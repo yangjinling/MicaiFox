@@ -20,6 +20,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        tv.setText("你好");
+        tv.setText("测试louqiang分支提交");
     }
 }
