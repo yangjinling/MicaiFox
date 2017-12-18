@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 /**
- * Created by cagr on 2017/1/15.
+ * Created by yangjinling on 2017/12/15.
  */
 
 public class MyEditText extends View {

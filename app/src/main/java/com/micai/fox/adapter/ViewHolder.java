@@ -1,4 +1,4 @@
-package com.maicai.fox.adapter;
+package com.micai.fox.adapter;
 
 import android.content.Context;
 import android.util.SparseArray;
