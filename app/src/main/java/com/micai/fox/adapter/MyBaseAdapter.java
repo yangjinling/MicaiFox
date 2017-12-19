@@ -1,11 +1,10 @@
-package com.maicai.fox.adapter;
+package com.micai.fox.adapter;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.maicai.fox.adapter.ViewHolder;
 
 import java.util.List;
 
