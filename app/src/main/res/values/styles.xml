@@ -1,11 +1,22 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <!--activityTheme-->
+    <style name="ActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+    <!--dialogTheme-->
+    <style name="Translucent_NoTitles" parent="android:style/Theme.Dialog">   <!--背景颜色及透明程度-->
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:backgroundDimAmount">0.7</item><!-- 灰度 -->
+        <item name="android:background">#00000000</item> <!-- 设置自定义布局的背景透明 -->
     </style>
     <style name="Translucent_NoTitle" parent="android:style/Theme.Dialog">
         <item name="android:background">#00000000</item> <!-- 设置自定义布局的背景透明 -->
