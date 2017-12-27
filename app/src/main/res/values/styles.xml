@@ -8,8 +8,11 @@
     </style>
     <!--activityTheme-->
     <style name="ActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@null</item>
+       <!-- <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>//设置activity的window为透明窗口
+        <item name="android:windowBackground">@null</item>-->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
     <!--dialogTheme-->
     <style name="Translucent_NoTitles" parent="android:style/Theme.Dialog">   <!--背景颜色及透明程度-->

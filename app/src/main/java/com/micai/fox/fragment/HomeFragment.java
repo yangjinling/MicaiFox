@@ -1,5 +1,6 @@
 package com.micai.fox.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.micai.fox.R;
+import com.micai.fox.activity.ExpertsDetailActivity;
 import com.micai.fox.adapter.MyListViewVAdapter;
 import com.micai.fox.adapter.MyRecycleHAdapter;
 import com.micai.fox.util.ToolUtils;
@@ -60,6 +62,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(getContext(), "click " + position + " item", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), ExpertsDetailActivity.class);
+                startActivity(intent);
             }
 
             @Override
