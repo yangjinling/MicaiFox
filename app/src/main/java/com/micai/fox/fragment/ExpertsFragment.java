@@ -28,7 +28,7 @@ public class ExpertsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_experts, container, false);
         ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
         return view;
     }
 

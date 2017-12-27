@@ -1,27 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.micai.fox.activity.MainActivity">
 
     <LinearLayout
-        android:background="@android:color/black"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <FrameLayout
-
             android:id="@+id/main_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></FrameLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:background="@android:color/holo_red_light"
+    <RadioGroup
+        android:id="@+id/main_rg"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_alignParentBottom="true"></LinearLayout>
+        android:layout_height="70dp"
+        android:layout_gravity="center_vertical"
+        android:background="@android:color/holo_red_light"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-</RelativeLayout>
+        <RadioButton
+            android:id="@+id/rb_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:drawableTop="@drawable/rb_home"
+            android:gravity="center"
+            android:text="首页"
+            android:textColor="@drawable/text_select" />
+
+        <RadioButton
+            android:id="@+id/rb_experts"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/rb_experts"
+            android:gravity="center"
+            android:text="专家"
+            android:textColor="@drawable/text_select" />
+
+        <RadioButton
+            android:id="@+id/rb_mine"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/rb_mine"
+            android:gravity="center"
+            android:text="我的"
+            android:textColor="@drawable/text_select" />
+    </RadioGroup>
+
+</LinearLayout>
