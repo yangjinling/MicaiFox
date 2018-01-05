@@ -16,10 +16,11 @@ import java.util.List;
  * 邮箱：18363820101@163.com
  */
 
-public class MyListViewVAdapter extends MyBaseAdapter<String> {
+/*首页众筹列表*/
+public class MyHomeZhongChouAdapter extends MyBaseAdapter<String> {
     private List<String> mList;
 
-    public MyListViewVAdapter(List<String> list, Context context, int resId) {
+    public MyHomeZhongChouAdapter(List<String> list, Context context, int resId) {
         super(list, context, resId);
 //        mList = list;
     }

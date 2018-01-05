@@ -33,10 +33,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <!-- 主界面 -->
+        <!--欢迎页面-->
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.IndexActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme">
             <intent-filter>
@@ -45,6 +44,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- 主界面 -->
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"></activity>
         <!-- 登陆界面 -->
         <activity
             android:name=".activity.LoginActivity"
@@ -100,7 +104,7 @@
             android:name=".activity.ModifyNiChengActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
-        <!--各项设置详细界面-->
+        <!-- 各项设置详细界面 -->
         <activity
             android:name=".activity.SettingDetailActivity"
             android:screenOrientation="portrait"
@@ -124,7 +128,6 @@
             android:exported="false"
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-
     </application>
 
 </manifest>

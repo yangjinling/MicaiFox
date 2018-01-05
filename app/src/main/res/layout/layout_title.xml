@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="50dp"
+    android:background="@android:color/transparent">
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/blue">
+        android:background="@android:color/transparent"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_back"
@@ -29,9 +30,9 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:textSize="20sp"
+            android:text="标题"
             android:textColor="@android:color/black"
-            android:text="标题" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_notify"
@@ -41,8 +42,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
             android:gravity="center"
-            android:textSize="20sp"
             android:textColor="@android:color/black"
+            android:textSize="20sp"
             android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

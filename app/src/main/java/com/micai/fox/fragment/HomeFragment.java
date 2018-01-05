@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide;
 import com.micai.fox.R;
 import com.micai.fox.activity.ExpertsDetailActivity;
 import com.micai.fox.activity.ZhongChouDetailActivity;
-import com.micai.fox.adapter.MyListViewVAdapter;
+import com.micai.fox.adapter.MyHomeZhongChouAdapter;
 import com.micai.fox.adapter.MyRecycleHAdapter;
 import com.youth.banner.Banner;
 
@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment {
         recycleviewH.setLayoutManager(mLayoutManagerH);
         // 设置adapter
         recycleviewH.setAdapter(mAdapterH);
-        MyListViewVAdapter adapter = new MyListViewVAdapter(data, getContext(), R.layout.item_v_listview);
+        MyHomeZhongChouAdapter adapter = new MyHomeZhongChouAdapter(data, getContext(), R.layout.item_v_listview);
         listviewHome.setAdapter(adapter);
 //        ToolUtils.setListViewHeightBasedOnChildren(listviewHome);
         mAdapterH.setOnItemClickListener(new MyRecycleHAdapter.OnItemClickListener() {

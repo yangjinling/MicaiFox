@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.micai.fox.R;
 import com.micai.fox.activity.ExpertsDetailActivity;
-import com.micai.fox.adapter.MyListViewVAdapter;
+import com.micai.fox.adapter.MyExpertsListAdapter;
 
 import java.util.ArrayList;
 
@@ -46,7 +46,7 @@ public class ExpertsDetailFragment extends Fragment {
                 break;
         }
         data = getData();
-        MyListViewVAdapter adapter = new MyListViewVAdapter(data, getContext(), R.layout.item_v_listview);
+        MyExpertsListAdapter adapter = new MyExpertsListAdapter(data, getContext(),R.layout.item_lv_experts);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

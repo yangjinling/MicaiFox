@@ -10,7 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.micai.fox.R;
-import com.micai.fox.adapter.MyListViewVAdapter;
 import com.micai.fox.adapter.MyReportAdapter;
 
 import java.util.ArrayList;

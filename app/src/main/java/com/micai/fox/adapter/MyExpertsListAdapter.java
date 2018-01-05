@@ -5,14 +5,14 @@ import android.content.Context;
 import java.util.List;
 
 /**
- * 作者：杨金玲 on 2018/1/4 14:54
+ * 作者：杨金玲 on 2018/1/5 13:42
  * 邮箱：18363820101@163.com
  */
-/*我的--通知列表*/
-public class MyNotificationAdapter extends MyBaseAdapter<String> {
+
+public class MyExpertsListAdapter extends MyBaseAdapter<String> {
     private List<String> mLists;
 
-    public MyNotificationAdapter(List<String> list, Context context, int resId) {
+    public MyExpertsListAdapter(List<String> list, Context context, int resId) {
         super(list, context, resId);
         this.mLists = list;
     }

@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.micai.fox.R;
-import com.micai.fox.adapter.MyListViewVAdapter;
+import com.micai.fox.adapter.MyNotificationAdapter;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ public class NotificationActivity extends AppCompatActivity {
     @Bind(R.id.lv_notify)
     ListView lvNotify;
     private ArrayList<String> data;
-
+    private MyNotificationAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +42,7 @@ public class NotificationActivity extends AppCompatActivity {
         tvBack.setVisibility(View.VISIBLE);
         tvNotify.setVisibility(View.VISIBLE);
         data = getData();
-        MyListViewVAdapter adapter = new MyListViewVAdapter(data, this, R.layout.item_v_listview);
+        adapter = new MyNotificationAdapter(data, this, R.layout.item_lv_notification);
         lvNotify.setAdapter(adapter);
     }
 
@@ -52,7 +52,9 @@ public class NotificationActivity extends AppCompatActivity {
             case R.id.tv_back:
                 finish();
                 break;
-            case R.id.tv_notify:
+            case R.id.tv_notify://清空
+                data.clear();
+                adapter.notifyDataSetChanged();
                 break;
         }
     }

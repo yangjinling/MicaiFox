@@ -1,5 +1,6 @@
 package com.micai.fox.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -62,8 +63,8 @@ public class ExpertsFragment extends Fragment {
                 expertsTvIncome.setTextColor(getResources().getColor(R.color.gray));
                 expertsTvMizhong.setTextColor(getResources().getColor(R.color.gray));
                 expertsViewAll.setBackgroundResource(R.color.blue);
-                expertsViewIncome.setBackgroundResource(R.color.white);
-                expertsViewMizhong.setBackgroundResource(R.color.white);
+                expertsViewIncome.setBackgroundColor(new Color().alpha(0));
+                expertsViewMizhong.setBackgroundColor(new Color().alpha(0));
                 kind = 0;
                 choiceFragment(kind);
                 break;
@@ -72,9 +73,9 @@ public class ExpertsFragment extends Fragment {
                 expertsTvAll.setTextColor(getResources().getColor(R.color.gray));
                 expertsTvIncome.setTextColor(getResources().getColor(R.color.blue));
                 expertsTvMizhong.setTextColor(getResources().getColor(R.color.gray));
-                expertsViewAll.setBackgroundResource(R.color.white);
+                expertsViewAll.setBackgroundColor(new Color().alpha(0));
                 expertsViewIncome.setBackgroundResource(R.color.blue);
-                expertsViewMizhong.setBackgroundResource(R.color.white);
+                expertsViewMizhong.setBackgroundColor(new Color().alpha(0));
                 kind = 1;
                 choiceFragment(kind);
                 break;
@@ -83,8 +84,8 @@ public class ExpertsFragment extends Fragment {
                 expertsTvAll.setTextColor(getResources().getColor(R.color.gray));
                 expertsTvIncome.setTextColor(getResources().getColor(R.color.gray));
                 expertsTvMizhong.setTextColor(getResources().getColor(R.color.blue));
-                expertsViewAll.setBackgroundResource(R.color.white);
-                expertsViewIncome.setBackgroundResource(R.color.white);
+                expertsViewAll.setBackgroundColor(new Color().alpha(0));
+                expertsViewIncome.setBackgroundColor(new Color().alpha(0));
                 expertsViewMizhong.setBackgroundResource(R.color.blue);
                 kind = 2;
                 choiceFragment(kind);
