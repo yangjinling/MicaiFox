@@ -9,14 +9,14 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.micai.fox.R;
 import com.micai.fox.base.BaseActivity;
 import com.micai.fox.fragment.ExpertsFragment;
 import com.micai.fox.fragment.HomeFragment;
 import com.micai.fox.fragment.MineFragmnet;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

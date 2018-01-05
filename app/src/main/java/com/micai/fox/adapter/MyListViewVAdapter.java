@@ -1,7 +1,6 @@
 package com.micai.fox.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +21,11 @@ public class MyListViewVAdapter extends MyBaseAdapter<String> {
 
     public MyListViewVAdapter(List<String> list, Context context, int resId) {
         super(list, context, resId);
-        mList = list;
+//        mList = list;
     }
 
     @Override
     public void setData(ViewHolder viewHolder, int position) {
-        ((TextView) viewHolder.findViewById(R.id.item_tv)).setText(mList.get(position));
+//        ((TextView) viewHolder.findViewById(R.id.item_tv)).setText(mList.get(position));
     }
 }

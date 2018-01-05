@@ -32,4 +32,6 @@ public class ToolUtils {
         //params.height最后得到整个ListView完整显示需要的高度
         listView.setLayoutParams(params);
     }
+
+
 }

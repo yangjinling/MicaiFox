@@ -11,13 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.micai.fox.R;
 import com.micai.fox.activity.ExpertsDetailActivity;
 import com.micai.fox.adapter.MyListViewVAdapter;
 import com.micai.fox.adapter.MyRecycleHAdapter;
-import com.micai.fox.util.ToolUtils;
+import com.youth.banner.Banner;
 
 import java.util.ArrayList;
 
@@ -29,19 +32,39 @@ import butterknife.ButterKnife;
  */
 
 public class HomeFragment extends Fragment {
-    @Bind(R.id.iv_home)
-    ImageView homeIv;
+   /* @Bind(R.id.iv_home)
+    ImageView homeIv;*/
     @Bind(R.id.recycleview_h)
     RecyclerView recycleviewH;
     @Bind(R.id.listview_home)
     ListView listviewHome;
+    @Bind(R.id.tv_title)
+    TextView tvTitle;
+    @Bind(R.id.rl)
+    RelativeLayout rl;
+    @Bind(R.id.banner)
+    Banner banner;
     private ArrayList<String> data;
+    //设置图片资源:url或本地资源
+    String[] images = new String[]{
+            "http://218.192.170.132/BS80.jpg",
+            "http://img.zcool.cn/community/0166c756e1427432f875520f7cc838.jpg",
+            "http://img.zcool.cn/community/018fdb56e1428632f875520f7b67cb.jpg",
+            "http://img.zcool.cn/community/01c8dc56e1428e6ac72531cbaa5f2c.jpg",
+            "http://img.zcool.cn/community/01fda356640b706ac725b2c8b99b08.jpg",
+            "http://img.zcool.cn/community/01fd2756e142716ac72531cbf8bbbf.jpg",
+            "http://img.zcool.cn/community/0114a856640b6d32f87545731c076a.jpg"};
+
+    //设置图片标题:自动对应
+    String[] titles = new String[]{"十大星级品牌联盟，全场2折起", "全场2折起", "十大星级品牌联盟", "嗨购5折不要停", "12趁现在", "嗨购5折不要停，12.12趁现在", "实打实大顶顶顶顶"};
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
+        rl.setVisibility(View.VISIBLE);
+        tvTitle.setText("迷彩狐");
         data = getData();
         initView();
         return view;
@@ -57,7 +80,7 @@ public class HomeFragment extends Fragment {
         recycleviewH.setAdapter(mAdapterH);
         MyListViewVAdapter adapter = new MyListViewVAdapter(data, getContext(), R.layout.item_v_listview);
         listviewHome.setAdapter(adapter);
-        ToolUtils.setListViewHeightBasedOnChildren(listviewHome);
+//        ToolUtils.setListViewHeightBasedOnChildren(listviewHome);
         mAdapterH.setOnItemClickListener(new MyRecycleHAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -71,7 +94,53 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), "long click " + position + " item", Toast.LENGTH_SHORT).show();
             }
         });
+        initBanner();
+    }
 
+    private void initBanner() {
+        //设置样式,默认为:Banner.NOT_INDICATOR(不显示指示器和标题)
+        //可选样式如下:
+        //1. Banner.CIRCLE_INDICATOR    显示圆形指示器
+        //2. Banner.NUM_INDICATOR   显示数字指示器
+        //3. Banner.NUM_INDICATOR_TITLE 显示数字指示器和标题
+        //4. Banner.CIRCLE_INDICATOR_TITLE  显示圆形指示器和标题
+        banner.setBannerStyle(Banner.CIRCLE_INDICATOR_TITLE);
+
+        //设置轮播样式（没有标题默认为右边,有标题时默认左边）
+        //可选样式:
+        //Banner.LEFT   指示器居左
+        //Banner.CENTER 指示器居中
+        //Banner.RIGHT  指示器居右
+        banner.setIndicatorGravity(Banner.CENTER);
+
+        /*//设置轮播要显示的标题和图片对应（如果不传默认不显示标题）
+        banner.setBannerTitle(titles);*/
+
+        //设置是否自动轮播（不设置则默认自动）
+        banner.isAutoPlay(true);
+
+        //设置轮播图片间隔时间（不设置默认为2000）
+//        banner.setDelayTime(5000);
+        //设置图片资源:可选图片网址/资源文件，默认用Glide加载,也可自定义图片的加载框架
+        //所有设置参数方法都放在此方法之前执行
+        //banner.setImages(images);
+
+        //自定义图片加载框架
+        banner.setImages(images, new Banner.OnLoadImageListener() {
+            @Override
+            public void OnLoadImage(ImageView view, Object url) {
+                System.out.println("加载中");
+                Glide.with(getActivity()).load(url).into(view);
+                System.out.println("加载完");
+            }
+        });
+        //设置点击事件，下标是从1开始
+        banner.setOnBannerClickListener(new Banner.OnBannerClickListener() {//设置点击事件
+            @Override
+            public void OnBannerClick(View view, int position) {
+                Toast.makeText(getActivity(), "你点击了：" + position, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -83,7 +152,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> getData() {
         ArrayList<String> data = new ArrayList<>();
         String temp = " item";
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 4; i++) {
             data.add(i + temp);
         }
 

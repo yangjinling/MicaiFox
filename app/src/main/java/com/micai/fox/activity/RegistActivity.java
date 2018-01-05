@@ -8,7 +8,7 @@ import com.micai.fox.base.BaseActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
+/*注册页面*/
 public class RegistActivity extends BaseActivity {
 
     @Bind(R.id.regist_tv)

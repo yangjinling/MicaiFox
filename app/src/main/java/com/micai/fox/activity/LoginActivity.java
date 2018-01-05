@@ -8,7 +8,7 @@ import com.micai.fox.base.BaseActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
+/*登陆页面*/
 public class LoginActivity extends BaseActivity {
 
     @Bind(R.id.login_tv)

@@ -55,11 +55,57 @@
             android:name=".activity.RegistActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
-        <!--专家详情界面-->
-        <activity android:name=".activity.ExpertsDetailActivity"
+        <!-- 忘记密码界面 -->
+        <activity
+            android:name=".activity.ForgetPassActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ActivityTheme"></activity>
-        <!-- //微信支付的界面-->
+            android:theme="@style/ActivityTheme" />
+        <!-- 专家详情界面 -->
+        <activity
+            android:name=".activity.ExpertsDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <!-- 众筹详情界面 -->
+        <activity
+            android:name=".activity.ZhongChouDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <!-- 报告详情界面 -->
+        <activity
+            android:name=".activity.ReportDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <!-- 设置界面 -->
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <!-- 消息通知界面 -->
+        <activity
+            android:name=".activity.NotificationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <!-- 我的众筹界面 -->
+        <activity
+            android:name=".activity.MyZhongChouActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <!-- 我的报告界面 -->
+        <activity
+            android:name=".activity.MyReportActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <!-- 修改昵称界面 -->
+        <activity
+            android:name=".activity.ModifyNiChengActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <!--各项设置详细界面-->
+        <activity
+            android:name=".activity.SettingDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <!-- //微信支付的界面 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
@@ -78,6 +124,7 @@
             android:exported="false"
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+
     </application>
 
 </manifest>
