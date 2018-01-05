@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.micai.fox.R;
 import com.micai.fox.activity.ExpertsDetailActivity;
+import com.micai.fox.activity.ZhongChouDetailActivity;
 import com.micai.fox.adapter.MyListViewVAdapter;
 import com.micai.fox.adapter.MyRecycleHAdapter;
 import com.youth.banner.Banner;
@@ -32,8 +34,8 @@ import butterknife.ButterKnife;
  */
 
 public class HomeFragment extends Fragment {
-   /* @Bind(R.id.iv_home)
-    ImageView homeIv;*/
+    /* @Bind(R.id.iv_home)
+     ImageView homeIv;*/
     @Bind(R.id.recycleview_h)
     RecyclerView recycleviewH;
     @Bind(R.id.listview_home)
@@ -92,6 +94,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemLongClick(View view, int position) {
                 Toast.makeText(getContext(), "long click " + position + " item", Toast.LENGTH_SHORT).show();
+            }
+        });
+        listviewHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), ZhongChouDetailActivity.class);
+                getContext().startActivity(intent);
             }
         });
         initBanner();

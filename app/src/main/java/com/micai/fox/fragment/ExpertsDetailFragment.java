@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class ExpertsDetailFragment extends Fragment {
     private int kind;
-    private TextView tv;
+//    private TextView tv;
     private ArrayList<String> data;
     private ListView lv;
 
@@ -33,17 +33,16 @@ public class ExpertsDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_experts, container, false);
         kind = getArguments().getInt("KIND", 0);
-        tv = ((TextView) view.findViewById(R.id.fragment_experts_tv));
         lv = ((ListView) view.findViewById(R.id.experts_fragment_lv));
         switch (kind) {
             case 0:
-                tv.setText("全部");
+//                tv.setText("全部");
                 break;
             case 1:
-                tv.setText("盈利榜");
+//                tv.setText("盈利榜");
                 break;
             case 2:
-                tv.setText("命中榜");
+//                tv.setText("命中榜");
                 break;
         }
         data = getData();
