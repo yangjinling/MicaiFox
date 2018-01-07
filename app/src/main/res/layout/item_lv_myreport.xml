@@ -1,109 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    android:orientation="vertical"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+    android:layout_height="wrap_content"
+    android:background="@drawable/redbgtstyle"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_title_lv_report"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView中有setCompoundDrawables方法 里面的参数就是我们"
+        android:layout_marginTop="15dp"
+        android:lineSpacingExtra="10dp"
+        android:maxLines="2"
+        android:paddingLeft="16dp"
+        android:paddingRight="14dp"
+        android:text="中有方法里面的参数就是中有方法里面的参数就是数就是我们数就是我们"
         android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:textSize="15sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/gray"
+        android:layout_height="24dp"
+        android:layout_marginTop="13.5dp"
+        android:background="#FF23253C"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/tv_type_lv_report"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1.5"
-            android:text="世界杯"
-            android:textColor="@android:color/black"
+            android:layout_marginLeft="9dp"
+            android:text="【世界杯】"
+            android:textColor="@color/red"
             android:textSize="15sp" />
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/tv_country1_lv_report"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1.5"
+            android:layout_marginLeft="24dp"
             android:text="西班牙"
-            android:textColor="@android:color/black"
+            android:textColor="@color/red"
             android:textSize="15sp" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="4"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/tv_score_lv_report"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.1"
+            android:layout_marginLeft="19dp"
             android:gravity="center_horizontal"
-            android:text=":"
-            android:textColor="@android:color/black"
+            android:text="4:3"
+            android:textColor="@color/red"
             android:textSize="15sp" />
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/tv_country2_lv_report"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:gravity="center_horizontal"
-            android:text="4"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
+            android:layout_marginLeft="17dp"
             android:gravity="center_horizontal"
             android:text="德国"
-            android:textColor="@android:color/black"
+            android:textColor="@color/red"
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_date_lv_report"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1.5"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:gravity="right"
             android:text="11月27日"
-            android:textColor="@android:color/black"
+            android:textColor="@color/red"
             android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="11dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="12dp">
 
         <TextView
-            android:textSize="15sp"
+            android:id="@+id/tv_state_lv_report"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="刚刚发布"
-            android:textColor="@android:color/black" />
+            android:textColor="@color/white"
+            android:textSize="13sp" />
 
         <TextView
-            android:textSize="15sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tv_rate_lv_report"
+            android:layout_width="74dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/whitebgtstyle"
+            android:gravity="center"
             android:text="2中2"
-            android:textColor="@android:color/black" />
+            android:textColor="@color/red"
+            android:textSize="15sp" />
     </LinearLayout>
 </LinearLayout>

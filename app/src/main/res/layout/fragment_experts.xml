@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
+    android:background="@drawable/background"
     android:orientation="vertical">
 
     <LinearLayout
@@ -18,8 +18,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="全部"
-            android:textColor="@android:color/holo_blue_light"
-            android:textSize="16sp" />
+            android:textColor="@color/white"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/experts_tv_income"
@@ -28,8 +28,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="周盈利榜"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="16sp" />
+            android:textColor="@color/white"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/experts_tv_mizhong"
@@ -38,13 +38,13 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="周命中榜"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="16sp" />
+            android:textColor="@color/white"
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="4dp"
         android:orientation="horizontal">
 
         <View
@@ -52,7 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_light"></View>
+            android:background="@color/white"></View>
 
         <View
             android:id="@+id/experts_view_income"
@@ -76,6 +76,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@android:color/white"
+        android:background="@android:color/transparent"
         android:orientation="vertical"></LinearLayout>
 </LinearLayout>

@@ -34,7 +34,7 @@
         android:layout_marginRight="12dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/buttonstyle"
-        android:text="登录"
+        android:text="注册"
         android:textColor="#FFFFFFFF"
         android:textSize="20sp" />
 </LinearLayout>

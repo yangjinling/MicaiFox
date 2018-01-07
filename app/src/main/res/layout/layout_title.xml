@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="48dp"
     android:background="@android:color/transparent">
 
     <RelativeLayout
         android:id="@+id/rl"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="match_parent"
         android:background="@android:color/transparent"
-        android:visibility="gone">
+        >
 
         <TextView
             android:id="@+id/tv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:drawableLeft="@mipmap/nav_icon_back"
+            android:layout_marginLeft="15dp"
+            android:drawableLeft="@mipmap/back"
             android:gravity="center"
-            android:text="返回"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:visibility="gone" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -31,8 +28,8 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="标题"
-            android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/tv_notify"
@@ -42,7 +39,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
             android:gravity="center"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="20sp"
             android:visibility="gone" />
     </RelativeLayout>

@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.micai.fox.R;
+import com.micai.fox.util.ExitAppUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -37,6 +39,8 @@ public class SettingActivity extends AppCompatActivity {
     LinearLayout llSetAggrement;
     @Bind(R.id.ll_set_about)
     LinearLayout llSetAbout;
+    @Bind(R.id.set_btn_exit)
+    Button setBtnExit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +53,18 @@ public class SettingActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.tv_back, R.id.ll_set_account, R.id.ll_set_phone, R.id.ll_set_pass, R.id.ll_set_idea, R.id.ll_set_aggrement, R.id.ll_set_about})
+    @OnClick({R.id.set_btn_exit, R.id.tv_back, R.id.ll_set_account, R.id.ll_set_phone, R.id.ll_set_pass, R.id.ll_set_idea, R.id.ll_set_aggrement, R.id.ll_set_about})
     public void onClick(View view) {
         Intent intent = new Intent(SettingActivity.this, SettingDetailActivity.class);
         int type = 0;
         switch (view.getId()) {
             case R.id.tv_back:
                 finish();
+                break;
+            case R.id.set_btn_exit:
+                intent = new Intent(SettingActivity.this, LoginActivity.class);
+                startActivity(intent);
+//                ExitAppUtils.getInstance().finishAllActivities();
                 break;
             case R.id.ll_set_account:
                 //收款账号
@@ -73,8 +82,10 @@ public class SettingActivity extends AppCompatActivity {
 
             case R.id.ll_set_pass:
                 //密码
-                type = 2;
-                intent.putExtra("VALUE", type);
+//                type = 2;
+//                intent.putExtra("VALUE", type);
+//                startActivity(intent);
+                intent = new Intent(SettingActivity.this, ResetPassActivity.class);
                 startActivity(intent);
                 break;
 
@@ -105,4 +116,6 @@ public class SettingActivity extends AppCompatActivity {
         super.onDestroy();
         ButterKnife.unbind(this);
     }
+
+
 }

@@ -87,7 +87,7 @@ public class MineFragmnet extends Fragment {
         rl.setVisibility(View.VISIBLE);
         tvNotify.setVisibility(View.VISIBLE);
         tvTitle.setText("我的");
-        Drawable drawable = getResources().getDrawable(R.mipmap.nav_icon_notice);
+        Drawable drawable = getResources().getDrawable(R.mipmap.message);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置边界
         // param 左上右下
         tvNotify.setCompoundDrawables(null, null, drawable, null);

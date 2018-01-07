@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
+    android:background="@drawable/background"
     android:orientation="vertical">
     <include layout="@layout/layout_title"></include>
 
@@ -16,6 +16,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:layout_marginTop="28dp"
                 android:id="@+id/iv_mine_head"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -27,21 +28,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:drawableRight="@mipmap/ic_launcher"
+                android:layout_marginTop="5dp"
+                android:drawableRight="@mipmap/change"
                 android:gravity="center_vertical"
                 android:text="奀奀1029"
-                android:textColor="@android:color/black"
-                android:textSize="25sp" />
+                android:drawablePadding="7.5dp"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/gray"></View>
+
 
             <LinearLayout
+                android:layout_marginTop="55dp"
+                android:background="@drawable/edittextstyle"
+                android:layout_marginLeft="12.5dp"
+                android:layout_marginRight="12.5dp"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -49,31 +52,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/earnings" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="8.5dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="累计收益"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥"
                     android:textColor="@android:color/holo_red_light"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="100"
                     android:textColor="@android:color/holo_red_light"
-                    android:textSize="30sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -84,15 +87,16 @@
                     android:textSize="20sp" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/gray"></View>
+
 
             <LinearLayout
+                android:background="@drawable/edittextstyle"
+                android:layout_marginLeft="12.5dp"
+                android:layout_marginRight="12.5dp"
+                android:layout_marginTop="13dp"
                 android:id="@+id/ll_mine_zhongchou"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -100,36 +104,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/funds" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="8.5dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="我的众筹"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="16dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/next" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="75dp"
-                android:background="@color/gray"></View>
 
             <LinearLayout
+                android:layout_marginTop="1dp"
+                android:background="@drawable/edittextstyle"
+                android:layout_marginLeft="12.5dp"
+                android:layout_marginRight="12.5dp"
                 android:id="@+id/ll_mine_report"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -137,40 +140,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/report" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="8.5dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="我的报告"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="16dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/next" />
 
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="75dp"
-                android:background="@color/gray"></View>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/gray"></View>
+
 
             <LinearLayout
+                android:layout_marginTop="13dp"
                 android:id="@+id/ll_mine_set"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="50dp"
+                android:background="@drawable/edittextstyle"
+                android:layout_marginLeft="12.5dp"
+                android:layout_marginRight="12.5dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -178,29 +177,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/setting" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="8.5dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="设置"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="16dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/next" />
 
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray"></View>
+
         </LinearLayout>
     </ScrollView>
 
