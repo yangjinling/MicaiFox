@@ -20,14 +20,17 @@
         android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/modify_tv_nicheng"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="25.5dp"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="奀奀1029" />
+            android:hint="" />
 
         <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_tv_nicheng"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="12.5dp"

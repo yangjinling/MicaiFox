@@ -6,13 +6,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +27,7 @@ import com.micai.fox.activity.ZhongChouDetailActivity;
 import com.micai.fox.adapter.MyHomeZhongChouAdapter;
 import com.micai.fox.adapter.MyRecycleHAdapter;
 import com.micai.fox.view.MyDividerItemDecoration;
+import com.micai.fox.view.MyScrollView;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -49,6 +54,20 @@ public class HomeFragment extends Fragment {
     RelativeLayout rl;
     @Bind(R.id.banner)
     Banner banner;
+    @Bind(R.id.home_experts_moveview)
+    LinearLayout homeExpertsMoveview;
+    @Bind(R.id.home_experts_parent)
+    LinearLayout homeExpertsParent;
+    @Bind(R.id.home_zhongchou_moveview)
+    LinearLayout homeZhongchouMoveview;
+    @Bind(R.id.home_zhongchou_parent)
+    LinearLayout homeZhongchouParent;
+    @Bind(R.id.home_xuanting)
+    LinearLayout homeXuanting;
+    @Bind(R.id.home_scroll)
+    ScrollView homeScroll;
+    @Bind(R.id.home_xuanting2)
+    LinearLayout homeXuanting2;
     private ArrayList<String> data;
     //设置图片资源:url或本地资源
     String[] images = new String[]{
@@ -63,6 +82,7 @@ public class HomeFragment extends Fragment {
     //设置图片标题:自动对应
     String[] titles = new String[]{"十大星级品牌联盟，全场2折起", "全场2折起", "十大星级品牌联盟", "嗨购5折不要停", "12趁现在", "嗨购5折不要停，12.12趁现在", "实打实大顶顶顶顶"};
     private View footer_view;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,6 +92,24 @@ public class HomeFragment extends Fragment {
         tvTitle.setText("迷彩狐");
         data = getData();
         initView();
+     /*   homeScroll.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Log.e("YJL", "悬停");
+                homeScroll.setXuantingquyu(homeXuanting2, homeExpertsParent, homeExpertsMoveview);
+                homeScroll.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
+            }
+        });*/
+      /*  homeScroll.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Log.e("YJL", "悬停");
+                homeScroll.setXuantingquyu(homeXuanting, homeZhongchouParent, homeZhongchouMoveview);
+                homeScroll.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
+            }
+        });*/
         return view;
     }
 
@@ -93,7 +131,7 @@ public class HomeFragment extends Fragment {
         mAdapterH.setOnItemClickListener(new MyRecycleHAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getContext(), "click " + position + " item", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "click " + position + " item", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), ExpertsDetailActivity.class);
                 startActivity(intent);
             }

@@ -27,7 +27,6 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  * 邮箱：18363820101@163.com
  */
 
-//专家详情---众筹
 public class ExpertsZhongChouFragment extends Fragment {
     private int kind;
     //    private TextView tv;
@@ -43,15 +42,42 @@ public class ExpertsZhongChouFragment extends Fragment {
         lv = ((ListView) view.findViewById(R.id.experts_detail_zhong_report_lv));
         lv.setFocusable(false);
         data = getData();
+      /*  switch (kind) {
+            case 0://众筹
+//                tv.setText("全部");
+                MyExpertsZhonChouAdapter adapter = new MyExpertsZhonChouAdapter(data, getContext(), R.layout.item_lv_experts_zhongchou);
+                lv.setAdapter(adapter);
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Intent intent = new Intent(getActivity(), ZhongChouDetailActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                break;
+            case 1://报告
+                MyExpertsReportAdapter reportAdapter = new MyExpertsReportAdapter(data, getContext(), R.layout.item_lv_experts_report);
+                lv.setAdapter(reportAdapter);
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Intent intent = new Intent(getActivity(), ReportDetailActivity.class);
+                        startActivity(intent);
+                    }
+                });
+//                tv.setText("盈利榜");
+                break;
+
+        }*/
+//        footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv_home_zhongchou, null);
+//        lv.addFooterView(footer_view);
         MyExpertsZhonChouAdapter adapter = new MyExpertsZhonChouAdapter(data, getContext(), R.layout.item_lv_experts_zhongchou);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ZhongChouDetailActivity.class);
-                startActivity(intent);
-            }
-        });
+                startActivity(intent);}});
         return view;
     }
 

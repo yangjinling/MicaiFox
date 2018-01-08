@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.micai.fox.R;
 
-/*忘记密码页面*/
+/*重置密码页面*/
 public class ForgetPassActivity extends AppCompatActivity {
 
     @Override

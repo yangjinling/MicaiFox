@@ -45,6 +45,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.micai.fox.R.id.iv_mine_head;
+import static com.micai.fox.R.id.tv_mine_nicheng;
 
 /**
  * Created by lq on 2017/12/19.
@@ -81,6 +82,7 @@ public class MineFragmnet extends Fragment {
     private static String fileName;
     private String imageName;
     private String fileDir;
+    private final int REQUEST_NICHENG = 3;//修改昵称
 
     @Nullable
     @Override
@@ -120,7 +122,8 @@ public class MineFragmnet extends Fragment {
             case R.id.tv_mine_nicheng:
                 //修改昵称
                 intent = new Intent(getActivity(), ModifyNiChengActivity.class);
-                startActivity(intent);
+                intent.putExtra("NAME", "" + tvMineNicheng.getText().toString().trim());
+                startActivityForResult(intent, REQUEST_NICHENG);
                 break;
             case R.id.ll_mine_zhongchou:
                 //我的众筹
@@ -199,6 +202,10 @@ public class MineFragmnet extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
+            case REQUEST_NICHENG:
+                if (null!=data)
+                tvMineNicheng.setText(data.getStringExtra("NAME"));
+                break;
             case TAKE_PICTURE://拍照
                 try {
                     Bitmap bitmap = Bimp.revitionImageSize(fileDir);
@@ -295,4 +302,5 @@ public class MineFragmnet extends Fragment {
         }
 
     }
+
 }

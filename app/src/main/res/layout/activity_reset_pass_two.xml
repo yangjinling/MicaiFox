@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     tools:context="com.micai.fox.activity.ResetPassTwoActivity">
+
     <include layout="@layout/layout_title"></include>
 
     <LinearLayout
@@ -54,7 +55,7 @@
                 android:layout_marginRight="32dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:hint="6~16位的数字、字母或符号"
+                android:hint="请输入密码"
                 android:textSize="17sp" />
         </LinearLayout>
 

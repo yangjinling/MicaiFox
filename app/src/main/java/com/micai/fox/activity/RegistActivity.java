@@ -2,6 +2,10 @@ package com.micai.fox.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -45,6 +49,23 @@ public class RegistActivity extends BaseActivity {
     Button registBtnNext;
     @Bind(R.id.regist_tv_have)
     TextView registTvHave;
+    @Bind(R.id.regist_tv_agreement)
+    TextView registTvAgreement;
+    private int second = 60;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (null != registBtnCode)
+                registBtnCode.setText(--second + "秒后重发");
+            if (second >= 1) {
+                mHandler.sendEmptyMessageDelayed(1, 1000);
+            } else {
+                registBtnCode.setClickable(true);
+                registBtnCode.setText("获取验证码");
+                second = 60;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +82,7 @@ public class RegistActivity extends BaseActivity {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.tv_back, R.id.regist_btn_code, R.id.regist_btn_next, R.id.regist_tv_have})
+    @OnClick({R.id.regist_tv_agreement, R.id.tv_back, R.id.regist_btn_code, R.id.regist_btn_next, R.id.regist_tv_have})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -70,19 +91,47 @@ public class RegistActivity extends BaseActivity {
                 break;
             case R.id.regist_btn_code:
                 //获取验证码
-
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        registBtnCode.setText(second + "秒后重发");
+                        registBtnCode.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(1, 1000);
+                    }
+                });
                 break;
             case R.id.regist_btn_next:
                 //下一步
-                intent = new Intent(RegistActivity.this, RegistTwoActivity.class);
-                startActivity(intent);
+                if (canNext()) {
+                    intent = new Intent(RegistActivity.this, RegistTwoActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.regist_tv_have:
                 intent = new Intent(RegistActivity.this, LoginActivity.class);
                 startActivity(intent);
                 //已有账号
-
+                break;
+            case R.id.regist_tv_agreement:
+                //用户协议
+                intent = new Intent(RegistActivity.this, AgreementActivity.class);
+                startActivity(intent);
                 break;
         }
+
+    }
+
+    private boolean canNext() {
+        String phone = registEtPhone.getText().toString().trim();
+        String code = registEtCode.getText().toString().trim();
+        if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(code) && phone.length() == 11 && code.length() == 6 && registCk.isChecked()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return super.onKeyDown(keyCode, event);
     }
 }

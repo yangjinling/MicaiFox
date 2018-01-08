@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.micai.fox.R;
 import com.micai.fox.fragment.ExpertsReportFragment;
 import com.micai.fox.fragment.ExpertsZhongChouFragment;
+import com.micai.fox.view.MyScrollView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -56,7 +59,13 @@ public class ExpertsDetailActivity extends AppCompatActivity {
     @Bind(R.id.experts_detail_ll)
     LinearLayout expertsDetailLl;
     @Bind(R.id.experts_detail_scroll)
-    ScrollView scrollView;
+    MyScrollView scrollView;
+    @Bind(R.id.experts_detail_moveview)
+    LinearLayout expertsDetailMoveview;
+    @Bind(R.id.experts_detail_parentcontent)
+    LinearLayout expertsDetailParentcontent;
+    @Bind(R.id.xuantingquyu)
+    LinearLayout xuantingquyu;
     private Fragment[] mFragments;
     private FragmentManager mManager;
     private FragmentTransaction transcation;
@@ -65,7 +74,7 @@ public class ExpertsDetailActivity extends AppCompatActivity {
     Runnable scrollViewRunable = new Runnable() {
         @Override
         public void run() {
-            scrollView.scrollTo(0, 20);
+            scrollView.scrollTo(0, 0);
         }
     };
 
@@ -79,6 +88,15 @@ public class ExpertsDetailActivity extends AppCompatActivity {
         tvTitle.setText("专家详情");
         initFragments();
         initLinearLayout();
+        scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Log.e("YJL","悬停");
+                scrollView.setXuantingquyu(xuantingquyu, expertsDetailParentcontent, expertsDetailMoveview);
+                scrollView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
+            }
+        });
         mHandler.postDelayed(scrollViewRunable, 1);
     }
 
