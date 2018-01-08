@@ -58,6 +58,8 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.login_btn_login:
                 //登录
+                intent=new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
                 break;
             case R.id.login_tv_regist:
                 intent = new Intent(LoginActivity.this, RegistActivity.class);

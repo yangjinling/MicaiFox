@@ -59,10 +59,10 @@ public class ExpertsFragment extends Fragment {
         switch (view.getId()) {
             case R.id.experts_tv_all:
                 //全部
-                expertsTvAll.setTextColor(getResources().getColor(R.color.blue));
-                expertsTvIncome.setTextColor(getResources().getColor(R.color.gray));
-                expertsTvMizhong.setTextColor(getResources().getColor(R.color.gray));
-                expertsViewAll.setBackgroundResource(R.color.blue);
+//                expertsTvAll.setTextColor(getResources().getColor(R.color.white));
+//                expertsTvIncome.setTextColor(getResources().getColor(R.color.gray));
+//                expertsTvMizhong.setTextColor(getResources().getColor(R.color.gray));
+                expertsViewAll.setBackgroundResource(R.color.white);
                 expertsViewIncome.setBackgroundColor(new Color().alpha(0));
                 expertsViewMizhong.setBackgroundColor(new Color().alpha(0));
                 kind = 0;
@@ -70,23 +70,23 @@ public class ExpertsFragment extends Fragment {
                 break;
             case R.id.experts_tv_income:
                 //盈利帮
-                expertsTvAll.setTextColor(getResources().getColor(R.color.gray));
-                expertsTvIncome.setTextColor(getResources().getColor(R.color.blue));
-                expertsTvMizhong.setTextColor(getResources().getColor(R.color.gray));
+//                expertsTvAll.setTextColor(getResources().getColor(R.color.gray));
+//                expertsTvIncome.setTextColor(getResources().getColor(R.color.blue));
+//                expertsTvMizhong.setTextColor(getResources().getColor(R.color.gray));
                 expertsViewAll.setBackgroundColor(new Color().alpha(0));
-                expertsViewIncome.setBackgroundResource(R.color.blue);
+                expertsViewIncome.setBackgroundResource(R.color.white);
                 expertsViewMizhong.setBackgroundColor(new Color().alpha(0));
                 kind = 1;
                 choiceFragment(kind);
                 break;
             case R.id.experts_tv_mizhong:
                 //命中帮
-                expertsTvAll.setTextColor(getResources().getColor(R.color.gray));
-                expertsTvIncome.setTextColor(getResources().getColor(R.color.gray));
-                expertsTvMizhong.setTextColor(getResources().getColor(R.color.blue));
+//                expertsTvAll.setTextColor(getResources().getColor(R.color.gray));
+//                expertsTvIncome.setTextColor(getResources().getColor(R.color.gray));
+//                expertsTvMizhong.setTextColor(getResources().getColor(R.color.blue));
                 expertsViewAll.setBackgroundColor(new Color().alpha(0));
                 expertsViewIncome.setBackgroundColor(new Color().alpha(0));
-                expertsViewMizhong.setBackgroundResource(R.color.blue);
+                expertsViewMizhong.setBackgroundResource(R.color.white);
                 kind = 2;
                 choiceFragment(kind);
                 break;

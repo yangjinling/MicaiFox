@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,64 +20,76 @@
     <FrameLayout
         android:id="@+id/main_fragment"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"></FrameLayout>
+        android:layout_height="match_parent"></FrameLayout>
     <!--</LinearLayout>-->
 
-    <RadioGroup
+    <LinearLayout
         android:id="@+id/main_rg"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@android:color/transparent"
+        android:layout_alignParentBottom="true"
+        android:background="#23253C"
+        android:alpha="0.9"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center">
+            android:layout_gravity="bottom"
+            android:layout_weight="1">
 
             <RadioButton
                 android:id="@+id/rb_home"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rb_home"
+                android:layout_weight="1"
                 android:button="@null"
                 android:checked="true"
-                android:drawablePadding="0dp" />
+                android:drawablePadding="0dp"
+                android:drawableTop="@drawable/rb_home" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center">
+            android:layout_gravity="bottom"
+            android:layout_weight="1">
 
             <RadioButton
                 android:id="@+id/rb_experts"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rb_experts"
+                android:layout_weight="1"
                 android:button="@null"
-                android:drawablePadding="0dp" />
+                android:drawablePadding="0dp"
+                android:drawableTop="@drawable/rb_experts" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center">
+            android:layout_gravity="bottom"
+            android:layout_weight="1">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/home_mine_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/click"
+        android:layout_marginRight="40dp"
+        android:layout_alignParentRight="true"/>
+    <RadioButton
+        android:id="@+id/rb_mine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:button="@null"
+        android:drawableTop="@drawable/rb_mine" />
+</RelativeLayout>
 
-            <RadioButton
-                android:id="@+id/rb_mine"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rb_mine"
-                android:button="@null" />
         </LinearLayout>
-    </RadioGroup>
+    </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

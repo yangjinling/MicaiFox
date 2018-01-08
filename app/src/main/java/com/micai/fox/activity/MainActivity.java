@@ -1,16 +1,14 @@
 package com.micai.fox.activity;
 
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.micai.fox.R;
 import com.micai.fox.base.BaseActivity;
@@ -20,6 +18,7 @@ import com.micai.fox.fragment.MineFragmnet;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
 
@@ -27,13 +26,15 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.main_fragment)
     FrameLayout fragmentlayout;
     @Bind(R.id.main_rg)
-    RadioGroup mainRg;
+    LinearLayout mainRg;
     @Bind(R.id.rb_home)
     RadioButton rbHome;
     @Bind(R.id.rb_experts)
     RadioButton rbExperts;
     @Bind(R.id.rb_mine)
     RadioButton rbMine;
+    @Bind(R.id.home_mine_point)
+    ImageView homeMinePoint;
 
 
     private Fragment[] mFragments;
@@ -64,36 +65,41 @@ public class MainActivity extends BaseActivity {
         // mMainTabBar.setOnClickListener(this);
         mManager = getSupportFragmentManager();
         mManager.beginTransaction().replace(R.id.main_fragment, mFragments[0]).commit();
-//        FragmentTransaction lTransaction = mManager.beginTransaction();
-//        lTransaction.replace(R.id.main_fragment_container, mFragments[2]).commit();
-        mainRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
-                switch (i) {
-                    case R.id.rb_home:
-                        //首页
-                        FragmentTransaction transaction1 = mManager.beginTransaction();
-                        transaction1.replace(R.id.main_fragment, mFragments[0]).commit();
-                        break;
-                    case R.id.rb_experts:
-                        //专家
-                        FragmentTransaction transaction2 = mManager.beginTransaction();
-                        transaction2.replace(R.id.main_fragment, mFragments[1]).commit();
-                        break;
-                    case R.id.rb_mine:
-                        //我的
-                        FragmentTransaction transaction3 = mManager.beginTransaction();
-                        transaction3.replace(R.id.main_fragment, mFragments[2]).commit();
-                        break;
-                }
-            }
-        });
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    @OnClick({R.id.rb_home, R.id.rb_experts, R.id.rb_mine})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.rb_home:
+                homeMinePoint.setVisibility(View.GONE);
+                rbHome.setChecked(true);
+                rbExperts.setChecked(false);
+                rbMine.setChecked(false);
+                FragmentTransaction transaction1 = mManager.beginTransaction();
+                transaction1.replace(R.id.main_fragment, mFragments[0]).commit();
+                break;
+            case R.id.rb_experts:
+                homeMinePoint.setVisibility(View.GONE);
+                rbHome.setChecked(false);
+                rbExperts.setChecked(true);
+                rbMine.setChecked(false);
+                FragmentTransaction transaction2 = mManager.beginTransaction();
+                transaction2.replace(R.id.main_fragment, mFragments[1]).commit();
+                break;
+            case R.id.rb_mine:
+                homeMinePoint.setVisibility(View.VISIBLE);
+                rbHome.setChecked(false);
+                rbExperts.setChecked(false);
+                rbMine.setChecked(true);
+                FragmentTransaction transaction3 = mManager.beginTransaction();
+                transaction3.replace(R.id.main_fragment, mFragments[2]).commit();
+                break;
+        }
     }
 }

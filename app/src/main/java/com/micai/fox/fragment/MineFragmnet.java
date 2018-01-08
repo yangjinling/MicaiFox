@@ -62,6 +62,8 @@ public class MineFragmnet extends Fragment {
     ImageView ivMineHead;
     @Bind(R.id.tv_mine_nicheng)
     TextView tvMineNicheng;
+    @Bind(R.id.iv_notify_point)
+    ImageView ivNotifyPoint;
     @Bind(R.id.ll_mine_zhongchou)
     LinearLayout llMineZhongchou;
     @Bind(R.id.ll_mine_report)
@@ -73,6 +75,7 @@ public class MineFragmnet extends Fragment {
 
     private final int TAKE_PICTURE = 1;//拍照
     private final int PHOTO_REQUEST_GALLERY = 2;//从相册选择
+
     private File file;
     private Uri photoUri = null;
     private static String fileName;
@@ -87,6 +90,7 @@ public class MineFragmnet extends Fragment {
         rl.setVisibility(View.VISIBLE);
         tvNotify.setVisibility(View.VISIBLE);
         tvTitle.setText("我的");
+        ivNotifyPoint.setVisibility(View.VISIBLE);
         Drawable drawable = getResources().getDrawable(R.mipmap.message);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置边界
         // param 左上右下

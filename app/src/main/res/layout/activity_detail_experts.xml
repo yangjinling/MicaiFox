@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,20 +11,25 @@
     <include layout="@layout/layout_title"></include>
 
     <ScrollView
+        android:id="@+id/experts_detail_scroll"
+        android:layout_marginTop="48dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="12.5dp"
                 android:layout_marginRight="12.5dp"
-                android:layout_width="match_parent"
                 android:layout_marginTop="8dp"
-                android:orientation="vertical"
-                android:layout_height="wrap_content"
-                android:background="@drawable/whitebgtstyle">
+                android:background="@drawable/whitebgtstyle"
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -34,9 +39,9 @@
 
                     <ImageView
                         android:id="@+id/experts_detail_iv_head"
-                        android:layout_marginLeft="13dp"
                         android:layout_width="65dp"
                         android:layout_height="65dp"
+                        android:layout_marginLeft="13dp"
                         android:src="@mipmap/ic_launcher_round" />
 
                     <LinearLayout
@@ -116,138 +121,160 @@
 
                 <TextView
                     android:id="@+id/experts_detail_tv_content"
-                    android:maxLines="2"
-                    android:lineSpacingExtra="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="13dp"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="5dp"
+                    android:maxLines="2"
                     android:text="片放在同一行动态片放在同一行动态使和图片放在同一行使和图片放在同一行"
                     android:textColor="@android:color/black"
                     android:textSize="15sp" />
 
                 <LinearLayout
-                    android:layout_marginBottom="19dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="19dp"
                     android:orientation="horizontal">
+
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="14dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="14dp"
+                        android:layout_weight="1"
                         android:orientation="horizontal">
+
                         <TextView
                             android:id="@+id/experts_detail_tv_yili"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="35sp"
+                            android:text="100"
                             android:textColor="@color/red"
-                            android:text="100"/>
-                        <TextView
-                            android:textColor="@color/red"
+                            android:textSize="35sp" />
 
+                        <TextView
                             android:layout_width="wrap_content"
+
                             android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:text="%"/>
+                            android:text="%"
+                            android:textColor="@color/red"
+                            android:textSize="15sp" />
+
                         <LinearLayout
-                            android:layout_marginLeft="8dp"
                             android:layout_width="wrap_content"
                             android:layout_height="57dp"
+                            android:layout_marginLeft="8dp"
                             android:gravity="center_vertical"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
-                                android:textSize="14sp"
-                                android:text="盈利率"/>
+                                android:text="盈利率"
+                                android:textSize="14sp" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
-                                android:textSize="14sp"
-                                android:text="最近开奖"/>
+                                android:text="最近开奖"
+                                android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
+
                     <LinearLayout
+                        android:gravity="right"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_marginRight="23dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="23dp"
+                        android:layout_weight="1"
                         android:orientation="horizontal">
+
                         <TextView
                             android:id="@+id/experts_detail_tv_maxyili"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="35sp"
+                            android:text="98"
                             android:textColor="@color/red"
-                            android:text="98"/>
-                        <TextView
-                            android:textColor="@color/red"
+                            android:textSize="35sp" />
 
+                        <TextView
                             android:layout_width="wrap_content"
+
                             android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:text="%"/>
+                            android:text="%"
+                            android:textColor="@color/red"
+                            android:textSize="15sp" />
+
                         <LinearLayout
-                            android:layout_marginLeft="8dp"
                             android:layout_width="wrap_content"
                             android:layout_height="57dp"
+                            android:layout_marginLeft="8dp"
                             android:gravity="center_vertical"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
-                                android:textSize="14sp"
-                                android:text="最高盈利率"/>
+                                android:text="最高盈利率"
+                                android:textSize="14sp" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
-                                android:textSize="14sp"
-                                android:text="共32次众筹"/>
+                                android:text="共32次众筹"
+                                android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="9dp"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textSize="15sp"
-                    android:textColor="@color/white"
-                    android:gravity="center_horizontal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="众筹"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:textSize="15sp"
-                    android:textColor="@color/white"
-                    android:gravity="center_horizontal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="报告"
-                    android:layout_weight="1"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
                 android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/experts_detail_tv_zhongchou"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="众筹"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/experts_detail_tv_report"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="报告"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
                 <View
                     android:id="@+id/experts_detail_line_zhongchou"
-                    android:layout_marginLeft="50dp"
                     android:layout_width="80dp"
                     android:layout_height="3dp"
+                    android:layout_marginLeft="50dp"
                     android:background="@color/white"></View>
-               <View
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="1"></View>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"></View>
+
                 <View
                     android:id="@+id/experts_detail_line_report"
                     android:layout_width="80dp"
@@ -255,15 +282,15 @@
                     android:layout_marginRight="50dp"
                     android:background="@android:color/transparent"></View>
             </LinearLayout>
-            <com.micai.fox.view.MyListView
-                android:layout_marginTop="10.5dp"
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/experts_detail_ll"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:dividerHeight="10dp"
-                android:divider="@android:color/transparent"
-                android:layout_weight="1"></com.micai.fox.view.MyListView>
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:orientation="vertical"></LinearLayout>
         </LinearLayout>
 
 
     </ScrollView>
-</LinearLayout>
+</RelativeLayout>

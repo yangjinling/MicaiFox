@@ -83,9 +83,9 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
             return;
         }
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Banner);
-        mIndicatorWidth =typedArray.getDimensionPixelSize(R.styleable.Banner_indicator_width, 25);
-        mIndicatorHeight =typedArray.getDimensionPixelSize(R.styleable.Banner_indicator_height,25);
-        mIndicatorMargin =typedArray.getDimensionPixelSize(R.styleable.Banner_indicator_margin, 5);
+        mIndicatorWidth =typedArray.getDimensionPixelSize(R.styleable.Banner_indicator_width, 20);
+        mIndicatorHeight =typedArray.getDimensionPixelSize(R.styleable.Banner_indicator_height,20);
+        mIndicatorMargin =typedArray.getDimensionPixelSize(R.styleable.Banner_indicator_margin, 10);
         mIndicatorSelectedResId =typedArray.getResourceId(R.styleable.Banner_indicator_drawable_selected, R.drawable.gray_radius);
         mIndicatorUnselectedResId =typedArray.getResourceId(R.styleable.Banner_indicator_drawable_unselected, R.drawable.white_radius);
         mIndicatorAnimatorResId = typedArray.getResourceId(R.styleable.Banner_indicator_animator, R.animator.scale_with_alpha);

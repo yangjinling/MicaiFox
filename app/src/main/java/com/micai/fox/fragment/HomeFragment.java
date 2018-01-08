@@ -22,12 +22,15 @@ import com.micai.fox.activity.ExpertsDetailActivity;
 import com.micai.fox.activity.ZhongChouDetailActivity;
 import com.micai.fox.adapter.MyHomeZhongChouAdapter;
 import com.micai.fox.adapter.MyRecycleHAdapter;
+import com.micai.fox.view.MyDividerItemDecoration;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 /**
  * Created by lq on 2017/12/19.
@@ -49,7 +52,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> data;
     //设置图片资源:url或本地资源
     String[] images = new String[]{
-            "http://218.192.170.132/BS80.jpg",
+            /*"http://218.192.170.132/BS80.jpg",*/
             "http://img.zcool.cn/community/0166c756e1427432f875520f7cc838.jpg",
             "http://img.zcool.cn/community/018fdb56e1428632f875520f7b67cb.jpg",
             "http://img.zcool.cn/community/01c8dc56e1428e6ac72531cbaa5f2c.jpg",
@@ -59,13 +62,13 @@ public class HomeFragment extends Fragment {
 
     //设置图片标题:自动对应
     String[] titles = new String[]{"十大星级品牌联盟，全场2折起", "全场2折起", "十大星级品牌联盟", "嗨购5折不要停", "12趁现在", "嗨购5折不要停，12.12趁现在", "实打实大顶顶顶顶"};
-
+    private View footer_view;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
-        rl.setVisibility(View.VISIBLE);
+        rl.setVisibility(View.GONE);
         tvTitle.setText("迷彩狐");
         data = getData();
         initView();
@@ -80,6 +83,10 @@ public class HomeFragment extends Fragment {
         recycleviewH.setLayoutManager(mLayoutManagerH);
         // 设置adapter
         recycleviewH.setAdapter(mAdapterH);
+        int itemSpacing = 13;
+        recycleviewH.addItemDecoration(new MyDividerItemDecoration(itemSpacing));
+        footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv_home_zhongchou, null);
+        listviewHome.addFooterView(footer_view);
         MyHomeZhongChouAdapter adapter = new MyHomeZhongChouAdapter(data, getContext(), R.layout.item_v_listview);
         listviewHome.setAdapter(adapter);
 //        ToolUtils.setListViewHeightBasedOnChildren(listviewHome);

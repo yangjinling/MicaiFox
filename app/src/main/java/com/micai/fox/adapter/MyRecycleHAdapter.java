@@ -86,7 +86,7 @@ public class MyRecycleHAdapter extends RecyclerView.Adapter<MyRecycleHAdapter.Vi
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mTv = (TextView) itemView.findViewById(R.id.item_tv);
+            mTv = (TextView) itemView.findViewById(R.id.home_experts_name);
         }
 
 

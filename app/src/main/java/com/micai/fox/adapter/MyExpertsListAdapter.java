@@ -1,6 +1,9 @@
 package com.micai.fox.adapter;
 
 import android.content.Context;
+import android.widget.LinearLayout;
+
+import com.micai.fox.R;
 
 import java.util.List;
 
@@ -19,6 +22,5 @@ public class MyExpertsListAdapter extends MyBaseAdapter<String> {
 
     @Override
     public void setData(ViewHolder viewHolder, int position) {
-
     }
 }

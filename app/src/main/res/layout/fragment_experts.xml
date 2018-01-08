@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@android:color/transparent"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="44dp"
         android:background="@android:color/transparent"
         android:orientation="horizontal">
 
@@ -43,30 +43,32 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
+        android:layout_height="3dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:orientation="horizontal">
 
         <View
             android:id="@+id/experts_view_all"
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="@color/white"></View>
 
         <View
+            android:layout_marginLeft="45dp"
             android:id="@+id/experts_view_income"
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="@android:color/transparent"></View>
 
 
         <View
+            android:layout_marginLeft="45dp"
             android:id="@+id/experts_view_mizhong"
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="@android:color/transparent"></View>
     </LinearLayout>
 
