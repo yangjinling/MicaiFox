@@ -30,6 +30,7 @@ public class ExpertsDetailFragment extends Fragment {
     private ArrayList<String> data;
     private ListView lv;
     private View footer_view;
+    private View headView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,6 +49,8 @@ public class ExpertsDetailFragment extends Fragment {
                 break;
         }
         data = getData();
+        headView = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.headview_lv, null);
+        lv.addHeaderView(headView);
         footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv_home_zhongchou, null);
         lv.addFooterView(footer_view);
         MyExpertsListAdapter adapter = new MyExpertsListAdapter(data, getContext(),R.layout.item_lv_experts);

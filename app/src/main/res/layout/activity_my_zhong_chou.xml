@@ -16,7 +16,6 @@
         app:tabIndicatorColor="#ffffff"
         app:tabIndicatorHeight="3dp"
         app:tabTextColor="#ffffff"
-        app:tabMinWidth="50dp"
         app:tabSelectedTextColor="#ffffff"
         android:layout_gravity="center_horizontal"
         app:tabTextAppearance="@style/CustomeTextSize"

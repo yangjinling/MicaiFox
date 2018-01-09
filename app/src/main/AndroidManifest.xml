@@ -27,10 +27,10 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name=".app.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".app.MyApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -61,12 +61,12 @@
             android:name=".activity.RegistActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
-        <!--注册的下一步-->
+        <!-- 注册的下一步 -->
         <activity
             android:name=".activity.RegistTwoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
-        <!--用户协议界面-->
+        <!-- 用户协议界面 -->
         <activity
             android:name=".activity.AgreementActivity"
             android:screenOrientation="portrait"
@@ -76,7 +76,7 @@
             android:name=".activity.ResetPassActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
-        <!--忘记密码的下一步-->
+        <!-- 忘记密码的下一步 -->
         <activity
             android:name=".activity.ResetPassTwoActivity"
             android:screenOrientation="portrait"
@@ -116,6 +116,12 @@
             android:name=".activity.MyZhongChouActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
+        <!--众筹订单详情-->
+        <activity
+            android:name=".activity.ZhongChouOrderDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+
         <!-- 我的报告界面 -->
         <activity
             android:name=".activity.MyReportActivity"
@@ -150,7 +156,6 @@
             android:exported="false"
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-
     </application>
 
 </manifest>

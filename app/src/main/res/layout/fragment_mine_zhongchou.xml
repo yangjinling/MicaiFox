@@ -14,6 +14,7 @@
         android:visibility="gone" />
 
     <ListView
+        android:headerDividersEnabled="true"
         android:scrollbars="none"
         android:layout_marginRight="12.5dp"
         android:layout_marginLeft="12.5dp"
