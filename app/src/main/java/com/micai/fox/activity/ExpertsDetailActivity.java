@@ -87,11 +87,12 @@ public class ExpertsDetailActivity extends AppCompatActivity {
         tvBack.setVisibility(View.VISIBLE);
         tvTitle.setText("专家详情");
         initFragments();
-        initLinearLayout();
+//        initLinearLayout();
+        switchFragment(mFragments[0]);
         scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                Log.e("YJL","悬停");
+                Log.e("YJL", "悬停");
                 scrollView.setXuantingquyu(xuantingquyu, expertsDetailParentcontent, expertsDetailMoveview);
                 scrollView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 
@@ -110,16 +111,40 @@ public class ExpertsDetailActivity extends AppCompatActivity {
                 expertsDetailLineZhongchou.setBackgroundResource(R.color.white);
                 expertsDetailLineReport.setBackgroundColor(new Color().alpha(0));
                 kind = 0;
-                FragmentTransaction transaction1 = mManager.beginTransaction();
-                transaction1.replace(R.id.experts_detail_ll, mFragments[0]).commit();
+//                FragmentTransaction transaction1 = mManager.beginTransaction();
+//                transaction1.replace(R.id.experts_detail_ll, mFragments[0]).commit();
+                switchFragment(mFragments[0]);
                 break;
             case R.id.experts_detail_tv_report:
                 expertsDetailLineReport.setBackgroundResource(R.color.white);
                 expertsDetailLineZhongchou.setBackgroundColor(new Color().alpha(0));
-                FragmentTransaction transaction2 = mManager.beginTransaction();
-                transaction2.replace(R.id.experts_detail_ll, mFragments[1]).commit();
+//                FragmentTransaction transaction2 = mManager.beginTransaction();
+//                transaction2.replace(R.id.experts_detail_ll, mFragments[1]).commit();
+                switchFragment(mFragments[1]);
                 break;
         }
+    }
+
+    private Fragment currentFragment=new Fragment();
+
+    //正确的做法
+    private void switchFragment(Fragment targetFragment) {
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+        if (!targetFragment.isAdded()) {
+            transaction
+                    .hide(currentFragment)
+                    .add(R.id.experts_detail_ll, targetFragment)
+                    .commit();
+            System.out.println("还没添加呢");
+        } else {
+            transaction
+                    .hide(currentFragment)
+                    .show(targetFragment)
+                    .commit();
+            System.out.println("添加了( ⊙o⊙ )哇");
+        }
+        currentFragment = targetFragment;
     }
 
     private void initFragments() {

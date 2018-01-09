@@ -21,6 +21,7 @@
         <item name="android:backgroundDimAmount">0.7</item><!-- 灰度 -->
         <item name="android:background">#00000000</item> <!-- 设置自定义布局的背景透明 -->
     </style>
+
     <style name="Translucent_NoTitle" parent="android:style/Theme.Dialog">
         <item name="android:background">#00000000</item> <!-- 设置自定义布局的背景透明 -->
         <item name="android:windowIsFloating">true</item>
@@ -38,5 +39,10 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="CustomeTextSize" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 </resources>

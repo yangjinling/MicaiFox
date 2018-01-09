@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
@@ -9,4 +10,30 @@
 
     <include layout="@layout/layout_title"></include>
 
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        app:tabIndicatorColor="#ffffff"
+        app:tabIndicatorHeight="3dp"
+        app:tabTextColor="#ffffff"
+        app:tabMinWidth="50dp"
+        app:tabSelectedTextColor="#ffffff"
+        android:layout_gravity="center_horizontal"
+        app:tabTextAppearance="@style/CustomeTextSize"
+        android:layout_height="48dp"></android.support.design.widget.TabLayout>
+<!-- 下方滚动的下划线颜色  -->
+    app:tabIndicatorColor="#33aa22"
+    <!-- 下方指示条的高度  -->
+    app:tabIndicatorHeight="5dp"
+    <!-- tab被选中后，文字的颜色  -->
+    app:tabSelectedTextColor="#33aa22"
+    <!--可以改变tab中的字体的大小-->
+    app:tabTextAppearance="@style/App_Theme"
+    <!-- tab中字体的颜色  -->
+    app:tabTextColor="#33aa22"-->
+    <com.micai.fox.view.NoScrollViewPager
+        android:id="@+id/mine_zhongchou_viewpager"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>
