@@ -45,7 +45,7 @@ public class Bimp {
             i += 1;
         }
         double bitcount =bitmap.getByteCount()/1000;
-        Log.e("YJL", "bitcount==="+bitcount+"");
+        LogUtil.e("YJL", "bitcount==="+bitcount+"");
         return bitmap;
     }
 

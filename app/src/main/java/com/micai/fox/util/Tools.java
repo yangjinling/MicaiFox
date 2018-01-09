@@ -506,13 +506,13 @@ public class Tools {
 
             String name = appProcessInfo.processName;
 
-            Log.e("YJL", "processName--->>" + name);
+            LogUtil.e("YJL", "processName--->>" + name);
 
             // 杀掉除了自身应用以及百度之外的，因为百度的服务是 包名 + android:process=":bdservice_v1"
             // processName--->>cn.cbapay.fivezero
             // processName--->>cn.cbapay.fivezero:bdservice_v1
             if (name.indexOf(currentProcess) == -1) {
-                Log.e("YJL", "kill-->>processName--->>" + name);
+                LogUtil.e("YJL", "kill-->>processName--->>" + name);
                 activityManager.killBackgroundProcesses(name);
             }
 
@@ -578,7 +578,7 @@ public class Tools {
             new JsonParser().parse(json);
             return true;
         } catch (JsonParseException e) {
-            Log.e("YJL", "bad json: " + json);
+            LogUtil.e("YJL", "bad json: " + json);
             return false;
         }
     }

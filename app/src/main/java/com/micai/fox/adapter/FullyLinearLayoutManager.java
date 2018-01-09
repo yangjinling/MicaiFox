@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.micai.fox.util.LogUtil;
+
 /**
  * 作者：杨金玲 on 2017/12/27 08:58
  * 邮箱：18363820101@163.com
@@ -35,7 +37,7 @@ public class FullyLinearLayoutManager  extends LinearLayoutManager {
         final int widthSize = View.MeasureSpec.getSize(widthSpec);
         final int heightSize = View.MeasureSpec.getSize(heightSpec);
 
-        Log.i(TAG, "onMeasure called. \nwidthMode " + widthMode
+        LogUtil.i(TAG, "onMeasure called. \nwidthMode " + widthMode
                 + " \nheightMode " + heightSpec
                 + " \nwidthSize " + widthSize
                 + " \nheightSize " + heightSize

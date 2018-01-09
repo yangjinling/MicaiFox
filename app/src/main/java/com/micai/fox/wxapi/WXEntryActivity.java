@@ -9,6 +9,7 @@ import android.util.Log;
 import com.micai.fox.R;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Constant;
+import com.micai.fox.util.LogUtil;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -36,8 +37,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     //处理支付的回调
     @Override
     public void onResp(BaseResp baseResp) {
-        Log.e(Constant.TAG, "进来了没有");
-        Log.e(Constant.TAG, "errStr===" + baseResp.errStr + "errStr===errCode" + baseResp.errCode + "type===" + baseResp.getType());
+        LogUtil.e(Constant.TAG, "进来了没有");
+        LogUtil.e(Constant.TAG, "errStr===" + baseResp.errStr + "errStr===errCode" + baseResp.errCode + "type===" + baseResp.getType());
         if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
           /*  AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("提示");

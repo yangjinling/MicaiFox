@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.micai.fox.R;
 import com.micai.fox.util.ExitAppUtils;
+import com.micai.fox.util.LogUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -60,7 +61,7 @@ public class ResetPassTwoActivity extends AppCompatActivity {
     }
 
     private void doAction(int code) {
-        Log.e("YJL", "" + code);
+        LogUtil.e("YJL", "" + code);
         switch (code) {
             case 1:
                 resetEtPassword.setHintTextColor(getResources().getColor(R.color.red));

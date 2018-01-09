@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.micai.fox.R;
 import com.micai.fox.fragment.ExpertsReportFragment;
 import com.micai.fox.fragment.ExpertsZhongChouFragment;
+import com.micai.fox.util.LogUtil;
 import com.micai.fox.view.MyScrollView;
 
 import butterknife.Bind;
@@ -92,7 +93,7 @@ public class ExpertsDetailActivity extends AppCompatActivity {
         scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                Log.e("YJL", "悬停");
+                LogUtil.e("YJL", "悬停");
                 scrollView.setXuantingquyu(xuantingquyu, expertsDetailParentcontent, expertsDetailMoveview);
                 scrollView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 

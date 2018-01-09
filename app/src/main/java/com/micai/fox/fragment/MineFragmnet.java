@@ -28,6 +28,7 @@ import com.micai.fox.activity.MyZhongChouActivity;
 import com.micai.fox.activity.NotificationActivity;
 import com.micai.fox.activity.SettingActivity;
 import com.micai.fox.util.Bimp;
+import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.ChooseDialog;
 
@@ -172,15 +173,15 @@ public class MineFragmnet extends Fragment {
                 startActivityForResult(cameraIntent, TAKE_PICTURE);*/
 
                 if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                    Log.e("YJL", "" + Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED));
+                    LogUtil.e("YJL", "" + Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED));
                     String folderStr = context.getExternalFilesDir(null) + "/micaifox/Camera";
                     File folderName = new File(folderStr);
                     if (!folderName.exists()) {
-                        Log.e("YJL", "" + folderName.exists());
+                        LogUtil.e("YJL", "" + folderName.exists());
                         folderName.mkdirs();
                     }
                     fileDir = folderName + File.separator + imageName;
-                    Log.e("YJL", "" + fileDir);
+                    LogUtil.e("YJL", "" + fileDir);
                     file = new File(fileDir);
                     Uri imageUri = Uri.fromFile(file);
                     intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -211,15 +212,15 @@ public class MineFragmnet extends Fragment {
                     Bitmap bitmap = Bimp.revitionImageSize(fileDir);
                     String path;
                     if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                        Log.e("YJL", "" + Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED));
+                        LogUtil.e("YJL", "" + Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED));
                         path = getActivity().getExternalFilesDir(null) + "/masterwork/Camera";
                         File folderName = new File(path);
                         if (!folderName.exists()) {
-                            Log.e("YJL", "" + folderName.exists());
+                            LogUtil.e("YJL", "" + folderName.exists());
                             folderName.mkdirs();
                         }
                         path = folderName + File.separator + imageName;
-                        Log.e("YJL", "" + fileDir);
+                        LogUtil.e("YJL", "" + fileDir);
                         File photo = new File(path);
                         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(photo));
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bos);
@@ -242,9 +243,9 @@ public class MineFragmnet extends Fragment {
                 break;
             case PHOTO_REQUEST_GALLERY://相册获取
                 if (data != null) {
-                    Log.e("YJL", "" + PHOTO_REQUEST_GALLERY);
+                    LogUtil.e("YJL", "" + PHOTO_REQUEST_GALLERY);
                     if (null != data.getData()) {
-                        Log.e("YJL", "" + data.getData());
+                        LogUtil.e("YJL", "" + data.getData());
                         setPicToView(data.getData(), getActivity());
                     }
                 } else {
@@ -256,15 +257,15 @@ public class MineFragmnet extends Fragment {
 
     public void setPicToView(Uri uri, Activity activity) {
         photoUri = uri;
-        Log.e("YJL", "" + photoUri);
+        LogUtil.e("YJL", "" + photoUri);
         fileName = activity.getExternalFilesDir(null) + "/micaifox/Camera";
         File folderName = new File(fileName);
         if (!folderName.exists()) {
-            Log.e("YJL", "" + folderName.exists());
+            LogUtil.e("YJL", "" + folderName.exists());
             folderName.mkdirs();
         }
         fileName = folderName + File.separator + System.currentTimeMillis() + ".jpg";
-        Log.e("YJL", "" + fileName);
+        LogUtil.e("YJL", "" + fileName);
         file = new File(fileName);
         FileOutputStream fos = null;
         try {
@@ -278,17 +279,17 @@ public class MineFragmnet extends Fragment {
             fos = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fos);
             if (bitmap != null) {
-                Log.e("YJL", "bitmap" + bitmap);
+                LogUtil.e("YJL", "bitmap" + bitmap);
                 ivMineHead.setImageBitmap(bitmap);
             } else {
-                Log.e("YJL", "bitmap为空");
+                LogUtil.e("YJL", "bitmap为空");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Log.e("YJL", "FileNotFoundException" + e.getMessage());
+            LogUtil.e("YJL", "FileNotFoundException" + e.getMessage());
 
         } catch (IOException e) {
-            Log.e("YJL", "IOException-----" + e.getMessage());
+            LogUtil.e("YJL", "IOException-----" + e.getMessage());
             e.printStackTrace();
 
         } finally {
