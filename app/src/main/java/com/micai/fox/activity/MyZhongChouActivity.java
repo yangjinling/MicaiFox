@@ -73,7 +73,7 @@ public class MyZhongChouActivity extends AppCompatActivity {
     private void initControls() {
         list_fragment = new ArrayList<>();
         //初始化各fragment
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i <4; i++) {
             Fragment fragment = new MyZhongChouFragment();
             //将fragment装进列表中
             Bundle bundle = new Bundle();

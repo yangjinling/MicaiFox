@@ -3,6 +3,7 @@ package com.micai.fox.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -30,7 +31,7 @@ public class MyReportActivity extends AppCompatActivity {
     @Bind(R.id.lv_myreport)
     ListView lvMyreport;
     private ArrayList<String> data;
-
+    private View headView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,8 @@ public class MyReportActivity extends AppCompatActivity {
         tvBack.setVisibility(View.VISIBLE);
         tvTitle.setText("我的报告");
         data = getData();
+        headView = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.headview_lv, null);
+        lvMyreport.addHeaderView(headView);
         MyReportAdapter adapter = new MyReportAdapter(data, this, R.layout.item_lv_myreport);
         lvMyreport.setAdapter(adapter);
         lvMyreport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
