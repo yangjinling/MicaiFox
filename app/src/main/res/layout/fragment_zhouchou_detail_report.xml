@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/test"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="本文仅介绍了 SpannableString 常用的一些场景，例如修改特定文本的颜色，替换特定文本，特定文本的点击事件，但是 SpannableString 的强大远不止如此。SpannableString 的更多用法可阅读官方文档。好了，以上就是这篇文章的全部内容了，希望本文的内容对大家的学习或者工作能带来一定的帮助，如果有疑问大家可以留言交流，谢谢大家对脚本之家的支持。本文仅介绍了 SpannableString 常用的一些场景，例如修改特定文本的颜色，替换特定文本，特定文本的点击事件，但是 SpannableString 的强大远不止如此。SpannableString 的更多用法可阅读官方文档。好了，以上就是这篇文章的全部内容了，希望本文的内容对大家的学习或者工作能带来一定的帮助，如果有疑问大家可以留言交流，谢谢大家对脚本之家的支持。本文仅介绍了 SpannableString 常用的一些场景，例如修改特定文本的颜色，替换特定文本，特定文本的点击事件，但是 SpannableString 的强大远不止如此。SpannableString 的更多用法可阅读官方文档。好了，以上就是这篇文章的全部内容了，希望本文的内容对大家的学习或者工作能带来一定的帮助，如果有疑问大家可以留言交流，谢谢大家对脚本之家的支持。" />
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/zhouchou_detail_report_ll_ing"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"><TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:drawableLeft="@mipmap/ic_launcher_round"
+        android:text="相关报告需在投注出片后才可查看"/></LinearLayout>
+
+</LinearLayout>
