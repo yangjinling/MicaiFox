@@ -15,6 +15,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/*引导页*/
 public class IndexActivity extends BaseActivity {
 
     @Bind(R.id.btn_login)

@@ -129,6 +129,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
+                android:listSelector="@android:color/transparent"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="10dp"
                 android:scrollbars="none"></com.micai.fox.view.MyListView>

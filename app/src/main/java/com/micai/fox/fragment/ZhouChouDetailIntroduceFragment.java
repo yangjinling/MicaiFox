@@ -23,6 +23,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  * 邮箱：18363820101@163.com
  */
 
+/*众筹详情--项目介绍模块*/
 public class ZhouChouDetailIntroduceFragment extends Fragment {
     private int kind;
 //    private TextView tv;

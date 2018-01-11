@@ -9,6 +9,8 @@ import android.graphics.SweepGradient;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.micai.fox.R;
+
 /**
  * Created by yangjinling on 15/12/27.
  */
@@ -21,10 +23,15 @@ public class CyDownProgressView extends View {
 
 
     //圆环颜色
-    private static int[] doughnutColors = new int[]{
+//    rgba(236,124,100,1)
+/*    private static int[] doughnutColors = new int[]{
             Color.argb(MIN_ALPHA,255,201,0),
             Color.argb(MIN_ALPHA,255,201,0),
-            Color.argb(MAX_ALPHA,255,201,0)};
+            Color.argb(MAX_ALPHA,255,201,0)};*/
+    private  int[] doughnutColors = new int[]{
+            Color.argb(MIN_ALPHA,124,0,100),
+            Color.argb(MIN_ALPHA,124,0,100),
+            Color.argb(MAX_ALPHA,124,0,100)};
     private Paint paint = new Paint(); //画笔
     private float width; //自定义view的宽度
     private float height; //自定义view的高度
@@ -94,8 +101,9 @@ public class CyDownProgressView extends View {
         canvas.drawArc(rectF, 0, 360, false, paint);
         //画旋转头部圆
         initPaint();
+        //    rgba(236,124,100,1)
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.argb(MAX_ALPHA,255,201,0));
+        paint.setColor(/*Color.argb(MAX_ALPHA,255,201,0)*/getResources().getColor(R.color.red));
         canvas.drawCircle(raduis * doughnutRaduisPercent, 0, doughnutWidth / 2, paint);
 
     }

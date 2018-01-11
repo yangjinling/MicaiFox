@@ -15,6 +15,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/*注册的下一步*/
 public class RegistTwoActivity extends AppCompatActivity {
 
     @Bind(R.id.tv_back)

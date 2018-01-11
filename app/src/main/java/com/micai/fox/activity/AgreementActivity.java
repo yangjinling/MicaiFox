@@ -12,6 +12,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/*用户协议界面*/
 public class AgreementActivity extends AppCompatActivity {
 
     @Bind(R.id.tv_back)

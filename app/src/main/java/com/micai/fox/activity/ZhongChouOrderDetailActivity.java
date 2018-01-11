@@ -12,6 +12,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/*众筹订单详情界面*/
 public class ZhongChouOrderDetailActivity extends AppCompatActivity {
 
     @Bind(R.id.tv_back)
@@ -38,7 +39,7 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
 
     @OnClick({R.id.tv_back})
     public void onViewClicked(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tv_back:
                 finish();
                 break;

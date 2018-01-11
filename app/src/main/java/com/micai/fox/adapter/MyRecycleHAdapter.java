@@ -15,6 +15,7 @@ import java.util.ArrayList;
  * 邮箱：18363820101@163.com
  */
 
+/*首页---横向专家列表*/
 public class MyRecycleHAdapter extends RecyclerView.Adapter<MyRecycleHAdapter.ViewHolder> {
     private ArrayList<String> mData;
     /**
@@ -65,7 +66,7 @@ public class MyRecycleHAdapter extends RecyclerView.Adapter<MyRecycleHAdapter.Vi
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if(onItemClickListener != null) {
+                if (onItemClickListener != null) {
                     int pos = holder.getLayoutPosition();
                     onItemClickListener.onItemLongClick(holder.itemView, pos);
                 }

@@ -7,9 +7,10 @@ import java.util.List;
 /**
  * Created by lq on 2018/1/8.
  */
-
+/*专家详情---众筹列表*/
 public class MyExpertsZhonChouAdapter extends MyBaseAdapter<String> {
-    private List<String>list;
+    private List<String> list;
+
     public MyExpertsZhonChouAdapter(List<String> list, Context context, int resId) {
         super(list, context, resId);
     }

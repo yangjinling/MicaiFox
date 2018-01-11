@@ -9,7 +9,7 @@ import java.util.List;
  * 邮箱：18363820101@163.com
  */
 
-/*我的报告列表*/
+/*我的---我的报告列表*/
 public class MyReportAdapter extends MyBaseAdapter<String> {
     private List<String> list;
 

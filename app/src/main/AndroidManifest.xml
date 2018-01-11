@@ -120,7 +120,6 @@
             android:name=".activity.ZhongChouOrderDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
-
         <!-- 我的报告界面 -->
         <activity
             android:name=".activity.MyReportActivity"

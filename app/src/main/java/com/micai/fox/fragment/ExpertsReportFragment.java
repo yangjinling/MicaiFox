@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * 作者：杨金玲 on 2017/12/27 16:45
  * 邮箱：18363820101@163.com
  */
-//专家详情---report
+/*专家--报告模块*/
 public class ExpertsReportFragment extends Fragment {
     private int kind;
     //    private TextView tv;

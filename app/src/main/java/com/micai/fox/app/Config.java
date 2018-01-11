@@ -10,7 +10,7 @@ public class Config {
     private Context mContext;
     private static Config mAppConfig;
     private String appId;//微信支付的appid
-
+    private String photoUrl;
     private Config() {
     }
 
@@ -42,5 +42,13 @@ public class Config {
 
     public void setAppId(String appId) {
         this.appId = appId;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }

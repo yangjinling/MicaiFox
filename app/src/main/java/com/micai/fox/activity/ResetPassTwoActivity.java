@@ -20,6 +20,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/*重置密码下一步*/
 public class ResetPassTwoActivity extends AppCompatActivity {
 
     @Bind(R.id.tv_back)

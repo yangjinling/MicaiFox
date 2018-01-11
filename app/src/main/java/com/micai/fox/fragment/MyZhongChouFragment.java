@@ -27,6 +27,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  * Created by lq on 2018/1/9.
  */
 
+/*我的--我的众筹模块*/
 public class MyZhongChouFragment extends Fragment {
     private ArrayList<String> data;
     private ListView lv;

@@ -8,6 +8,7 @@ import java.util.List;
  * Created by lq on 2018/1/8.
  */
 
+/*专家详情---报告列表*/
 public class MyExpertsReportAdapter extends MyBaseAdapter<String> {
     private List<String> mList;
 

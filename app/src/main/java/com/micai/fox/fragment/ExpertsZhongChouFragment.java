@@ -27,6 +27,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  * 邮箱：18363820101@163.com
  */
 
+/*专家--众筹模块*/
 public class ExpertsZhongChouFragment extends Fragment {
     private int kind;
     //    private TextView tv;
@@ -77,7 +78,9 @@ public class ExpertsZhongChouFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ZhongChouDetailActivity.class);
-                startActivity(intent);}});
+                startActivity(intent);
+            }
+        });
         return view;
     }
 

@@ -8,6 +8,8 @@ import java.util.List;
  * Created by lq on 2018/1/10.
  */
 
+
+/*报告详情里面的列表*/
 public class ReportDetailLvAdapter extends MyBaseAdapter<String> {
     private List<String> mList;
 

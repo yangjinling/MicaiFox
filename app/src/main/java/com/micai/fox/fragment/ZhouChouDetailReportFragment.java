@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
  * 作者：杨金玲 on 2017/12/27 16:45
  * 邮箱：18363820101@163.com
  */
-
+/*众筹详情--报告模块*/
 public class ZhouChouDetailReportFragment extends Fragment {
     @Bind(R.id.zhouchou_detail_report_ll_ing)
     LinearLayout zhouchouDetailReportLlIng;

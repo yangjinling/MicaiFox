@@ -45,7 +45,7 @@ public class BaseActivity extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View contentview = inflater.inflate(R.layout.progress, null);
         mDialog.setContentView(contentview);
-        mDialog.setCancelable(false);
+        mDialog.setCancelable(true);
 
     }
 
@@ -72,8 +72,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-
     }
 
     @Override

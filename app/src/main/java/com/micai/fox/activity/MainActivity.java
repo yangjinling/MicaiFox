@@ -15,14 +15,17 @@ import com.micai.fox.base.BaseActivity;
 import com.micai.fox.fragment.ExpertsFragment;
 import com.micai.fox.fragment.HomeFragment;
 import com.micai.fox.fragment.MineFragmnet;
+import com.micai.fox.view.CyDownProgressView;
+import com.zhy.http.okhttp.callback.DialogInShow;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/*主界面*/
 public class MainActivity extends BaseActivity {
-
-
     @Bind(R.id.main_fragment)
     FrameLayout fragmentlayout;
     @Bind(R.id.main_rg)

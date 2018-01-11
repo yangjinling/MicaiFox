@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
  * 邮箱：18363820101@163.com
  */
 
+/*众筹详情--披露模块*/
 public class ZhouChouDetailPilutFragment extends Fragment {
     @Bind(R.id.pilu_test)
     TextView piluTest;

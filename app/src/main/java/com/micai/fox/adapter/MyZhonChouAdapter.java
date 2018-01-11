@@ -14,6 +14,7 @@ import java.util.List;
  * 邮箱：18363820101@163.com
  */
 
+/*我的--我的众筹列表*/
 public class MyZhonChouAdapter extends MyBaseAdapter<String> {
     private List<String> mLists;
     private Context context;

@@ -18,7 +18,6 @@ import butterknife.OnClick;
 
 /*设置界面*/
 public class SettingActivity extends AppCompatActivity {
-
     @Bind(R.id.tv_back)
     TextView tvBack;
     @Bind(R.id.tv_title)

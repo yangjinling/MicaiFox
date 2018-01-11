@@ -12,6 +12,7 @@ import java.util.List;
  * 邮箱：18363820101@163.com
  */
 
+/*专家---专家列表*/
 public class MyExpertsListAdapter extends MyBaseAdapter<String> {
     private List<String> mLists;
 

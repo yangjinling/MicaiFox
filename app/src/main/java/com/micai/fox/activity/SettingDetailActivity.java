@@ -12,6 +12,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/*设置详情*/
 public class SettingDetailActivity extends AppCompatActivity {
 
     @Bind(R.id.tv_back)
