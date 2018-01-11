@@ -63,6 +63,7 @@ public class SettingActivity extends AppCompatActivity {
                 break;
             case R.id.set_btn_exit:
                 intent = new Intent(SettingActivity.this, LoginActivity.class);
+                ExitAppUtils.getInstance().finishAllActivities();
                 startActivity(intent);
 //                ExitAppUtils.getInstance().finishAllActivities();
                 break;

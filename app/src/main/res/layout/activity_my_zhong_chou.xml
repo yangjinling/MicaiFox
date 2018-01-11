@@ -9,17 +9,19 @@
     tools:context="com.micai.fox.activity.MyZhongChouActivity">
 
     <include layout="@layout/layout_title"></include>
-
+<!--
+    app:tabContentStart="50dp"
+-->
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        app:tabIndicatorColor="#ffffff"
+        app:tabIndicatorColor="@android:color/transparent"
         app:tabIndicatorHeight="3dp"
-        app:tabContentStart="50dp"
         app:tabSelectedTextColor="#ffffff"
         app:tabTextAppearance="@style/CustomeTextSize"
+        app:tabBackground="@android:color/transparent"
         app:tabTextColor="#ffffff"></android.support.design.widget.TabLayout>
 
     <com.micai.fox.view.NoScrollViewPager

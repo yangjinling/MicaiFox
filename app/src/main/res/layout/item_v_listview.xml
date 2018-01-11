@@ -116,10 +116,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingRight="60dp"
-        android:layout_marginTop="10dp"
-        android:text="片放在同一行动态使和图片放在同一行"
+        android:layout_marginTop="9dp"
+        android:text="片放在同一行动态使和图片放在同一行片放在同一行动态使和图片放在同一行"
         android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:textSize="15sp" />
 
     <LinearLayout
         android:layout_marginTop="5dp"
@@ -196,16 +196,16 @@
 
 
             <TextView
-                android:paddingLeft="21dp"
+                android:paddingLeft="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
                 android:text="目标金额"
                 android:textColor="@android:color/black"
                 android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -237,13 +237,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
                 android:text="已筹"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -256,33 +256,24 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="￥"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-                <TextView
                     android:id="@+id/home_zhong_tv_people"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20000"
+                    android:text="180"
                     android:textColor="@android:color/black"
-                    android:textSize="25sp" />
+                    android:textSize="24sp" />
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
                 android:text="支持人次"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -305,7 +296,6 @@
                 android:layout_marginRight="45dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
                 android:text="距开始"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />

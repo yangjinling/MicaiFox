@@ -44,6 +44,7 @@
         android:background="@color/gray"></View>
 
     <LinearLayout
+        android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -63,7 +64,7 @@
                 android:maxLines="2"
                 android:text="你好嗨hi都会死动四方爱思帝瑟吉欧ID死哦发货方is地方撒旦覅还能"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_marginTop="5dp"
@@ -92,7 +93,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
@@ -111,8 +111,8 @@
                 android:id="@+id/item_zhongchou_btn_pay"
                 android:layout_width="80dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="20dp"
                 android:focusable="false"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/vertifystyle"
                 android:text="去支付" />
         </LinearLayout>

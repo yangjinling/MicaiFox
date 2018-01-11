@@ -17,10 +17,10 @@
         android:layout_marginTop="10dp"
         android:text="片放在同一行动态使和图片放在同一行"
         android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:textSize="15sp" />
 
     <LinearLayout
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -95,10 +95,9 @@
 
 
             <TextView
-                android:paddingLeft="21dp"
+                android:paddingLeft="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
                 android:text="目标金额"
                 android:textColor="@android:color/black"
                 android:textSize="14sp" />
@@ -106,7 +105,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
@@ -136,7 +135,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
                 android:text="已筹"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
@@ -154,19 +152,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="￥"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20000"
                     android:textColor="@android:color/black"
-                    android:textSize="25sp" />
+                    android:textSize="24sp" />
 
             </LinearLayout>
 
@@ -174,7 +166,6 @@
                 android:id="@+id/experts_zhongchou_people"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
                 android:text="支持人次"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />

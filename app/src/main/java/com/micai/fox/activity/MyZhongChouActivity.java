@@ -73,7 +73,7 @@ public class MyZhongChouActivity extends AppCompatActivity {
     private void initControls() {
         list_fragment = new ArrayList<>();
         //初始化各fragment
-        for (int i = 0; i <4; i++) {
+        for (int i = 0; i < 4; i++) {
             Fragment fragment = new MyZhongChouFragment();
             //将fragment装进列表中
             Bundle bundle = new Bundle();
@@ -90,17 +90,49 @@ public class MyZhongChouActivity extends AppCompatActivity {
         //设置TabLayout的模式
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         //为TabLayout添加tab名称
-        for (int i = 0; i < 4; i++) {
+       /* for (int i = 0; i < 4; i++) {
             tabLayout.addTab(tabLayout.newTab().setText(list_title.get(i)));
-        }
+        }*/
         fAdapter = new ViewPageAdapter(getSupportFragmentManager(), list_fragment, list_title);
         //viewpager加载adapter
         mineZhongchouViewpager.setAdapter(fAdapter);
         //tab_FindFragment_title.setViewPager(vp_FindFragment_pager);
         //TabLayout加载viewpager
         tabLayout.setupWithViewPager(mineZhongchouViewpager);
+        initTable();
+    }
 
+    private void initTable() {
+        for (int i = 0; i < fAdapter.getCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);//获得每一个tab
+            tab.setCustomView(R.layout.item_tablayout);//给每一个tab设置view
+            if (i == 0) {
+                // 设置第一个tab的TextView是被选择的样式
+                tab.getCustomView().findViewById(R.id.tv_tableitem).setSelected(true);//第一个tab被选中
+                tab.getCustomView().findViewById(R.id.line_tableitem).setVisibility(View.VISIBLE);
+            }
+            TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tv_tableitem);
+            textView.setText(list_title.get(i));//设置tab上的文字
+        }
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                tab.getCustomView().findViewById(R.id.tv_tableitem).setSelected(true);
+                tab.getCustomView().findViewById(R.id.line_tableitem).setVisibility(View.VISIBLE);
+                mineZhongchouViewpager.setCurrentItem(tab.getPosition());
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                tab.getCustomView().findViewById(R.id.tv_tableitem).setSelected(false);
+                tab.getCustomView().findViewById(R.id.line_tableitem).setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override
@@ -108,7 +140,6 @@ public class MyZhongChouActivity extends AppCompatActivity {
         super.onDestroy();
         ButterKnife.unbind(this);
     }
-
 
 
 }

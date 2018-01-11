@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment {
     @Bind(R.id.home_xuanting)
     LinearLayout homeXuanting;
     @Bind(R.id.home_scroll)
-    ScrollView homeScroll;
+    MyScrollView homeScroll;
     @Bind(R.id.home_xuanting2)
     LinearLayout homeXuanting2;
     private ArrayList<String> data;
@@ -92,16 +92,16 @@ public class HomeFragment extends Fragment {
         tvTitle.setText("迷彩狐");
         data = getData();
         initView();
-     /*   homeScroll.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                Log.e("YJL", "悬停");
-                homeScroll.setXuantingquyu(homeXuanting2, homeExpertsParent, homeExpertsMoveview);
-                homeScroll.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
-            }
-        });*/
-      /*  homeScroll.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//        homeScroll.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                Log.e("YJL", "悬停");
+//                homeScroll.setXuantingquyu(homeXuanting, homeExpertsParent, homeExpertsMoveview);
+//                homeScroll.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//
+//            }
+//        });
+        homeScroll.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 Log.e("YJL", "悬停");
@@ -109,13 +109,14 @@ public class HomeFragment extends Fragment {
                 homeScroll.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 
             }
-        });*/
+        });
         return view;
     }
 
     private void initView() {
         //横向recycle
-        LinearLayoutManager mLayoutManagerH = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager mLayoutManagerH = new LinearLayoutManager(getContext());
+        mLayoutManagerH.setOrientation(LinearLayoutManager.HORIZONTAL);
         MyRecycleHAdapter mAdapterH = new MyRecycleHAdapter(data);
         // 设置布局管理器
         recycleviewH.setLayoutManager(mLayoutManagerH);

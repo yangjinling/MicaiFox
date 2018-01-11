@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ScrollView;
 
+import com.micai.fox.util.LogUtil;
+
 /**
  * Created by lq on 2018/1/8.
  */
@@ -21,6 +23,7 @@ public class MyScrollView extends ScrollView {
 //    public void setOnXuanTingScrollListener(OnXuanTingScrollListener onXuanTingScrollListener) {
 //        this.onXuanTingScrollListener = onXuanTingScrollListener;
 //    }
+    private int type;
 
     public MyScrollView(Context context) {
         super(context);
@@ -112,6 +115,7 @@ public class MyScrollView extends ScrollView {
             xuantingquyu.addView(moveView);//加到悬停区域
             xuantingquyu.setVisibility(View.VISIBLE);//悬停区域显示
             isXuanting = true;//处于悬停状态
+            LogUtil.e("YJL","悬停");
         } else if (currentMoveY <= moveViewGetTopHeight && isXuanting) {//当前应该回到原始区域
             if (moveView.getParent() != null) {
                 ((ViewGroup) moveView.getParent()).removeView(moveView);//先移除 一定要先移除 否则很有可能会抛出异常
