@@ -42,6 +42,7 @@
             android:theme="@style/ActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -95,6 +96,12 @@
             android:name=".activity.ZhongChouDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
+        <!--购买众筹界面-->
+        <activity
+            android:name=".activity.BuyZhongChouActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+
         <!-- 报告详情界面 -->
         <activity
             android:name=".activity.ReportDetailActivity"
@@ -115,9 +122,14 @@
             android:name=".activity.MyZhongChouActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
-        <!--众筹订单详情-->
+        <!-- 众筹订单详情 -->
         <activity
             android:name=".activity.ZhongChouOrderDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+        <!-- 支付界面 -->
+        <activity
+            android:name=".activity.PayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
         <!-- 我的报告界面 -->
