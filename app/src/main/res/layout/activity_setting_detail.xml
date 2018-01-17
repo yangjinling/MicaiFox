@@ -3,9 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/background"
+    android:orientation="vertical"
     tools:context="com.micai.fox.activity.SettingDetailActivity">
 
     <include layout="@layout/layout_title"></include>
+
+    <include layout="@layout/set_account"></include>
+
+    <include layout="@layout/set_pass"></include>
+
+    <include layout="@layout/set_web"></include>
+
+    <include layout="@layout/set_idea"></include>
+
+    <include layout="@layout/set_phone"></include>
 </LinearLayout>

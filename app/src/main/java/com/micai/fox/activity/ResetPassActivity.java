@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.micai.fox.R;
 import com.micai.fox.util.ExitAppUtils;
@@ -45,14 +46,43 @@ public class ResetPassActivity extends AppCompatActivity {
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (null != resetBtnCode)
-                resetBtnCode.setText(--second + "秒后重发");
-            if (second >= 1) {
-                mHandler.sendEmptyMessageDelayed(1, 1000);
-            } else {
-                resetBtnCode.setClickable(true);
-                resetBtnCode.setText("获取验证码");
-                second = 60;
+            switch (msg.what) {
+                case 5://验证码倒计时
+                    if (null != resetBtnCode)
+                        resetBtnCode.setText(--second + "秒后可重发送");
+                    if (second >= 1) {
+                        mHandler.sendEmptyMessageDelayed(1, 1000);
+                    } else {
+                        resetBtnCode.setClickable(true);
+                        resetBtnCode.setText("重新获取验证码");
+                        second = 60;
+                    }
+                    break;
+                case 0:
+                    resetEtPhone.setHintTextColor(getResources().getColor(R.color.gray));
+                    resetEtPhone.setHint("请输入手机号");
+                    resetBtnNext.setClickable(true);
+                    break;
+                case 1:
+                    resetEtPhone.setHintTextColor(getResources().getColor(R.color.gray));
+                    resetEtPhone.setHint("请输入手机号");
+                    resetBtnNext.setClickable(true);
+                    break;
+                case 2:
+                    resetEtCode.setTextColor(getResources().getColor(R.color.gray));
+                    resetEtCode.setHint("请输入验证码");
+                    resetBtnNext.setClickable(true);
+                    break;
+                case 3:
+                    resetEtCode.setHintTextColor(getResources().getColor(R.color.gray));
+                    resetEtCode.setHint("请输入验证码");
+                    resetBtnNext.setClickable(true);
+                    break;
+                case 4:
+                    resetEtPhone.setHintTextColor(getResources().getColor(R.color.gray));
+                    resetEtPhone.setHint("请输入手机号");
+                    resetBtnCode.setClickable(true);
+                    break;
             }
         }
     };
@@ -74,37 +104,89 @@ public class ResetPassActivity extends AppCompatActivity {
                 break;
             case R.id.reset_btn_code:
                 //获取验证码
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        resetBtnCode.setText(second + "秒后重发");
+                String phone = resetEtPhone.getText().toString().trim();
+                if (!TextUtils.isEmpty(phone) && phone.length() == 11 && "1".equals(phone.substring(0, 1))) {
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            resetBtnCode.setBackground(getResources().getDrawable(R.drawable.vertifystyle2));
+                            resetBtnCode.setText(second + "秒后可重发送");
+                            resetBtnCode.setClickable(false);
+                            mHandler.sendEmptyMessageDelayed(5, 1000);
+                        }
+                    });
+                } else {
+                    if (TextUtils.isEmpty(phone)) {
+                        resetEtPhone.setHintTextColor(getResources().getColor(R.color.red));
+                        resetEtPhone.setHint("请输入手机号");
                         resetBtnCode.setClickable(false);
-                        mHandler.sendEmptyMessageDelayed(1, 1000);
+                        mHandler.sendEmptyMessageDelayed(4, 3000);
+                    } else {
+                        resetEtPhone.setText("");
+                        resetEtPhone.setHintTextColor(getResources().getColor(R.color.red));
+                        resetEtPhone.setHint("请输入正确的手机号");
+                        resetBtnCode.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(4, 3000);
                     }
-                });
+                }
                 break;
             case R.id.reset_btn_next:
                 //下一步
-                if (canNext()) {
-                    Intent intent = new Intent(ResetPassActivity.this, ResetPassTwoActivity.class);
-                    startActivity(intent);
-                    mHandler.removeMessages(1);
-                    resetBtnCode.setClickable(true);
-                    resetBtnCode.setText("获取验证码");
-                    second = 60;
-                } else {
+                switch (canNext()) {
+                    case 0:
+                        resetEtPhone.setHintTextColor(getResources().getColor(R.color.red));
+                        resetEtPhone.setHint("请输入手机号");
+                        resetBtnNext.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(0, 3000);
+                        break;
+                    case 1:
+                        resetEtPhone.setText("");
+                        resetEtPhone.setHintTextColor(getResources().getColor(R.color.red));
+                        resetEtPhone.setHint("请输入正确的手机号");
+                        resetBtnNext.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(1, 3000);
+                        break;
+                    case 2:
+                        resetEtCode.setHintTextColor(getResources().getColor(R.color.red));
+                        resetEtCode.setHint("请输入验证码");
+                        resetBtnNext.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(2, 3000);
+                        break;
+                    case 3:
+                        resetEtCode.setText("");
+                        resetEtCode.setHintTextColor(getResources().getColor(R.color.red));
+                        resetEtCode.setHint("验证码错误");
+                        resetBtnNext.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(3, 3000);
+                        break;
+                    case 4:
+                        Intent intent = new Intent(ResetPassActivity.this, ResetPassTwoActivity.class);
+                        startActivity(intent);
+                        mHandler.removeMessages(5);
+                        resetBtnCode.setClickable(true);
+                        resetBtnCode.setText("获取验证码");
+                        resetBtnCode.setBackground(getResources().getDrawable(R.drawable.vertifystyle));
+                        second = 60;
+                        break;
                 }
                 break;
         }
     }
 
-    private boolean canNext() {
+    private int canNext() {
         String phone = resetEtPhone.getText().toString().trim();
         String code = resetEtCode.getText().toString().trim();
-        if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(code) && phone.length() == 11 && code.length() == 6) {
-            return true;
+        if (TextUtils.isEmpty(phone)) {
+            return 0;
+        } else if (phone.length() != 11 || !phone.substring(0, 1).equals("1")) {
+            return 1;
+        } else if (TextUtils.isEmpty(code)) {
+            return 2;
+        } else if (code.length() < 4 || code.length() > 4) {
+            return 3;
+        } else {
+            return 4;
         }
-        return false;
     }
 
     @Override

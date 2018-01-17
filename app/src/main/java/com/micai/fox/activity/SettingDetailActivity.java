@@ -1,12 +1,26 @@
 package com.micai.fox.activity;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.media.TimedText;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.micai.fox.R;
+import com.micai.fox.util.Tools;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,8 +37,127 @@ public class SettingDetailActivity extends AppCompatActivity {
     TextView tvNotify;
     @Bind(R.id.rl)
     RelativeLayout rl;
+    @Bind(R.id.set_ll_account)
+    LinearLayout setLlAccount;
+    @Bind(R.id.set_ll_pass)
+    LinearLayout setLlPass;
+    @Bind(R.id.set_web)
+    LinearLayout setWeb;
+    @Bind(R.id.set_ll_idea)
+    RelativeLayout setLlIdea;
+    @Bind(R.id.set_ll_phone)
+    LinearLayout setLlPhone;
+    @Bind(R.id.account_et_name)
+    EditText accountEtName;
+    @Bind(R.id.account_et_num)
+    EditText accountEtNum;
+    @Bind(R.id.account_ll_bank)
+    LinearLayout accountLlBank;
+    @Bind(R.id.account_et_bankname)
+    EditText accountEtBankname;
+    @Bind(R.id.pass_et_origin)
+    EditText passEtOrigin;
+    @Bind(R.id.pass_et_new)
+    EditText passEtNew;
+    @Bind(R.id.pass_et_again)
+    EditText passEtAgain;
+    @Bind(R.id.pass_btn_confirm)
+    Button passBtnConfirm;
+    @Bind(R.id.idea_et)
+    EditText ideaEt;
+    @Bind(R.id.idea_btn_submit)
+    Button ideaBtnSubmit;
+    @Bind(R.id.phone_et_num)
+    EditText phoneEtNum;
+    @Bind(R.id.phone_et_code)
+    EditText phoneEtCode;
+    @Bind(R.id.phone_btn_code)
+    Button phoneBtnCode;
+    @Bind(R.id.phone_btn_confirm)
+    Button phoneBtnConfirm;
     private int type;
+    private int second = 60;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0://修改手机号--没有输入手机号
+                    phoneEtNum.setHintTextColor(getResources().getColor(R.color.gray));
+                    phoneEtNum.setHint("请输入手机号");
+                    phoneBtnCode.setClickable(true);
+                    break;
+                case 1://修改手机号--手机号格式不对
+                    phoneEtNum.setHintTextColor(getResources().getColor(R.color.gray));
+                    phoneEtNum.setHint("请输入手机号");
+                    phoneBtnCode.setClickable(true);
+                    break;
+                case 2:
+                    phoneEtNum.setHintTextColor(getResources().getColor(R.color.gray));
+                    phoneEtNum.setHint("请输入手机号");
+                    phoneBtnConfirm.setClickable(true);
+                    break;
+                case 3://phone---验证码没有输入
+                    phoneEtCode.setHintTextColor(getResources().getColor(R.color.gray));
+                    phoneEtCode.setHint("请输入验证码");
+                    phoneBtnConfirm.setClickable(true);
+                    break;
+                case 4://phone---验证码错误
+                    phoneEtCode.setHintTextColor(getResources().getColor(R.color.gray));
+                    phoneEtCode.setHint("请输入验证码");
+                    phoneBtnConfirm.setClickable(true);
+                    break;
+                case 5://phone---修改成功
+                    finish();
+                    break;
+                case 6:
+                    //修改手机号验证码
+                    if (null != phoneBtnCode)
+                        phoneBtnCode.setText(--second + "秒后可重发送");
+                    if (second >= 1) {
+                        mHandler.sendEmptyMessageDelayed(6, 1000);
+                    } else {
+                        phoneBtnCode.setBackground(getResources().getDrawable(R.drawable.vertifystyle));
+                        phoneBtnCode.setClickable(true);
+                        phoneBtnCode.setText("重新获取验证码");
+                        second = 60;
+                    }
+                    break;
+                case 7:
+                    passEtOrigin.setHintTextColor(getResources().getColor(R.color.gray));
+                    passEtOrigin.setHint("请输入原密码");
+                    phoneBtnConfirm.setClickable(true);
+                    break;
+                case 8:
+                    passEtNew.setHintTextColor(getResources().getColor(R.color.gray));
+                    passEtNew.setHint("请输入原密码");
+                    passBtnConfirm.setClickable(true);
+                    break;
+                case 9:
+                    passEtAgain.setHintTextColor(getResources().getColor(R.color.gray));
+                    passEtAgain.setHint("请再次输入新密码");
+                    passBtnConfirm.setClickable(true);
+                    break;
+                case 10:
+                    passEtNew.setHintTextColor(getResources().getColor(R.color.gray));
+                    passEtNew.setHint("6~16位的数字、字母或符号");
+                    passEtAgain.setHintTextColor(getResources().getColor(R.color.gray));
+                    passEtAgain.setHint("请再次输入新密码");
+                    phoneBtnConfirm.setClickable(true);
+                    passEtNew.requestFocus();
+                    break;
+                case 11:
+                    passEtNew.setHintTextColor(getResources().getColor(R.color.gray));
+                    passEtNew.setHint("6~16位的数字、字母或符号");
+                    passEtAgain.setHintTextColor(getResources().getColor(R.color.gray));
+                    passEtAgain.setHint("请再次输入新密码");
+                    phoneBtnConfirm.setClickable(true);
+                    passEtNew.requestFocus();
+                    break;
+            }
 
+        }
+    };
+    private Dialog phoneDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,23 +175,29 @@ public class SettingDetailActivity extends AppCompatActivity {
         switch (type) {
             case 0:
                 tvNotify.setVisibility(View.VISIBLE);
-                tvNotify.setText("编辑");
+                tvNotify.setText("保存");
                 tvTitle.setText("收款账户");
+                setLlAccount.setVisibility(View.VISIBLE);
                 break;
             case 1:
                 tvTitle.setText("修改手机号");
+                setLlPhone.setVisibility(View.VISIBLE);
                 break;
             case 2:
                 tvTitle.setText("修改密码");
+                setLlPass.setVisibility(View.VISIBLE);
                 break;
             case 3:
                 tvTitle.setText("意见反馈");
+                setLlIdea.setVisibility(View.VISIBLE);
                 break;
             case 4:
                 tvTitle.setText("用户协议");
+                setWeb.setVisibility(View.VISIBLE);
                 break;
             case 5:
                 tvTitle.setText("关于我们");
+                setWeb.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -69,14 +208,166 @@ public class SettingDetailActivity extends AppCompatActivity {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.tv_back, R.id.tv_notify})
-    public void onClick(View view) {
+    @OnClick({R.id.tv_back, R.id.tv_notify, R.id.account_ll_bank, R.id.pass_btn_confirm, R.id.idea_btn_submit, R.id.phone_btn_code, R.id.phone_btn_confirm})
+    public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_back:
                 finish();
                 break;
             case R.id.tv_notify:
+                //修改收款账户
+                break;
+            case R.id.account_ll_bank:
+                break;
+            case R.id.pass_btn_confirm:
+                switch (canPassWord()) {
+                    case 0:
+                        passEtOrigin.setHintTextColor(getResources().getColor(R.color.red));
+                        passEtOrigin.setHint("请输入原密码");
+                        phoneBtnConfirm.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(7, 3000);
+//                        Toast.makeText(SettingDetailActivity.this, "原密码不能为空", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        passEtNew.setHintTextColor(getResources().getColor(R.color.red));
+                        passEtNew.setHint("请输入新密码");
+                        phoneBtnConfirm.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(8, 3000);
+//                        Toast.makeText(SettingDetailActivity.this, "新密码不能为空", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        passEtAgain.setHintTextColor(getResources().getColor(R.color.red));
+                        passEtAgain.setHint("请再次输入新密码");
+                        phoneBtnConfirm.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(9, 3000);
+//                        Toast.makeText(SettingDetailActivity.this, "确认密码不能为空", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 3:
+                        passEtNew.setText("");
+                        passEtAgain.setText("");
+                        passEtNew.setHintTextColor(getResources().getColor(R.color.red));
+                        passEtNew.setHint("两次输入的新密码不一致");
+                        passEtAgain.setHintTextColor(getResources().getColor(R.color.red));
+                        passEtAgain.setHint("两次输入的新密码不一致");
+                        phoneBtnConfirm.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(10, 3000);
+//                        Toast.makeText(SettingDetailActivity.this, "两次输入密码不一致", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 4:
+                        passEtNew.setText("");
+                        passEtAgain.setText("");
+                        passEtNew.setHintTextColor(getResources().getColor(R.color.red));
+                        passEtNew.setHint("密码需为6~16位的数字、字母或符号");
+                        passEtAgain.setHintTextColor(getResources().getColor(R.color.red));
+                        passEtAgain.setHint("密码需为6~16位的数字、字母或符号");
+                        phoneBtnConfirm.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(11, 3000);
+                        break;
+                    case 5:
+                        phoneDialog = Tools.showDialog(this, 2);
+                        mHandler.sendEmptyMessageDelayed(5, 1500);
+                        break;
+                }
+                break;
+            case R.id.idea_btn_submit:
+                phoneDialog = Tools.showDialog(this, 3);
+                mHandler.sendEmptyMessageDelayed(5, 1500);
+                break;
+            case R.id.phone_btn_code:
+                //获取验证码
+                String phone = phoneEtNum.getText().toString().trim();
+                if (TextUtils.isEmpty(phone)) {
+                    phoneEtNum.setHintTextColor(getResources().getColor(R.color.red));
+                    phoneEtNum.setHint("请输入手机号");
+                    phoneBtnCode.setClickable(false);
+                    mHandler.sendEmptyMessageDelayed(0, 3000);
+                } else if (phone.length() < 11 || !phone.substring(0, 1).equals("1")) {
+                    phoneEtNum.setText("");
+                    phoneEtNum.setHintTextColor(getResources().getColor(R.color.red));
+                    phoneEtNum.setHint("请输入正确的手机号");
+                    phoneBtnCode.setClickable(false);
+                    mHandler.sendEmptyMessageDelayed(1, 3000);
+                } else {
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            phoneBtnCode.setBackground(getResources().getDrawable(R.drawable.vertifystyle2));
+                            phoneBtnCode.setText(second + "秒后可重发送");
+                            phoneBtnCode.setClickable(false);
+                            mHandler.sendEmptyMessageDelayed(6, 1000);
+                        }
+                    });
+                }
+                break;
+            case R.id.phone_btn_confirm:
+                switch (canPhone()) {
+                    case 0:
+                        phoneEtNum.setHintTextColor(getResources().getColor(R.color.red));
+                        phoneEtNum.setHint("请输入手机号");
+                        phoneBtnConfirm.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(2, 3000);
+                        break;
+                    case 1:
+                        phoneEtCode.setHintTextColor(getResources().getColor(R.color.red));
+                        phoneEtCode.setHint("请输入验证码");
+                        phoneBtnConfirm.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(3, 3000);
+                        break;
+                    case 2:
+                        phoneEtCode.setText("");
+                        phoneEtCode.setHintTextColor(getResources().getColor(R.color.red));
+                        phoneEtCode.setHint("验证码错误");
+                        phoneBtnConfirm.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(4, 3000);
+                        break;
+                    case 3:
+                        phoneDialog = Tools.showDialog(this, 2);
+                        mHandler.sendEmptyMessageDelayed(5, 1500);
+                        break;
+                }
                 break;
         }
+    }
+
+    private int canPhone() {
+        String phone = phoneEtNum.getText().toString().trim();
+        String code = phoneEtCode.getText().toString().trim();
+        //0:手机号不能为空  1:验证码不能为空
+        // 3:验证码不合法
+        if (TextUtils.isEmpty(phone)) {
+            return 0;
+        } else if (TextUtils.isEmpty(code)) {
+            return 1;
+        } else if (code.length() < 4) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
+
+    private int canPassWord() {
+        String origin = passEtOrigin.getText().toString().trim();
+        String newPass = passEtNew.getText().toString().trim();
+        String passAgain = passEtAgain.getText().toString().trim();
+        if (TextUtils.isEmpty(origin)) {
+            return 0;
+        } else if (TextUtils.isEmpty(newPass)) {
+            return 1;
+        } else if (TextUtils.isEmpty(passAgain)) {
+            return 2;
+        } else if (!newPass.equals(passAgain)) {
+            return 3;
+        } else if (!judgePass(passAgain) || !judgePass(newPass)) {
+            return 4;
+        } else {
+            return 5;
+        }
+    }
+
+    private boolean judgePass(String password) {
+        String regEx = "[\\da-zA-Z]{6,16}";
+        Pattern pattern = Pattern.compile(regEx);
+        Matcher ExetPwd = pattern.matcher(password);    // 新密码
+        return ExetPwd.matches();
     }
 }

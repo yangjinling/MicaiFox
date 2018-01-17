@@ -38,6 +38,7 @@ public class NotificationActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         tvTitle.setText("通知");
         tvNotify.setText("清空");
+        tvNotify.setTextSize(16);
         rl.setVisibility(View.VISIBLE);
         tvBack.setVisibility(View.VISIBLE);
         tvNotify.setVisibility(View.VISIBLE);

@@ -1,7 +1,10 @@
 package com.micai.fox.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,6 +18,10 @@ import android.widget.TextView;
 import com.micai.fox.R;
 import com.micai.fox.util.ExitAppUtils;
 import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.Tools;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -39,6 +46,45 @@ public class ResetPassTwoActivity extends AppCompatActivity {
     LinearLayout regsetLlEtTwo;
     @Bind(R.id.reset_btn_reset)
     Button resetBtnReset;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    resetEtPassword.setHintTextColor(getResources().getColor(R.color.gray));
+                    resetEtPassword.setHint("请输入密码");
+                    resetBtnReset.setClickable(true);
+                    break;
+                case 1:
+                    resetEtPasswordAgin.setTextColor(getResources().getColor(R.color.gray));
+                    resetEtPasswordAgin.setHint("请再次输入密码");
+                    resetEtPasswordAgin.setClickable(true);
+                    break;
+                case 2:
+                    resetEtPassword.setHintTextColor(getResources().getColor(R.color.gray));
+                    resetEtPassword.setHint("请输入密码");
+                    resetEtPasswordAgin.setHintTextColor(getResources().getColor(R.color.gray));
+                    resetEtPasswordAgin.setHint("请再次输入密码");
+                    resetBtnReset.setClickable(true);
+                    resetEtPassword.requestFocus();
+                    break;
+                case 3:
+                    resetEtPassword.setHintTextColor(getResources().getColor(R.color.gray));
+                    resetEtPassword.setHint("请输入密码");
+                    resetEtPasswordAgin.setHintTextColor(getResources().getColor(R.color.gray));
+                    resetEtPasswordAgin.setHint("请再次输入密码");
+                    resetBtnReset.setClickable(true);
+                    resetEtPassword.requestFocus();
+                    break;
+                case 4:
+                    dialog.dismiss();
+                    ExitAppUtils.getInstance().finishActivity(ResetPassActivity.class);
+                    finish();
+                    break;
+            }
+        }
+    };
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,24 +110,43 @@ public class ResetPassTwoActivity extends AppCompatActivity {
     private void doAction(int code) {
         LogUtil.e("YJL", "" + code);
         switch (code) {
-            case 1:
+            case 0:
                 resetEtPassword.setHintTextColor(getResources().getColor(R.color.red));
-                resetEtPassword.setHint("6~16位的数字、字母或符号");
+                resetEtPassword.setHint("请输入密码");
+                resetBtnReset.setClickable(false);
+                mHandler.sendEmptyMessageDelayed(0, 3000);
+                break;
+            case 1:
+                resetEtPasswordAgin.setHintTextColor(getResources().getColor(R.color.red));
+                resetEtPasswordAgin.setHint("请重复输入密码");
+                resetBtnReset.setClickable(false);
+                mHandler.sendEmptyMessageDelayed(1, 3000);
                 break;
             case 2:
+                resetEtPassword.setText("");
                 resetEtPasswordAgin.setText("");
+                resetEtPassword.setHintTextColor(getResources().getColor(R.color.red));
+                resetEtPassword.setHint("两次密码不一致，请重新输入");
                 resetEtPasswordAgin.setHintTextColor(getResources().getColor(R.color.red));
-                resetEtPasswordAgin.setHint("两次密码输入不一致");
+                resetEtPasswordAgin.setHint("两次密码不一致，请重新输入");
+                resetBtnReset.setClickable(false);
+                mHandler.sendEmptyMessageDelayed(2, 3000);
                 break;
             case 3:
+                resetEtPassword.setText("");
+                resetEtPasswordAgin.setText("");
+                resetEtPassword.setHintTextColor(getResources().getColor(R.color.red));
+                resetEtPassword.setHint("密码需为6~16位的数字、字母或符号");
                 resetEtPasswordAgin.setHintTextColor(getResources().getColor(R.color.red));
-                resetEtPasswordAgin.setHint("6~16位的数字、字母或符号");
+                resetEtPasswordAgin.setHint("密码需为6~16位的数字、字母或符号");
+                resetBtnReset.setClickable(false);
+                mHandler.sendEmptyMessageDelayed(3, 3000);
                 break;
-            case 5:
+            case 4:
 //                Intent intent = new Intent(ResetPassTwoActivity.this, MainActivity.class);
 //                startActivity(intent);
-                ExitAppUtils.getInstance().finishActivity(ResetPassActivity.class);
-                finish();
+                dialog = Tools.showDialog(this, 1);
+                mHandler.sendEmptyMessageDelayed(4, 1500);
                 break;
         }
     }
@@ -90,18 +155,23 @@ public class ResetPassTwoActivity extends AppCompatActivity {
         String pass = resetEtPassword.getText().toString();
         String passAgain = resetEtPasswordAgin.getText().toString();
         if (TextUtils.isEmpty(pass.trim())) {
-            return 1;
-        } else if (pass.trim().length() < 6) {
-            return 1;
+            return 0;
         } else if (TextUtils.isEmpty(passAgain.trim())) {
-            return 3;
-        } else if (passAgain.trim().length() < 6) {
-            return 3;
-        } else if (!TextUtils.isEmpty(pass.trim()) && !TextUtils.isEmpty(passAgain.trim()) && !pass.equals(passAgain)) {
+            return 1;
+        } else if (!pass.equals(passAgain)) {
             return 2;
+        } else if (!judgePass(pass) || !judgePass(passAgain)) {
+            return 3;//两次密码输入一致
         } else {
-            return 5;//两次密码输入一致
+            return 4;
         }
+    }
+
+    private boolean judgePass(String password) {
+        String regEx = "[\\da-zA-Z]{6,16}";
+        Pattern pattern = Pattern.compile(regEx);
+        Matcher ExetPwd = pattern.matcher(password);    // 新密码
+        return ExetPwd.matches();
     }
 
     @Override

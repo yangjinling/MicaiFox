@@ -40,7 +40,7 @@ public class MyZhongChouActivity extends AppCompatActivity {
     @Bind(R.id.tablayout)
     TabLayout tabLayout;
     @Bind(R.id.mine_zhongchou_viewpager)
-    NoScrollViewPager mineZhongchouViewpager;
+    ViewPager mineZhongchouViewpager;
 
 
     private FragmentPagerAdapter fAdapter; //定义adapter
@@ -89,6 +89,7 @@ public class MyZhongChouActivity extends AppCompatActivity {
         list_title.add("已兑换");
         //设置TabLayout的模式
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+//        tabLayout.setTabMode(TabLayout.MODE_FIXED);
         fAdapter = new ViewPageAdapter(getSupportFragmentManager(), list_fragment, list_title);
         //viewpager加载adapter
         mineZhongchouViewpager.setAdapter(fAdapter);

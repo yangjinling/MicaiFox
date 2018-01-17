@@ -36,6 +36,7 @@
             android:textColor="#FF23253C" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/experts_tv_changci"
                 android:background="@drawable/expertstextstyle"
                 android:layout_marginLeft="7.5dp"

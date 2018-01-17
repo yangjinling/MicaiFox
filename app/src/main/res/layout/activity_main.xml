@@ -28,8 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:background="#23253C"
         android:alpha="0.9"
+        android:background="#23253C"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -44,7 +44,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@null"
-                android:checked="true"
                 android:drawablePadding="0dp"
                 android:drawableTop="@drawable/rb_home" />
         </LinearLayout>
@@ -70,24 +69,28 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_weight="1">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/home_mine_point"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/point_notice_main"
-        android:layout_marginRight="48dp"
-        android:layout_alignParentRight="true"/>
-    <RadioButton
-        android:id="@+id/rb_mine"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:button="@null"
-        android:drawableTop="@drawable/rb_mine" />
-</RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/home_mine_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="48dp"
+                    android:src="@drawable/point_notice_main"
+                    android:visibility="gone" />
+
+                <RadioButton
+                    android:checked="true"
+                    android:id="@+id/rb_mine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableTop="@drawable/rb_mine" />
+            </RelativeLayout>
 
         </LinearLayout>
     </LinearLayout>

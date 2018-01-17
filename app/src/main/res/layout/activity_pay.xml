@@ -11,64 +11,132 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher_round" />
+            android:src="@mipmap/timing" />
 
         <TextView
-            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
             android:text="请尽快支付，以免满标后无法购买！"
             android:textColor="@color/white"
             android:textSize="15sp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12.5dp"
+        android:layout_marginRight="12.5dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/edittextstyle"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="15dp"
+            android:lines="2"
+            android:text="比你好啊后地撒谎第四季第哦释迦佛i速度集散地哦系啊覅哦就是都i放假哦"
+            android:textColor="#23253C"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/text_gray"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:paddingBottom="13dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:layout_marginRight="12dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="需支付金额" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:gravity="right"
+                android:text="5000.00"
+                android:textColor="@color/red"
+                android:textSize="18sp"></TextView>
+        </LinearLayout>
+    </LinearLayout>
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:background="@color/gray"
-        android:lines="2"
-        android:padding="10dp"
-        android:text="比你好啊后地撒谎第四季第哦释迦佛i速度集散地哦系啊覅哦就是都i放假哦"
+        android:layout_marginLeft="12.5dp"
+        android:layout_marginTop="26dp"
+        android:text="支付方式"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:id="@+id/pay_ll_payway"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="12.5dp"
+        android:layout_marginRight="12.5dp"
+        android:layout_marginTop="9dp"
+        android:background="@drawable/edittextstyle"
         android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:drawableLeft="@mipmap/ic_launcher_round"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
-            android:text="您需支付￥" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="17.5dp"
             android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="5000.00"></TextView>
+            android:text="支付宝"
+            android:textColor="#23253C"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/pointedselect" />
     </LinearLayout>
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"></LinearLayout>
+
+    <Button
+        android:id="@+id/pay_btn_pay"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="30dp"
         android:layout_marginLeft="12dp"
-        android:text="支付方式"
-        android:textSize="25sp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/white"/>
+        android:layout_marginRight="12dp"
+        android:background="@drawable/buttonstyle"
+        android:text="支付￥1000.25"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
 </LinearLayout>

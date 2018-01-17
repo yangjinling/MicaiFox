@@ -47,6 +47,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import com.micai.fox.R;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -636,11 +637,52 @@ public class Tools {
     }
 
 
-
     public static boolean isValidName(String name) {
         String strPattern = "^([\\u4E00-\\u9FA5\\uF900-\\uFA2D]{1,15}([•][\\u4E00-\\u9FA5\\uF900-\\uFA2D]{1,15})*([.][\\u4E00-\\u9FA5\\uF900-\\uFA2D]{1,15})*([·][\\u4E00-\\u9FA5\\uF900-\\uFA2D]{1,15})*)$";
         Pattern p = Pattern.compile(strPattern);
         Matcher m = p.matcher(name);
         return m.matches();
     }
+
+
+    //修改类提示dialog
+    public static Dialog showDialog(final Activity activity, int type) {
+        final Dialog dialog = new Dialog(activity, R.style.Translucent_NoTitle);
+        View view = ((LayoutInflater) activity.getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.layout_dialog, null);
+        //设置它的ContentView
+        dialog.setContentView(view);
+        TextView tv = view.findViewById(R.id.dialog_tv);
+        if (type == 0) {
+            //注册成功
+            tv.setText("注册成功");
+        } else if (type == 1) {
+            tv.setText("重置成功");
+        } else if (type == 2) {
+            tv.setText("修改成功");
+        } else if (type == 3) {
+            tv.setText("提交成功");
+        }
+        WindowManager m = activity.getWindowManager();
+        Display d = m.getDefaultDisplay();  //为获取屏幕宽、高
+        WindowManager.LayoutParams p = dialog.getWindow().getAttributes();  //获取对话框当前的参数值
+                  /* (int) (d.getHeight() * 0.3);  */ //高度设置为屏幕的0.3
+        p.height = (int) (d.getHeight() * 0.3); //高度设置为屏幕-标题栏
+                /*(int) (d.getWidth() * 0.5);*/
+        p.width = (int) (d.getWidth() * 0.9);   //宽度设置为屏幕的0.5
+        dialog.getWindow().setAttributes(p);     //设置生效
+        dialog.show();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+                    return true;
+                } else {
+                    return true; //默认返回 false，这里false不能屏蔽返回键，改成true就可以了
+                }
+            }
+        });
+        return dialog;
+    }
+
 }

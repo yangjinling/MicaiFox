@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/set_ll_pass"
+    android:layout_marginTop="8dp"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12.5dp"
+        android:layout_marginRight="12.5dp"
+        android:background="@drawable/edittextstyle"
+        android:orientation="vertical"
+        android:paddingBottom="21dp"
+        android:paddingLeft="14sp"
+        android:paddingRight="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:text="原密码："
+                android:textColor="@color/text_black"
+                android:textSize="17sp" />
+            <EditText
+                android:id="@+id/pass_et_origin"
+                android:background="@null"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="请输入原密码"
+                android:textColorHint="@color/gray"
+                android:textSize="17sp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/text_gray"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:text="新密码："
+                android:textColor="@color/text_black"
+                android:textSize="17sp" />
+            <EditText
+                android:textColorHint="@color/gray"
+                android:id="@+id/pass_et_new"
+                android:background="@null"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="17sp"
+                android:hint="6~16位的数字、字母或符号"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="17dp"
+            android:background="@color/text_gray"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:text="重置密码："
+                android:textColor="@color/text_black"
+                android:textSize="17sp" />
+            <EditText
+                android:textColorHint="@color/gray"
+                android:id="@+id/pass_et_again"
+                android:background="@null"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="请再次输入新密码"
+                android:textSize="17sp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/pass_btn_confirm"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="12.5dp"
+        android:layout_marginRight="12.5dp"
+        android:background="@drawable/buttonstyle"
+        android:layout_width="match_parent"
+        android:textColor="@color/white"
+        android:text="确认"
+        android:textSize="20sp"
+        android:layout_height="50dp" />
+
+</LinearLayout>

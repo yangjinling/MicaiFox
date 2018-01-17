@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:orientation="vertical">
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="@android:color/transparent"
@@ -43,6 +45,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="3dp"
@@ -74,10 +77,29 @@
 
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/experts_ll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:orientation="vertical"></LinearLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/experts_tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:tabIndicatorColor="@android:color/transparent"
+        app:tabIndicatorHeight="3dp"
+        app:tabSelectedTextColor="#ffffff"
+        app:tabTextAppearance="@style/CustomeTextSize"
+        app:tabBackground="@android:color/transparent"
+        app:tabTextColor="#ffffff"></android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/experts_viewpager"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>

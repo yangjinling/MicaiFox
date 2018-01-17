@@ -15,6 +15,7 @@ import com.micai.fox.base.BaseActivity;
 import com.micai.fox.fragment.ExpertsFragment;
 import com.micai.fox.fragment.HomeFragment;
 import com.micai.fox.fragment.MineFragmnet;
+import com.micai.fox.util.ExitAppUtils;
 import com.micai.fox.view.CyDownProgressView;
 import com.zhy.http.okhttp.callback.DialogInShow;
 
@@ -48,6 +49,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        ExitAppUtils.getInstance().addActivity(this);
         //初始化fragment
         initFragments();
         //初始化布局
@@ -67,7 +69,7 @@ public class MainActivity extends BaseActivity {
         //导航
         // mMainTabBar.setOnClickListener(this);
         mManager = getSupportFragmentManager();
-        mManager.beginTransaction().replace(R.id.main_fragment, mFragments[0]).commit();
+        mManager.beginTransaction().replace(R.id.main_fragment, mFragments[2]).commit();
     }
 
     @Override

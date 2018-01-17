@@ -4,11 +4,10 @@
     android:layout_height="wrap_content"
     android:background="@drawable/whitebgtstyle"
     android:orientation="vertical"
-    android:paddingBottom="12dp"
-    android:paddingLeft="12dp"
+    android:paddingLeft="17dp"
     android:paddingRight="12dp"
     android:descendantFocusability="blocksDescendants"
-    android:paddingTop="12dp">
+    android:paddingTop="11dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,39 +18,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="订单号："
-            android:textColor="@color/black" />
+            android:textSize="14sp"
+            android:textColor="@color/text_gray" />
 
         <TextView
             android:id="@+id/item_zhongchou_tv_orderid"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="14sp"
             android:text="33222111122222"
-            android:textColor="@color/black" />
+            android:textColor="@color/text_gray" />
 
         <TextView
             android:id="@+id/item_zhongchou_tv_orderstate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="待支付"
-            android:textColor="@color/black" />
+            android:textSize="15sp"
+            android:textColor="@color/red" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
-        android:background="@color/gray"></View>
+        android:background="@color/text_gray"></View>
 
     <LinearLayout
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_marginTop="8dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -61,18 +63,20 @@
                 android:id="@+id/item_zhongchou_tv_talk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
+                android:lines="2"
                 android:text="你好嗨hi都会死动四方爱思帝瑟吉欧ID死哦发货方is地方撒旦覅还能"
-                android:textColor="@color/black"
+                android:textColor="#23253C"
                 android:textSize="15sp" />
 
             <LinearLayout
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="3dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:textColor="@color/text_gray"
+                    android:textSize="13sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="项目状态 : " />
@@ -81,38 +85,44 @@
                     android:id="@+id/item_zhongchou_tv_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/text_gray"
+                    android:textSize="13sp"
                     android:text="众筹中" />
             </LinearLayout>
 
             <TextView
-                android:layout_marginTop="5dp"
                 android:id="@+id/item_zhongchou_tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/text_gray"
+                android:textSize="13sp"
                 android:text="2018.01.09 13:01" />
         </LinearLayout>
 
         <LinearLayout
+            android:gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
             android:orientation="vertical">
 
             <TextView
+                android:layout_marginTop="7dp"
                 android:id="@+id/item_zhongchou_tv_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="￥5000"
                 android:textColor="@color/red"
-                android:textSize="25sp" />
+                android:textSize="18sp" />
 
             <Button
+                android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:id="@+id/item_zhongchou_btn_pay"
                 android:layout_width="80dp"
                 android:layout_height="30dp"
                 android:focusable="false"
-                android:layout_marginTop="5dp"
+                android:textSize="15sp"
+                android:textColor="@color/white"
                 android:background="@drawable/vertifystyle"
                 android:text="去支付" />
         </LinearLayout>

@@ -10,7 +10,7 @@
 
     <include layout="@layout/layout_title"></include>
 
-    <com.micai.fox.view.MyScrollView
+    <ScrollView
         android:id="@+id/experts_detail_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -234,7 +234,8 @@
                 android:id="@+id/experts_detail_parentcontent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/experts_detail_moveview"
@@ -304,17 +305,37 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:background="@android:color/transparent"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical"
+                android:visibility="gone"></LinearLayout>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/experts_detail_tablayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                app:tabBackground="@android:color/transparent"
+                app:tabIndicatorColor="@android:color/transparent"
+                app:tabIndicatorHeight="3dp"
+                app:tabSelectedTextColor="#ffffff"
+                app:tabTextAppearance="@style/CustomeTextSize"
+                app:tabTextColor="#ffffff"></android.support.design.widget.TabLayout>
+
+            <com.micai.fox.view.CustomViewPager
+                android:layout_marginTop="10dp"
+                android:id="@+id/experts_detail_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
         </LinearLayout>
 
 
-    </com.micai.fox.view.MyScrollView>
+    </ScrollView>
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="48dp"
         android:id="@+id/xuantingquyu"
-        android:orientation="vertical"
-        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
         android:background="@color/red"
-        android:layout_height="wrap_content"/>
+        android:orientation="vertical"
+        android:visibility="gone" />
 </RelativeLayout>

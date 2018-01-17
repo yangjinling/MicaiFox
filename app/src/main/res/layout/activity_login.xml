@@ -26,7 +26,8 @@
         android:layout_above="@+id/login_btn_login"
         android:layout_marginBottom="15dp"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="22dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:background="@drawable/edittextstyle"
@@ -40,16 +41,18 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="68dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="28dp"
-                android:text="手机号:"
+                android:text="手机号："
+                android:textColor="@color/black"
                 android:textSize="17sp" />
             <EditText
                 android:phoneNumber="true"
                 android:id="@+id/login_et_phone"
-                android:layout_marginRight="32dp"
+                android:layout_marginRight="14dp"
                 android:background="@null"
+                android:textColorHint="@color/gray"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="17sp"
@@ -71,16 +74,17 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="68dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="28dp"
-                android:text="密    码:"
+                android:text="密    码："
+                android:textColor="@color/black"
                 android:textSize="17sp" />
             <EditText
-                
                 android:id="@+id/login_et_password"
-                android:layout_marginRight="32dp"
+                android:layout_marginRight="14dp"
                 android:background="@null"
+                android:textColorHint="@color/gray"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="17sp"

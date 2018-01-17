@@ -42,6 +42,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/home_zhong_tv_changci"
                     android:layout_width="0dp"
                     android:layout_weight="1"

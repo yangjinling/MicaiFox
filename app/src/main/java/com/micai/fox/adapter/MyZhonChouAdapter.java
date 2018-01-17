@@ -1,11 +1,13 @@
 package com.micai.fox.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.micai.fox.R;
+import com.micai.fox.activity.PayActivity;
 
 import java.util.List;
 
@@ -31,7 +33,9 @@ public class MyZhonChouAdapter extends MyBaseAdapter<String> {
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "去支付", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, PayActivity.class);
+                context.startActivity(intent);
+//                Toast.makeText(context, "去支付", Toast.LENGTH_SHORT).show();
             }
         });
     }
