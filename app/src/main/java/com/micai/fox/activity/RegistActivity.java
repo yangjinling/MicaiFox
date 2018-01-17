@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.micai.fox.R;
 import com.micai.fox.base.BaseActivity;
 import com.micai.fox.util.ExitAppUtils;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -111,9 +112,24 @@ public class RegistActivity extends BaseActivity {
     }
 
     @Override
+    protected void onStop() {
+        clearMessage();
+        super.onStop();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    private void clearMessage() {
+        mHandler.removeMessages(0);
+        mHandler.removeMessages(1);
+        mHandler.removeMessages(2);
+        mHandler.removeMessages(3);
+        mHandler.removeMessages(4);
+        mHandler = null;
     }
 
     @OnClick({R.id.regist_tv_agreement, R.id.tv_back, R.id.regist_btn_code, R.id.regist_btn_next, R.id.regist_tv_have})
@@ -232,5 +248,19 @@ public class RegistActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 获取验证码
+     */
+    private void getCode() {
+
+    }
+
+    /**
+     * 校验手机与验证码---下一步
+     */
+    private void registNext() {
+
     }
 }

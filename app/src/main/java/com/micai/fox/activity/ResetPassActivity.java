@@ -69,7 +69,7 @@ public class ResetPassActivity extends AppCompatActivity {
                     resetBtnNext.setClickable(true);
                     break;
                 case 2:
-                    resetEtCode.setTextColor(getResources().getColor(R.color.gray));
+                    resetEtCode.setHintTextColor(getResources().getColor(R.color.gray));
                     resetEtCode.setHint("请输入验证码");
                     resetBtnNext.setClickable(true);
                     break;
@@ -190,8 +190,34 @@ public class ResetPassActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        clearMessage();
+        super.onStop();
+    }
+    private void clearMessage() {
+        mHandler.removeMessages(0);
+        mHandler.removeMessages(1);
+        mHandler.removeMessages(2);
+        mHandler.removeMessages(3);
+        mHandler.removeMessages(4);
+        mHandler = null;
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    /**
+     * 获取验证码
+     */
+    private void getCode() {
+    }
+
+    /**
+     * 校验手机号、验证码---下一步
+     */
+    private void resetNnext() {
     }
 }

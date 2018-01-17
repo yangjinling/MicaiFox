@@ -49,8 +49,8 @@
                 android:textSize="17sp" />
 
             <EditText
-                android:phoneNumber="true"
-                android:id="@+id/regist_et_phone"
+                android:inputType="number"
+                android:digits="0123456789"                android:id="@+id/regist_et_phone"
                 android:textColorHint="@color/gray"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

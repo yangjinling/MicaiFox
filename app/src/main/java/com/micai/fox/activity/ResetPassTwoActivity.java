@@ -56,25 +56,29 @@ public class ResetPassTwoActivity extends AppCompatActivity {
                     resetBtnReset.setClickable(true);
                     break;
                 case 1:
-                    resetEtPasswordAgin.setTextColor(getResources().getColor(R.color.gray));
+                    resetEtPasswordAgin.setHintTextColor(getResources().getColor(R.color.gray));
                     resetEtPasswordAgin.setHint("请再次输入密码");
                     resetEtPasswordAgin.setClickable(true);
                     break;
                 case 2:
+                    resetEtPassword.requestFocus();
+                    resetEtPassword.setText("");
+                    resetEtPasswordAgin.setText("");
                     resetEtPassword.setHintTextColor(getResources().getColor(R.color.gray));
                     resetEtPassword.setHint("请输入密码");
                     resetEtPasswordAgin.setHintTextColor(getResources().getColor(R.color.gray));
                     resetEtPasswordAgin.setHint("请再次输入密码");
                     resetBtnReset.setClickable(true);
-                    resetEtPassword.requestFocus();
                     break;
                 case 3:
+                    resetEtPassword.requestFocus();
+                    resetEtPassword.setText("");
+                    resetEtPasswordAgin.setText("");
                     resetEtPassword.setHintTextColor(getResources().getColor(R.color.gray));
                     resetEtPassword.setHint("请输入密码");
                     resetEtPasswordAgin.setHintTextColor(getResources().getColor(R.color.gray));
                     resetEtPasswordAgin.setHint("请再次输入密码");
                     resetBtnReset.setClickable(true);
-                    resetEtPassword.requestFocus();
                     break;
                 case 4:
                     dialog.dismiss();
@@ -175,8 +179,28 @@ public class ResetPassTwoActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        clearMessage();
+        super.onStop();
+    }
+
+    private void clearMessage() {
+        mHandler.removeMessages(0);
+        mHandler.removeMessages(1);
+        mHandler.removeMessages(2);
+        mHandler.removeMessages(3);
+        mHandler.removeMessages(4);
+        mHandler = null;
+    }
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    /**
+     * 校验两次密码---重置
+     */
+    private void reset() {
     }
 }

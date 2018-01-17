@@ -48,7 +48,6 @@
                 android:textSize="17sp" />
 
             <EditText
-                android:maxLength="16"
                 android:id="@+id/regist_et_nick"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -83,6 +82,7 @@
                 android:textSize="17sp" />
 
             <EditText
+                android:inputType="textPassword|textMultiLine"
                 android:id="@+id/regist_et_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -118,6 +118,7 @@
                 android:textSize="17sp" />
 
             <EditText
+                android:inputType="textPassword|textMultiLine"
                 android:id="@+id/regist_et_password_agin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

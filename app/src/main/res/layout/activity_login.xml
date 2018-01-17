@@ -48,7 +48,8 @@
                 android:textColor="@color/black"
                 android:textSize="17sp" />
             <EditText
-                android:phoneNumber="true"
+                android:inputType="number"
+                android:digits="0123456789"
                 android:id="@+id/login_et_phone"
                 android:layout_marginRight="14dp"
                 android:background="@null"
@@ -82,6 +83,7 @@
                 android:textSize="17sp" />
             <EditText
                 android:id="@+id/login_et_password"
+                android:inputType="textPassword|textMultiLine"
                 android:layout_marginRight="14dp"
                 android:background="@null"
                 android:textColorHint="@color/gray"

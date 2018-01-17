@@ -7,20 +7,20 @@
     tools:context="com.micai.fox.activity.IndexActivity">
 
     <ImageView
-        android:layout_centerHorizontal="true"
-        android:layout_alignBottom="@+id/btn_login"
-        android:layout_marginBottom="72dp"
         android:layout_width="162dp"
         android:layout_height="178dp"
+        android:layout_alignBottom="@+id/btn_login"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="72dp"
         android:src="@mipmap/ic_launcher" />
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_alignBottom="@+id/btn_regist"
-        android:layout_marginBottom="65dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_alignBottom="@+id/btn_regist"
+        android:layout_marginBottom="65dp"
         android:layout_marginLeft="13dp"
         android:layout_marginRight="12dp"
         android:layout_marginTop="72dp"
@@ -30,11 +30,11 @@
         android:textSize="20sp" />
 
     <Button
-        android:layout_alignBottom="@+id/index_bottom"
-        android:layout_marginBottom="218dp"
         android:id="@+id/btn_regist"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_alignBottom="@+id/index_bottom"
+        android:layout_marginBottom="218dp"
         android:layout_marginLeft="13dp"
         android:layout_marginRight="12dp"
         android:layout_marginTop="15dp"
@@ -42,13 +42,14 @@
         android:text="注册"
         android:textColor="#FFFFFFFF"
         android:textSize="20sp" />
+
     <LinearLayout
         android:id="@+id/index_bottom"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:background="#23253C"
         android:alpha="0.9"
+        android:background="#23253C"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -58,11 +59,11 @@
             android:layout_weight="1">
 
             <RadioButton
-                android:clickable="false"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@null"
+                android:clickable="false"
                 android:drawablePadding="0dp"
                 android:drawableTop="@drawable/rb_home" />
         </LinearLayout>
@@ -74,11 +75,11 @@
             android:layout_weight="1">
 
             <RadioButton
-                android:clickable="false"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@null"
+                android:clickable="false"
                 android:drawablePadding="0dp"
                 android:drawableTop="@drawable/rb_experts" />
         </LinearLayout>
@@ -88,23 +89,26 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_weight="1">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <ImageView
-                    android:visibility="gone"
                     android:id="@+id/home_mine_point"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/point_notice_main"
+                    android:layout_alignParentRight="true"
                     android:layout_marginRight="48dp"
-                    android:layout_alignParentRight="true"/>
+                    android:src="@drawable/point_notice_main"
+                    android:visibility="gone" />
+
                 <RadioButton
-                    android:clickable="false"
-                    android:checked="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:button="@null"
+                    android:checked="true"
+                    android:clickable="false"
                     android:drawableTop="@drawable/rb_mine" />
             </RelativeLayout>
 

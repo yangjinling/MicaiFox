@@ -138,20 +138,30 @@ public class SettingDetailActivity extends AppCompatActivity {
                     passBtnConfirm.setClickable(true);
                     break;
                 case 10:
+                    passEtNew.requestFocus();
+                    passEtNew.setText("");
+                    passEtAgain.setText("");
                     passEtNew.setHintTextColor(getResources().getColor(R.color.gray));
                     passEtNew.setHint("6~16位的数字、字母或符号");
                     passEtAgain.setHintTextColor(getResources().getColor(R.color.gray));
                     passEtAgain.setHint("请再次输入新密码");
                     phoneBtnConfirm.setClickable(true);
-                    passEtNew.requestFocus();
                     break;
                 case 11:
+                    passEtNew.requestFocus();
+                    passEtNew.setText("");
+                    passEtAgain.setText("");
                     passEtNew.setHintTextColor(getResources().getColor(R.color.gray));
                     passEtNew.setHint("6~16位的数字、字母或符号");
                     passEtAgain.setHintTextColor(getResources().getColor(R.color.gray));
                     passEtAgain.setHint("请再次输入新密码");
                     phoneBtnConfirm.setClickable(true);
-                    passEtNew.requestFocus();
+                    break;
+                case 12:
+                    passEtOrigin.setHintTextColor(getResources().getColor(R.color.gray));
+                    passEtOrigin.setHint("请输入原密码");
+                    phoneBtnConfirm.setClickable(true);
+                    passEtOrigin.requestFocus();
                     break;
             }
 
@@ -267,6 +277,13 @@ public class SettingDetailActivity extends AppCompatActivity {
                         phoneDialog = Tools.showDialog(this, 2);
                         mHandler.sendEmptyMessageDelayed(5, 1500);
                         break;
+                    case 6:
+                        passEtOrigin.setText("");
+                        passEtOrigin.setHintTextColor(getResources().getColor(R.color.red));
+                        passEtOrigin.setHint("原密码错误");
+                        phoneBtnConfirm.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(12, 3000);
+                        break;
                 }
                 break;
             case R.id.idea_btn_submit:
@@ -338,7 +355,7 @@ public class SettingDetailActivity extends AppCompatActivity {
             return 0;
         } else if (TextUtils.isEmpty(code)) {
             return 1;
-        } else if (code.length() < 4) {
+        } else if (code.length() < 4 || code.length() > 4) {
             return 2;
         } else {
             return 3;
@@ -355,6 +372,8 @@ public class SettingDetailActivity extends AppCompatActivity {
             return 1;
         } else if (TextUtils.isEmpty(passAgain)) {
             return 2;
+        } else if (!judgePass(origin)) {
+            return 6;
         } else if (!newPass.equals(passAgain)) {
             return 3;
         } else if (!judgePass(passAgain) || !judgePass(newPass)) {
@@ -369,5 +388,33 @@ public class SettingDetailActivity extends AppCompatActivity {
         Pattern pattern = Pattern.compile(regEx);
         Matcher ExetPwd = pattern.matcher(password);    // 新密码
         return ExetPwd.matches();
+    }
+
+    @Override
+    protected void onStop() {
+        clearMessage();
+        super.onStop();
+    }
+
+    private void clearMessage() {
+        if (type == 1) {
+            //修改手机号
+            mHandler.removeMessages(0);
+            mHandler.removeMessages(1);
+            mHandler.removeMessages(2);
+            mHandler.removeMessages(3);
+            mHandler.removeMessages(4);
+            mHandler.removeMessages(5);
+            mHandler.removeMessages(6);
+        } else if (type == 2) {
+            //修改密码
+            mHandler.removeMessages(7);
+            mHandler.removeMessages(8);
+            mHandler.removeMessages(9);
+            mHandler.removeMessages(10);
+            mHandler.removeMessages(11);
+            mHandler.removeMessages(12);
+        }
+        mHandler = null;
     }
 }

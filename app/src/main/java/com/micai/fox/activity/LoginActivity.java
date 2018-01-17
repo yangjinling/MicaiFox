@@ -1,5 +1,6 @@
 package com.micai.fox.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.TimedText;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -58,11 +60,12 @@ public class LoginActivity extends BaseActivity {
                     loginBtnLogin.setClickable(true);
                     break;
                 case 2:
+                    loginEtPhone.requestFocus();
+                    loginEtPhone.setText("");
                     loginEtPhone.setHintTextColor(getResources().getColor(R.color.gray));
                     loginEtPhone.setHint("请输入手机号");
                     loginEtPassword.setHintTextColor(getResources().getColor(R.color.gray));
                     loginEtPassword.setHint("请输入密码");
-                    loginEtPhone.requestFocus();
                     loginBtnLogin.setClickable(true);
                     break;
 
@@ -81,9 +84,22 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
+    protected void onStop() {
+        clearMessage();
+        super.onStop();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    private void clearMessage() {
+        mHandler.removeMessages(0);
+        mHandler.removeMessages(1);
+        mHandler.removeMessages(2);
+        mHandler = null;
     }
 
     @OnClick({R.id.tv_back, R.id.tv_title, R.id.rl, R.id.login_btn_login, R.id.login_tv_regist, R.id.login_tv_forgetpass})
@@ -152,5 +168,11 @@ public class LoginActivity extends BaseActivity {
             return 3;
         }
 
+    }
+
+    /**
+     * 校验手机号与密码----登录
+     */
+    private void login() {
     }
 }

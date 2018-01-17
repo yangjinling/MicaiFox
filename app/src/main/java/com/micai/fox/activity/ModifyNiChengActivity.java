@@ -45,7 +45,7 @@ public class ModifyNiChengActivity extends AppCompatActivity {
         tvTitle.setText("修改昵称");
         name = getIntent().getStringExtra("NAME");
         modifyTvNicheng.setHint("" + name);
-        ivTvNicheng.setVisibility(View.VISIBLE);
+//        ivTvNicheng.setVisibility(View.VISIBLE);
     }
 
     @OnClick({R.id.tv_back, R.id.tv_notify, R.id.iv_tv_nicheng})
