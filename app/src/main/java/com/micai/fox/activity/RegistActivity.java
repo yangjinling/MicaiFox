@@ -15,14 +15,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
+import com.micai.fox.app.Url;
 import com.micai.fox.base.BaseActivity;
+import com.micai.fox.bean.ParentBean;
 import com.micai.fox.util.ExitAppUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 /*注册页面*/
 public class RegistActivity extends BaseActivity {
@@ -261,6 +267,20 @@ public class RegistActivity extends BaseActivity {
      * 校验手机与验证码---下一步
      */
     private void registNext() {
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(Url.WEB_VALIDATE_CODE)
+                .content(new Gson().toJson(new ParentBean()))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
 
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+
+            }
+        });
     }
 }

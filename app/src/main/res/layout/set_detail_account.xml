@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/set_ll_account"
+    android:id="@+id/set_detail_ll_account"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="4dp"
-    android:visibility="gone"
     android:background="@android:color/transparent"
     android:orientation="vertical">
 
@@ -28,22 +27,23 @@
             <TextView
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
-                android:text="账户名称："
+                android:text="账户名称:"
                 android:textColor="@color/text_black"
                 android:textSize="17sp" />
 
-            <EditText
-                android:id="@+id/account_et_name"
+            <TextView
+                android:id="@+id/account_tv_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="right"
                 android:background="@null"
-                android:hint="请输入户名"
-                android:textColorHint="@color/gray"
+                android:text="杨金玲"
                 android:textSize="17sp" />
         </LinearLayout>
 
         <View
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="15dp"
@@ -58,26 +58,26 @@
             <TextView
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
-                android:text="账户号码："
+                android:text="账户号码:"
                 android:textColor="@color/text_black"
                 android:textSize="17sp" />
 
-            <EditText
-                android:id="@+id/account_et_num"
+            <TextView
+                android:id="@+id/account_tv_num"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
-                android:textColorHint="@color/gray"
-                android:hint="请输入账户号码"
+                android:gravity="right"
+                android:text="6227002191594874010"
                 android:textSize="17sp" />
         </LinearLayout>
 
         <View
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="17dp"
-
             android:background="@color/text_gray"></View>
 
         <LinearLayout
@@ -90,25 +90,24 @@
             <TextView
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
-                android:text="账户银行："
+                android:text="账户银行:"
                 android:textColor="@color/text_black"
                 android:textSize="17sp" />
 
             <TextView
+                android:id="@+id/account_tv_bank"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="请选择"
-                android:textColor="@color/gray"
+                android:text="招商银行"
+                android:gravity="right"
                 android:textSize="17sp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/down" />
+
         </LinearLayout>
 
         <View
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="20dp"
@@ -123,49 +122,20 @@
             <TextView
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
-                android:text="开户支行："
+                android:text="开户支行:"
                 android:textColor="@color/text_black"
                 android:textSize="17sp" />
 
-            <EditText
-                android:id="@+id/account_et_bankname"
+            <TextView
+                android:id="@+id/account_tv_bankname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
-                android:textColorHint="@color/gray"
-                android:hint="请输入开户支行"
+                android:gravity="right"
+                android:text="招商银行北京分行中关村支行"
                 android:textSize="17sp" />
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="17.5dp"
-        android:layout_marginRight="12.5dp"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/ic_launcher_round"
-            android:drawablePadding="7.5dp"
-            android:gravity="center_vertical"
-            android:text="开户支行可拔打账户所属银行客服查询"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:drawableLeft="@mipmap/ic_launcher_round"
-            android:drawablePadding="7.5dp"
-            android:gravity="center_vertical"
-            android:text="如在平台兑付过程中修改收款账户，兑付资金可能会转账至原有收款账户内"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
-    </LinearLayout>
 </LinearLayout>

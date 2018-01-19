@@ -16,15 +16,22 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
 import com.micai.fox.base.BaseActivity;
+import com.micai.fox.bean.ParentBean;
 import com.micai.fox.util.ExitAppUtils;
 import com.micai.fox.util.PrefUtils;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 /*登陆页面*/
 public class LoginActivity extends BaseActivity {
@@ -174,5 +181,7 @@ public class LoginActivity extends BaseActivity {
      * 校验手机号与密码----登录
      */
     private void login() {
+//        url(String.format(Url.WEB_CONDITION_QUERY, sessionId))
+
     }
 }

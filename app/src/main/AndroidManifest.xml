@@ -96,7 +96,7 @@
             android:name=".activity.ZhongChouDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
-        <!--购买众筹界面-->
+        <!-- 购买众筹界面 -->
         <activity
             android:name=".activity.BuyZhongChouActivity"
             android:screenOrientation="portrait"
@@ -147,6 +147,12 @@
             android:name=".activity.SettingDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
+        <!--收款账户编辑界面-->
+        <activity
+            android:name=".activity.AcountEditActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
+
         <!-- //微信支付的界面 -->
         <activity
             android:name=".wxapi.WXEntryActivity"

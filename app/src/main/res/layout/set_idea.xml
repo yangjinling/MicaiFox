@@ -7,7 +7,7 @@
     android:visibility="gone"
     android:background="@android:color/transparent">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12.5dp"
@@ -15,26 +15,35 @@
         android:background="@drawable/edittextstyle"
         android:minHeight="250dp"
         android:orientation="vertical"
-        android:paddingBottom="21dp"
+        android:paddingBottom="15dp"
         android:paddingLeft="14sp"
         android:paddingRight="14dp"
         android:paddingTop="10dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/idea_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null" />
+        </LinearLayout>
+
         <TextView
+            android:id="@+id/idea_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right|bottom"
-            android:minHeight="250dp"
             android:text="0/500"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
-        <EditText
-            android:id="@+id/idea_et"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null" />
-    </RelativeLayout>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/idea_btn_submit"

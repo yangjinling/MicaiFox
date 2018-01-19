@@ -2,12 +2,14 @@ package com.micai.fox.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.media.TimedText;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.Selection;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,8 +39,6 @@ public class SettingDetailActivity extends AppCompatActivity {
     TextView tvNotify;
     @Bind(R.id.rl)
     RelativeLayout rl;
-    @Bind(R.id.set_ll_account)
-    LinearLayout setLlAccount;
     @Bind(R.id.set_ll_pass)
     LinearLayout setLlPass;
     @Bind(R.id.set_web)
@@ -47,14 +47,6 @@ public class SettingDetailActivity extends AppCompatActivity {
     RelativeLayout setLlIdea;
     @Bind(R.id.set_ll_phone)
     LinearLayout setLlPhone;
-    @Bind(R.id.account_et_name)
-    EditText accountEtName;
-    @Bind(R.id.account_et_num)
-    EditText accountEtNum;
-    @Bind(R.id.account_ll_bank)
-    LinearLayout accountLlBank;
-    @Bind(R.id.account_et_bankname)
-    EditText accountEtBankname;
     @Bind(R.id.pass_et_origin)
     EditText passEtOrigin;
     @Bind(R.id.pass_et_new)
@@ -75,6 +67,20 @@ public class SettingDetailActivity extends AppCompatActivity {
     Button phoneBtnCode;
     @Bind(R.id.phone_btn_confirm)
     Button phoneBtnConfirm;
+    @Bind(R.id.idea_tv)
+    TextView ideaTv;
+    @Bind(R.id.account_tv_name)
+    TextView accountTvName;
+    @Bind(R.id.account_tv_num)
+    TextView accountTvNum;
+    @Bind(R.id.account_tv_bank)
+    TextView accountTvBank;
+    @Bind(R.id.account_tv_bankname)
+    TextView accountTvBankname;
+    @Bind(R.id.set_detail_ll_account)
+    LinearLayout setDetailLlAccount;
+    @Bind(R.id.set_phone_tv_content)
+    TextView setPhoneTvContent;
     private int type;
     private int second = 60;
     private Handler mHandler = new Handler() {
@@ -185,9 +191,9 @@ public class SettingDetailActivity extends AppCompatActivity {
         switch (type) {
             case 0:
                 tvNotify.setVisibility(View.VISIBLE);
-                tvNotify.setText("保存");
+                tvNotify.setText("编辑");
                 tvTitle.setText("收款账户");
-                setLlAccount.setVisibility(View.VISIBLE);
+                setDetailLlAccount.setVisibility(View.VISIBLE);
                 break;
             case 1:
                 tvTitle.setText("修改手机号");
@@ -200,6 +206,7 @@ public class SettingDetailActivity extends AppCompatActivity {
             case 3:
                 tvTitle.setText("意见反馈");
                 setLlIdea.setVisibility(View.VISIBLE);
+                initIdeaEdit();
                 break;
             case 4:
                 tvTitle.setText("用户协议");
@@ -218,6 +225,63 @@ public class SettingDetailActivity extends AppCompatActivity {
         ButterKnife.unbind(this);
     }
 
+    private void initIdeaEdit() {
+        ideaEt.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int count, int after) {
+                int mTextMaxlenght = 0;
+                int counts = 0;
+                Editable editable = ideaEt.getText();
+                String str = editable.toString().trim();
+                //得到最初字段的长度大小，用于光标位置的判断
+                int selEndIndex = Selection.getSelectionEnd(editable);
+                // 取出每个字符进行判断，如果是字母数字和标点符号则为一个字符加1，
+                //如果是汉字则为两个字符
+                for (int i = 0; i < str.length(); i++) {
+                    char charAt = str.charAt(i);
+                    //32-122包含了空格，大小写字母，数字和一些常用的符号，
+                    //如果在这个范围内则算一个字符，
+                    //如果不在这个范围比如是汉字的话就是两个字符
+                    if (charAt >= 32 && charAt <= 122) {
+                        mTextMaxlenght++;
+                    } else {
+                        mTextMaxlenght += 2;
+                    }
+                    // 当最大字符大于40时，进行字段的截取，并进行提示字段的大小
+                    if (mTextMaxlenght > 1000) {
+                        // 截取最大的字段
+                        String newStr = str.substring(0, i);
+                        ideaEt.setText(newStr);
+                        // 得到新字段的长度值
+                        editable = ideaEt.getText();
+                        int newLen = editable.length();
+                        if (selEndIndex > newLen) {
+                            selEndIndex = editable.length();
+                        }
+                        // 设置新光标所在的位置
+                        Selection.setSelection(editable, selEndIndex);
+                        Toast.makeText(SettingDetailActivity.this, "最大长度为1000个字符或500个汉字！", Toast.LENGTH_SHORT).show();
+                    } else {
+                        counts++;
+                        ideaTv.setText(counts + "/500");
+                    }
+
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
     @OnClick({R.id.tv_back, R.id.tv_notify, R.id.account_ll_bank, R.id.pass_btn_confirm, R.id.idea_btn_submit, R.id.phone_btn_code, R.id.phone_btn_confirm})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -226,6 +290,8 @@ public class SettingDetailActivity extends AppCompatActivity {
                 break;
             case R.id.tv_notify:
                 //修改收款账户
+                Intent intent = new Intent(SettingDetailActivity.this, AcountEditActivity.class);
+                startActivityForResult(intent, 100);
                 break;
             case R.id.account_ll_bank:
                 break;
@@ -388,6 +454,18 @@ public class SettingDetailActivity extends AppCompatActivity {
         Pattern pattern = Pattern.compile(regEx);
         Matcher ExetPwd = pattern.matcher(password);    // 新密码
         return ExetPwd.matches();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 100:
+                if (resultCode == RESULT_OK) {
+
+                } else {
+                }
+                break;
+        }
     }
 
     @Override
