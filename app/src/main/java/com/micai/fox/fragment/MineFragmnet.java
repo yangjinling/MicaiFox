@@ -301,6 +301,7 @@ public class MineFragmnet extends Fragment {
                 Bitmap photo = null;
                 LogUtil.e("YJL", "uri===" + intent.getData());
                 if (null != intent.getData()) {
+//                    photoUri=intent.getData();
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = false;
                     options.inSampleSize = 2;

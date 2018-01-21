@@ -166,7 +166,7 @@ public class SettingActivity extends AppCompatActivity {
         Display d = m.getDefaultDisplay();  //为获取屏幕宽、高
         WindowManager.LayoutParams p = dialog.getWindow().getAttributes();  //获取对话框当前的参数值
                   /* (int) (d.getHeight() * 0.3);  */ //高度设置为屏幕的0.3
-        p.height = (int) (d.getHeight() * 0.4); //高度设置为屏幕-标题栏
+        p.height = (int) (d.getHeight() * 0.3); //高度设置为屏幕-标题栏
                 /*(int) (d.getWidth() * 0.5);*/
         p.width = (int) (d.getWidth() * 0.9);   //宽度设置为屏幕的0.5
         dialog.getWindow().setAttributes(p);     //设置生效
@@ -176,11 +176,11 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void logOut() {
-        OkHttpUtils.postString()
-                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
-                .url(Url.WEB_LOGOUT)
-                .content("")
-//                .url(String.format(Url.WEB_LOGOUT, Config.getInstance().getSessionId()))
+        OkHttpUtils.post()
+//                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+//////                .url(Url.WEB_LOGOUT)
+//                .content("")
+                .url(String.format(Url.WEB_LOGOUT, Config.getInstance().getSessionId()))
                 .build().execute(new StringCallback() {
 
             private BaseResultBean baseResultBean;

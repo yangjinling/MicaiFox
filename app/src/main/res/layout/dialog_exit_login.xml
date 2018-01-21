@@ -3,7 +3,6 @@
     android:id="@+id/ll_dialog"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:alpha="0.9"
     android:layout_marginLeft="50dp"
     android:layout_marginRight="50dp"
     android:background="@drawable/edittextstyle"
@@ -13,7 +12,7 @@
     <TextView
         android:id="@+id/dialog_tv_wechat"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="85dp"
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"

@@ -255,7 +255,6 @@ public class RegistActivity extends BaseActivity {
      * 获取验证码
      */
     private void getCode(String phone) {
-        Tools.showDialog(this,1);
         paramBean = new ParamBean();
         paramData = new ParamBean.ParamData();
         paramData.setPhone(phone);

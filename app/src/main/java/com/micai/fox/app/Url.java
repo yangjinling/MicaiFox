@@ -23,7 +23,7 @@ public class Url {
     /*2.1.7登录*/
     public static final String WEB_LOGIN=WEB_BASE_URL+"login";
     /*2.1.8退出登录*/
-    public static final String WEB_LOGOUT=WEB_BASE_URL+"app/logout";
+    public static final String WEB_LOGOUT=WEB_BASE_URL+"app/logout"+WEB_BASE_SESSION;
     /*2.2.1收款账号查询*/
     public static final String WEB_SET_ACCOUNT_SEARCH=WEB_BASE_URL+"bd/account/search"+WEB_BASE_SESSION;
     /*2.2.2收款账号修改*/

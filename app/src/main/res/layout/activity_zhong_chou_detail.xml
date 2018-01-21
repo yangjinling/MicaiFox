@@ -309,7 +309,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="10dp"
-                android:drawableLeft="@mipmap/ic_launcher_round"
+                android:drawableLeft="@mipmap/group"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:text="你好" />
@@ -320,7 +320,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="10dp"
-                android:drawableLeft="@mipmap/ic_launcher_round"
+                android:drawableLeft="@mipmap/payment"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:text="你好" />
