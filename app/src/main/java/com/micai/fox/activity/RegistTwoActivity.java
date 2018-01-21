@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,10 +17,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
+import com.micai.fox.app.Url;
+import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.BaseResultBean;
 import com.micai.fox.util.ExitAppUtils;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,6 +34,8 @@ import java.util.regex.Pattern;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 /*注册的下一步*/
 public class RegistTwoActivity extends AppCompatActivity {
@@ -99,13 +108,16 @@ public class RegistTwoActivity extends AppCompatActivity {
         }
     };
     private Dialog dialog;
+    private ParamBean paramBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regist_two);
         ButterKnife.bind(this);
+        ExitAppUtils.getInstance().addActivity(this);
         tvTitle.setText("注册");
+        paramBean = ((ParamBean) getIntent().getSerializableExtra("BEAN"));
         registEtNick.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -129,7 +141,7 @@ public class RegistTwoActivity extends AppCompatActivity {
                     }
                     // 当最大字符大于40时，进行字段的截取，并进行提示字段的大小
                     if (mTextMaxlenght > 32) {
-                    // 截取最大的字段
+                        // 截取最大的字段
                         String newStr = str.substring(0, i);
                         registEtNick.setText(newStr);
                         // 得到新字段的长度值
@@ -207,8 +219,7 @@ public class RegistTwoActivity extends AppCompatActivity {
                         mHandler.sendEmptyMessageDelayed(4, 3000);
                         break;
                     case 5:
-                        dialog = Tools.showDialog(this, 0);
-                        mHandler.sendEmptyMessageDelayed(5, 1500);
+                        regist(registEtNick.getText().toString(), registEtPassword.getText().toString(), registEtPasswordAgin.getText().toString());
                         break;
 
                 }
@@ -255,18 +266,52 @@ public class RegistTwoActivity extends AppCompatActivity {
     }
 
     private void clearMessage() {
+        if (null!=mHandler){
         mHandler.removeMessages(0);
         mHandler.removeMessages(1);
         mHandler.removeMessages(2);
         mHandler.removeMessages(3);
         mHandler.removeMessages(4);
         mHandler.removeMessages(5);
-        mHandler = null;
+        mHandler = null;}
     }
 
     /**
      * 校验昵称、密码---注册
      */
-    private void regist() {
+    private void regist(String nickName, String pwd, String pwd2) {
+        ParamBean paramBeans = new ParamBean();
+        ParamBean.ParamData paramData = paramBean.getParamData();
+        paramData.setNickName(nickName);
+        paramData.setPwd(pwd);
+        paramData.setPwd2(pwd2);
+        paramBeans.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(Url.WEB_REGIST)
+                .content(new Gson().toJson(paramBeans))
+                .build().execute(new StringCallback() {
+
+            private BaseResultBean baseResultBean;
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("yjl", "regist--result>>" + response);
+                if (Tools.isGoodJson(response)) {
+                    baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                    if (baseResultBean.isExecResult()) {
+                        dialog = Tools.showDialog(RegistTwoActivity.this, 0);
+                        mHandler.sendEmptyMessageDelayed(5, 1500);
+                    } else {
+                    }
+                }
+
+            }
+        });
     }
 }

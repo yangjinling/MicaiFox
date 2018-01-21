@@ -12,14 +12,23 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
+import com.micai.fox.app.Url;
+import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.BaseResultBean;
 import com.micai.fox.util.ExitAppUtils;
+import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.Tools;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 /*重置密码*/
 public class ResetPassActivity extends AppCompatActivity {
@@ -106,15 +115,7 @@ public class ResetPassActivity extends AppCompatActivity {
                 //获取验证码
                 String phone = resetEtPhone.getText().toString().trim();
                 if (!TextUtils.isEmpty(phone) && phone.length() == 11 && "1".equals(phone.substring(0, 1))) {
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            resetBtnCode.setBackground(getResources().getDrawable(R.drawable.vertifystyle2));
-                            resetBtnCode.setText(second + "秒后可重发送");
-                            resetBtnCode.setClickable(false);
-                            mHandler.sendEmptyMessageDelayed(5, 1000);
-                        }
-                    });
+                    getCode(phone);
                 } else {
                     if (TextUtils.isEmpty(phone)) {
                         resetEtPhone.setHintTextColor(getResources().getColor(R.color.red));
@@ -160,13 +161,7 @@ public class ResetPassActivity extends AppCompatActivity {
                         mHandler.sendEmptyMessageDelayed(3, 3000);
                         break;
                     case 4:
-                        Intent intent = new Intent(ResetPassActivity.this, ResetPassTwoActivity.class);
-                        startActivity(intent);
-                        mHandler.removeMessages(5);
-                        resetBtnCode.setClickable(true);
-                        resetBtnCode.setText("获取验证码");
-                        resetBtnCode.setBackground(getResources().getDrawable(R.drawable.vertifystyle));
-                        second = 60;
+                        resetNext(resetEtPhone.getText().toString(), resetEtCode.getText().toString());
                         break;
                 }
                 break;
@@ -194,13 +189,15 @@ public class ResetPassActivity extends AppCompatActivity {
         clearMessage();
         super.onStop();
     }
+
     private void clearMessage() {
+        if (null!=mHandler){
         mHandler.removeMessages(0);
         mHandler.removeMessages(1);
         mHandler.removeMessages(2);
         mHandler.removeMessages(3);
         mHandler.removeMessages(4);
-        mHandler = null;
+        mHandler = null;}
     }
 
     @Override
@@ -209,15 +206,91 @@ public class ResetPassActivity extends AppCompatActivity {
         ButterKnife.unbind(this);
     }
 
+    ParamBean paramBean;
+    ParamBean.ParamData paramData;
+
     /**
      * 获取验证码
      */
-    private void getCode() {
+    private void getCode(String phone) {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setPhone(phone);
+        paramBean.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(Url.WEB_VALIDATE_CODE_RESET)
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+
+            private BaseResultBean baseResultBean;
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                if (Tools.isGoodJson(response)) {
+                    baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                    if (baseResultBean.isExecResult()) {
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                resetBtnCode.setBackground(getResources().getDrawable(R.drawable.vertifystyle2));
+                                resetBtnCode.setText(second + "秒后可重发送");
+                                resetBtnCode.setClickable(false);
+                                mHandler.sendEmptyMessageDelayed(5, 1000);
+                            }
+                        });
+                    } else {
+                    }
+                }
+            }
+        });
     }
 
     /**
      * 校验手机号、验证码---下一步
      */
-    private void resetNnext() {
+    private void resetNext(String phone, String code) {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setPhone(phone);
+        paramData.setCode(code);
+        paramBean.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(Url.WEB_CHECK_VALIDATE_CODE_RESET)
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+
+            private BaseResultBean baseResultBean;
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("yjl", "reset---response>>" + response);
+                if (Tools.isGoodJson(response)) {
+                    baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                    if (baseResultBean.isExecResult()) {
+                        mHandler.removeMessages(5);
+                        resetBtnCode.setClickable(true);
+                        resetBtnCode.setText("获取验证码");
+                        resetBtnCode.setBackground(getResources().getDrawable(R.drawable.vertifystyle));
+                        second = 60;
+                        Intent intent = new Intent(ResetPassActivity.this, ResetPassTwoActivity.class);
+                        intent.putExtra("BEAN", paramBean);
+                        startActivity(intent);
+                    } else {
+                    }
+                }
+            }
+        });
     }
 }

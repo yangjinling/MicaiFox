@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="4dp"
-    android:visibility="gone"
     android:background="@android:color/transparent"
     android:orientation="vertical">
 
@@ -95,6 +94,7 @@
                 android:textSize="17sp" />
 
             <TextView
+                android:id="@+id/update_account_tv_bank"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

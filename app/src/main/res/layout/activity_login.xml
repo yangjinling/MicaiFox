@@ -11,14 +11,14 @@
     <LinearLayout
         android:layout_above="@+id/login_ll_et"
         android:layout_width="wrap_content"
-        android:layout_marginBottom="65dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="45dp"
         android:layout_centerHorizontal="true">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/logo" />
     </LinearLayout>
 
     <LinearLayout
@@ -48,11 +48,12 @@
                 android:textColor="@color/black"
                 android:textSize="17sp" />
             <EditText
-                android:inputType="number"
+                android:inputType="number|textMultiLine"
                 android:digits="0123456789"
                 android:id="@+id/login_et_phone"
                 android:layout_marginRight="14dp"
                 android:background="@null"
+                android:maxLength="11"
                 android:textColorHint="@color/gray"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -90,6 +91,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="17sp"
+                android:maxLength="16"
                 android:hint="请输入密码"
                 android:layout_weight="1"/>
         </LinearLayout>

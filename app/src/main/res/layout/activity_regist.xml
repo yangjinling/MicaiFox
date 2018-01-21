@@ -13,13 +13,13 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/regist_ll_et"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="65dp"
+        android:layout_marginBottom="45dp"
         android:gravity="center">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/logo" />
     </LinearLayout>
 
     <LinearLayout
@@ -53,6 +53,7 @@
                 android:digits="0123456789"                android:id="@+id/regist_et_phone"
                 android:textColorHint="@color/gray"
                 android:layout_width="0dp"
+                android:maxLength="11"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
                 android:layout_weight="1"
@@ -93,6 +94,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:textColorHint="@color/gray"
+                android:maxLength="4"
                 android:hint="请输入验证码"
                 android:textSize="17sp" />
 

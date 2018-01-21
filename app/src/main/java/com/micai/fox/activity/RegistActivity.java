@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -19,8 +20,11 @@ import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.app.Url;
 import com.micai.fox.base.BaseActivity;
-import com.micai.fox.bean.ParentBean;
+import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.BaseResultBean;
 import com.micai.fox.util.ExitAppUtils;
+import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.Tools;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -83,6 +87,7 @@ public class RegistActivity extends BaseActivity {
                     registBtnNext.setClickable(true);
                     break;
                 case 1:
+                    registEtPhone.requestFocus();
                     registEtPhone.setHintTextColor(getResources().getColor(R.color.gray));
                     registEtPhone.setHint("请输入手机号");
                     registBtnNext.setClickable(true);
@@ -130,12 +135,13 @@ public class RegistActivity extends BaseActivity {
     }
 
     private void clearMessage() {
+        if (null!=mHandler){
         mHandler.removeMessages(0);
         mHandler.removeMessages(1);
         mHandler.removeMessages(2);
         mHandler.removeMessages(3);
         mHandler.removeMessages(4);
-        mHandler = null;
+        mHandler = null;}
     }
 
     @OnClick({R.id.regist_tv_agreement, R.id.tv_back, R.id.regist_btn_code, R.id.regist_btn_next, R.id.regist_tv_have})
@@ -149,15 +155,7 @@ public class RegistActivity extends BaseActivity {
                 //获取验证码
                 String phone = registEtPhone.getText().toString().trim();
                 if (!TextUtils.isEmpty(phone) && phone.length() == 11 && "1".equals(phone.substring(0, 1))) {
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            registBtnCode.setBackground(getResources().getDrawable(R.drawable.vertifystyle2));
-                            registBtnCode.setText(second + "秒后可重发送");
-                            registBtnCode.setClickable(false);
-                            mHandler.sendEmptyMessageDelayed(5, 1000);
-                        }
-                    });
+                    getCode(phone);
                 } else {
                     if (TextUtils.isEmpty(phone)) {
                         registEtPhone.setHintTextColor(getResources().getColor(R.color.red));
@@ -203,13 +201,7 @@ public class RegistActivity extends BaseActivity {
                         mHandler.sendEmptyMessageDelayed(3, 3000);
                         break;
                     case 5:
-                        mHandler.removeMessages(5);
-                        registBtnCode.setClickable(true);
-                        registBtnCode.setText("获取验证码");
-                        registBtnCode.setBackground(getResources().getDrawable(R.drawable.vertifystyle));
-                        second = 60;
-                        intent = new Intent(RegistActivity.this, RegistTwoActivity.class);
-                        startActivity(intent);
+                        registNext(registEtPhone.getText().toString().trim(), registEtCode.getText().toString().trim());
                         break;
                     case 4:
                         Toast.makeText(RegistActivity.this, "请先阅读并同意《用户协议》", Toast.LENGTH_SHORT).show();
@@ -256,22 +248,26 @@ public class RegistActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    ParamBean paramBean;
+    ParamBean.ParamData paramData;
+
     /**
      * 获取验证码
      */
-    private void getCode() {
-
-    }
-
-    /**
-     * 校验手机与验证码---下一步
-     */
-    private void registNext() {
+    private void getCode(String phone) {
+        Tools.showDialog(this,1);
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setPhone(phone);
+        paramBean.setParamData(paramData);
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
-                .url(Url.WEB_VALIDATE_CODE)
-                .content(new Gson().toJson(new ParentBean()))
+                .url(Url.WEB_VALIDATE_CODE_REGIST)
+                .content(new Gson().toJson(paramBean))
                 .build().execute(new StringCallback() {
+
+            private BaseResultBean baseResultBean;
+
             @Override
             public void onError(Call call, Exception e, int id) {
 
@@ -279,7 +275,71 @@ public class RegistActivity extends BaseActivity {
 
             @Override
             public void onResponse(String response, int id) throws Exception {
+                Log.e("yjl","regist--code"+response);
+                if (Tools.isGoodJson(response)) {
+                    baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                    if (baseResultBean.isExecResult()) {
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                registBtnCode.setBackground(getResources().getDrawable(R.drawable.vertifystyle2));
+                                registBtnCode.setText(second + "秒后可重发送");
+                                registBtnCode.setClickable(false);
+                                mHandler.sendEmptyMessageDelayed(5, 1000);
+                            }
+                        });
+                    } else {
+                        registEtPhone.setText("");
+                        registEtPhone.setHintTextColor(getResources().getColor(R.color.red));
+                        registEtPhone.setHint("" + baseResultBean.getExecMsg());
+                        registBtnCode.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(1, 3000);
+                    }
+                }
+            }
+        });
+    }
 
+    /**
+     * 校验手机与验证码---下一步
+     */
+    private void registNext(String phone, String code) {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setPhone(phone);
+        paramData.setCode(code);
+        paramBean.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(Url.WEB_CHECK_VALIDATE_CODE_REGIST)
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+
+            private BaseResultBean baseResultBean;
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("yjl", "regist---response>>" + response);
+                if (Tools.isGoodJson(response)) {
+                    baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                    if (baseResultBean.isExecResult()) {
+                        mHandler.removeMessages(5);
+                        registBtnCode.setClickable(true);
+                        registBtnCode.setText("获取验证码");
+                        registBtnCode.setBackground(getResources().getDrawable(R.drawable.vertifystyle));
+                        second = 60;
+                        Intent intent = new Intent(RegistActivity.this, RegistTwoActivity.class);
+                        intent.putExtra("BEAN", paramBean);
+                        startActivity(intent);
+                    }else {
+//                        {"execResult":false,"execErrCode":"u-000030","execMsg":"验证码错误","count":0,"num":0}
+                    }
+                }
             }
         });
     }

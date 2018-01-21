@@ -12,11 +12,22 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
+import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
+import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.BaseResultBean;
+import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.Tools;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 public class AcountEditActivity extends AppCompatActivity {
 
@@ -38,6 +49,8 @@ public class AcountEditActivity extends AppCompatActivity {
     EditText accountEtBankname;
     @Bind(R.id.set_ll_account)
     LinearLayout setLlAccount;
+    @Bind(R.id.update_account_tv_bank)
+    TextView updateAccountTvBank;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -100,9 +113,7 @@ public class AcountEditActivity extends AppCompatActivity {
                         mHandler.sendEmptyMessageDelayed(0, 3000);
                         break;
                     case 3:
-                        Intent intent = new Intent(AcountEditActivity.this, SettingDetailActivity.class);
-                        setResult(RESULT_OK, intent);
-                        finish();
+                        updateAccount(accountEtName.getText().toString(), accountEtNum.getText().toString(), updateAccountTvBank.getText().toString(), accountEtBankname.getText().toString());
                         break;
                 }
                 break;
@@ -130,5 +141,49 @@ public class AcountEditActivity extends AppCompatActivity {
     protected void onDestroy() {
         ButterKnife.unbind(tvBack);
         super.onDestroy();
+    }
+
+    ParamBean paramBean;
+    ParamBean.ParamData paramData;
+
+
+    /*更新收款账号*/
+    private void updateAccount(String accountName, String accountNumber, String accountBank, String accountBranch) {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setAccountName(accountName);
+        paramData.setAccountNumber(accountNumber);
+        paramData.setAccountBank(accountBank);
+        paramData.setAccountBranch(accountBranch);
+        paramBean.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+//                .url(Url.WEB_SET_ACCOUNT_UPDATE)
+                .url(String.format(Url.WEB_SET_ACCOUNT_UPDATE, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+
+            private BaseResultBean baseResultBean;
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("yjl", "update--account>>" + response);
+                if (Tools.isGoodJson(response)) {
+                    baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                    if (baseResultBean.isExecResult()) {
+                        Intent intent = new Intent(AcountEditActivity.this, SettingDetailActivity.class);
+                        intent.putExtra("BEAN", paramBean);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    } else {
+                    }
+                }
+            }
+        });
     }
 }

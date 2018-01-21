@@ -1,13 +1,11 @@
 package com.micai.fox.activity;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,10 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
+import com.micai.fox.app.Url;
+import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.BaseResultBean;
 import com.micai.fox.util.ExitAppUtils;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,6 +30,8 @@ import java.util.regex.Pattern;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 /*重置密码下一步*/
 public class ResetPassTwoActivity extends AppCompatActivity {
@@ -89,12 +95,14 @@ public class ResetPassTwoActivity extends AppCompatActivity {
         }
     };
     private Dialog dialog;
+    private ParamBean paramBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_pass_two);
         ButterKnife.bind(this);
+        paramBean = ((ParamBean) getIntent().getSerializableExtra("BEAN"));
         tvTitle.setText("重置密码");
     }
 
@@ -149,8 +157,7 @@ public class ResetPassTwoActivity extends AppCompatActivity {
             case 4:
 //                Intent intent = new Intent(ResetPassTwoActivity.this, MainActivity.class);
 //                startActivity(intent);
-                dialog = Tools.showDialog(this, 1);
-                mHandler.sendEmptyMessageDelayed(4, 1500);
+                reset(resetEtPassword.getText().toString(), resetEtPasswordAgin.getText().toString());
                 break;
         }
     }
@@ -185,13 +192,16 @@ public class ResetPassTwoActivity extends AppCompatActivity {
     }
 
     private void clearMessage() {
-        mHandler.removeMessages(0);
-        mHandler.removeMessages(1);
-        mHandler.removeMessages(2);
-        mHandler.removeMessages(3);
-        mHandler.removeMessages(4);
-        mHandler = null;
+        if (null != mHandler) {
+            mHandler.removeMessages(0);
+            mHandler.removeMessages(1);
+            mHandler.removeMessages(2);
+            mHandler.removeMessages(3);
+            mHandler.removeMessages(4);
+            mHandler = null;
+        }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -201,6 +211,36 @@ public class ResetPassTwoActivity extends AppCompatActivity {
     /**
      * 校验两次密码---重置
      */
-    private void reset() {
+    private void reset(String pwd, String pwd2) {
+        ParamBean paramBeans = new ParamBean();
+        ParamBean.ParamData paramData = paramBean.getParamData();
+        paramData.setPwd(pwd);
+        paramData.setPwd2(pwd2);
+        paramBeans.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(Url.WEB_RESET)
+                .content(new Gson().toJson(paramBeans))
+                .build().execute(new StringCallback() {
+
+            private BaseResultBean baseResultBean;
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                if (Tools.isGoodJson(response)) {
+                    baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                    if (baseResultBean.isExecResult()) {
+                        dialog = Tools.showDialog(ResetPassTwoActivity.this, 1);
+                        mHandler.sendEmptyMessageDelayed(4, 1500);
+                    } else {
+                    }
+                }
+            }
+        });
     }
 }

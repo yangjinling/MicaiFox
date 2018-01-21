@@ -16,8 +16,12 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
+import com.micai.fox.resultbean.BaseResultBean;
 import com.micai.fox.util.ExitAppUtils;
+import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.PrefUtils;
+import com.micai.fox.util.Tools;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -144,11 +148,7 @@ public class SettingActivity extends AppCompatActivity {
             //跳转 需要判断密码是否相等
             @Override
             public void onClick(View view) {
-                dialog.dismiss();
-                Intent intent = new Intent(SettingActivity.this, IndexActivity.class);
-                ExitAppUtils.getInstance().finishAllActivities();
-                PrefUtils.setBoolean(Config.getInstance().getmContext(), "ISFIRST", false );
-                startActivity(intent);
+               logOut();
 
             }
         });
@@ -166,12 +166,46 @@ public class SettingActivity extends AppCompatActivity {
         Display d = m.getDefaultDisplay();  //为获取屏幕宽、高
         WindowManager.LayoutParams p = dialog.getWindow().getAttributes();  //获取对话框当前的参数值
                   /* (int) (d.getHeight() * 0.3);  */ //高度设置为屏幕的0.3
-        p.height = (int) (d.getHeight() * 0.35); //高度设置为屏幕-标题栏
+        p.height = (int) (d.getHeight() * 0.4); //高度设置为屏幕-标题栏
                 /*(int) (d.getWidth() * 0.5);*/
         p.width = (int) (d.getWidth() * 0.9);   //宽度设置为屏幕的0.5
         dialog.getWindow().setAttributes(p);     //设置生效
         dialog.show();
 
 
+    }
+
+    private void logOut() {
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(Url.WEB_LOGOUT)
+                .content("")
+//                .url(String.format(Url.WEB_LOGOUT, Config.getInstance().getSessionId()))
+                .build().execute(new StringCallback() {
+
+            private BaseResultBean baseResultBean;
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("yjl", "set---logout>>" + response);
+                if (Tools.isGoodJson(response)) {
+                    baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                    if (baseResultBean.isExecResult()) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(SettingActivity.this, IndexActivity.class);
+                        ExitAppUtils.getInstance().finishAllActivities();
+                        PrefUtils.setBoolean(Config.getInstance().getmContext(), "ISFIRST", false);
+                        startActivity(intent);
+                    } else {
+                    }
+                }
+
+            }
+        });
     }
 }

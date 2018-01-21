@@ -11,6 +11,8 @@ public class Config {
     private static Config mAppConfig;
     private String appId;//微信支付的appid
     private String photoUrl;
+    private String sessionId;
+    private String phone;
     private Config() {
     }
 
@@ -50,5 +52,21 @@ public class Config {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

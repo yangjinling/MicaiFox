@@ -18,8 +18,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
+import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
+import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.AccountInfoResult;
+import com.micai.fox.resultbean.BaseResultBean;
+import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,6 +36,8 @@ import java.util.regex.Pattern;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 /*设置详情*/
 public class SettingDetailActivity extends AppCompatActivity {
@@ -174,6 +185,8 @@ public class SettingDetailActivity extends AppCompatActivity {
         }
     };
     private Dialog phoneDialog;
+    private ParamBean paramBeanResult;
+    private ParamBean.ParamData paramDataResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,10 +207,13 @@ public class SettingDetailActivity extends AppCompatActivity {
                 tvNotify.setText("编辑");
                 tvTitle.setText("收款账户");
                 setDetailLlAccount.setVisibility(View.VISIBLE);
+                getAccountInfo();
                 break;
             case 1:
                 tvTitle.setText("修改手机号");
                 setLlPhone.setVisibility(View.VISIBLE);
+                setPhoneTvContent.setText(reformatPhone(Config.getInstance().getPhone()));
+
                 break;
             case 2:
                 tvTitle.setText("修改密码");
@@ -217,6 +233,10 @@ public class SettingDetailActivity extends AppCompatActivity {
                 setWeb.setVisibility(View.VISIBLE);
                 break;
         }
+    }
+
+    private String reformatPhone(String phone) {
+        return "您当前的注册手机号为：" + phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4);
     }
 
     @Override
@@ -340,8 +360,7 @@ public class SettingDetailActivity extends AppCompatActivity {
                         mHandler.sendEmptyMessageDelayed(11, 3000);
                         break;
                     case 5:
-                        phoneDialog = Tools.showDialog(this, 2);
-                        mHandler.sendEmptyMessageDelayed(5, 1500);
+                        updatePass(passEtOrigin.getText().toString(), passEtNew.getText().toString(), passEtAgain.getText().toString());
                         break;
                     case 6:
                         passEtOrigin.setText("");
@@ -353,8 +372,11 @@ public class SettingDetailActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.idea_btn_submit:
-                phoneDialog = Tools.showDialog(this, 3);
-                mHandler.sendEmptyMessageDelayed(5, 1500);
+                if (!TextUtils.isEmpty(ideaEt.getText().toString())) {
+                    submitIdea(ideaEt.getText().toString());
+                } else {
+                    Toast.makeText(SettingDetailActivity.this, "意见不能为空", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.phone_btn_code:
                 //获取验证码
@@ -371,15 +393,7 @@ public class SettingDetailActivity extends AppCompatActivity {
                     phoneBtnCode.setClickable(false);
                     mHandler.sendEmptyMessageDelayed(1, 3000);
                 } else {
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            phoneBtnCode.setBackground(getResources().getDrawable(R.drawable.vertifystyle2));
-                            phoneBtnCode.setText(second + "秒后可重发送");
-                            phoneBtnCode.setClickable(false);
-                            mHandler.sendEmptyMessageDelayed(6, 1000);
-                        }
-                    });
+                    updatePhoneCode(phoneEtNum.getText().toString().trim());
                 }
                 break;
             case R.id.phone_btn_confirm:
@@ -404,8 +418,7 @@ public class SettingDetailActivity extends AppCompatActivity {
                         mHandler.sendEmptyMessageDelayed(4, 3000);
                         break;
                     case 3:
-                        phoneDialog = Tools.showDialog(this, 2);
-                        mHandler.sendEmptyMessageDelayed(5, 1500);
+                        updatePhone(phoneEtNum.getText().toString().trim(), phoneEtCode.getText().toString());
                         break;
                 }
                 break;
@@ -461,7 +474,12 @@ public class SettingDetailActivity extends AppCompatActivity {
         switch (requestCode) {
             case 100:
                 if (resultCode == RESULT_OK) {
-
+                    paramBeanResult = ((ParamBean) data.getSerializableExtra("BEAN"));
+                    paramDataResult = paramBeanResult.getParamData();
+                    accountTvName.setText(paramDataResult.getAccountName());
+                    accountTvNum.setText(paramDataResult.getAccountNumber());
+                    accountTvBank.setText(paramDataResult.getAccountBank());
+                    accountTvBankname.setText(paramDataResult.getAccountBranch());
                 } else {
                 }
                 break;
@@ -475,24 +493,224 @@ public class SettingDetailActivity extends AppCompatActivity {
     }
 
     private void clearMessage() {
-        if (type == 1) {
-            //修改手机号
-            mHandler.removeMessages(0);
-            mHandler.removeMessages(1);
-            mHandler.removeMessages(2);
-            mHandler.removeMessages(3);
-            mHandler.removeMessages(4);
-            mHandler.removeMessages(5);
-            mHandler.removeMessages(6);
-        } else if (type == 2) {
-            //修改密码
-            mHandler.removeMessages(7);
-            mHandler.removeMessages(8);
-            mHandler.removeMessages(9);
-            mHandler.removeMessages(10);
-            mHandler.removeMessages(11);
-            mHandler.removeMessages(12);
+        if (null != mHandler) {
+            if (type == 1) {
+                //修改手机号
+                mHandler.removeMessages(0);
+                mHandler.removeMessages(1);
+                mHandler.removeMessages(2);
+                mHandler.removeMessages(3);
+                mHandler.removeMessages(4);
+                mHandler.removeMessages(5);
+                mHandler.removeMessages(6);
+            } else if (type == 2) {
+                //修改密码
+                mHandler.removeMessages(7);
+                mHandler.removeMessages(8);
+                mHandler.removeMessages(9);
+                mHandler.removeMessages(10);
+                mHandler.removeMessages(11);
+                mHandler.removeMessages(12);
+            }
+            mHandler = null;
         }
-        mHandler = null;
+    }
+
+    ParamBean paramBean;
+    ParamBean.ParamData paramData;
+
+    /*获取收款账户信息*/
+    private void getAccountInfo() {
+        OkHttpUtils.post()
+//                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+//                .url(Url.WEB_SET_ACCOUNT_SEARCH)
+                .url(String.format(Url.WEB_SET_ACCOUNT_SEARCH, Config.getInstance().getSessionId()))
+                .build().execute(new StringCallback() {
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("yjl", "set---account>>" + response);
+                if (Tools.isGoodJson(response)) {
+                    AccountInfoResult accountInfoResult = new Gson().fromJson(response, AccountInfoResult.class);
+                    if (accountInfoResult.isExecResult()) {
+                        AccountInfoResult.ExecDatasBean execDatas = accountInfoResult.getExecDatas();
+                        accountTvName.setText(execDatas.getAccountName());
+                        accountTvNum.setText(execDatas.getAccountNumber());
+                        accountTvBank.setText(execDatas.getAccountBank());
+                        accountTvBankname.setText(execDatas.getAccountBranch());
+                    } else {
+                    }
+                }
+
+            }
+        });
+    }
+
+    /*意见反馈*/
+    private void submitIdea(String content) {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setContent(content);
+        paramBean.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+//                .url(Url.WEB_SET_IDEAR)
+                .url(String.format(Url.WEB_SET_IDEAR, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+
+            private BaseResultBean baseResultBean;
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("yjl", "set---idea>>" + response);
+                if (Tools.isGoodJson(response)) {
+                    baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                    if (baseResultBean.isExecResult()) {
+                        phoneDialog = Tools.showDialog(SettingDetailActivity.this, 3);
+                        mHandler.sendEmptyMessageDelayed(5, 1500);
+                    } else {
+                    }
+                }
+
+            }
+        });
+    }
+
+    /*修改密码*/
+    private void updatePass(String oldPwd, String pwd, String pwd2) {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setOldPwd(oldPwd);
+        paramData.setPwd(pwd);
+        paramData.setPwd2(pwd2);
+        paramBean.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                // .url(Url.WEB_SET_PASSWORD)
+                .url(String.format(Url.WEB_SET_PASSWORD, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+
+            private BaseResultBean baseResultBean;
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("yjl", "set---pass>>" + response);
+                if (Tools.isGoodJson(response)) {
+                    baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                    if (baseResultBean.isExecResult()) {
+                        phoneDialog = Tools.showDialog(SettingDetailActivity.this, 2);
+                        mHandler.sendEmptyMessageDelayed(5, 1500);
+                    } else {
+                    }
+                }
+
+            }
+        });
+    }
+
+    /*修改手机号验证码*/
+    private void updatePhoneCode(String phone) {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setPhone(phone);
+        paramBean.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+//                .url(Url.WEB_SET_PHONE_CODE)
+                .url(String.format(Url.WEB_SET_PHONE_CODE, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+
+            private BaseResultBean baseResultBean;
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("yjl", "set---phoneCode>>" + response);
+                if (Tools.isGoodJson(response)) {
+                    baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                    if (baseResultBean.isExecResult()) {
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                phoneBtnCode.setBackground(getResources().getDrawable(R.drawable.vertifystyle2));
+                                phoneBtnCode.setText(second + "秒后可重发送");
+                                phoneBtnCode.setClickable(false);
+                                mHandler.sendEmptyMessageDelayed(6, 1000);
+                            }
+                        });
+                    } else {
+                        phoneEtNum.setText("");
+                        phoneEtNum.setHintTextColor(getResources().getColor(R.color.red));
+                        phoneEtNum.setHint("" + baseResultBean.getExecMsg());
+                        phoneBtnConfirm.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(2, 3000);
+                    }
+                }
+
+            }
+        });
+    }
+
+    /*修改手机号*/
+    private void updatePhone(String phone, String code) {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setPhone(phone);
+        paramData.setCode(code);
+        paramBean.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+//                .url(Url.WEB_SET_PHONE)
+                .url(String.format(Url.WEB_SET_PHONE, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+
+            private BaseResultBean baseResultBean;
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("yjl", "set---phone>>" + response);
+                if (Tools.isGoodJson(response)) {
+                    baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                    if (baseResultBean.isExecResult()) {
+                        phoneDialog = Tools.showDialog(SettingDetailActivity.this, 2);
+                        mHandler.sendEmptyMessageDelayed(5, 1500);
+                    } else {
+                        phoneEtCode.setText("");
+                        phoneEtCode.setHintTextColor(getResources().getColor(R.color.red));
+                        phoneEtCode.setHint("验证码错误");
+                        phoneBtnConfirm.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(4, 3000);
+                    }
+                }
+            }
+        });
     }
 }
