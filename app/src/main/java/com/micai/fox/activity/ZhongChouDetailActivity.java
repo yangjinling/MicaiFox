@@ -98,23 +98,9 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
         rl.setVisibility(View.VISIBLE);
         tvBack.setVisibility(View.VISIBLE);
         tvTitle.setText("众筹详情");
-        initTalk(0);
         initControls(0);
 //        initFragments(0);
 //        switchFragment(mFragments[0]);
-    }
-
-    private void initTalk(int type) {
-        if (type == 0) {
-            SpannableString spannableString = new SpannableString(" 预热中 原有的文字大小的基础上，相对设置文字大小，实现方法如下：");
-            ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#ffffff"));
-            spannableString.setSpan(colorSpan, 0, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            BackgroundColorSpan colorSpans = new BackgroundColorSpan(Color.parseColor("#FFEC7C64"));
-            spannableString.setSpan(colorSpans, 0, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            RelativeSizeSpan sizeSpan = new RelativeSizeSpan(1.2f);
-            spannableString.setSpan(sizeSpan, 4, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            zhongchouDetailTvTalk.setText(spannableString);
-        }
     }
 
     private void initFragments(int type) {
@@ -230,7 +216,8 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
             if (i == 0) {
                 // 设置第一个tab的TextView是被选择的样式
                 tab.getCustomView().findViewById(R.id.tv_tableitem).setSelected(true);//第一个tab被选中
-                tab.getCustomView().findViewById(R.id.line_tableitem).setVisibility(View.VISIBLE);
+                tab.getCustomView().findViewById(R.id.line_tableitem1).setVisibility(View.VISIBLE);
+                tab.getCustomView().findViewById(R.id.line_tableitem2).setVisibility(View.VISIBLE);
             }
             TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tv_tableitem);
             textView.setText(list_title.get(i));//设置tab上的文字
@@ -239,14 +226,15 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 tab.getCustomView().findViewById(R.id.tv_tableitem).setSelected(true);
-                tab.getCustomView().findViewById(R.id.line_tableitem).setVisibility(View.VISIBLE);
-                zhongchouDetailViewpager.setCurrentItem(tab.getPosition());
+                tab.getCustomView().findViewById(R.id.line_tableitem1).setVisibility(View.VISIBLE);
+                tab.getCustomView().findViewById(R.id.line_tableitem2).setVisibility(View.VISIBLE);                zhongchouDetailViewpager.setCurrentItem(tab.getPosition());
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 tab.getCustomView().findViewById(R.id.tv_tableitem).setSelected(false);
-                tab.getCustomView().findViewById(R.id.line_tableitem).setVisibility(View.GONE);
+                tab.getCustomView().findViewById(R.id.line_tableitem1).setVisibility(View.GONE);
+                tab.getCustomView().findViewById(R.id.line_tableitem2).setVisibility(View.GONE);
             }
 
             @Override

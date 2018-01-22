@@ -88,8 +88,8 @@ public class MyZhongChouActivity extends AppCompatActivity {
         list_title.add("已支付");
         list_title.add("已兑换");
         //设置TabLayout的模式
-        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-//        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+//        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
         fAdapter = new ViewPageAdapter(getSupportFragmentManager(), list_fragment, list_title);
         //viewpager加载adapter
         mineZhongchouViewpager.setAdapter(fAdapter);

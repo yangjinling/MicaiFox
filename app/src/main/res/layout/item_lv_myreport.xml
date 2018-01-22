@@ -97,11 +97,10 @@
             android:id="@+id/tv_rate_lv_report"
             android:layout_width="74dp"
             android:layout_height="24dp"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/whitebgtstyle"
-            android:gravity="center"
+            android:layout_marginRight="14dp"
+            android:gravity="right|center_vertical"
             android:text="2中2"
-            android:textColor="@color/red"
-            android:textSize="15sp" />
+            android:textColor="@color/white"
+            android:textSize="13sp" />
     </LinearLayout>
 </LinearLayout>

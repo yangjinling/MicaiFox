@@ -159,7 +159,8 @@ public class ExpertsFragment extends Fragment {
             if (i == 0) {
                 // 设置第一个tab的TextView是被选择的样式
                 tab.getCustomView().findViewById(R.id.tv_tableitem).setSelected(true);//第一个tab被选中
-                tab.getCustomView().findViewById(R.id.line_tableitem).setVisibility(View.VISIBLE);
+                tab.getCustomView().findViewById(R.id.line_tableitem1).setVisibility(View.VISIBLE);
+                tab.getCustomView().findViewById(R.id.line_tableitem2).setVisibility(View.VISIBLE);
             }
             TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tv_tableitem);
             textView.setText(list_title.get(i));//设置tab上的文字
@@ -168,14 +169,16 @@ public class ExpertsFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 tab.getCustomView().findViewById(R.id.tv_tableitem).setSelected(true);
-                tab.getCustomView().findViewById(R.id.line_tableitem).setVisibility(View.VISIBLE);
+                tab.getCustomView().findViewById(R.id.line_tableitem1).setVisibility(View.VISIBLE);
+                tab.getCustomView().findViewById(R.id.line_tableitem2).setVisibility(View.VISIBLE);
                 expertsViewpager.setCurrentItem(tab.getPosition());
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 tab.getCustomView().findViewById(R.id.tv_tableitem).setSelected(false);
-                tab.getCustomView().findViewById(R.id.line_tableitem).setVisibility(View.GONE);
+                tab.getCustomView().findViewById(R.id.line_tableitem1).setVisibility(View.GONE);
+                tab.getCustomView().findViewById(R.id.line_tableitem2).setVisibility(View.GONE);
             }
 
             @Override

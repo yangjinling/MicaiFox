@@ -14,14 +14,14 @@
         android:visibility="gone" />
 
     <ListView
-        android:headerDividersEnabled="true"
         android:scrollbars="none"
         android:layout_marginRight="12.5dp"
         android:layout_marginLeft="12.5dp"
         android:id="@+id/mine_zhongchou_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="10dp"></ListView>
+        android:dividerHeight="10dp"
+        android:footerDividersEnabled="true"
+        android:divider="@android:color/transparent"></ListView>
 
 </LinearLayout>
