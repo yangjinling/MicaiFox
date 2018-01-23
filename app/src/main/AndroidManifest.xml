@@ -29,11 +29,19 @@
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.WelcomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <!-- 欢迎页面 -->
         <activity
@@ -45,12 +53,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ActivityTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/ActivityTheme"></activity>
         <!-- 登陆界面 -->
         <activity
             android:name=".activity.LoginActivity"
@@ -147,7 +150,7 @@
             android:name=".activity.SettingDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
-        <!--收款账户编辑界面-->
+        <!-- 收款账户编辑界面 -->
         <activity
             android:name=".activity.AcountEditActivity"
             android:screenOrientation="portrait"

@@ -11,13 +11,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12.5dp"
-        android:layout_marginRight="12.5dp"
-        android:background="@drawable/edittextstyle"
-        android:orientation="vertical"
-        android:paddingBottom="18dp"
-        android:paddingLeft="14sp"
-        android:paddingRight="15dp">
+        android:layout_marginLeft="20.5dp"
+        android:layout_marginRight="18.5dp"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,26 +25,27 @@
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:text="账户名称:"
-                android:textColor="@color/text_black"
-                android:textSize="17sp" />
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/account_tv_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right"
                 android:background="@null"
+                android:gravity="right"
                 android:text="杨金玲"
-                android:textSize="17sp" />
+                android:textColor="@color/black"
+                android:textSize="15sp" />
         </LinearLayout>
 
         <View
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="15dp"
-            android:background="@color/text_gray"></View>
+            android:background="@color/text_gray"
+            android:visibility="gone"></View>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,8 +57,8 @@
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:text="账户号码:"
-                android:textColor="@color/text_black"
-                android:textSize="17sp" />
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/account_tv_num"
@@ -71,15 +68,16 @@
                 android:background="@null"
                 android:gravity="right"
                 android:text="6227002191594874010"
-                android:textSize="17sp" />
+                android:textColor="@color/black"
+                android:textSize="15sp" />
         </LinearLayout>
 
         <View
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="17dp"
-            android:background="@color/text_gray"></View>
+            android:background="@color/text_gray"
+            android:visibility="gone"></View>
 
         <LinearLayout
             android:id="@+id/account_ll_bank"
@@ -92,27 +90,28 @@
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:text="账户银行:"
-                android:textColor="@color/text_black"
-                android:textSize="17sp" />
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/account_tv_bank"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="招商银行"
                 android:gravity="right"
-                android:textSize="17sp" />
+                android:text="招商银行"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
 
 
         </LinearLayout>
 
         <View
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="20dp"
-            android:background="@color/text_gray"></View>
+            android:background="@color/text_gray"
+            android:visibility="gone"></View>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,8 +123,8 @@
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:text="开户支行:"
-                android:textColor="@color/text_black"
-                android:textSize="17sp" />
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/account_tv_bankname"
@@ -135,7 +134,8 @@
                 android:background="@null"
                 android:gravity="right"
                 android:text="招商银行北京分行中关村支行"
-                android:textSize="17sp" />
+                android:textColor="@color/black"
+                android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
 

@@ -12,13 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/regist_ll_et_two"
-        android:layout_marginBottom="45dp"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="40dp">
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/logo" />
+            android:layout_height="wrap_content"
+            android:background="@mipmap/logo" />
     </LinearLayout>
 
     <LinearLayout
@@ -82,15 +83,15 @@
                 android:textSize="17sp" />
 
             <EditText
-                android:inputType="textPassword|textMultiLine"
                 android:id="@+id/regist_et_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:maxLength="16"
                 android:hint="6~16位的数字、字母或符号"
+                android:inputType="textPassword|textMultiLine"
+                android:maxLength="16"
                 android:textSize="17sp" />
         </LinearLayout>
 
@@ -119,7 +120,6 @@
                 android:textSize="17sp" />
 
             <EditText
-                android:inputType="textPassword|textMultiLine"
                 android:id="@+id/regist_et_password_agin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -127,6 +127,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="请再次输入密码"
+                android:inputType="textPassword|textMultiLine"
                 android:maxLength="16"
                 android:textSize="17sp" />
         </LinearLayout>

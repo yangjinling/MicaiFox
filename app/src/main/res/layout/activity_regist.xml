@@ -9,17 +9,19 @@
     <include layout="@layout/layout_title"></include>
 
     <LinearLayout
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/regist_ll_et"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="45dp"
         android:gravity="center">
 
         <ImageView
+            android:scaleType="centerCrop"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/logo" />
+            android:layout_height="wrap_content"
+            android:background="@mipmap/logo" />
     </LinearLayout>
 
     <LinearLayout

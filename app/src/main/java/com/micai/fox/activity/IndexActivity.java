@@ -28,13 +28,6 @@ public class IndexActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
         ButterKnife.bind(this);
-        if (PrefUtils.getBoolean(Config.getInstance().getmContext(), "ISFIRST", false)) {
-            Config.getInstance().setSessionId(PrefUtils.getString(Config.getInstance().getmContext(),"SESSIONID",""));
-            Config.getInstance().setPhone(PrefUtils.getString(Config.getInstance().getmContext(),"PHONE",""));
-            Intent intent = new Intent(IndexActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
     }
 
     @OnClick({R.id.btn_login, R.id.btn_regist})
