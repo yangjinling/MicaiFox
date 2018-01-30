@@ -16,8 +16,7 @@
         <ImageView
             android:id="@+id/home_zhong_iv_head"
             android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:src="@mipmap/ic_launcher_round" />
+            android:layout_height="65dp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -130,6 +129,7 @@
         android:orientation="horizontal">
 
         <ProgressBar
+            android:id="@+id/home_zhong_prograss_ing"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="0dp"
             android:layout_height="6dp"
@@ -138,14 +138,14 @@
             android:progress="20"
             android:progressDrawable="@drawable/layer_list_progress_drawable" />
         <ProgressBar
-            android:id="@+id/home_zhong_prograss"
+            android:id="@+id/home_zhong_prograss_liu"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="0dp"
             android:layout_height="6dp"
             android:layout_weight="1"
-            android:visibility="gone"
             android:max="100"
             android:progress="20"
+            android:visibility="gone"
             android:progressDrawable="@drawable/layer_list_progress_liubiao_drawable" />
         <TextView
             android:id="@+id/home_zhong_tv_state"
@@ -168,6 +168,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/home_zhong_ll_mubiao"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -206,7 +207,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
+            android:id="@+id/home_zhong_ll_have"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -244,7 +245,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
+            android:id="@+id/home_zhong_ll_people"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -275,9 +276,11 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/home_zhong_ll_nostart"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:visibility="gone"
             android:gravity="right"
             android:orientation="vertical">
 

@@ -236,7 +236,9 @@ public class SettingDetailActivity extends AppCompatActivity {
     }
 
     private String reformatPhone(String phone) {
-        return "您当前的注册手机号为：" + phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4);
+        if (null != phone&&!TextUtils.isEmpty(phone)) {
+            return "您当前的注册手机号为：" + phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4);
+        } else return "";
     }
 
     @Override
@@ -478,7 +480,7 @@ public class SettingDetailActivity extends AppCompatActivity {
                     paramDataResult = paramBeanResult.getParamData();
                     accountTvName.setText(paramDataResult.getAccountName());
                     accountTvNum.setText(paramDataResult.getAccountNumber());
-                    accountTvBank.setText(paramDataResult.getAccountBank());
+                    accountTvBank.setText(paramDataResult.getAccountBankName());
                     accountTvBankname.setText(paramDataResult.getAccountBranch());
                 } else {
                 }
@@ -541,7 +543,7 @@ public class SettingDetailActivity extends AppCompatActivity {
                         AccountInfoResult.ExecDatasBean execDatas = accountInfoResult.getExecDatas();
                         accountTvName.setText(execDatas.getAccountName());
                         accountTvNum.setText(execDatas.getAccountNumber());
-                        accountTvBank.setText(execDatas.getAccountBank());
+                        accountTvBank.setText(execDatas.getAccountBankName());
                         accountTvBankname.setText(execDatas.getAccountBranch());
                     } else {
                     }

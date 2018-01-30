@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -17,6 +18,7 @@ import com.micai.fox.R;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.BankResultBean;
 import com.micai.fox.resultbean.BaseResultBean;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
@@ -113,11 +115,13 @@ public class AcountEditActivity extends AppCompatActivity {
                         mHandler.sendEmptyMessageDelayed(0, 3000);
                         break;
                     case 3:
-                        updateAccount(accountEtName.getText().toString(), accountEtNum.getText().toString(), updateAccountTvBank.getText().toString(), accountEtBankname.getText().toString());
+                        updateAccount(accountEtName.getText().toString(), accountEtNum.getText().toString(), bankResultBean.getExecDatas().get(0).getValue(), accountEtBankname.getText().toString());
                         break;
                 }
                 break;
             case R.id.account_ll_bank:
+                //选择银行列表
+                getBankData();
                 break;
         }
     }
@@ -143,9 +147,37 @@ public class AcountEditActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    ParamBean paramBean;
-    ParamBean.ParamData paramData;
+    private ParamBean paramBean;
+    private ParamBean.ParamData paramData;
+    private BankResultBean bankResultBean;
 
+    //获取银行列表
+    private void getBankData() {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setType("Bank");
+        paramBean.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(String.format(Url.WEB_SET_BANK, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("YJL", "bank---" + response);
+                if (Tools.isGoodJson(response)) {
+                    bankResultBean = new Gson().fromJson(response, BankResultBean.class);
+                    if (bankResultBean.isExecResult()) {
+                    } else {
+                    }
+                }
+            }
+        });
+    }
 
     /*更新收款账号*/
     private void updateAccount(String accountName, String accountNumber, String accountBank, String accountBranch) {
@@ -155,6 +187,7 @@ public class AcountEditActivity extends AppCompatActivity {
         paramData.setAccountNumber(accountNumber);
         paramData.setAccountBank(accountBank);
         paramData.setAccountBranch(accountBranch);
+        paramData.setAccountBankName(bankResultBean.getExecDatas().get(0).getLabel());
         paramBean.setParamData(paramData);
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
@@ -186,4 +219,5 @@ public class AcountEditActivity extends AppCompatActivity {
             }
         });
     }
+
 }

@@ -28,7 +28,9 @@ public class ParamBean implements Serializable {
         String accountName;
         String accountNumber;
         String accountBank;
+        String accountBankName;
         String accountBranch;
+        String type;
 
         public String getPhone() {
             return phone;
@@ -116,6 +118,22 @@ public class ParamBean implements Serializable {
 
         public void setAccountBranch(String accountBranch) {
             this.accountBranch = accountBranch;
+        }
+
+        public String getAccountBankName() {
+            return accountBankName;
+        }
+
+        public void setAccountBankName(String accountBankName) {
+            this.accountBankName = accountBankName;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
         }
     }
 }

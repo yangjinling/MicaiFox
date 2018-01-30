@@ -68,7 +68,9 @@
         <activity
             android:name=".activity.RegistTwoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ActivityTheme" />
+            android:theme="@style/ActivityTheme" >
+
+        </activity>
         <!-- 用户协议界面 -->
         <activity
             android:name=".activity.AgreementActivity"
@@ -83,7 +85,8 @@
         <activity
             android:name=".activity.ResetPassTwoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ActivityTheme" />
+            android:theme="@style/ActivityTheme" >
+        </activity>
         <!-- 忘记密码界面 -->
         <activity
             android:name=".activity.ForgetPassActivity"

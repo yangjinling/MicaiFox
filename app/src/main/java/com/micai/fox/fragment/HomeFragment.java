@@ -21,19 +21,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.activity.ExpertsDetailActivity;
+import com.micai.fox.activity.ReportDetailActivity;
 import com.micai.fox.activity.ZhongChouDetailActivity;
 import com.micai.fox.adapter.MyHomeZhongChouAdapter;
 import com.micai.fox.adapter.MyRecycleHAdapter;
+import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
+import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.BaseResultBean;
+import com.micai.fox.resultbean.HomeResultBean;
+import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.Tools;
 import com.micai.fox.view.MyDividerItemDecoration;
 import com.micai.fox.view.MyScrollView;
 import com.youth.banner.Banner;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -65,23 +79,14 @@ public class HomeFragment extends Fragment {
     @Bind(R.id.home_xuanting)
     LinearLayout homeXuanting;
     @Bind(R.id.home_scroll)
-    MyScrollView homeScroll;
+    ScrollView homeScroll;
     @Bind(R.id.home_xuanting2)
     LinearLayout homeXuanting2;
-    private ArrayList<String> data;
-    //设置图片资源:url或本地资源
-    String[] images = new String[]{
-            /*"http://218.192.170.132/BS80.jpg",*/
-           /* "http://img.zcool.cn/community/0166c756e1427432f875520f7cc838.jpg",
-            "http://img.zcool.cn/community/018fdb56e1428632f875520f7b67cb.jpg",*/
-            "http://img.zcool.cn/community/01c8dc56e1428e6ac72531cbaa5f2c.jpg",
-            "http://img.zcool.cn/community/01fda356640b706ac725b2c8b99b08.jpg",
-            "http://img.zcool.cn/community/01fd2756e142716ac72531cbf8bbbf.jpg",
-            "http://img.zcool.cn/community/0114a856640b6d32f87545731c076a.jpg"};
-
     //设置图片标题:自动对应
     String[] titles = new String[]{"十大星级品牌联盟，全场2折起", "全场2折起", "十大星级品牌联盟", "嗨购5折不要停", "12趁现在", "嗨购5折不要停，12.12趁现在", "实打实大顶顶顶顶"};
     private View footer_view;
+    private HomeResultBean homeResultBean;
+    private List<HomeResultBean.ExecDatasBean.BannerBean> bannerBeanList;
 
     @Nullable
     @Override
@@ -90,8 +95,7 @@ public class HomeFragment extends Fragment {
         ButterKnife.bind(this, view);
         rl.setVisibility(View.GONE);
         tvTitle.setText("迷彩狐");
-        data = getData();
-        initView();
+        getHomeData();
 //        homeScroll.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 //            @Override
 //            public void onGlobalLayout() {
@@ -101,7 +105,7 @@ public class HomeFragment extends Fragment {
 //
 //            }
 //        });
-        homeScroll.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+       /* homeScroll.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 Log.e("YJL", "悬停");
@@ -109,15 +113,16 @@ public class HomeFragment extends Fragment {
                 homeScroll.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 
             }
-        });
+        });*/
         return view;
     }
 
     private void initView() {
+        initBanner();
         //横向recycle
         LinearLayoutManager mLayoutManagerH = new LinearLayoutManager(getContext());
         mLayoutManagerH.setOrientation(LinearLayoutManager.HORIZONTAL);
-        MyRecycleHAdapter mAdapterH = new MyRecycleHAdapter(data);
+        MyRecycleHAdapter mAdapterH = new MyRecycleHAdapter(homeResultBean.getExecDatas().getProfessor());
         // 设置布局管理器
         recycleviewH.setLayoutManager(mLayoutManagerH);
         // 设置adapter
@@ -126,7 +131,7 @@ public class HomeFragment extends Fragment {
         recycleviewH.addItemDecoration(new MyDividerItemDecoration(itemSpacing));
         footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv_home_zhongchou, null);
         listviewHome.addFooterView(footer_view);
-        MyHomeZhongChouAdapter adapter = new MyHomeZhongChouAdapter(data, getContext(), R.layout.item_v_listview);
+        MyHomeZhongChouAdapter adapter = new MyHomeZhongChouAdapter(homeResultBean.getExecDatas().getCrowdfunding(), getContext(), R.layout.item_v_listview);
         listviewHome.setAdapter(adapter);
 //        ToolUtils.setListViewHeightBasedOnChildren(listviewHome);
         mAdapterH.setOnItemClickListener(new MyRecycleHAdapter.OnItemClickListener() {
@@ -149,7 +154,6 @@ public class HomeFragment extends Fragment {
                 getContext().startActivity(intent);
             }
         });
-        initBanner();
     }
 
     private void initBanner() {
@@ -180,7 +184,12 @@ public class HomeFragment extends Fragment {
         //所有设置参数方法都放在此方法之前执行
         //banner.setImages(images);
 
+        bannerBeanList = homeResultBean.getExecDatas().getBanner();
         //自定义图片加载框架
+        List<String> images = new ArrayList<String>();
+        for (HomeResultBean.ExecDatasBean.BannerBean bannerBean : bannerBeanList) {
+            images.add(bannerBean.getImgPath());
+        }
         banner.setImages(images, new Banner.OnLoadImageListener() {
             @Override
             public void OnLoadImage(ImageView view, Object url) {
@@ -190,10 +199,32 @@ public class HomeFragment extends Fragment {
             }
         });
         //设置点击事件，下标是从1开始
-        banner.setOnBannerClickListener(new Banner.OnBannerClickListener() {//设置点击事件
+        banner.setOnBannerClickListener(new Banner.OnBannerClickListener() {
+            private String forwardModule;
+
             @Override
             public void OnBannerClick(View view, int position) {
-                Toast.makeText(getActivity(), "你点击了：" + position, Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), "你点击了：" + position, Toast.LENGTH_LONG).show();
+                forwardModule = bannerBeanList.get(position-1).getForwardModule();
+                LogUtil.e("YJL","banner-position"+forwardModule);
+                Intent intent;
+                switch (forwardModule) {
+                    case "0":
+                        //众筹
+                        intent = new Intent(getActivity(), ZhongChouDetailActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "1":
+                        //报告
+                        intent = new Intent(getActivity(), ReportDetailActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "2":
+                        //专家
+                        intent = new Intent(getActivity(), ExpertsDetailActivity.class);
+                        startActivity(intent);
+                        break;
+                }
             }
         });
     }
@@ -204,14 +235,34 @@ public class HomeFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    private ArrayList<String> getData() {
-        ArrayList<String> data = new ArrayList<>();
-        String temp = " item";
-        for (int i = 0; i < 4; i++) {
-            data.add(i + temp);
-        }
+    ParamBean paramBean;
+    ParamBean.ParamData paramData;
 
-        return data;
+    //获取首页数据
+    private void getHomeData() {
+        paramBean = new ParamBean();
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(String.format(Url.WEB_HOME, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                Log.e("yjl", "home--data" + response);
+                if (Tools.isGoodJson(response)) {
+                    homeResultBean = new Gson().fromJson(response, HomeResultBean.class);
+                    if (homeResultBean.isExecResult()) {
+                        initView();
+                    } else {
+                    }
+                }
+            }
+        });
     }
 
 }

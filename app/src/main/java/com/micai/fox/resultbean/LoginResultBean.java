@@ -8,109 +8,67 @@ public class LoginResultBean {
 
 
     /**
-     * id : 3aa135cf225049d9b579340bb0f6a8d01516193937423
-     * loginName : 18612241134
-     * name : 18612241134
-     * mobileLogin : true
-     * user : {"id":"3aa135cf225049d9b579340bb0f6a8d01516193937423","isNewRecord":false,"createDate":"2018-01-17 20:58:57","updateDate":"2018-01-17 20:58:57","loginName":"18612241134","no":"18612241134","name":"18612241134","phone":"18612241134","mobile":"18612241134","userType":"1","loginIp":"127.0.0.1","loginDate":"2018-01-19 00:01:49","loginFlag":"1","oldLoginIp":"127.0.0.1","oldLoginDate":"2018-01-19 00:01:49","admin":false,"roleNames":"","roleEnNames":""}
-     * sessionid : 97b7bf6f1da4472d8f86be77fbea733b1516359749001
+     * execResult : true
+     * execDatas : {"id":"749e45bc8d7b4aceb9d8851e051088d01516457894981","loginName":"18363820101","name":"18363820101","nickName":"ling","mobileLogin":true,"user":{"id":"749e45bc8d7b4aceb9d8851e051088d01516457894981","isNewRecord":false,"createDate":"2018-01-20 22:18:15","updateDate":"2018-01-20 22:18:15","loginName":"18363820101","no":"18363820101","name":"18363820101","nickName":"ling","phone":"18363820101","mobile":"18363820101","userType":"1","loginIp":"1.15.140.180","loginDate":"2018-01-21 11:47:48","loginFlag":"1","oldLoginIp":"1.15.140.180","oldLoginDate":"2018-01-21 11:47:48","roleNames":"","roleEnNames":"","admin":false},"sessionid":"e8128e5592ca4f3ba1a38e57c11c9e241517018027167"}
+     * count : 0
+     * num : 0
      */
 
-    private String id;
-    private String loginName;
-    private String name;
-    private boolean mobileLogin;
-    private UserBean user;
-    private String sessionid;
+    private boolean execResult;
+    private ExecDatasBean execDatas;
+    private int count;
+    private int num;
 
-    public String getId() {
-        return id;
+    public boolean isExecResult() {
+        return execResult;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setExecResult(boolean execResult) {
+        this.execResult = execResult;
     }
 
-    public String getLoginName() {
-        return loginName;
+    public ExecDatasBean getExecDatas() {
+        return execDatas;
     }
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
+    public void setExecDatas(ExecDatasBean execDatas) {
+        this.execDatas = execDatas;
     }
 
-    public String getName() {
-        return name;
+    public int getCount() {
+        return count;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCount(int count) {
+        this.count = count;
     }
 
-    public boolean isMobileLogin() {
-        return mobileLogin;
+    public int getNum() {
+        return num;
     }
 
-    public void setMobileLogin(boolean mobileLogin) {
-        this.mobileLogin = mobileLogin;
+    public void setNum(int num) {
+        this.num = num;
     }
 
-    public UserBean getUser() {
-        return user;
-    }
-
-    public void setUser(UserBean user) {
-        this.user = user;
-    }
-
-    public String getSessionid() {
-        return sessionid;
-    }
-
-    public void setSessionid(String sessionid) {
-        this.sessionid = sessionid;
-    }
-
-    public static class UserBean {
+    public static class ExecDatasBean {
         /**
-         * id : 3aa135cf225049d9b579340bb0f6a8d01516193937423
-         * isNewRecord : false
-         * createDate : 2018-01-17 20:58:57
-         * updateDate : 2018-01-17 20:58:57
-         * loginName : 18612241134
-         * no : 18612241134
-         * name : 18612241134
-         * phone : 18612241134
-         * mobile : 18612241134
-         * userType : 1
-         * loginIp : 127.0.0.1
-         * loginDate : 2018-01-19 00:01:49
-         * loginFlag : 1
-         * oldLoginIp : 127.0.0.1
-         * oldLoginDate : 2018-01-19 00:01:49
-         * admin : false
-         * roleNames :
-         * roleEnNames :
+         * id : 749e45bc8d7b4aceb9d8851e051088d01516457894981
+         * loginName : 18363820101
+         * name : 18363820101
+         * nickName : ling
+         * mobileLogin : true
+         * user : {"id":"749e45bc8d7b4aceb9d8851e051088d01516457894981","isNewRecord":false,"createDate":"2018-01-20 22:18:15","updateDate":"2018-01-20 22:18:15","loginName":"18363820101","no":"18363820101","name":"18363820101","nickName":"ling","phone":"18363820101","mobile":"18363820101","userType":"1","loginIp":"1.15.140.180","loginDate":"2018-01-21 11:47:48","loginFlag":"1","oldLoginIp":"1.15.140.180","oldLoginDate":"2018-01-21 11:47:48","roleNames":"","roleEnNames":"","admin":false}
+         * sessionid : e8128e5592ca4f3ba1a38e57c11c9e241517018027167
          */
 
         private String id;
-        private boolean isNewRecord;
-        private String createDate;
-        private String updateDate;
         private String loginName;
-        private String no;
         private String name;
-        private String phone;
-        private String mobile;
-        private String userType;
-        private String loginIp;
-        private String loginDate;
-        private String loginFlag;
-        private String oldLoginIp;
-        private String oldLoginDate;
-        private boolean admin;
-        private String roleNames;
-        private String roleEnNames;
+        private String nickName;
+        private boolean mobileLogin;
+        private UserBean user;
+        private String sessionid;
 
         public String getId() {
             return id;
@@ -118,30 +76,6 @@ public class LoginResultBean {
 
         public void setId(String id) {
             this.id = id;
-        }
-
-        public boolean isIsNewRecord() {
-            return isNewRecord;
-        }
-
-        public void setIsNewRecord(boolean isNewRecord) {
-            this.isNewRecord = isNewRecord;
-        }
-
-        public String getCreateDate() {
-            return createDate;
-        }
-
-        public void setCreateDate(String createDate) {
-            this.createDate = createDate;
-        }
-
-        public String getUpdateDate() {
-            return updateDate;
-        }
-
-        public void setUpdateDate(String updateDate) {
-            this.updateDate = updateDate;
         }
 
         public String getLoginName() {
@@ -152,14 +86,6 @@ public class LoginResultBean {
             this.loginName = loginName;
         }
 
-        public String getNo() {
-            return no;
-        }
-
-        public void setNo(String no) {
-            this.no = no;
-        }
-
         public String getName() {
             return name;
         }
@@ -168,92 +94,232 @@ public class LoginResultBean {
             this.name = name;
         }
 
-        public String getPhone() {
-            return phone;
+        public String getNickName() {
+            return nickName;
         }
 
-        public void setPhone(String phone) {
-            this.phone = phone;
+        public void setNickName(String nickName) {
+            this.nickName = nickName;
         }
 
-        public String getMobile() {
-            return mobile;
+        public boolean isMobileLogin() {
+            return mobileLogin;
         }
 
-        public void setMobile(String mobile) {
-            this.mobile = mobile;
+        public void setMobileLogin(boolean mobileLogin) {
+            this.mobileLogin = mobileLogin;
         }
 
-        public String getUserType() {
-            return userType;
+        public UserBean getUser() {
+            return user;
         }
 
-        public void setUserType(String userType) {
-            this.userType = userType;
+        public void setUser(UserBean user) {
+            this.user = user;
         }
 
-        public String getLoginIp() {
-            return loginIp;
+        public String getSessionid() {
+            return sessionid;
         }
 
-        public void setLoginIp(String loginIp) {
-            this.loginIp = loginIp;
+        public void setSessionid(String sessionid) {
+            this.sessionid = sessionid;
         }
 
-        public String getLoginDate() {
-            return loginDate;
-        }
+        public static class UserBean {
+            /**
+             * id : 749e45bc8d7b4aceb9d8851e051088d01516457894981
+             * isNewRecord : false
+             * createDate : 2018-01-20 22:18:15
+             * updateDate : 2018-01-20 22:18:15
+             * loginName : 18363820101
+             * no : 18363820101
+             * name : 18363820101
+             * nickName : ling
+             * phone : 18363820101
+             * mobile : 18363820101
+             * userType : 1
+             * loginIp : 1.15.140.180
+             * loginDate : 2018-01-21 11:47:48
+             * loginFlag : 1
+             * oldLoginIp : 1.15.140.180
+             * oldLoginDate : 2018-01-21 11:47:48
+             * roleNames :
+             * roleEnNames :
+             * admin : false
+             */
 
-        public void setLoginDate(String loginDate) {
-            this.loginDate = loginDate;
-        }
+            private String id;
+            private boolean isNewRecord;
+            private String createDate;
+            private String updateDate;
+            private String loginName;
+            private String no;
+            private String name;
+            private String nickName;
+            private String phone;
+            private String mobile;
+            private String userType;
+            private String loginIp;
+            private String loginDate;
+            private String loginFlag;
+            private String oldLoginIp;
+            private String oldLoginDate;
+            private String roleNames;
+            private String roleEnNames;
+            private boolean admin;
 
-        public String getLoginFlag() {
-            return loginFlag;
-        }
+            public String getId() {
+                return id;
+            }
 
-        public void setLoginFlag(String loginFlag) {
-            this.loginFlag = loginFlag;
-        }
+            public void setId(String id) {
+                this.id = id;
+            }
 
-        public String getOldLoginIp() {
-            return oldLoginIp;
-        }
+            public boolean isIsNewRecord() {
+                return isNewRecord;
+            }
 
-        public void setOldLoginIp(String oldLoginIp) {
-            this.oldLoginIp = oldLoginIp;
-        }
+            public void setIsNewRecord(boolean isNewRecord) {
+                this.isNewRecord = isNewRecord;
+            }
 
-        public String getOldLoginDate() {
-            return oldLoginDate;
-        }
+            public String getCreateDate() {
+                return createDate;
+            }
 
-        public void setOldLoginDate(String oldLoginDate) {
-            this.oldLoginDate = oldLoginDate;
-        }
+            public void setCreateDate(String createDate) {
+                this.createDate = createDate;
+            }
 
-        public boolean isAdmin() {
-            return admin;
-        }
+            public String getUpdateDate() {
+                return updateDate;
+            }
 
-        public void setAdmin(boolean admin) {
-            this.admin = admin;
-        }
+            public void setUpdateDate(String updateDate) {
+                this.updateDate = updateDate;
+            }
 
-        public String getRoleNames() {
-            return roleNames;
-        }
+            public String getLoginName() {
+                return loginName;
+            }
 
-        public void setRoleNames(String roleNames) {
-            this.roleNames = roleNames;
-        }
+            public void setLoginName(String loginName) {
+                this.loginName = loginName;
+            }
 
-        public String getRoleEnNames() {
-            return roleEnNames;
-        }
+            public String getNo() {
+                return no;
+            }
 
-        public void setRoleEnNames(String roleEnNames) {
-            this.roleEnNames = roleEnNames;
+            public void setNo(String no) {
+                this.no = no;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getNickName() {
+                return nickName;
+            }
+
+            public void setNickName(String nickName) {
+                this.nickName = nickName;
+            }
+
+            public String getPhone() {
+                return phone;
+            }
+
+            public void setPhone(String phone) {
+                this.phone = phone;
+            }
+
+            public String getMobile() {
+                return mobile;
+            }
+
+            public void setMobile(String mobile) {
+                this.mobile = mobile;
+            }
+
+            public String getUserType() {
+                return userType;
+            }
+
+            public void setUserType(String userType) {
+                this.userType = userType;
+            }
+
+            public String getLoginIp() {
+                return loginIp;
+            }
+
+            public void setLoginIp(String loginIp) {
+                this.loginIp = loginIp;
+            }
+
+            public String getLoginDate() {
+                return loginDate;
+            }
+
+            public void setLoginDate(String loginDate) {
+                this.loginDate = loginDate;
+            }
+
+            public String getLoginFlag() {
+                return loginFlag;
+            }
+
+            public void setLoginFlag(String loginFlag) {
+                this.loginFlag = loginFlag;
+            }
+
+            public String getOldLoginIp() {
+                return oldLoginIp;
+            }
+
+            public void setOldLoginIp(String oldLoginIp) {
+                this.oldLoginIp = oldLoginIp;
+            }
+
+            public String getOldLoginDate() {
+                return oldLoginDate;
+            }
+
+            public void setOldLoginDate(String oldLoginDate) {
+                this.oldLoginDate = oldLoginDate;
+            }
+
+            public String getRoleNames() {
+                return roleNames;
+            }
+
+            public void setRoleNames(String roleNames) {
+                this.roleNames = roleNames;
+            }
+
+            public String getRoleEnNames() {
+                return roleEnNames;
+            }
+
+            public void setRoleEnNames(String roleEnNames) {
+                this.roleEnNames = roleEnNames;
+            }
+
+            public boolean isAdmin() {
+                return admin;
+            }
+
+            public void setAdmin(boolean admin) {
+                this.admin = admin;
+            }
         }
     }
 }

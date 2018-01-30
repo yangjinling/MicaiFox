@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="right"
-                android:text="杨金玲"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -67,7 +67,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="right"
-                android:text="6227002191594874010"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="招商银行"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
@@ -133,7 +133,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="right"
-                android:text="招商银行北京分行中关村支行"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="15sp" />
         </LinearLayout>

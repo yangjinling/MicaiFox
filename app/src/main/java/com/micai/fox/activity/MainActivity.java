@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity {
         //导航
         // mMainTabBar.setOnClickListener(this);
         mManager = getSupportFragmentManager();
-        mManager.beginTransaction().replace(R.id.main_fragment, mFragments[2]).commit();
+        mManager.beginTransaction().replace(R.id.main_fragment, mFragments[0]).commit();
     }
 
     @Override

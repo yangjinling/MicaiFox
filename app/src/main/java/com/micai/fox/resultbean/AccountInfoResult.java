@@ -62,6 +62,7 @@ public class AccountInfoResult {
         private String accountBranch;
         private String accountBank;
         private String accountNumber;
+        private String accountBankName;
 
         public String getAccountName() {
             return accountName;
@@ -77,6 +78,14 @@ public class AccountInfoResult {
 
         public void setAccountBranch(String accountBranch) {
             this.accountBranch = accountBranch;
+        }
+
+        public String getAccountBankName() {
+            return accountBankName;
+        }
+
+        public void setAccountBankName(String accountBankName) {
+            this.accountBankName = accountBankName;
         }
 
         public String getAccountBank() {

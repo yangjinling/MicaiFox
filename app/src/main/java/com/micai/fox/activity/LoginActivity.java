@@ -202,12 +202,12 @@ public class LoginActivity extends BaseActivity {
                         LogUtil.e("yjl", "login---response>>" + response);
                         if (Tools.isGoodJson(response)) {
                             loginResultBean = new Gson().fromJson(response, LoginResultBean.class);
-                            if (null != loginResultBean.getId()) {
-                                Config.getInstance().setSessionId(loginResultBean.getSessionid());
-                                Config.getInstance().setPhone(loginResultBean.getUser().getPhone());
+                            if (loginResultBean.isExecResult()) {
+                                Config.getInstance().setSessionId(loginResultBean.getExecDatas().getSessionid());
+                                Config.getInstance().setPhone(loginResultBean.getExecDatas().getUser().getPhone());
                                 PrefUtils.setBoolean(Config.getInstance().getmContext(), "ISFIRST", true);
-                                PrefUtils.setString(Config.getInstance().getmContext(), "SESSIONID", loginResultBean.getSessionid());
-                                PrefUtils.setString(Config.getInstance().getmContext(), "PHONE", loginResultBean.getUser().getPhone());
+                                PrefUtils.setString(Config.getInstance().getmContext(), "SESSIONID", loginResultBean.getExecDatas().getSessionid());
+                                PrefUtils.setString(Config.getInstance().getmContext(), "PHONE", loginResultBean.getExecDatas().getUser().getPhone());
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 ExitAppUtils.getInstance().finishActivity(IndexActivity.class);

@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.micai.fox.R;
+import com.micai.fox.resultbean.HomeResultBean;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作者：杨金玲 on 2017/12/27 08:45
@@ -17,17 +19,17 @@ import java.util.ArrayList;
 
 /*首页---横向专家列表*/
 public class MyRecycleHAdapter extends RecyclerView.Adapter<MyRecycleHAdapter.ViewHolder> {
-    private ArrayList<String> mData;
+    private List<HomeResultBean.ExecDatasBean.ProfessorBean> mData;
     /**
      * 事件回调监听
      */
     private MyRecycleHAdapter.OnItemClickListener onItemClickListener;
 
-    public MyRecycleHAdapter(ArrayList<String> data) {
+    public MyRecycleHAdapter(List<HomeResultBean.ExecDatasBean.ProfessorBean> data) {
         this.mData = data;
     }
 
-    public void updateData(ArrayList<String> data) {
+    public void updateData(List<HomeResultBean.ExecDatasBean.ProfessorBean> data) {
         this.mData = data;
         notifyDataSetChanged();
     }
@@ -53,7 +55,7 @@ public class MyRecycleHAdapter extends RecyclerView.Adapter<MyRecycleHAdapter.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         // 绑定数据
-        holder.mTv.setText(mData.get(position));
+        holder.mTv.setText(mData.get(position).getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {

@@ -337,6 +337,11 @@ public class RegistActivity extends BaseActivity {
                         startActivity(intent);
                     }else {
 //                        {"execResult":false,"execErrCode":"u-000030","execMsg":"验证码错误","count":0,"num":0}
+                        registEtCode.setText("");
+                        registEtCode.setHintTextColor(getResources().getColor(R.color.red));
+                        registEtCode.setHint("验证码错误");
+                        registBtnNext.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(3, 3000);
                     }
                 }
             }
