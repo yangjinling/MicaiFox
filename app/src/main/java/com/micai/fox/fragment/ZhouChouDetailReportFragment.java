@@ -1,5 +1,6 @@
 package com.micai.fox.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.micai.fox.R;
+import com.micai.fox.view.CustomViewPager;
 
 import java.util.ArrayList;
 
@@ -33,6 +35,14 @@ public class ZhouChouDetailReportFragment extends Fragment {
     private ListView lv;
     private View footer_view;
     private View headView;
+    private CustomViewPager vp;
+
+    public ZhouChouDetailReportFragment() {
+    }
+    @SuppressLint("ValidFragment")
+    public ZhouChouDetailReportFragment(CustomViewPager vp) {
+        this.vp = vp;
+    }
 
     @Nullable
     @Override
@@ -40,7 +50,7 @@ public class ZhouChouDetailReportFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_zhouchou_detail_report, container, false);
         ButterKnife.bind(this, view);
         kind = getArguments().getInt("KIND", 0);
-        switch (kind) {
+        switch (0) {
             case 0:
 //                tv.setText("全部");
                 zhouchouDetailReportLlIng.setVisibility(View.VISIBLE);
@@ -54,6 +64,7 @@ public class ZhouChouDetailReportFragment extends Fragment {
                 break;
         }
         data = getData();
+        vp.setObjectForPosition(view,1);
         return view;
     }
 

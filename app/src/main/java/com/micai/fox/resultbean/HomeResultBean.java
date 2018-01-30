@@ -1,12 +1,13 @@
 package com.micai.fox.resultbean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by louqiang on 2018/1/27.
  */
 
-public class HomeResultBean {
+public class HomeResultBean implements Serializable {
 
     /**
      * execResult : true
@@ -52,7 +53,7 @@ public class HomeResultBean {
         this.num = num;
     }
 
-    public static class ExecDatasBean {
+    public static class ExecDatasBean implements Serializable{
         private List<BannerBean> banner;
         private List<ProfessorBean> professor;
         private List<CrowdfundingBean> crowdfunding;
@@ -81,7 +82,7 @@ public class HomeResultBean {
             this.crowdfunding = crowdfunding;
         }
 
-        public static class BannerBean {
+        public static class BannerBean implements Serializable{
             /**
              * imgPath : https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516032080989&di=08a4ad368e6af2586cbdd9aed58e5f0e&imgtype=0&src=http%3A%2F%2Fimg1.szhk.com%2FImage%2F2017%2F07%2F21%2F1500623627742.jpg
              * forwardPath : 2
@@ -127,7 +128,7 @@ public class HomeResultBean {
             }
         }
 
-        public static class ProfessorBean {
+        public static class ProfessorBean implements Serializable{
             /**
              * id : 5edb348b25a248e185a6f12c9204fa561516523589992
              * name : zhang
@@ -173,7 +174,7 @@ public class HomeResultBean {
             }
         }
 
-        public static class CrowdfundingBean {
+        public static class CrowdfundingBean implements Serializable{
             /**
              * crowdfundingId : 1
              * title : 世界杯

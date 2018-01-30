@@ -1,5 +1,6 @@
 package com.micai.fox.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import com.micai.fox.R;
 import com.micai.fox.activity.ExpertsDetailActivity;
 import com.micai.fox.adapter.MyExpertsListAdapter;
+import com.micai.fox.view.CustomViewPager;
 
 import java.util.ArrayList;
 
@@ -28,7 +30,14 @@ public class ZhouChouDetailIntroduceFragment extends Fragment {
     private int kind;
 //    private TextView tv;
     private ArrayList<String> data;
+    private CustomViewPager vp;
+    public ZhouChouDetailIntroduceFragment() {
+    }
 
+    @SuppressLint("ValidFragment")
+    public ZhouChouDetailIntroduceFragment(CustomViewPager vp){
+        this.vp=vp;
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,6 +55,7 @@ public class ZhouChouDetailIntroduceFragment extends Fragment {
                 break;
         }
         data = getData();
+        vp.setObjectForPosition(view,0);
         return view;
     }
 

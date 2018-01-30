@@ -1,10 +1,12 @@
 package com.micai.fox.resultbean;
 
+import java.io.Serializable;
+
 /**
  * Created by louqiang on 2018/1/20.
  */
 
-public class LoginResultBean {
+public class LoginResultBean implements Serializable {
 
 
     /**
@@ -51,7 +53,7 @@ public class LoginResultBean {
         this.num = num;
     }
 
-    public static class ExecDatasBean {
+    public static class ExecDatasBean implements Serializable{
         /**
          * id : 749e45bc8d7b4aceb9d8851e051088d01516457894981
          * loginName : 18363820101
@@ -126,7 +128,7 @@ public class LoginResultBean {
             this.sessionid = sessionid;
         }
 
-        public static class UserBean {
+        public static class UserBean implements Serializable{
             /**
              * id : 749e45bc8d7b4aceb9d8851e051088d01516457894981
              * isNewRecord : false

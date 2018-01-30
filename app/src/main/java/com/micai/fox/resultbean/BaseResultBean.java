@@ -1,10 +1,12 @@
 package com.micai.fox.resultbean;
 
+import java.io.Serializable;
+
 /**
  * Created by louqiang on 2018/1/20.
  */
 
-public class BaseResultBean {
+public class BaseResultBean implements Serializable {
 
     /**
      * execResult : true

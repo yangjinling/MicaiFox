@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/transparent">
 
     <LinearLayout
@@ -13,130 +14,163 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:background="#FF23253C"
+            android:orientation="horizontal"
+            android:paddingLeft="12dp"
+            android:paddingBottom="1.5dp"
+            android:paddingTop="1.5dp"
+            android:paddingRight="7dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="星期五013"
+                android:textColor="@color/red"
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="星期五013" />
+                android:text="[世界杯]"
+                android:textColor="@color/red"
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="[世界杯]" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="2018.1.10 10:23" />
+                android:text="2018.1.10 10:23"
+                android:textColor="@color/red"
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="进行中" />
+                android:text="进行中"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
 
             <TextView
-                android:layout_width="30dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="让球" />
+                android:layout_marginLeft="17.5dp"
+                android:gravity="center"
+                android:text="让球"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="球队A"
-                android:textSize="25sp" />
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="0dp"
-
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="VS" />
+                android:text="3:3"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="0dp"
-
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="球队B"
-                android:textSize="25sp" />
+                android:textColor="@color/white"
+                android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
 
             <TextView
-                android:layout_width="30dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="30dp"
                 android:gravity="center"
-                android:text="0" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/huanhang" />
+                android:text="0"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:lines="2"
-                android:text="@string/huanhang" />
+                android:text="主胜233"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/huanhang" />
+                android:text="主胜233"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="主胜233"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/white"></View>
     </LinearLayout>
-    <ImageView
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:src="@mipmap/ic_launcher"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="80dp"/>
-<ImageView
-    android:layout_marginTop="110dp"
-    android:layout_marginLeft="155dp"
-    android:layout_width="10dp"
-    android:layout_height="10dp"
-    android:src="@mipmap/ic_launcher"/>
-    <ImageView
-        android:layout_width="10dp"
-        android:layout_height="10dp"
+
+    <com.github.czy1121.view.CornerLabelView
+        style="@style/CornerLabelView.Default"
+        app:clvFillColor="@color/red"
+        android:layout_marginTop="33dp"
         android:layout_alignParentRight="true"
-        android:src="@mipmap/ic_launcher"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="110dp"
-        />
+        app:clvFlags="triangle"
+        app:clvPaddingCenter="-9dp"
+        android:rotation="90"
+        app:clvText2Color="@color/black"
+        android:visibility="gone"
+        app:clvText2="已中" />
+    <com.github.czy1121.view.CornerLabelView
+        style="@style/CornerLabelView.Default"
+        app:clvFillColor="@color/white"
+        android:layout_marginTop="33dp"
+        android:layout_alignParentRight="true"
+        app:clvFlags="triangle"
+        app:clvPaddingCenter="-9dp"
+        android:rotation="90"
+        app:clvText1Color="@color/black"
+        app:clvText1="未中" />
 </RelativeLayout>

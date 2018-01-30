@@ -87,7 +87,7 @@ public class ExpertsDetailActivity extends AppCompatActivity {
     Runnable scrollViewRunable = new Runnable() {
         @Override
         public void run() {
-            scrollView.scrollTo(0, 0);
+            scrollView.smoothScrollTo(0, 0);
         }
     };
     private FragmentPagerAdapter fAdapter; //定义adapter
@@ -115,7 +115,24 @@ public class ExpertsDetailActivity extends AppCompatActivity {
             }
         });*/
         initControls();
-        mHandler.postDelayed(scrollViewRunable, 1);
+        mHandler.post(scrollViewRunable);
+        expertsDetailViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                expertsDetailViewpager.resetHeight(position);
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        expertsDetailViewpager.resetHeight(0);
+
     }
 
     @OnClick({R.id.tv_back, R.id.experts_detail_tv_zhongchou, R.id.experts_detail_tv_report})
@@ -183,16 +200,16 @@ public class ExpertsDetailActivity extends AppCompatActivity {
     private void initControls() {
         list_fragment = new ArrayList<>();
         //初始化各fragment
-       /* for (int i = 0; i < 3; i++) {
-            Fragment fragment = new ExpertsDetailFragment();
+  /*      for (int i = 0; i < 2; i++) {
+            Fragment fragment = new ExpertsZhongChouFragment(expertsDetailViewpager);
             //将fragment装进列表中
             Bundle bundle = new Bundle();
             bundle.putInt("KIND", i);
             fragment.setArguments(bundle);
             list_fragment.add(fragment);
         }*/
-        list_fragment.add(new ExpertsZhongChouFragment());
-        list_fragment.add(new ExpertsReportFragment());
+        list_fragment.add(new ExpertsZhongChouFragment(expertsDetailViewpager));
+        list_fragment.add(new ExpertsReportFragment(expertsDetailViewpager));
         //将名称加载tab名字列表，正常情况下，我们应该在values/arrays.xml中进行定义然后调用
         list_title = new ArrayList<>();
         list_title.add("众筹");

@@ -1,10 +1,12 @@
 package com.micai.fox.resultbean;
 
+import java.io.Serializable;
+
 /**
  * Created by louqiang on 2018/1/20.
  */
 
-public class AccountInfoResult {
+public class AccountInfoResult  implements Serializable{
 
     /**
      * execResult : true
@@ -50,7 +52,7 @@ public class AccountInfoResult {
         this.num = num;
     }
 
-    public static class ExecDatasBean {
+    public static class ExecDatasBean implements Serializable {
         /**
          * accountName : 账户名称
          * accountBranch : 开户支行

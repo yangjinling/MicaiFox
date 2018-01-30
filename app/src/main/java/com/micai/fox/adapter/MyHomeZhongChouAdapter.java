@@ -50,19 +50,22 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeResultBean.ExecDat
         //目标金额
         ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_mubiao)).setText("" + mList.get(position).getAmountDown());
         //已筹
-       LinearLayout ll_have= ((LinearLayout) viewHolder.findViewById(R.id.home_zhong_ll_have));
-        TextView tv_have= ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_have));
+        LinearLayout ll_have = ((LinearLayout) viewHolder.findViewById(R.id.home_zhong_ll_have));
+        TextView tv_have = ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_have));
 
         //支持人次
-        LinearLayout ll_people= ((LinearLayout) viewHolder.findViewById(R.id.home_zhong_ll_people));
-        TextView tv_people= ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_people));
+        LinearLayout ll_people = ((LinearLayout) viewHolder.findViewById(R.id.home_zhong_ll_people));
+        TextView tv_people = ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_people));
         //未开始
-        LinearLayout ll_start= ((LinearLayout) viewHolder.findViewById(R.id.home_zhong_ll_nostart));
-        TextView tv_time= ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_daojishi));
+        LinearLayout ll_start = ((LinearLayout) viewHolder.findViewById(R.id.home_zhong_ll_nostart));
+        TextView tv_time = ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_daojishi));
         if (null != mList.get(position).getStatus()) {
             if ("0".equals(mList.get(position).getStatus())) {
                 //未开始
                 pb_ing.setProgress(0);
+                ll_start.setVisibility(View.VISIBLE);
+                ll_people.setVisibility(View.GONE);
+                ll_have.setVisibility(View.GONE);
             } else if ("9".equals(mList.get(position).getStatus())) {
                 //流标
                 pb_ing.setVisibility(View.GONE);

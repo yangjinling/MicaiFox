@@ -2,6 +2,7 @@ package com.micai.fox.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,7 +57,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  * Created by lq on 2017/12/19.
  */
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements AbsListView.OnScrollListener {
     /* @Bind(R.id.iv_home)
      ImageView homeIv;*/
     @Bind(R.id.recycleview_h)
@@ -87,7 +89,13 @@ public class HomeFragment extends Fragment {
     private View footer_view;
     private HomeResultBean homeResultBean;
     private List<HomeResultBean.ExecDatasBean.BannerBean> bannerBeanList;
-
+    private Handler mHandler = new Handler();
+    Runnable scrollViewRunable = new Runnable() {
+        @Override
+        public void run() {
+            homeScroll.smoothScrollTo(0, 0);
+        }
+    };
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -114,9 +122,16 @@ public class HomeFragment extends Fragment {
 
             }
         });*/
+        listviewHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), ZhongChouDetailActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+        listviewHome.setOnScrollListener(this);
         return view;
     }
-
     private void initView() {
         initBanner();
         //横向recycle
@@ -147,13 +162,7 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), "long click " + position + " item", Toast.LENGTH_SHORT).show();
             }
         });
-        listviewHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), ZhongChouDetailActivity.class);
-                getContext().startActivity(intent);
-            }
-        });
+        mHandler.post(scrollViewRunable);
     }
 
     private void initBanner() {
@@ -205,8 +214,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void OnBannerClick(View view, int position) {
 //                Toast.makeText(getActivity(), "你点击了：" + position, Toast.LENGTH_LONG).show();
-                forwardModule = bannerBeanList.get(position-1).getForwardModule();
-                LogUtil.e("YJL","banner-position"+forwardModule);
+                forwardModule = bannerBeanList.get(position - 1).getForwardModule();
+                LogUtil.e("YJL", "banner-position" + forwardModule);
                 Intent intent;
                 switch (forwardModule) {
                     case "0":
@@ -265,4 +274,78 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    public interface OnSwipeIsValid {
+        public void setSwipeEnabledTrue();
+
+        public void setSwipeEnabledFalse();
+    }
+
+    private HomeFragment.OnSwipeIsValid isValid = new HomeFragment.OnSwipeIsValid() {
+        @Override
+        public void setSwipeEnabledTrue() {
+//            walletSwiperefresh.setEnabled(true);//让swipe起作用，能够刷新
+//            isCanRefresh = true;
+        }
+
+        @Override
+        public void setSwipeEnabledFalse() {
+//            walletSwiperefresh.setEnabled(false);//让swipe不能够刷新
+//            isCanRefresh = false;
+        }
+    };
+    private int lastItem;
+    private int totalItem;
+    private boolean isBottom = false;//是否到第20条数据了
+    private int curPageNum = 1;
+
+    @Override
+    public void onScrollStateChanged(AbsListView absListView, int i) {
+        LogUtil.e("YJL---", "+进来了没有");
+        switch (i) {
+            case SCROLL_STATE_IDLE://空闲状态
+                LogUtil.e("YJL", "+进来了没有空闲");
+                break;
+            case SCROLL_STATE_TOUCH_SCROLL://滚状态
+                LogUtil.e("YJL", "+进来了没有滚");
+                break;
+            case SCROLL_STATE_FLING://飞状态
+                LogUtil.e("YJL", "+进来了没有飞");
+                break;
+        }
+        //判断ListView是否滑动到第一个Item的顶部
+        if (isValid != null && listviewHome.getChildCount() > 0 && listviewHome.getFirstVisiblePosition() == 0
+                && listviewHome.getChildAt(0).getTop() >= listviewHome.getPaddingTop()) {
+            //解决滑动冲突，当滑动到第一个item，下拉刷新才起作用
+            isValid.setSwipeEnabledTrue();
+        } else {
+            isValid.setSwipeEnabledFalse();
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+        this.lastItem = i + i1;
+        this.totalItem = i2;
+              /*i:屏幕中第一个可见item的下标
+              * i1:可见item数量
+            * i2:itme的总数量*/
+        if (i2 != 0 && i + i1 == i2) {
+            isBottom = true;
+            LogUtil.e("YJL", "isBottom111===" + isBottom);
+        } else {
+            isBottom = false;
+            LogUtil.e("YJL", "isBottom222===" + isBottom);
+        }
+        if (absListView.getLastVisiblePosition() >= 3 + ((curPageNum - 1) * 3)) {
+            LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
+            if (++curPageNum <= 1) {
+                LogUtil.e("YJL", "curPageNum==" + curPageNum);
+//                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
+                Toast.makeText(getContext(), "加载中…", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "没有更多了", Toast.LENGTH_SHORT).show();
+//                ToolsC.CenterToast(getContext(), "没有更多数据");
+            }
+        }
+    }
 }

@@ -98,9 +98,25 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
         rl.setVisibility(View.VISIBLE);
         tvBack.setVisibility(View.VISIBLE);
         tvTitle.setText("众筹详情");
-        initControls(0);
+        initControls(1);
 //        initFragments(0);
 //        switchFragment(mFragments[0]);
+        zhongchouDetailViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                zhongchouDetailViewpager.resetHeight(position);
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        zhongchouDetailViewpager.resetHeight(0);
     }
 
     private void initFragments(int type) {
@@ -181,9 +197,9 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
         bundle.putInt("KIND", type);
         list_fragment = new ArrayList<>();
         //初始化各fragment
-        list_fragment.add(new ZhouChouDetailIntroduceFragment());
-        list_fragment.add(new ZhouChouDetailReportFragment());
-        list_fragment.add(new ZhouChouDetailPilutFragment());
+        list_fragment.add(new ZhouChouDetailIntroduceFragment(zhongchouDetailViewpager));
+        list_fragment.add(new ZhouChouDetailReportFragment(zhongchouDetailViewpager));
+        list_fragment.add(new ZhouChouDetailPilutFragment(zhongchouDetailViewpager));
         list_fragment.get(1).setArguments(bundle);
         list_fragment.get(2).setArguments(bundle);
         //将名称加载tab名字列表，正常情况下，我们应该在values/arrays.xml中进行定义然后调用

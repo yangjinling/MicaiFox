@@ -17,158 +17,193 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp">
-
-            <TextView
-                android:id="@+id/report_detail_tv_time_talk"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:maxLines="2"
-                android:text="你好"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/report_detail_tv_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="6小时前发布" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/gray"></View>
+            android:paddingLeft="12.5dp"
+            android:paddingRight="12.5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:background="@drawable/edittextstyle"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/report_detail_iv_head"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/report_detail_tv_time_talk"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@mipmap/ic_launcher" />
+                    android:layout_marginLeft="16.5dp"
+                    android:layout_marginRight="13.5dp"
+                    android:layout_marginTop="14.5dp"
+                    android:maxLines="2"
+                    android:text="你好"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/report_detail_tv_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16.5dp"
+                    android:layout_marginTop="2dp"
+                    android:text="6小时前发布"
+                    android:textSize="13sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="16.5dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#D0D0D0"></View>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginRight="10.5dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15.5dp">
 
-                    <TextView
-                        android:id="@+id/report_detail_tv_name"
-                        android:layout_width="wrap_content"
+                    <ImageView
+                        android:id="@+id/report_detail_iv_head"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:background="@mipmap/ic_launcher" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="专家甲"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/report_detail_tv_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="专家甲"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7.5dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/report_detail_tv_introduce"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="专家一句话简介"
+                                android:textColor="@color/black"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/report_detail_tv_changci"
+                                android:layout_width="wrap_content"
+                                android:layout_height="21dp"
+                                android:background="@drawable/expertstextstyle"
+                                android:gravity="center"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:text="近5场 中5场"
+                                android:visibility="gone" />
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_marginRight="10dp"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/report_detail_tv_introduce"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="专家一句话简介" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/report_detail_tv_rate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="80"
+                                android:textColor="@color/red"
+                                android:textSize="30sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="%"
+                                android:textColor="@color/red"
+                                android:textSize="14sp" />
+                        </LinearLayout>
 
                         <TextView
-                            android:id="@+id/report_detail_tv_changci"
                             android:layout_width="wrap_content"
-                            android:layout_height="21dp"
-                            android:background="@drawable/expertstextstyle"
-                            android:gravity="center"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:text="近5场 中5场" />
+                            android:layout_height="wrap_content"
+                            android:text="命中率"
+                            android:textColor="@color/red"
+                            android:textSize="14sp" />
                     </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/report_detail_tv_rate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="80%"
-                        android:textSize="30sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="命中率" />
                 </LinearLayout>
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/gray"></View>
-
             <com.micai.fox.view.MyListView
+                android:layout_marginTop="15dp"
                 android:id="@+id/report_detail_lv"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:listSelector="@android:color/transparent"
-                android:layout_marginTop="5dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="10dp"
                 android:layout_weight="1"></com.micai.fox.view.MyListView>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="@color/gray"></View>
 
             <LinearLayout
                 android:id="@+id/report_detail_ll_about"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="18.5dp"
+                android:background="@drawable/edittextstyle"
                 android:gravity="center_vertical"
-                android:minHeight="40dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="相关众筹" />
+                    android:layout_marginLeft="16.5dp"
+                    android:text="相关众筹"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="13sp"
                     android:layout_weight="1"
-                    android:drawableRight="@mipmap/ic_launcher"
+                    android:drawablePadding="4dp"
+                    android:drawableRight="@mipmap/next"
                     android:gravity="right|center_vertical"
-                    android:text="第02期足球众筹" />
+                    android:text="第02期足球众筹"
+                    android:textColor="@color/text_gray" />
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="@color/gray"></View>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="13.5dp"
                     android:text="推荐理由"
-                    android:textSize="30sp" />
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -5,12 +5,6 @@
     android:background="@android:color/transparent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/pilu_test"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="本文仅介绍了 SpannableString 常用的一些场景，例如修改特定文本的颜色，替换特定文本，特定文本的点击事件，但是 SpannableString 的强大远不止如此。SpannableString 的更多用法可阅读官方文档。好了，以上就是这篇文章的全部内容了，希望本文的内容对大家的学习或者工作能带来一定的帮助，如果有疑问大家可以留言交流，谢谢大家对脚本之家的支持。本文仅介绍了 SpannableString 常用的一些场景，例如修改特定文本的颜色，替换特定文本，特定文本的点击事件，但是 SpannableString 的强大远不止如此。SpannableString 的更多用法可阅读官方文档。好了，以上就是这篇文章的全部内容了，希望本文的内容对大家的学习或者工作能带来一定的帮助，如果有疑问大家可以留言交流，谢谢大家对脚本之家的支持。本文仅介绍了 SpannableString 常用的一些场景，例如修改特定文本的颜色，替换特定文本，特定文本的点击事件，但是 SpannableString 的强大远不止如此。SpannableString 的更多用法可阅读官方文档。好了，以上就是这篇文章的全部内容了，希望本文的内容对大家的学习或者工作能带来一定的帮助，如果有疑问大家可以留言交流，谢谢大家对脚本之家的支持。"
-        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/zhouchou_detail_pilu_ll_ing"
@@ -29,5 +23,166 @@
             android:gravity="center"
             android:text="当前众筹项目暂无披露信息"
             android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/zhouchou_detail_pilu_ll_ed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="55dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="26.5dp"
+            android:text="盈利信息"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="29dp"
+            android:layout_marginRight="28.5dp"
+            android:layout_marginTop="7dp"
+            android:background="@color/white"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="59dp"
+            android:layout_marginRight="104dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥"
+                android:textColor="@color/red"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2000.00"
+                android:textColor="@color/red"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableRight="@mipmap/payment" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="65dp"
+            android:layout_marginRight="87dp"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="投注金额"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="营收金额"
+                android:textColor="@color/white"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="27dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/payment"
+                android:text="投注盈利金额"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/payment"
+                android:text="投注盈利率"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/payment"
+                android:text="兑付盈利金额"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/payment"
+                android:text="兑付盈利率"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="29dp"
+            android:layout_marginRight="28.5dp"
+            android:layout_marginTop="19dp"
+            android:background="@color/white"></View>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="14dp"
+            android:drawableLeft="@mipmap/payment"
+            android:drawablePadding="9dp"
+            android:text="文本文本"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="26.5dp"
+            android:text="投注信息"
+            android:layout_marginTop="28dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

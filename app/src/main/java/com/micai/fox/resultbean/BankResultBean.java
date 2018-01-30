@@ -1,12 +1,13 @@
 package com.micai.fox.resultbean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by louqiang on 2018/1/27.
  */
 
-public class BankResultBean {
+public class BankResultBean implements Serializable {
     /**
      * execResult : true
      * execMsg : 查询成功!
@@ -61,7 +62,7 @@ public class BankResultBean {
         this.execDatas = execDatas;
     }
 
-    public static class ExecDatasBean {
+    public static class ExecDatasBean implements Serializable{
         /**
          * label : 北京银行
          * value : 0
