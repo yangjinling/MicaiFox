@@ -33,6 +33,10 @@ import com.micai.fox.activity.MyZhongChouActivity;
 import com.micai.fox.activity.NotificationActivity;
 import com.micai.fox.activity.SettingActivity;
 import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
+import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.BaseResultBean;
+import com.micai.fox.resultbean.MineResultBean;
 import com.micai.fox.util.Bimp;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
@@ -54,6 +58,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
+import okhttp3.MediaType;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -101,6 +106,7 @@ public class MineFragmnet extends Fragment {
 
     File photo = null;
     private Uri uri;
+    private MineResultBean mineResultBean;
 
     @Nullable
     @Override
@@ -125,6 +131,7 @@ public class MineFragmnet extends Fragment {
         if (null != Config.getInstance().getPhotoUrl() || !TextUtils.isEmpty(Config.getInstance().getPhotoUrl())) {
             Glide.with(this).load(Config.getInstance().getPhotoUrl()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(ivMineHead);
         }
+        getMineInfo();
         return view;
     }
 
@@ -396,6 +403,7 @@ public class MineFragmnet extends Fragment {
             }
         });*/
     }
+
     /**
      * 裁剪，例如：输出100*100大小的图片，宽高比例是1:1
      *
@@ -427,5 +435,33 @@ public class MineFragmnet extends Fragment {
         intent.putExtra("noFaceDetection", true);
         intent.putExtra("return-data", true);
         return intent;
+    }
+
+    private ParamBean paramBean;
+    private ParamBean.ParamData paramData;
+
+    private void getMineInfo() {
+        paramBean = new ParamBean();
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(String.format(Url.WEB_MINE, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                Log.e("yjl", "mine--data" + response);
+                if (Tools.isGoodJson(response)) {
+                    mineResultBean = new Gson().fromJson(response, MineResultBean.class);
+                    if (mineResultBean.isExecResult()) {
+                        tvMineNicheng.setText(mineResultBean.getExecDatas().getNickName());
+                    }
+                }
+            }
+        });
     }
 }

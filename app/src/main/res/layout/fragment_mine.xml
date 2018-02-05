@@ -32,7 +32,7 @@
                 android:layout_marginLeft="15dp"
                 android:drawableRight="@mipmap/change"
                 android:gravity="center_vertical"
-                android:text="奀奀1029"
+                android:text=""
                 android:drawablePadding="7.5dp"
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />

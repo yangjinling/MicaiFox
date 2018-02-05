@@ -3,6 +3,7 @@ package com.micai.fox.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,14 +11,23 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.adapter.MyReportAdapter;
+import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
+import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.util.Tools;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 /*我的报告界面*/
 public class MyReportActivity extends AppCompatActivity {
@@ -43,6 +53,7 @@ public class MyReportActivity extends AppCompatActivity {
         data = getData();
         headView = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.headview_lv, null);
         lvMyreport.addHeaderView(headView);
+        getReportList("0");
         MyReportAdapter adapter = new MyReportAdapter(data, this, R.layout.item_lv_myreport);
         lvMyreport.setAdapter(adapter);
         lvMyreport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,5 +88,31 @@ public class MyReportActivity extends AppCompatActivity {
         }
 
         return data;
+    }
+
+    private ParamBean paramBean;
+    private ParamBean.ParamData paramData;
+    private void getReportList(String pageNum) {
+        paramBean = new ParamBean();
+        paramBean.setLength("20");
+        paramBean.setPageNum(pageNum);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(String.format(Url.WEB_MINE_REPORT, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                Log.e("yjl", "mine--report" + response);
+                if (Tools.isGoodJson(response)) {
+
+                }
+            }
+        });
     }
 }

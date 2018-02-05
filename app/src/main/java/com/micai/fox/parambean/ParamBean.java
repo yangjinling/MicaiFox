@@ -7,7 +7,25 @@ import java.io.Serializable;
  */
 
 public class ParamBean implements Serializable {
+    private String pageNum;
+    private String length;
     private ParamData paramData;
+
+    public String getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(String pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+    }
 
     public ParamData getParamData() {
         return paramData;
@@ -135,5 +153,6 @@ public class ParamBean implements Serializable {
         public void setType(String type) {
             this.type = type;
         }
+
     }
 }
