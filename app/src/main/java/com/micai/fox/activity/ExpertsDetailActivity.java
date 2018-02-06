@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -18,14 +19,21 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.adapter.ViewPageAdapter;
+import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
 import com.micai.fox.fragment.ExpertsDetailFragment;
 import com.micai.fox.fragment.ExpertsReportFragment;
 import com.micai.fox.fragment.ExpertsZhongChouFragment;
+import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
 import com.micai.fox.view.MyScrollView;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +41,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 /*专家详情页面*/
 public class ExpertsDetailActivity extends AppCompatActivity {
@@ -126,6 +136,7 @@ public class ExpertsDetailActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 expertsDetailViewpager.resetHeight(position);
             }
+
             @Override
             public void onPageScrollStateChanged(int state) {
 
@@ -265,6 +276,34 @@ public class ExpertsDetailActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+    }
+
+    private ParamBean paramBean;
+    private ParamBean.ParamData paramData;
+
+    private void getExpertsDetail(String proId) {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setProId(proId);
+        paramBean.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(String.format(Url.WEB_EXPERTS_DETAIL, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                Log.e("yjl", "专家详情-data" + response);
+                if (Tools.isGoodJson(response)) {
+
+                }
             }
         });
     }

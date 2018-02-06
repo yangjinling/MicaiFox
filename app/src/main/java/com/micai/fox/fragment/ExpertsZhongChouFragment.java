@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.activity.ExpertsDetailActivity;
 import com.micai.fox.activity.ReportDetailActivity;
@@ -20,10 +22,20 @@ import com.micai.fox.activity.ZhongChouDetailActivity;
 import com.micai.fox.adapter.MyExpertsListAdapter;
 import com.micai.fox.adapter.MyExpertsReportAdapter;
 import com.micai.fox.adapter.MyExpertsZhonChouAdapter;
+import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
+import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.ExpertsResultBean;
 import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -46,7 +58,7 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
 
     @SuppressLint("ValidFragment")
     public ExpertsZhongChouFragment(CustomViewPager customViewPager) {
-    this.vp=customViewPager;
+        this.vp = customViewPager;
     }
 
     @Nullable
@@ -56,6 +68,7 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
         data = getData();
         lv = ((ListView) view.findViewById(R.id.experts_detail_zhong_report_lv));
         lv.setFocusable(false);
+        getExpertsZhongChouList("0","0");
         MyExpertsZhonChouAdapter adapter = new MyExpertsZhonChouAdapter(data, getContext(), R.layout.item_lv_experts_zhongchou);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -66,7 +79,7 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
             }
         });
 //        lv.setOnScrollListener(this);
-        vp.setObjectForPosition(view,0);
+        vp.setObjectForPosition(view, 0);
 //        footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv_home_zhongchou, null);
 //        lv.addFooterView(footer_view);
         return view;
@@ -80,6 +93,36 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
         }
 
         return data;
+    }
+
+    private ParamBean paramBean;
+    private ParamBean.ParamData paramData;
+
+    private void getExpertsZhongChouList(String proId, String pageNnum) {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setProId((proId));
+        paramBean.setParamData(paramData);
+        paramBean.setLength("" + 20);
+        paramBean.setPageNum(pageNnum);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(String.format(Url.WEB_EXPERTS_ZHONCHOU, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                Log.e("yjl", "experts-众筹-data" + response);
+                if (Tools.isGoodJson(response)) {
+
+                }
+            }
+        });
     }
 
     @Override

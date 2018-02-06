@@ -16,20 +16,29 @@ import android.text.Spanned;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.adapter.ViewPageAdapter;
+import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
 import com.micai.fox.fragment.ExpertsReportFragment;
 import com.micai.fox.fragment.ExpertsZhongChouFragment;
 import com.micai.fox.fragment.ZhouChouDetailIntroduceFragment;
 import com.micai.fox.fragment.ZhouChouDetailPilutFragment;
 import com.micai.fox.fragment.ZhouChouDetailReportFragment;
+import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +46,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 /*众筹详情页面*/
 public class ZhongChouDetailActivity extends AppCompatActivity {
@@ -99,6 +110,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
         tvBack.setVisibility(View.VISIBLE);
         tvTitle.setText("众筹详情");
         initControls(1);
+        getZhongChouDetail("");
 //        initFragments(0);
 //        switchFragment(mFragments[0]);
         zhongchouDetailViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -111,6 +123,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 zhongchouDetailViewpager.resetHeight(position);
             }
+
             @Override
             public void onPageScrollStateChanged(int state) {
 
@@ -183,6 +196,35 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
         }
     }
 
+    private ParamBean paramBean;
+    private ParamBean.ParamData paramData;
+
+    private void getZhongChouDetail(String crowdfundingId) {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setCrowdfundingId(crowdfundingId);
+        paramBean.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(String.format(Url.WEB_HOME_ZHONGCHOU_DETAIL, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("yjl", "众筹详情-data" + response);
+                if (Tools.isGoodJson(response)) {
+
+                }
+            }
+        });
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -243,7 +285,8 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 tab.getCustomView().findViewById(R.id.tv_tableitem).setSelected(true);
                 tab.getCustomView().findViewById(R.id.line_tableitem1).setVisibility(View.VISIBLE);
-                tab.getCustomView().findViewById(R.id.line_tableitem2).setVisibility(View.VISIBLE);                zhongchouDetailViewpager.setCurrentItem(tab.getPosition());
+                tab.getCustomView().findViewById(R.id.line_tableitem2).setVisibility(View.VISIBLE);
+                zhongchouDetailViewpager.setCurrentItem(tab.getPosition());
             }
 
             @Override

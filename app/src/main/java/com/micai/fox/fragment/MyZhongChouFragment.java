@@ -5,6 +5,7 @@ import android.graphics.drawable.RippleDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +15,25 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.activity.ExpertsDetailActivity;
 import com.micai.fox.activity.ZhongChouDetailActivity;
 import com.micai.fox.activity.ZhongChouOrderDetailActivity;
 import com.micai.fox.adapter.MyExpertsListAdapter;
 import com.micai.fox.adapter.MyZhonChouAdapter;
+import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
+import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.Tools;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -73,6 +84,34 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
         });
         lv.setOnScrollListener(this);
         return view;
+    }
+
+    private ParamBean paramBean;
+    private ParamBean.ParamData paramData;
+
+    private void getMyZhongChouList(int status) {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setStatus(status);
+        paramBean.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(String.format(Url.WEB_MINE_ZHONGCHOU, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("yjl", "我的众筹-data" + response);
+                if (Tools.isGoodJson(response)) {
+
+                }
+            }
+        });
     }
 
     @Override
@@ -155,7 +194,7 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
         }
         if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum - 1) * 20)) {
             LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
-            if (++curPageNum <=2) {
+            if (++curPageNum <= 2) {
                 LogUtil.e("YJL", "curPageNum==" + curPageNum);
 //                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
                 if (kind == 0) {

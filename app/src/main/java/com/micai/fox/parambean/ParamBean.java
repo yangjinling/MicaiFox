@@ -49,6 +49,11 @@ public class ParamBean implements Serializable {
         String accountBankName;
         String accountBranch;
         String type;
+        String crowdfundingId;
+        String proId;
+        String reportId;
+        String orderId;
+        int  status;
 
         public String getPhone() {
             return phone;
@@ -154,5 +159,44 @@ public class ParamBean implements Serializable {
             this.type = type;
         }
 
+        public String getCrowdfundingId() {
+            return crowdfundingId;
+        }
+
+        public void setCrowdfundingId(String crowdfundingId) {
+            this.crowdfundingId = crowdfundingId;
+        }
+
+        public String getProId() {
+            return proId;
+        }
+
+        public void setProId(String proId) {
+            this.proId = proId;
+        }
+
+        public String getReportId() {
+            return reportId;
+        }
+
+        public void setReportId(String reportId) {
+            this.reportId = reportId;
+        }
+
+        public String getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(String orderId) {
+            this.orderId = orderId;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
     }
 }

@@ -28,17 +28,20 @@ import com.micai.fox.R;
 import com.micai.fox.activity.ExpertsDetailActivity;
 import com.micai.fox.activity.ReportDetailActivity;
 import com.micai.fox.activity.ZhongChouDetailActivity;
+import com.micai.fox.adapter.MyExpertsListAdapter;
 import com.micai.fox.adapter.MyHomeZhongChouAdapter;
 import com.micai.fox.adapter.MyRecycleHAdapter;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.BaseResultBean;
+import com.micai.fox.resultbean.ExpertsResultBean;
 import com.micai.fox.resultbean.HomeResultBean;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.MyDividerItemDecoration;
 import com.micai.fox.view.MyScrollView;
+import com.micai.fox.view.PageListScrollView;
 import com.youth.banner.Banner;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -57,7 +60,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  * Created by lq on 2017/12/19.
  */
 
-public class HomeFragment extends Fragment implements AbsListView.OnScrollListener {
+public class HomeFragment extends Fragment implements PageListScrollView.OnScrollToBottomListener {
     /* @Bind(R.id.iv_home)
      ImageView homeIv;*/
     @Bind(R.id.recycleview_h)
@@ -81,7 +84,7 @@ public class HomeFragment extends Fragment implements AbsListView.OnScrollListen
     @Bind(R.id.home_xuanting)
     LinearLayout homeXuanting;
     @Bind(R.id.home_scroll)
-    ScrollView homeScroll;
+    PageListScrollView homeScroll;
     @Bind(R.id.home_xuanting2)
     LinearLayout homeXuanting2;
     //设置图片标题:自动对应
@@ -96,6 +99,8 @@ public class HomeFragment extends Fragment implements AbsListView.OnScrollListen
             homeScroll.smoothScrollTo(0, 0);
         }
     };
+    private List<HomeResultBean.ExecDatasBean.CrowdfundingBean> crowdfundingBeanList;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -129,9 +134,10 @@ public class HomeFragment extends Fragment implements AbsListView.OnScrollListen
                 getContext().startActivity(intent);
             }
         });
-        listviewHome.setOnScrollListener(this);
+        homeScroll.setOnScrollToBottomListener(this);
         return view;
     }
+
     private void initView() {
         initBanner();
         //横向recycle
@@ -267,6 +273,10 @@ public class HomeFragment extends Fragment implements AbsListView.OnScrollListen
                     homeResultBean = new Gson().fromJson(response, HomeResultBean.class);
                     if (homeResultBean.isExecResult()) {
                         initView();
+                        crowdfundingBeanList = homeResultBean.getExecDatas().getCrowdfunding();
+                        if (crowdfundingBeanList.size() < 20) {
+//                            currentpage++;
+                        }
                     } else {
                     }
                 }
@@ -274,78 +284,55 @@ public class HomeFragment extends Fragment implements AbsListView.OnScrollListen
         });
     }
 
-    public interface OnSwipeIsValid {
-        public void setSwipeEnabledTrue();
-
-        public void setSwipeEnabledFalse();
-    }
-
-    private HomeFragment.OnSwipeIsValid isValid = new HomeFragment.OnSwipeIsValid() {
-        @Override
-        public void setSwipeEnabledTrue() {
-//            walletSwiperefresh.setEnabled(true);//让swipe起作用，能够刷新
-//            isCanRefresh = true;
-        }
-
-        @Override
-        public void setSwipeEnabledFalse() {
-//            walletSwiperefresh.setEnabled(false);//让swipe不能够刷新
-//            isCanRefresh = false;
-        }
-    };
-    private int lastItem;
-    private int totalItem;
-    private boolean isBottom = false;//是否到第20条数据了
-    private int curPageNum = 1;
+    private int pagesize = 20;
+    private int currentpage = 0;
+    private boolean judgeCanLoadMore = true;
+    private int totalCount = 20;//设置本次加载的数据的总数
 
     @Override
-    public void onScrollStateChanged(AbsListView absListView, int i) {
-        LogUtil.e("YJL---", "+进来了没有");
-        switch (i) {
-            case SCROLL_STATE_IDLE://空闲状态
-                LogUtil.e("YJL", "+进来了没有空闲");
-                break;
-            case SCROLL_STATE_TOUCH_SCROLL://滚状态
-                LogUtil.e("YJL", "+进来了没有滚");
-                break;
-            case SCROLL_STATE_FLING://飞状态
-                LogUtil.e("YJL", "+进来了没有飞");
-                break;
-        }
-        //判断ListView是否滑动到第一个Item的顶部
-        if (isValid != null && listviewHome.getChildCount() > 0 && listviewHome.getFirstVisiblePosition() == 0
-                && listviewHome.getChildAt(0).getTop() >= listviewHome.getPaddingTop()) {
-            //解决滑动冲突，当滑动到第一个item，下拉刷新才起作用
-            isValid.setSwipeEnabledTrue();
-        } else {
-            isValid.setSwipeEnabledFalse();
-        }
-    }
-
-    @Override
-    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-        this.lastItem = i + i1;
-        this.totalItem = i2;
-              /*i:屏幕中第一个可见item的下标
-              * i1:可见item数量
-            * i2:itme的总数量*/
-        if (i2 != 0 && i + i1 == i2) {
-            isBottom = true;
-            LogUtil.e("YJL", "isBottom111===" + isBottom);
-        } else {
-            isBottom = false;
-            LogUtil.e("YJL", "isBottom222===" + isBottom);
-        }
-        if (absListView.getLastVisiblePosition() >= 3 + ((curPageNum - 1) * 3)) {
-            LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
-            if (++curPageNum <= 1) {
-                LogUtil.e("YJL", "curPageNum==" + curPageNum);
-//                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
-                Toast.makeText(getContext(), "加载中…", Toast.LENGTH_SHORT).show();
+    public void onScrollBottomListener(boolean isBottom) {
+        //模拟进行数据的分页加载
+        if (judgeCanLoadMore && isBottom) {
+//            commentLv.startLoading();
+            if (currentpage == 0) {
+                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getContext(), "没有更多了", Toast.LENGTH_SHORT).show();
-//                ToolsC.CenterToast(getContext(), "没有更多数据");
+                Toast.makeText(getContext(), "正在加载中", Toast.LENGTH_SHORT).show();
+                getZhongChouList(currentpage);
             }
         }
     }
+
+    private void initLoadMoreTagOp() {
+        if (totalCount == 0 || totalCount <= currentpage * pagesize) {//当前获取的数目大于等于总共的数目时表示数据加载完毕，禁止滑动
+            judgeCanLoadMore = false;
+//            commentLv.loadComplete();
+            Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+            return;
+        }
+    }
+
+    private void getZhongChouList(int pageNum) {
+        paramBean.setPageNum("" + pageNum);
+        paramBean.setLength("" + 20);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(String.format(Url.WEB_HOME_ZHONGCHOU, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                Log.e("yjl", "home-众筹-data" + response);
+                if (Tools.isGoodJson(response)) {
+                    initLoadMoreTagOp();
+                }
+            }
+        });
+    }
+
 }

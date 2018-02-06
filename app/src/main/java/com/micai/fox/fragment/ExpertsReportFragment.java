@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +14,25 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.activity.ReportDetailActivity;
 import com.micai.fox.activity.ZhongChouDetailActivity;
 import com.micai.fox.adapter.MyExpertsReportAdapter;
 import com.micai.fox.adapter.MyExpertsZhonChouAdapter;
+import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
+import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 /**
  * 作者：杨金玲 on 2017/12/27 16:45
@@ -35,6 +46,7 @@ public class ExpertsReportFragment extends Fragment implements AbsListView.OnScr
     private ListView lv;
     private View footer_view;
     private CustomViewPager vp;
+
     public ExpertsReportFragment() {
     }
 
@@ -51,6 +63,7 @@ public class ExpertsReportFragment extends Fragment implements AbsListView.OnScr
         lv = ((ListView) view.findViewById(R.id.experts_detail_zhong_report_lv));
         lv.setFocusable(false);
         data = getData();
+        getExpertsReportList("", "");
         MyExpertsReportAdapter reportAdapter = new MyExpertsReportAdapter(data, getContext(), R.layout.item_lv_experts_report);
         lv.setAdapter(reportAdapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,7 +74,7 @@ public class ExpertsReportFragment extends Fragment implements AbsListView.OnScr
             }
         });
 //        lv.setOnScrollListener(this);
-        vp.setObjectForPosition(view,1);
+        vp.setObjectForPosition(view, 1);
         return view;
     }
 
@@ -73,6 +86,36 @@ public class ExpertsReportFragment extends Fragment implements AbsListView.OnScr
         }
 
         return data;
+    }
+
+    private ParamBean paramBean;
+    private ParamBean.ParamData paramData;
+
+    private void getExpertsReportList(String proId, String pageNnum) {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setProId((proId));
+        paramBean.setParamData(paramData);
+        paramBean.setLength("" + 20);
+        paramBean.setPageNum(pageNnum);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(String.format(Url.WEB_EXPERTS_REPORT, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                Log.e("yjl", "experts-报告-data" + response);
+                if (Tools.isGoodJson(response)) {
+
+                }
+            }
+        });
     }
 
     @Override
@@ -144,7 +187,7 @@ public class ExpertsReportFragment extends Fragment implements AbsListView.OnScr
         }
         if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum - 1) * 20)) {
             LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
-            if (++curPageNum <=2) {
+            if (++curPageNum <= 2) {
                 LogUtil.e("YJL", "curPageNum==" + curPageNum);
 //                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
                 if (kind == 0) {
