@@ -236,7 +236,7 @@ public class SettingDetailActivity extends AppCompatActivity {
     }
 
     private String reformatPhone(String phone) {
-        if (null != phone&&!TextUtils.isEmpty(phone)) {
+        if (null != phone && !TextUtils.isEmpty(phone)) {
             return "您当前的注册手机号为：" + phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4);
         } else return "";
     }
@@ -541,10 +541,12 @@ public class SettingDetailActivity extends AppCompatActivity {
                     AccountInfoResult accountInfoResult = new Gson().fromJson(response, AccountInfoResult.class);
                     if (accountInfoResult.isExecResult()) {
                         AccountInfoResult.ExecDatasBean execDatas = accountInfoResult.getExecDatas();
-                        accountTvName.setText(execDatas.getAccountName());
-                        accountTvNum.setText(execDatas.getAccountNumber());
-                        accountTvBank.setText(execDatas.getAccountBankName());
-                        accountTvBankname.setText(execDatas.getAccountBranch());
+                        if (null != execDatas) {
+                            accountTvName.setText(execDatas.getAccountName());
+                            accountTvNum.setText(execDatas.getAccountNumber());
+                            accountTvBank.setText(execDatas.getAccountBankName());
+                            accountTvBankname.setText(execDatas.getAccountBranch());
+                        }
                     } else {
                     }
                 }

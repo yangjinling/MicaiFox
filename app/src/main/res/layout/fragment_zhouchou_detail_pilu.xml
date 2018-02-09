@@ -53,7 +53,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="59dp"
-            android:layout_marginRight="104dp"
             android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
@@ -72,10 +71,21 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:layout_marginRight="104dp"
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableRight="@mipmap/payment" />
+                android:drawableRight="@mipmap/question" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:text="￥2000.00"
+                android:gravity="center"
+                android:textColor="@color/red"
+                android:textSize="15sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -118,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="5dp"
-                android:drawableTop="@mipmap/payment"
+                android:drawableTop="@mipmap/question"
                 android:text="投注盈利金额"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
@@ -129,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="5dp"
-                android:drawableTop="@mipmap/payment"
+                android:drawableTop="@mipmap/question"
                 android:text="投注盈利率"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
@@ -140,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="5dp"
-                android:drawableTop="@mipmap/payment"
+                android:drawableTop="@mipmap/question"
                 android:text="兑付盈利金额"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
@@ -151,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="5dp"
-                android:drawableTop="@mipmap/payment"
+                android:drawableTop="@mipmap/question"
                 android:text="兑付盈利率"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
@@ -181,7 +191,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="26.5dp"
             android:text="投注信息"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="25dp"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
