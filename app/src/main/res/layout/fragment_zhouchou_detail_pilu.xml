@@ -71,29 +71,30 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:layout_marginRight="104dp"
-                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="104dp"
                 android:layout_weight="1"
-                android:drawableRight="@mipmap/question" />
+                android:drawableRight="@mipmap/question"
+                android:visibility="gone" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginLeft="10dp"
-                android:text="￥2000.00"
+                android:layout_weight="1"
                 android:gravity="center"
+                android:text="￥2000.00"
                 android:textColor="@color/red"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="65dp"
-            android:layout_marginTop="5dp"
             android:layout_marginRight="87dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
 
@@ -120,48 +121,140 @@
             android:layout_marginLeft="24dp"
             android:layout_marginRight="27dp"
             android:layout_marginTop="16dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
-                android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="5dp"
                 android:drawableTop="@mipmap/question"
+                android:gravity="center"
                 android:text="投注盈利金额"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
             <TextView
-                android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="5dp"
                 android:drawableTop="@mipmap/question"
+                android:gravity="center"
                 android:text="投注盈利率"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
             <TextView
-                android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="5dp"
                 android:drawableTop="@mipmap/question"
+                android:gravity="center"
                 android:text="兑付盈利金额"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
             <TextView
-                android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="5dp"
                 android:drawableTop="@mipmap/question"
+                android:gravity="center"
+                android:text="兑付盈利率"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="27dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="￥500"
+                android:textColor="@color/red"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="￥500"
+                android:textColor="@color/red"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="￥500"
+                android:textColor="@color/red"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="￥500"
+                android:textColor="@color/red"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="27dp"
+
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="投注盈利金额"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="投注盈利率"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="兑付盈利金额"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="兑付盈利率"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
@@ -190,10 +283,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="26.5dp"
-            android:text="投注信息"
             android:layout_marginTop="25dp"
+            android:text="投注信息"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="7dp"
+            android:layout_weight="1"></ListView>
     </LinearLayout>
 </LinearLayout>

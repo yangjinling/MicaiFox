@@ -1,15 +1,22 @@
 package com.micai.fox.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,8 +29,14 @@ import com.micai.fox.resultbean.BankResultBean;
 import com.micai.fox.resultbean.BaseResultBean;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
+import com.wx.wheelview.adapter.ArrayWheelAdapter;
+import com.wx.wheelview.widget.WheelView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,7 +44,7 @@ import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.MediaType;
 
-public class AcountEditActivity extends AppCompatActivity {
+public class AcountEditActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Bind(R.id.tv_back)
     TextView tvBack;
@@ -88,7 +101,7 @@ public class AcountEditActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.tv_back, R.id.tv_notify, R.id.account_ll_bank})
-    public void onViewClicked(View view) {
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_back:
                 setResult(RESULT_CANCELED);
@@ -121,7 +134,20 @@ public class AcountEditActivity extends AppCompatActivity {
                 break;
             case R.id.account_ll_bank:
                 //选择银行列表
-                getBankData();
+                getBankData(view);
+                break;
+            case R.id.pop_cancle:
+                popupWindow.dismiss();
+                break;
+            case R.id.pop_sure:
+                popupWindow.dismiss();
+                if (selectPosition == 0) {
+                    updateAccountTvBank.setTextColor(getResources().getColor(R.color.gray));
+                    updateAccountTvBank.setText("请选择");
+                } else {
+                    updateAccountTvBank.setTextColor(getResources().getColor(R.color.black));
+                    updateAccountTvBank.setText(bankResultBean.getExecDatas().get(selectPosition - 1).getLabel());
+                }
                 break;
         }
     }
@@ -152,7 +178,7 @@ public class AcountEditActivity extends AppCompatActivity {
     private BankResultBean bankResultBean;
 
     //获取银行列表
-    private void getBankData() {
+    private void getBankData(final View view) {
         paramBean = new ParamBean();
         paramData = new ParamBean.ParamData();
         paramData.setType("Bank");
@@ -172,6 +198,7 @@ public class AcountEditActivity extends AppCompatActivity {
                 if (Tools.isGoodJson(response)) {
                     bankResultBean = new Gson().fromJson(response, BankResultBean.class);
                     if (bankResultBean.isExecResult()) {
+                        showServicePopwindow(view);
                     } else {
                     }
                 }
@@ -187,7 +214,7 @@ public class AcountEditActivity extends AppCompatActivity {
         paramData.setAccountNumber(accountNumber);
         paramData.setAccountBank(accountBank);
         paramData.setAccountBranch(accountBranch);
-        paramData.setAccountBankName(bankResultBean.getExecDatas().get(0).getLabel());
+        paramData.setAccountBankName(bankResultBean.getExecDatas().get(selectPosition - 1).getLabel());
         paramBean.setParamData(paramData);
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
@@ -219,5 +246,85 @@ public class AcountEditActivity extends AppCompatActivity {
             }
         });
     }
+
+    private PopupWindow popupWindow;
+    private WheelView wheelview1;
+    private WheelView wheelview2;
+    private Button pop_cancle;
+    private Button pop_sure;
+    private View popView;
+    private List<String> list;
+    private int selectPosition = 0;
+
+    //服务类型popWindow
+    public void showServicePopwindow(View view) {
+        LayoutInflater inflater = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE));
+        popView = inflater.inflate(R.layout.popwindow_bank, null);
+        wheelview1 = ((WheelView) popView.findViewById(R.id.wheelview));
+        pop_cancle = ((Button) popView.findViewById(R.id.pop_cancle));
+        pop_cancle.setOnClickListener(this);
+        pop_sure = ((Button) popView.findViewById(R.id.pop_sure));
+        pop_sure.setOnClickListener(this);
+        wheelview1.setWheelAdapter(new ArrayWheelAdapter(this)); // 文本数据源
+        list = new ArrayList<String>();
+        list.add("请选择");
+        for (int i = 0; i < bankResultBean.getExecDatas().size(); i++) {
+            list.add(bankResultBean.getExecDatas().get(i).getLabel());
+        }
+
+        wheelview1.setSelection(0);
+        wheelview1.setWheelData(list);
+//        wheelview1.setWheelSize(5);
+        wheelview1.setSkin(WheelView.Skin.Holo);
+        WheelView.WheelViewStyle styles = new WheelView.WheelViewStyle();
+        styles.backgroundColor = getResources().getColor(R.color.gray);
+        styles.holoBorderColor = getResources().getColor(R.color.text_gray);
+        styles.selectedTextSize = 16;
+        styles.textSize = 16;
+        styles.selectedTextColor = Color.WHITE;
+        styles.textColor = getResources().getColor(R.color.black);
+        wheelview1.setStyle(styles);
+        popupWindow = new PopupWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//        // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+//        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        // 使其聚集
+        popupWindow.setFocusable(true);
+        // 设置背景颜色变暗
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = 0.2f;
+        getWindow().setAttributes(lp);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.alpha = 1f;
+                getWindow().setAttributes(lp);
+            }
+        });
+        // 设置允许在外点击不消失
+        popupWindow.setOutsideTouchable(false);
+        popView.setFocusableInTouchMode(true);
+        popView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (popupWindow != null) {
+                        popupWindow.dismiss();
+                    }
+                }
+                return false;
+            }
+        });
+        popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
+        popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+        wheelview1.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener<String>() {
+            @Override
+            public void onItemSelected(int position, String string) {
+                Log.e("YJL--position1", "position1=====" + position);
+                selectPosition = position;
+            }
+        });
+    }
+
 
 }

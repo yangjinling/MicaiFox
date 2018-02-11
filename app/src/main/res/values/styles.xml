@@ -49,7 +49,14 @@
         <item name="android:windowBackground">@android:color/transparent
         </item>  <!-- 设置window背景透明，也就是去边框 -->
         <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+    </style>
 
+    <!--服务类型popwindow-->
+    <style name="mypopwindow_anim_style">
+        <item name="android:windowEnterAnimation">@animator/popshow_anim</item>
+        <!-- 指定显示的动画xml -->
 
+        <item name="android:windowExitAnimation">@animator/pophidden_anim</item>
+        <!-- 指定消失的动画xml -->
     </style>
 </resources>
