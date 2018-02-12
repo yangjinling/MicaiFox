@@ -24,7 +24,8 @@
         android:layout_marginBottom="50dp"
         android:gravity="center"
         android:textColor="@color/white"
-        android:drawableLeft="@mipmap/ic_launcher_round"
+        android:drawablePadding="5dp"
+        android:drawableLeft="@mipmap/special"
         android:text="相关报告需在投注出片后才可查看"/></LinearLayout>
 
 </LinearLayout>

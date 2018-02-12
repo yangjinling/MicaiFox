@@ -132,10 +132,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="15dp"
-            android:drawableLeft="@mipmap/ic_launcher_round"
+            android:drawableLeft="@mipmap/special"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
-            android:text="你好"
+            android:text="购买金额需为xx元整数倍，100元起"
             android:textColor="@color/white"
             android:textSize="15sp" />
 
@@ -144,10 +144,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="10dp"
-            android:drawableLeft="@mipmap/ic_launcher_round"
+            android:drawableLeft="@mipmap/special"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
-            android:text="你好"
+            android:text="众筹有风险，投资需谨慎"
             android:textColor="@color/white"
             android:textSize="15sp" />
     </LinearLayout>

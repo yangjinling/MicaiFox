@@ -273,7 +273,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="23dp"
             android:layout_marginTop="14dp"
-            android:drawableLeft="@mipmap/payment"
+            android:drawableLeft="@mipmap/special"
             android:drawablePadding="9dp"
             android:text="文本文本"
             android:textColor="@color/white"

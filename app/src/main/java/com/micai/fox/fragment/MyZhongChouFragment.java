@@ -59,15 +59,19 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
         switch (kind) {
             case 0:
 //                tv.setText("全部");
+                getMyZhongChouList(2,0);
                 break;
             case 1:
 //                tv.setText("待支付");
+                getMyZhongChouList(0,0);
                 break;
             case 2:
 //                tv.setText("已支付");
+                getMyZhongChouList(1,0);
                 break;
             case 3:
 //                tv.setText("已兑换");
+                getMyZhongChouList(7,0);
                 break;
         }
         data = getData();
@@ -89,10 +93,13 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
 
-    private void getMyZhongChouList(int status) {
+    private void getMyZhongChouList(int status, int curPageNum) {
         paramBean = new ParamBean();
+        paramBean.setLength("20");
+        paramBean.setPageNum("" + curPageNum);
         paramData = new ParamBean.ParamData();
-        paramData.setStatus(status);
+        if (2 != status)
+            paramData.setStatus(status);
         paramBean.setParamData(paramData);
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
