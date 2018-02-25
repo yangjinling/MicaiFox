@@ -26,6 +26,7 @@ import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.ExpertsResultBean;
+import com.micai.fox.resultbean.ExpertsZhongchouResultBean;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
@@ -48,11 +49,13 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 public class ExpertsZhongChouFragment extends Fragment implements AbsListView.OnScrollListener {
     private int kind;
     //    private TextView tv;
-    private ArrayList<String> data;
+    private ArrayList<ExpertsZhongchouResultBean.ExecDatasBean.RecordListBean> data=new ArrayList<>();
     private ListView lv;
     private View footer_view;
     private CustomViewPager vp;
-
+    private String proId;
+    private ExpertsZhongchouResultBean expertsZhongchouResultBean;
+    MyExpertsZhonChouAdapter adapter;
     public ExpertsZhongChouFragment() {
     }
 
@@ -65,16 +68,17 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_zhong_report_detail_experts, container, false);
-        data = getData();
         lv = ((ListView) view.findViewById(R.id.experts_detail_zhong_report_lv));
         lv.setFocusable(false);
-        getExpertsZhongChouList("0","0");
-        MyExpertsZhonChouAdapter adapter = new MyExpertsZhonChouAdapter(data, getContext(), R.layout.item_lv_experts_zhongchou);
+        proId = getArguments().getString("proId");
+        getExpertsZhongChouList(proId,"0");
+       adapter = new MyExpertsZhonChouAdapter(data, getContext(), R.layout.item_lv_experts_zhongchou);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ZhongChouDetailActivity.class);
+                intent.putExtra("crowdingId",expertsZhongchouResultBean.getExecDatas().getRecordList().get(i).getCrowdfundingId());
                 startActivity(intent);
             }
         });
@@ -85,15 +89,7 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
         return view;
     }
 
-    private ArrayList<String> getData() {
-        ArrayList<String> data = new ArrayList<>();
-        String temp = " item";
-        for (int i = 0; i < 50; i++) {
-            data.add(i + temp);
-        }
 
-        return data;
-    }
 
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
@@ -119,7 +115,11 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
             public void onResponse(String response, int id) throws Exception {
                 Log.e("yjl", "experts-众筹-data" + response);
                 if (Tools.isGoodJson(response)) {
-
+                    expertsZhongchouResultBean = new Gson().fromJson(response, ExpertsZhongchouResultBean.class);
+                    if (expertsZhongchouResultBean.isExecResult()){
+                        data.addAll(expertsZhongchouResultBean.getExecDatas().getRecordList());
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             }
         });

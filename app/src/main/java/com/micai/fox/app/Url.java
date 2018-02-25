@@ -6,6 +6,7 @@ package com.micai.fox.app;
 
 public class Url {
     public static final String CONTENT_TYPE = "application/json; charset=utf-8";
+    public static final String WEB_BASE_IP="http://39.106.29.117:18888";
     public static final String WEB_BASE_URL = "http://39.106.29.117:18888/mcfox/a/";
     public static final String WEB_BASE_SESSION = ";JSESSIONID=%s?__ajax=true";
     /*2.1.1注册短信验证码*/
@@ -52,8 +53,12 @@ public class Url {
     public static final String WEB_EXPERTS_REPORT = WEB_BASE_URL + "report/listByPro" + WEB_BASE_SESSION;
     /*2.4.5众筹--众筹详情*/
     public static final String WEB_HOME_ZHONGCHOU_DETAIL = WEB_BASE_URL + "crowdfunding/info" + WEB_BASE_SESSION;
-    /*2.4.6众筹--众筹详情-众筹报告*/
-    public static final String WEB_HOME_ZHONGCHOU_DETAIL_REPORT = WEB_BASE_URL + "report/info" + WEB_BASE_SESSION;
+    /*2.4.6众筹--众筹详情-报告Tab*/
+    public static final String WEB_HOME_ZHONGCHOU_DETAIL_REPORT = WEB_BASE_URL + "crowdfunding/report" + WEB_BASE_SESSION;
+    /*2.4.6众筹--众筹详情-披露Tab*/
+    public static final String WEB_HOME_ZHONGCHOU_DETAIL_PILU = WEB_BASE_URL + "crowdfunding/lotteryTicket" + WEB_BASE_SESSION;
+    /*2.4.8报告详情*/
+    public static final String WEB_REPORT_DETAIL = WEB_BASE_URL + "report/info" + WEB_BASE_SESSION;
     /*2.4.7众筹--众筹详情-众筹下单*/
     public static final String WEB_HOME_ZHONGCHOU_DETAIL_BUY = WEB_BASE_URL + "crowdfunding/orderSave" + WEB_BASE_SESSION;
     /*2.5.1我的*/
@@ -61,7 +66,7 @@ public class Url {
     /*2.5.2我的--昵称修改（完成--未测试）*/
     public static final String WEB_MINE_NICK = WEB_BASE_URL + "sys/user/updateNickName" + WEB_BASE_SESSION;
     /*2.5.3我的--头像修改*/
-    public static final String WEB_MINE_HEAD = WEB_BASE_URL + "sys/user/updatePhoto" + WEB_BASE_SESSION;
+    public static final String WEB_MINE_HEAD_MODYFY = WEB_BASE_URL + "sys/user/updatePhoto" + WEB_BASE_SESSION;
     /*2.5.4我的--我的众筹*/
     public static final String WEB_MINE_ZHONGCHOU = WEB_BASE_URL + "crowdfunding/orderList" + WEB_BASE_SESSION;
     /*2.5.5我的--我的众筹-详情*/
@@ -71,6 +76,8 @@ public class Url {
     /*2.5.7我的--通知列表*/
     public static final String WEB_MINE_NOTICE = WEB_BASE_URL + "bd/notice/list" + WEB_BASE_SESSION;
     /*2.5.8我的--清空通知列表（完成）*/
-    public static final String WEB_MINE_NOTICE_CLEAR = WEB_BASE_URL + "bd/delete" + WEB_BASE_SESSION;
+    public static final String WEB_MINE_NOTICE_CLEAR = WEB_BASE_URL + "bd/notice/delete" + WEB_BASE_SESSION;
+    /*2.5.9头像上传*/
+    public static final String WEB_MINE_HEAD = WEB_BASE_URL + "sys/user/file/upload" + WEB_BASE_SESSION;
 
 }

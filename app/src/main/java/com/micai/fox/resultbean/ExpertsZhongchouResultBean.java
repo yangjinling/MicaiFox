@@ -3,14 +3,14 @@ package com.micai.fox.resultbean;
 import java.util.List;
 
 /**
- * Created by lq on 2018/2/5.
+ * Created by louqiang on 2018/2/25.
  */
 
-public class ExpertsResultBean {
+public class ExpertsZhongchouResultBean {
 
     /**
      * execResult : true
-     * execDatas : {"length":20,"pageNo":1,"totalRow":2,"from":0,"recordList":[{"proId":"100001","proName":"aaa","proPhoto":"/mcfox/userfiles/5edb348b25a248e185a6f12c9204fa561516523589992/images/photo/2018/02/75e15cac9e69538a72bc53832cdb00d1.jpg","proAuth":"我是认证"},{"proId":"5edb348b25a248e185a6f12c9204fa561516523589992","proName":"zhang","proPhoto":"/admin-mcfox/userfiles/1/images/photo/2018/01/75e15cac9e69538a72bc53832cdb00d1(1).jpg","proAuth":"zhang"}],"needCount":true,"totalPage":1}
+     * execDatas : {"length":20,"pageNo":1,"totalRow":1,"from":0,"recordList":[{"crowdfundingId":"ZC100001","title":"众筹标题","amountDown":300,"amountUp":2000,"realAmount":300,"startDate":1519315200000,"status":4,"supNum":2}],"needCount":true,"totalPage":1}
      * count : 0
      * num : 0
      */
@@ -56,9 +56,9 @@ public class ExpertsResultBean {
         /**
          * length : 20
          * pageNo : 1
-         * totalRow : 2
+         * totalRow : 1
          * from : 0
-         * recordList : [{"proId":"100001","proName":"aaa","proPhoto":"/mcfox/userfiles/5edb348b25a248e185a6f12c9204fa561516523589992/images/photo/2018/02/75e15cac9e69538a72bc53832cdb00d1.jpg","proAuth":"我是认证"},{"proId":"5edb348b25a248e185a6f12c9204fa561516523589992","proName":"zhang","proPhoto":"/admin-mcfox/userfiles/1/images/photo/2018/01/75e15cac9e69538a72bc53832cdb00d1(1).jpg","proAuth":"zhang"}]
+         * recordList : [{"crowdfundingId":"ZC100001","title":"众筹标题","amountDown":300,"amountUp":2000,"realAmount":300,"startDate":1519315200000,"status":4,"supNum":2}]
          * needCount : true
          * totalPage : 1
          */
@@ -129,55 +129,87 @@ public class ExpertsResultBean {
 
         public static class RecordListBean {
             /**
-             * proId : 100001
-             * proName : aaa
-             * proPhoto : /mcfox/userfiles/5edb348b25a248e185a6f12c9204fa561516523589992/images/photo/2018/02/75e15cac9e69538a72bc53832cdb00d1.jpg
-             * proAuth : 我是认证
+             * crowdfundingId : ZC100001
+             * title : 众筹标题
+             * amountDown : 300.0
+             * amountUp : 2000.0
+             * realAmount : 300.0
+             * startDate : 1519315200000
+             * status : 4
+             * supNum : 2
              */
 
-            private String proId;
-            private String proName;
-            private String proPhoto;
-            private String proAuth;
-            private float hitRate;
-            public String getProId() {
-                return proId;
+            private String crowdfundingId;
+            private String title;
+            private double amountDown;
+            private double amountUp;
+            private double realAmount;
+            private long startDate;
+            private int status;
+            private int supNum;
+
+            public String getCrowdfundingId() {
+                return crowdfundingId;
             }
 
-            public void setProId(String proId) {
-                this.proId = proId;
+            public void setCrowdfundingId(String crowdfundingId) {
+                this.crowdfundingId = crowdfundingId;
             }
 
-            public String getProName() {
-                return proName;
+            public String getTitle() {
+                return title;
             }
 
-            public void setProName(String proName) {
-                this.proName = proName;
+            public void setTitle(String title) {
+                this.title = title;
             }
 
-            public String getProPhoto() {
-                return proPhoto;
+            public double getAmountDown() {
+                return amountDown;
             }
 
-            public void setProPhoto(String proPhoto) {
-                this.proPhoto = proPhoto;
+            public void setAmountDown(double amountDown) {
+                this.amountDown = amountDown;
             }
 
-            public String getProAuth() {
-                return proAuth;
+            public double getAmountUp() {
+                return amountUp;
             }
 
-            public void setProAuth(String proAuth) {
-                this.proAuth = proAuth;
+            public void setAmountUp(double amountUp) {
+                this.amountUp = amountUp;
             }
 
-            public float getHitRate() {
-                return hitRate;
+            public double getRealAmount() {
+                return realAmount;
             }
 
-            public void setHitRate(float hitRate) {
-                this.hitRate = hitRate;
+            public void setRealAmount(double realAmount) {
+                this.realAmount = realAmount;
+            }
+
+            public long getStartDate() {
+                return startDate;
+            }
+
+            public void setStartDate(long startDate) {
+                this.startDate = startDate;
+            }
+
+            public int getStatus() {
+                return status;
+            }
+
+            public void setStatus(int status) {
+                this.status = status;
+            }
+
+            public int getSupNum() {
+                return supNum;
+            }
+
+            public void setSupNum(int supNum) {
+                this.supNum = supNum;
             }
         }
     }

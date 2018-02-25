@@ -17,11 +17,14 @@ import com.micai.fox.adapter.MyReportAdapter;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.MyReportResultBean;
+import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,8 +43,12 @@ public class MyReportActivity extends AppCompatActivity {
     RelativeLayout rl;
     @Bind(R.id.lv_myreport)
     ListView lvMyreport;
-    private ArrayList<String> data;
+    private ArrayList<MyReportResultBean.ExecDatasBean.RecordListBean> data = new ArrayList<>();
     private View headView;
+    MyReportAdapter adapter;
+    private MyReportResultBean myReportResultBean;
+    private List<MyReportResultBean.ExecDatasBean.RecordListBean> recordList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,16 +57,17 @@ public class MyReportActivity extends AppCompatActivity {
         rl.setVisibility(View.VISIBLE);
         tvBack.setVisibility(View.VISIBLE);
         tvTitle.setText("我的报告");
-        data = getData();
         headView = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.headview_lv, null);
         lvMyreport.addHeaderView(headView);
         getReportList("0");
-        MyReportAdapter adapter = new MyReportAdapter(data, this, R.layout.item_lv_myreport);
+        adapter = new MyReportAdapter(data, this, R.layout.item_lv_myreport);
         lvMyreport.setAdapter(adapter);
         lvMyreport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MyReportActivity.this, ReportDetailActivity.class);
+                LogUtil.e("YJl","size=="+data.size()+"position=="+i);
+                intent.putExtra("reportId",data.get(i-1).getReportId());
                 startActivity(intent);
             }
         });
@@ -80,18 +88,19 @@ public class MyReportActivity extends AppCompatActivity {
         ButterKnife.unbind(this);
     }
 
-    private ArrayList<String> getData() {
-        ArrayList<String> data = new ArrayList<>();
-        String temp = " item";
-        for (int i = 0; i < 50; i++) {
-            data.add(i + temp);
-        }
-
-        return data;
-    }
+//    private ArrayList<String> getData() {
+//        ArrayList<String> data = new ArrayList<>();
+//        String temp = " item";
+//        for (int i = 0; i < 50; i++) {
+//            data.add(i + temp);
+//        }
+//
+//        return data;
+//    }
 
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
+
     private void getReportList(String pageNum) {
         paramBean = new ParamBean();
         paramBean.setLength("20");
@@ -110,7 +119,12 @@ public class MyReportActivity extends AppCompatActivity {
             public void onResponse(String response, int id) throws Exception {
                 Log.e("yjl", "mine--report" + response);
                 if (Tools.isGoodJson(response)) {
-
+                    myReportResultBean = new Gson().fromJson(response, MyReportResultBean.class);
+                    if (myReportResultBean.isExecResult()) {
+                        recordList = myReportResultBean.getExecDatas().getRecordList();
+                        data.addAll(recordList);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             }
         });

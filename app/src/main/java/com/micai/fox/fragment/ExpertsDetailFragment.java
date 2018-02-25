@@ -83,6 +83,7 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ExpertsDetailActivity.class);
+                intent.putExtra("proId",expertsResultBean.getExecDatas().getRecordList().get(i-1).getProId());
                 startActivity(intent);
             }
         });

@@ -12,7 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,14 +23,12 @@ import com.micai.fox.R;
 import com.micai.fox.adapter.ViewPageAdapter;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
-import com.micai.fox.fragment.ExpertsDetailFragment;
 import com.micai.fox.fragment.ExpertsReportFragment;
 import com.micai.fox.fragment.ExpertsZhongChouFragment;
 import com.micai.fox.parambean.ParamBean;
-import com.micai.fox.util.LogUtil;
+import com.micai.fox.resultbean.ExpertsDetailResultBean;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
-import com.micai.fox.view.MyScrollView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -89,6 +86,8 @@ public class ExpertsDetailActivity extends AppCompatActivity {
     TabLayout expertsDetailTablayout;
     @Bind(R.id.experts_detail_viewpager)
     CustomViewPager expertsDetailViewpager;
+    @Bind(R.id.experts_detail_tv_count)
+    TextView expertsDetailTvCount;
     private Fragment[] mFragments;
     private FragmentManager mManager;
     private FragmentTransaction transcation;
@@ -103,6 +102,8 @@ public class ExpertsDetailActivity extends AppCompatActivity {
     private FragmentPagerAdapter fAdapter; //定义adapter
     private List<Fragment> list_fragment; //定义要装fragment的列表
     private List<String> list_title; //tab名称列表
+    String proId;
+    private ExpertsDetailResultBean expertsDetailResultBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +125,8 @@ public class ExpertsDetailActivity extends AppCompatActivity {
 
             }
         });*/
+        proId = getIntent().getStringExtra("proId");
+        getExpertsDetail(proId);
         initControls();
         mHandler.post(scrollViewRunable);
         expertsDetailViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -219,8 +222,15 @@ public class ExpertsDetailActivity extends AppCompatActivity {
             fragment.setArguments(bundle);
             list_fragment.add(fragment);
         }*/
-        list_fragment.add(new ExpertsZhongChouFragment(expertsDetailViewpager));
-        list_fragment.add(new ExpertsReportFragment(expertsDetailViewpager));
+        Bundle bundle;
+        bundle = new Bundle();
+        bundle.putString("proId", proId);
+        ExpertsZhongChouFragment expertsZhongChouFragment = new ExpertsZhongChouFragment(expertsDetailViewpager);
+        expertsZhongChouFragment.setArguments(bundle);
+        list_fragment.add(expertsZhongChouFragment);
+        ExpertsReportFragment expertsReportFragment = new ExpertsReportFragment(expertsDetailViewpager);
+        expertsReportFragment.setArguments(bundle);
+        list_fragment.add(expertsReportFragment);
         //将名称加载tab名字列表，正常情况下，我们应该在values/arrays.xml中进行定义然后调用
         list_title = new ArrayList<>();
         list_title.add("众筹");
@@ -302,7 +312,16 @@ public class ExpertsDetailActivity extends AppCompatActivity {
             public void onResponse(String response, int id) throws Exception {
                 Log.e("yjl", "专家详情-data" + response);
                 if (Tools.isGoodJson(response)) {
-
+                    expertsDetailResultBean = new Gson().fromJson(response, ExpertsDetailResultBean.class);
+                    if (expertsDetailResultBean.isExecResult()) {
+                        expertsDetailTvName.setText(expertsDetailResultBean.getExecDatas().getProfessor().getProName());
+                        expertsDetailTvIntroduce.setText(expertsDetailResultBean.getExecDatas().getProfessor().getProAuth());
+                        expertsDetailTvContent.setText(expertsDetailResultBean.getExecDatas().getProfessor().getSelfIntro());
+                        expertsDetailTvRate.setText("" + expertsDetailResultBean.getExecDatas().getProfessor().getHitRate());
+                        expertsDetailTvYili.setText("" + expertsDetailResultBean.getExecDatas().getProfessor().getProfitRate());
+                        expertsDetailTvMaxyili.setText("" + expertsDetailResultBean.getExecDatas().getProfessor().getMaxProfitRate());
+                        expertsDetailTvCount.setText("共"+expertsDetailResultBean.getExecDatas().getProfessor().getTotalNum()+"次众筹");
+                    }
                 }
             }
         });

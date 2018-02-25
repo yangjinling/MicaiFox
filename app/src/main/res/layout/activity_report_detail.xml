@@ -179,6 +179,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/report_detail_tv_zhongchou_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="13sp"
@@ -205,6 +206,15 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_fu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_marginLeft="13.5dp"
+                android:text=""
+                android:textSize="14sp"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

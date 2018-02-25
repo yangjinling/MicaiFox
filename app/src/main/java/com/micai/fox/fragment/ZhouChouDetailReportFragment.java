@@ -46,6 +46,7 @@ public class ZhouChouDetailReportFragment extends Fragment {
     private View footer_view;
     private View headView;
     private CustomViewPager vp;
+    private String crowdingId;
 
     public ZhouChouDetailReportFragment() {
     }
@@ -61,6 +62,7 @@ public class ZhouChouDetailReportFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_zhouchou_detail_report, container, false);
         ButterKnife.bind(this, view);
         kind = getArguments().getInt("KIND", 0);
+        crowdingId = getArguments().getString("crowdingId");
         switch (0) {
             case 0:
 //                tv.setText("全部");
@@ -75,6 +77,7 @@ public class ZhouChouDetailReportFragment extends Fragment {
                 break;
         }
         data = getData();
+        getZhongChouReport(crowdingId);
         vp.setObjectForPosition(view, 1);
         return view;
     }
@@ -92,10 +95,10 @@ public class ZhouChouDetailReportFragment extends Fragment {
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
 
-    private void getZhongChouReport(String reportId) {
+    private void getZhongChouReport(String crowingId) {
         paramBean = new ParamBean();
         paramData = new ParamBean.ParamData();
-        paramData.setReportId(reportId);
+        paramData.setCrowdfundingId( crowingId);
         paramBean.setParamData(paramData);
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
@@ -109,7 +112,7 @@ public class ZhouChouDetailReportFragment extends Fragment {
 
             @Override
             public void onResponse(String response, int id) throws Exception {
-                Log.e("yjl", "众筹详情-data" + response);
+                Log.e("yjl", "众筹详情-报告" + response);
                 if (Tools.isGoodJson(response)) {
 
                 }

@@ -120,6 +120,7 @@
                 android:id="@+id/item_zhongchou_btn_pay"
                 android:layout_width="80dp"
                 android:layout_height="30dp"
+                android:visibility="gone"
                 android:focusable="false"
                 android:textSize="15sp"
                 android:textColor="@color/white"

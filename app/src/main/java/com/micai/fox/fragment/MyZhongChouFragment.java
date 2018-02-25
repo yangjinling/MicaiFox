@@ -25,6 +25,7 @@ import com.micai.fox.adapter.MyZhonChouAdapter;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.MyZhongChouResultBean;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -43,12 +44,13 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 /*我的--我的众筹模块*/
 public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrollListener {
-    private ArrayList<String> data;
+    private ArrayList<MyZhongChouResultBean.ExecDatasBean.RecordListBean> data=new ArrayList<>();
     private ListView lv;
     private TextView tv;
     private int kind;
     private View headView;
-
+    private MyZhongChouResultBean myZhongChouResultBean;
+    MyZhonChouAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,31 +60,36 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
         kind = getArguments().getInt("KIND", 0);
         switch (kind) {
             case 0:
+                adapter = new MyZhonChouAdapter(0,data, getContext(), R.layout.item_lv_mine_zhongchou);
 //                tv.setText("全部");
                 getMyZhongChouList(2,0);
                 break;
             case 1:
 //                tv.setText("待支付");
+                adapter = new MyZhonChouAdapter(1,data, getContext(), R.layout.item_lv_mine_zhongchou);
                 getMyZhongChouList(0,0);
                 break;
             case 2:
 //                tv.setText("已支付");
+                adapter = new MyZhonChouAdapter(2,data, getContext(), R.layout.item_lv_mine_zhongchou);
                 getMyZhongChouList(1,0);
                 break;
             case 3:
 //                tv.setText("已兑换");
+                adapter = new MyZhonChouAdapter(3,data, getContext(), R.layout.item_lv_mine_zhongchou);
                 getMyZhongChouList(7,0);
                 break;
         }
-        data = getData();
+//        data = getData();
         headView = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.headview_lv, null);
         lv.addHeaderView(headView);
-        MyZhonChouAdapter adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ZhongChouOrderDetailActivity.class);
+                intent.putExtra("orderId",myZhongChouResultBean.getExecDatas().getRecordList().get(i-1).getOrderId());
+                intent.putExtra("type",kind);
                 startActivity(intent);
             }
         });
@@ -94,12 +101,15 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
     private ParamBean.ParamData paramData;
 
     private void getMyZhongChouList(int status, int curPageNum) {
+        Log.e("YJL","status=="+status);
         paramBean = new ParamBean();
         paramBean.setLength("20");
         paramBean.setPageNum("" + curPageNum);
         paramData = new ParamBean.ParamData();
-        if (2 != status)
-            paramData.setStatus(status);
+        if (2 != status){
+            paramData.setStatus(""+status);}else {
+//            paramData.setStatus("");
+        }
         paramBean.setParamData(paramData);
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
@@ -115,7 +125,12 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
             public void onResponse(String response, int id) throws Exception {
                 LogUtil.e("yjl", "我的众筹-data" + response);
                 if (Tools.isGoodJson(response)) {
-
+                    myZhongChouResultBean = new Gson().fromJson(response, MyZhongChouResultBean.class);
+                    if (myZhongChouResultBean.isExecResult()){
+//                        data.clear();
+                        data.addAll(myZhongChouResultBean.getExecDatas().getRecordList());
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             }
         });

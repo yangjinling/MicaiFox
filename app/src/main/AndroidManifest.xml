@@ -184,9 +184,9 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
-        <!--友盟-->
+      <!--  &lt;!&ndash;友盟&ndash;&gt;
         <meta-data android:value="YOUR_APP_KEY" android:name="UMENG_APPKEY"/>
-        <meta-data    android:name="UMENG_CHANNEL"    android:value="${UMENG_CHANNEL_VALUE}" />
+        <meta-data    android:name="UMENG_CHANNEL"    android:value="${UMENG_CHANNEL_VALUE}" />-->
     </application>
 
 </manifest>

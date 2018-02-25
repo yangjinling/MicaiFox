@@ -22,11 +22,11 @@ import java.util.List;
  */
 
 /*首页众筹列表*/
-public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeResultBean.ExecDatasBean.CrowdfundingBean> {
-    private List<HomeResultBean.ExecDatasBean.CrowdfundingBean> mList;
+public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeResultBean.ExecDatasBean.CrowdfundingBean.RecordListBean> {
+    private List<HomeResultBean.ExecDatasBean.CrowdfundingBean.RecordListBean> mList;
     private Context mContext;
 
-    public MyHomeZhongChouAdapter(List<HomeResultBean.ExecDatasBean.CrowdfundingBean> list, Context context, int resId) {
+    public MyHomeZhongChouAdapter(List<HomeResultBean.ExecDatasBean.CrowdfundingBean.RecordListBean> list, Context context, int resId) {
         super(list, context, resId);
         mList = list;
         mContext = context;
@@ -37,11 +37,11 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeResultBean.ExecDat
         //头像
         ((ImageView) viewHolder.findViewById(R.id.home_zhong_iv_head)).setImageResource(R.mipmap.ic_launcher_round);
         //姓名
-        ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_name)).setText(mList.get(position).getName());
+        ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_name)).setText(mList.get(position).getProName());
         //专家简介
-        ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_introduce)).setText(mList.get(position).getAuth());
+        ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_introduce)).setText(mList.get(position).getProAuth());
         //命中率
-        ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_rates)).setText("100");
+        ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_rates)).setText(""+mList.get(position).getHitRate());
         //标题
         ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_talk)).setText(mList.get(position).getTitle());
         //进度条
@@ -73,11 +73,13 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeResultBean.ExecDat
                 pb_liu.setProgress(50);
                 ll_start.setVisibility(View.GONE);
                 ll_people.setVisibility(View.VISIBLE);
+                tv_people.setText(""+mList.get(position).getSupNum());
                 ll_have.setVisibility(View.VISIBLE);
             } else {
                 pb_ing.setProgress(80);
                 ll_start.setVisibility(View.GONE);
                 ll_people.setVisibility(View.VISIBLE);
+                tv_people.setText(""+mList.get(position).getSupNum());
                 ll_have.setVisibility(View.VISIBLE);
             }
         }

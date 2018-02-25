@@ -95,7 +95,7 @@
                                 android:id="@+id/experts_detail_tv_rate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="100"
+                                android:text=""
                                 android:textColor="@android:color/holo_red_light"
                                 android:textSize="24sp" />
 
@@ -128,7 +128,7 @@
                     android:layout_marginTop="10dp"
                     android:lineSpacingExtra="5dp"
                     android:maxLines="2"
-                    android:text="片放在同一行动态片放在同一行动态使和图片放在同一行使和图片放在同一行"
+                    android:text=""
                     android:textColor="@android:color/black"
                     android:textSize="15sp" />
 
@@ -149,7 +149,7 @@
                             android:id="@+id/experts_detail_tv_yili"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="100"
+                            android:text=""
                             android:textColor="@color/red"
                             android:textSize="35sp" />
 
@@ -194,7 +194,7 @@
                             android:id="@+id/experts_detail_tv_maxyili"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="98"
+                            android:text=""
                             android:textColor="@color/red"
                             android:textSize="35sp" />
 
@@ -220,6 +220,7 @@
                                 android:textSize="14sp" />
 
                             <TextView
+                                android:id="@+id/experts_detail_tv_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
                                 android:text="共32次众筹"

@@ -4,18 +4,28 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
+import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
+import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 /**
  * 作者：杨金玲 on 2017/12/27 16:45
@@ -32,6 +42,7 @@ public class ZhouChouDetailPilutFragment extends Fragment {
     //    private TextView tv;
     private ArrayList<String> data;
     private CustomViewPager vp;
+    private String crowdingId;
 
 
     public ZhouChouDetailPilutFragment() {
@@ -48,6 +59,7 @@ public class ZhouChouDetailPilutFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_zhouchou_detail_pilu, container, false);
         ButterKnife.bind(this, view);
         kind = getArguments().getInt("KIND", 0);
+        crowdingId = getArguments().getString("crowdingId");
         switch (kind) {
             case 0:
 //                tv.setText("全部");
@@ -65,6 +77,7 @@ public class ZhouChouDetailPilutFragment extends Fragment {
                 break;
         }
         data = getData();
+        getZhongchouPilu(crowdingId);
         vp.setObjectForPosition(view, 2);
         return view;
     }
@@ -84,4 +97,32 @@ public class ZhouChouDetailPilutFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+    private ParamBean paramBean;
+    private ParamBean.ParamData paramData;
+    private void getZhongchouPilu(String crowingId) {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setCrowdfundingId(crowingId);
+        paramBean.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(String.format(Url.WEB_HOME_ZHONGCHOU_DETAIL_PILU, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                Log.e("yjl", "众筹详情-披露" + response);
+                if (Tools.isGoodJson(response)) {
+
+                }
+            }
+        });
+    }
+
 }

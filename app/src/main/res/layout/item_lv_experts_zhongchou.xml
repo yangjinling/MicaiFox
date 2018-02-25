@@ -88,7 +88,7 @@
                     android:id="@+id/experts_zhongchou_mubiao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20000"
+                    android:text=""
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
             </LinearLayout>
@@ -126,7 +126,7 @@
                     android:id="@+id/experts_zhongchou_have"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20000"
+                    android:text=""
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
             </LinearLayout>
@@ -154,16 +154,16 @@
 
 
                 <TextView
+                    android:id="@+id/experts_zhongchou_people"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20000"
+                    android:text=""
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/experts_zhongchou_people"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="支持人次"

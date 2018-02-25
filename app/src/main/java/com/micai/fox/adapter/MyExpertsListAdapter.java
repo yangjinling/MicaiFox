@@ -27,5 +27,6 @@ public class MyExpertsListAdapter extends MyBaseAdapter<ExpertsResultBean.ExecDa
     public void setData(ViewHolder viewHolder, int position) {
         ((TextView) viewHolder.findViewById(R.id.experts_tv_name)).setText(mLists.get(position).getProName());
         ((TextView) viewHolder.findViewById(R.id.experts_tv_talk)).setText(mLists.get(position).getProAuth());
+        ((TextView) viewHolder.findViewById(R.id.experts_tv_rate)).setText(""+mLists.get(position).getHitRate());
     }
 }

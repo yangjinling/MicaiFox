@@ -36,6 +36,7 @@ import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.BaseResultBean;
+import com.micai.fox.resultbean.HeadResultBean;
 import com.micai.fox.resultbean.MineResultBean;
 import com.micai.fox.util.Bimp;
 import com.micai.fox.util.LogUtil;
@@ -90,6 +91,8 @@ public class MineFragmnet extends Fragment {
     LinearLayout llMineSet;
     @Bind(R.id.tv_back)
     TextView tvBack;
+    @Bind(R.id.tv_mine_amount)
+    TextView tvMineAmount;
 
 
     private File file;
@@ -129,7 +132,7 @@ public class MineFragmnet extends Fragment {
             Log.e("YJL", "personactivity恢复");
         }
         if (null != Config.getInstance().getPhotoUrl() || !TextUtils.isEmpty(Config.getInstance().getPhotoUrl())) {
-            Glide.with(this).load(Config.getInstance().getPhotoUrl()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(ivMineHead);
+            Glide.with(this).load(Url.WEB_BASE_IP+Config.getInstance().getPhotoUrl()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(ivMineHead);
         }
         getMineInfo();
         return view;
@@ -308,7 +311,7 @@ public class MineFragmnet extends Fragment {
                 Bitmap photo = null;
                 LogUtil.e("YJL", "uri===" + intent.getData());
                 if (null != intent.getData()) {
-//                    photoUri=intent.getData();
+                    photoUri = intent.getData();
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = false;
                     options.inSampleSize = 2;
@@ -377,31 +380,57 @@ public class MineFragmnet extends Fragment {
         String name = path.substring(path.lastIndexOf("/") + 1);
         LogUtil.e("YJL", "" + name);
         ivMineHead.setImageBitmap(headPhoto);
-/*        OkHttpUtils.post().addFile("mFile", name, file)
-                .url(String.format(Url.WEB_UPLOAD, SharedPreferencesUtils.getValue("SESSIONID", getApplicationContext())))
+        OkHttpUtils.post().addFile("mFile", name, file)
+                .url(String.format(Url.WEB_MINE_HEAD, Config.getInstance().getSessionId()))
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-                LogUtils.e(TAG, "e ==  " + e.getMessage());
+                LogUtil.e("YJL", "e ==  " + e.getMessage());
             }
 
             @Override
             public void onResponse(String response, int id) throws Exception {
-                if (HomeFunctionUtils.isNetworkAvailable(ChangePhotosActivity.this)) {
-                    if (Tools.isGoodJson(response)) {
-                        UploadResult uploadResult = new Gson().fromJson(response, UploadResult.class);
-                        if (uploadResult.isExecResult()) {
-                            LogUtils.e(TAG, response + "response");
-                            //    Toast.makeText(ChangePhotosActivity.this, "上传头像成功", Toast.LENGTH_SHORT).show(); // 上传头像
-                            ToolsC.CenterToast(ChangePhotosActivity.this, "上传头像成功");
-                            String url = uploadResult.getExecDatas().getUrl();
-                            LogUtils.e(TAG, "url :" + url);    // /website/userfiles/images/20170110/test.jpg}
-                            downLoadBitmap(url, headPhoto);
-                        }
+                if (Tools.isGoodJson(response)) {
+                    LogUtil.e("YJL", "头像response==  " + response);
+                    HeadResultBean uploadResult = new Gson().fromJson(response, HeadResultBean.class);
+                    if (uploadResult.isExecResult()) {
+                        LogUtil.e("YJL", response + "response");
+                        //    Toast.makeText(ChangePhotosActivity.this, "上传头像成功", Toast.LENGTH_SHORT).show(); // 上传头像
+//                            ToolsC.CenterToast(ChangePhotosActivity.this, "上传头像成功");
+                        String url = uploadResult.getExecDatas().getUrl();
+                        Config.getInstance().setPhotoUrl(url);
+                        LogUtil.e("YJL", "url :" + url);    // /website/userfiles/images/20170110/test.jpg}
+                            downLoadBitmap(url);
                     }
                 }
+
             }
-        });*/
+        });
+    }
+
+    private void downLoadBitmap(String url){
+        paramBean = new ParamBean();
+        paramData=new ParamBean.ParamData();
+        paramData.setPhoto(url);
+        paramBean.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(String.format(Url.WEB_MINE_HEAD_MODYFY, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                Log.e("yjl", "mine--data" + response);
+                if (Tools.isGoodJson(response)) {
+
+                }
+            }
+        });
     }
 
     /**
@@ -459,6 +488,9 @@ public class MineFragmnet extends Fragment {
                     mineResultBean = new Gson().fromJson(response, MineResultBean.class);
                     if (mineResultBean.isExecResult()) {
                         tvMineNicheng.setText(mineResultBean.getExecDatas().getNickName());
+                        tvMineAmount.setText(mineResultBean.getExecDatas().getProfitTotal());
+                        if (null != mineResultBean.getExecDatas().getPhoto())
+                            Config.getInstance().setPhotoUrl(mineResultBean.getExecDatas().getPhoto());
                     }
                 }
             }

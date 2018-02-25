@@ -11,12 +11,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.BackgroundColorSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -28,12 +22,11 @@ import com.micai.fox.R;
 import com.micai.fox.adapter.ViewPageAdapter;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
-import com.micai.fox.fragment.ExpertsReportFragment;
-import com.micai.fox.fragment.ExpertsZhongChouFragment;
 import com.micai.fox.fragment.ZhouChouDetailIntroduceFragment;
 import com.micai.fox.fragment.ZhouChouDetailPilutFragment;
 import com.micai.fox.fragment.ZhouChouDetailReportFragment;
 import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.ZhongChouDetailResultBean;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
@@ -86,6 +79,18 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
     TabLayout zhongchouDetailTablayout;
     @Bind(R.id.zhongchou_detail_viewpager)
     CustomViewPager zhongchouDetailViewpager;
+    @Bind(R.id.zhongchou_detail_tv_name)
+    TextView zhongchouDetailTvName;
+    @Bind(R.id.zhongchou_detail_tv_introduce)
+    TextView zhongchouDetailTvIntroduce;
+    @Bind(R.id.zhongchou_detail_tv_rate)
+    TextView zhongchouDetailTvRate;
+    @Bind(R.id.zhongchou_detail_tv_mubiao)
+    TextView zhongchouDetailTvMubiao;
+    @Bind(R.id.zhongchou_detail_tv_have)
+    TextView zhongchouDetailTvHave;
+    @Bind(R.id.zhongchou_detail_tv_people)
+    TextView zhongchouDetailTvPeople;
     private Fragment[] mFragments;
     private FragmentManager mManager;
     private FragmentTransaction transcation;
@@ -94,6 +99,8 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
     private FragmentPagerAdapter fAdapter; //定义adapter
     private List<Fragment> list_fragment; //定义要装fragment的列表
     private List<String> list_title; //tab名称列表
+    private String crowdingId;
+    private ZhongChouDetailResultBean zhongChouDetailResultBean;
 
     //    Runnable scrollViewRunable = new Runnable() {
 //        @Override
@@ -109,8 +116,9 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
         rl.setVisibility(View.VISIBLE);
         tvBack.setVisibility(View.VISIBLE);
         tvTitle.setText("众筹详情");
+        crowdingId = getIntent().getStringExtra("crowdingId");
         initControls(1);
-        getZhongChouDetail("");
+        getZhongChouDetail(crowdingId);
 //        initFragments(0);
 //        switchFragment(mFragments[0]);
         zhongchouDetailViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -218,7 +226,18 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
             public void onResponse(String response, int id) throws Exception {
                 LogUtil.e("yjl", "众筹详情-data" + response);
                 if (Tools.isGoodJson(response)) {
-
+                    zhongChouDetailResultBean = new Gson().fromJson(response, ZhongChouDetailResultBean.class);
+                    if (zhongChouDetailResultBean.isExecResult()) {
+                        zhongchouDetailTvTalk.setText("" + zhongChouDetailResultBean.getExecDatas().getTitle());
+                        zhongchouDetailTvName.setText("" + zhongChouDetailResultBean.getExecDatas().getProName());
+                        zhongchouDetailTvIntroduce.setText("" + zhongChouDetailResultBean.getExecDatas().getProAuth());
+                        zhongchouDetailTvMubiao.setText("" + zhongChouDetailResultBean.getExecDatas().getAmountDown());
+                        zhongchouDetailTvHave.setText("" + zhongChouDetailResultBean.getExecDatas().getRealAmount());
+                        zhongchouDetailTvPeople.setText("" + zhongChouDetailResultBean.getExecDatas().getSupNum());
+                        zhongchouDetailTv1.setText("" + zhongChouDetailResultBean.getExecDatas().getRemarks());
+                        zhongchouDetailTv2.setText("" + zhongChouDetailResultBean.getExecDatas().getRemarks());
+                        zhongchouDetailTvRate.setText("" + zhongChouDetailResultBean.getExecDatas().getHitRate());
+                    }
                 }
             }
         });
@@ -237,6 +256,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
     private void initControls(int type) {
         Bundle bundle = new Bundle();
         bundle.putInt("KIND", type);
+        bundle.putString("crowdingId", crowdingId);
         list_fragment = new ArrayList<>();
         //初始化各fragment
         list_fragment.add(new ZhouChouDetailIntroduceFragment(zhongchouDetailViewpager));

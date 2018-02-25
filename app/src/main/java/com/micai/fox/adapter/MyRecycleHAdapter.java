@@ -55,7 +55,7 @@ public class MyRecycleHAdapter extends RecyclerView.Adapter<MyRecycleHAdapter.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         // 绑定数据
-        holder.mTv.setText(mData.get(position).getName());
+        holder.mTv.setText(mData.get(position).getProName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {

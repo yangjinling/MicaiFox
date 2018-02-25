@@ -1,24 +1,43 @@
 package com.micai.fox.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
-import com.micai.fox.adapter.MyReportAdapter;
 import com.micai.fox.adapter.ReportDetailLvAdapter;
+import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
+import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.ReportDetailResultBean;
+import com.micai.fox.util.Tools;
 import com.micai.fox.view.MyListView;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 /*报告详情页面*/
 public class ReportDetailActivity extends AppCompatActivity {
@@ -47,7 +66,13 @@ public class ReportDetailActivity extends AppCompatActivity {
     MyListView reportDetailLv;
     @Bind(R.id.report_detail_ll_about)
     LinearLayout reportDetailLlAbout;
+    @Bind(R.id.report_detail_tv_zhongchou_title)
+    TextView reportDetailTvZhongchouTitle;
+    @Bind(R.id.tv_fu)
+    TextView tvFu;
     private ArrayList<String> data;
+    private String reportId;
+    private ReportDetailResultBean reportDetailResultBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +82,8 @@ public class ReportDetailActivity extends AppCompatActivity {
         rl.setVisibility(View.VISIBLE);
         tvBack.setVisibility(View.VISIBLE);
         tvTitle.setText("报告详情");
-        data = getData();
+        reportId = getIntent().getStringExtra("reportId");
+        getReportDetail();
         ReportDetailLvAdapter adapter = new ReportDetailLvAdapter(data, this, R.layout.item_lv_report_detail);
         reportDetailLv.setAdapter(adapter);
     }
@@ -76,18 +102,62 @@ public class ReportDetailActivity extends AppCompatActivity {
                 break;
             case R.id.report_detail_ll_about:
                 Intent intent = new Intent(ReportDetailActivity.this, ZhongChouDetailActivity.class);
+                intent.putExtra("crowdingId", reportDetailResultBean.getExecDatas().getReport().getCrowdfundingId());
                 startActivity(intent);
                 break;
         }
     }
 
-    private ArrayList<String> getData() {
-        ArrayList<String> data = new ArrayList<>();
-        String temp = " item";
-        for (int i = 0; i < 2; i++) {
-            data.add(i + temp);
-        }
 
-        return data;
+    private ParamBean paramBean;
+    private ParamBean.ParamData paramData;
+
+    private void getReportDetail() {
+        paramBean = new ParamBean();
+        paramData = new ParamBean.ParamData();
+        paramData.setReportId(reportId);
+        paramBean.setParamData(paramData);
+        OkHttpUtils.postString()
+                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+                .url(String.format(Url.WEB_REPORT_DETAIL, Config.getInstance().getSessionId()))
+                .content(new Gson().toJson(paramBean))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                Log.e("yjl", "mine--report" + response);
+                if (Tools.isGoodJson(response)) {
+                    reportDetailResultBean = new Gson().fromJson(response, ReportDetailResultBean.class);
+                    if (reportDetailResultBean.isExecResult()) {
+                        reportDetailTvTimeTalk.setText(reportDetailResultBean.getExecDatas().getReport().getTitle());
+                        reportDetailTvName.setText(reportDetailResultBean.getExecDatas().getReport().getProName());
+                        reportDetailTvIntroduce.setText(reportDetailResultBean.getExecDatas().getReport().getProAuth());
+                        reportDetailTvRate.setText("" + reportDetailResultBean.getExecDatas().getReport().getHitRate());
+                        reportDetailTvZhongchouTitle.setText("" + reportDetailResultBean.getExecDatas().getReport().getCrowdfundingTitle());
+                        CharSequence charSequence=Html.fromHtml(reportDetailResultBean.getExecDatas().getReport().getContent(),new Html.ImageGetter(){
+
+                            @Override
+                            public Drawable getDrawable(String arg0) {
+                                Drawable d = null;
+                                try {
+                                    InputStream is = new DefaultHttpClient().execute(new HttpGet(arg0)).getEntity().getContent();
+                                    Bitmap bm = BitmapFactory.decodeStream(is);
+                                    d = new BitmapDrawable(bm);
+                                    d.setBounds(0, 0, 200, 300);
+
+                                } catch (Exception e) {e.printStackTrace();}
+
+                                return d;
+                            }
+                        },null);
+                        tvFu.setText(charSequence);
+                    }
+                }
+            }
+        });
     }
 }

@@ -23,6 +23,7 @@ import com.micai.fox.adapter.MyExpertsZhonChouAdapter;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.ExpertsReportResultBean;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
@@ -42,11 +43,13 @@ import okhttp3.MediaType;
 public class ExpertsReportFragment extends Fragment implements AbsListView.OnScrollListener {
     private int kind;
     //    private TextView tv;
-    private ArrayList<String> data;
+    private ArrayList<ExpertsReportResultBean.ExecDatasBean.RecordListBean> data=new ArrayList<>();
     private ListView lv;
     private View footer_view;
     private CustomViewPager vp;
-
+    private String proId;
+    private ExpertsReportResultBean expertsReportResultBean;
+    MyExpertsReportAdapter reportAdapter;
     public ExpertsReportFragment() {
     }
 
@@ -62,14 +65,15 @@ public class ExpertsReportFragment extends Fragment implements AbsListView.OnScr
 //        kind = getArguments().getInt("KIND", 0);
         lv = ((ListView) view.findViewById(R.id.experts_detail_zhong_report_lv));
         lv.setFocusable(false);
-        data = getData();
-        getExpertsReportList("", "");
-        MyExpertsReportAdapter reportAdapter = new MyExpertsReportAdapter(data, getContext(), R.layout.item_lv_experts_report);
+        proId = getArguments().getString("proId");
+        getExpertsReportList(proId, "0");
+        reportAdapter = new MyExpertsReportAdapter(data, getContext(), R.layout.item_lv_experts_report);
         lv.setAdapter(reportAdapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ReportDetailActivity.class);
+                intent.putExtra("reportId",data.get(i).getReportId());
                 startActivity(intent);
             }
         });
@@ -78,26 +82,17 @@ public class ExpertsReportFragment extends Fragment implements AbsListView.OnScr
         return view;
     }
 
-    private ArrayList<String> getData() {
-        ArrayList<String> data = new ArrayList<>();
-        String temp = " item";
-        for (int i = 0; i < 50; i++) {
-            data.add(i + temp);
-        }
-
-        return data;
-    }
 
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
 
-    private void getExpertsReportList(String proId, String pageNnum) {
+    private void getExpertsReportList(String proId, String pageNum) {
         paramBean = new ParamBean();
         paramData = new ParamBean.ParamData();
         paramData.setProId((proId));
         paramBean.setParamData(paramData);
         paramBean.setLength("" + 20);
-        paramBean.setPageNum(pageNnum);
+        paramBean.setPageNum(pageNum);
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
                 .url(String.format(Url.WEB_EXPERTS_REPORT, Config.getInstance().getSessionId()))
@@ -112,7 +107,11 @@ public class ExpertsReportFragment extends Fragment implements AbsListView.OnScr
             public void onResponse(String response, int id) throws Exception {
                 Log.e("yjl", "experts-报告-data" + response);
                 if (Tools.isGoodJson(response)) {
-
+                    expertsReportResultBean = new Gson().fromJson(response, ExpertsReportResultBean.class);
+                    if (expertsReportResultBean.isExecResult()){
+                        data.addAll(expertsReportResultBean.getExecDatas().getRecordList());
+                        reportAdapter.notifyDataSetChanged();
+                    }
                 }
             }
         });

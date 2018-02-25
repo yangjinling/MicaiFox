@@ -8,7 +8,7 @@ public class MineResultBean {
 
     /**
      * execResult : true
-     * execDatas : {"userId":"749e45bc8d7b4aceb9d8851e051088d01516457894981","nickName":"ling","photo":""}
+     * execDatas : {"userId":"749e45bc8d7b4aceb9d8851e051088d01516457894981","nickName":"ling","photo":""，"profitTotal"：""}
      * count : 0
      * num : 0
      */
@@ -60,6 +60,7 @@ public class MineResultBean {
         private String userId;
         private String nickName;
         private String photo;
+        private String profitTotal;
 
         public String getUserId() {
             return userId;
@@ -83,6 +84,14 @@ public class MineResultBean {
 
         public void setPhoto(String photo) {
             this.photo = photo;
+        }
+
+        public String getProfitTotal() {
+            return profitTotal;
+        }
+
+        public void setProfitTotal(String profitTotal) {
+            this.profitTotal = profitTotal;
         }
     }
 }
