@@ -127,15 +127,12 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
 
             }
         });*/
-        listviewHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       /* listviewHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), ZhongChouDetailActivity.class);
-                intent.putExtra("crowdingId", crowdfundingBeanList.getRecordList().get(i).getCrowdfundingId());
-                intent.putExtra("status", crowdfundingBeanList.getRecordList().get(i).getStatus());
-                getContext().startActivity(intent);
+
             }
-        });
+        });*/
         homeScroll.setOnScrollToBottomListener(this);
         return view;
     }

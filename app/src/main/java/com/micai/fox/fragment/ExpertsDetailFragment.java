@@ -67,15 +67,15 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
         switch (kind) {
             case 0:
 //                tv.setText("全部");
-                getExpertsList(kind, "0");
+                getExpertsList(kind, "" + curPageNum);
                 break;
             case 1:
 //                tv.setText("盈利榜");
-                getExpertsList(kind, "0");
+                getExpertsList(kind, "" + curPageNum);
                 break;
             case 2:
 //                tv.setText("命中榜");
-                getExpertsList(kind, "0");
+                getExpertsList(kind, "" + curPageNum);
                 break;
         }
 
@@ -83,7 +83,7 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ExpertsDetailActivity.class);
-                intent.putExtra("proId",expertsResultBean.getExecDatas().getRecordList().get(i-1).getProId());
+                intent.putExtra("proId", expertsResultBean.getExecDatas().getRecordList().get(i - 1).getProId());
                 startActivity(intent);
             }
         });
@@ -128,15 +128,6 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
         });
     }
 
-    private ArrayList<String> getData() {
-        ArrayList<String> data = new ArrayList<>();
-        String temp = " item";
-        for (int i = 0; i < 50; i++) {
-            data.add(i + temp);
-        }
-
-        return data;
-    }
 
     @Override
     public void onDestroyView() {
@@ -165,7 +156,7 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
     private int lastItem;
     private int totalItem;
     private boolean isBottom = false;//是否到第20条数据了
-    private int curPageNum = 1;
+    private int curPageNum = 0;
 
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
@@ -207,18 +198,10 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
         }
         if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum - 1) * 20)) {
             LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
-            if (++curPageNum <= 2) {
+            if (++curPageNum <= expertsResultBean.getExecDatas().getTotalPage()) {
                 LogUtil.e("YJL", "curPageNum==" + curPageNum);
 //                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
-                if (kind == 0) {
-//                    initDates("all", formatPage(curPageNum), 2);
-                }
-                if (kind == 1) {
-//                    initDates("in", formatPage(curPageNum), 2);
-                }
-                if (kind == 2) {
-//                    initDates("out", formatPage(curPageNum), 2);
-                }
+                getExpertsList(kind, "" + curPageNum);
                 Toast.makeText(getContext(), "加载中…", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getContext(), "没有更多了", Toast.LENGTH_SHORT).show();

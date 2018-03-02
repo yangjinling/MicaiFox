@@ -12,8 +12,10 @@ import android.widget.TextView;
 import com.github.czy1121.view.CornerLabelView;
 import com.micai.fox.R;
 import com.micai.fox.resultbean.ReportDetailResultBean;
+import com.micai.fox.util.DateUtil;
 import com.micai.fox.util.LogUtil;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -61,12 +63,13 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
         TextView rang_ping = ((TextView) viewHolder.findViewById(R.id.rang_ping));
         TextView rang_ke = ((TextView) viewHolder.findViewById(R.id.rang_ke));
         TextView rang_num = ((TextView) viewHolder.findViewById(R.id.rang_num));
-
         if (selections.contains("R")) {
             popRang.setVisibility(View.VISIBLE);
-            rang_changci.setText("" + bean.getIssue() + bean.getSeq());
+            String date = DateUtil.getWeekOfDate(DateUtil.stringToDate(bean.getIssue(), DateUtil.DatePattern.ONLY_DAYS));
+            LogUtil.e("YJL", "日期" + date);
+            rang_changci.setText("" + date + bean.getSeq());
             rang_title.setText("" + bean.getGameName());
-            rang_time.setText("" + bean.getMatchTime());
+            rang_time.setText("" + bean.getMatchTime().replace("-", "年").substring(0, bean.getMatchTime().lastIndexOf(":")));
             rang_homename.setText("" + bean.getHomeTeamName());
             rang_guestname.setText("" + bean.getGuestTeamName());
             rang_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
@@ -106,9 +109,13 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                 rang_weizhong.setVisibility(View.VISIBLE);
             }
         } else {
-            pop_changci.setText("" + bean.getIssue() + bean.getSeq());
+//            String date = DateUtil.getWeekOfDate(DateUtil.stringToDate(bean.getIssue(), DateUtil.DatePattern.ONLY_DAYS));
+            LogUtil.e("YJL", "日期"+ bean.getIssue().substring(0, 4)+bean.getIssue().substring(4, 6)+bean.getIssue().substring(6)+ new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)), Integer.parseInt(bean.getIssue().substring(6)))/*+date*/);
+            Date date = new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)), Integer.parseInt(bean.getIssue().substring(6)));
+            String data = DateUtil.getWeekOfDate(date);
+            pop_changci.setText("" + data + bean.getSeq());
             pop_title.setText("" + bean.getGameName());
-            pop_time.setText("" + bean.getMatchTime());
+            pop_time.setText("" + bean.getMatchTime().replace("-", "年").substring(0, bean.getMatchTime().lastIndexOf(":")));
             pop_homename.setText("" + bean.getHomeTeamName());
             pop_guestname.setText("" + bean.getGuestTeamName());
             pop_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());

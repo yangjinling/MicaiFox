@@ -4,6 +4,9 @@ import android.app.Application;
 
 import com.facebook.stetho.Stetho;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.igexin.sdk.PushManager;
+import com.micai.fox.service.IntentService;
+import com.micai.fox.service.PushService;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.https.HttpsUtils;
 import com.zhy.http.okhttp.log.LoggerInterceptor;
@@ -46,5 +49,8 @@ public class MyApplication extends Application {
         OkHttpUtils.initClient(okHttpClient);
         Config.getInstance().setmContext(getApplicationContext());
         super.onCreate();
+        // com.getui.demo.DemoPushService 为第三方自定义推送服务
+        PushManager.getInstance().initialize(this.getApplicationContext(), PushService.class);
+        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), IntentService.class);
     }
 }

@@ -1,6 +1,7 @@
 package com.micai.fox.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,12 +9,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.micai.fox.R;
+import com.micai.fox.activity.ReportDetailActivity;
 import com.micai.fox.adapter.MyZhongchouReportAdapter;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
@@ -85,6 +88,14 @@ public class ZhouChouDetailReportFragment extends Fragment {
         adapter = new MyZhongchouReportAdapter(data, getContext(), R.layout.item_lv_report);
         lv_report.setAdapter(adapter);
         getZhongChouReport(crowdingId);
+        lv_report.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), ReportDetailActivity.class);
+                intent.putExtra("reportId",data.get(i).getReportId());
+                startActivity(intent);
+            }
+        });
         vp.setObjectForPosition(view, 1);
         return view;
     }

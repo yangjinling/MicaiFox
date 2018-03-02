@@ -1,6 +1,7 @@
 package com.micai.fox.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.micai.fox.R;
+import com.micai.fox.activity.ExpertsDetailActivity;
+import com.micai.fox.activity.ZhongChouDetailActivity;
 import com.micai.fox.resultbean.HomeResultBean;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
@@ -38,7 +41,7 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeResultBean.ExecDat
     }
 
     @Override
-    public void setData(ViewHolder viewHolder, int position) {
+    public void setData(ViewHolder viewHolder, final int position) {
         //头像
         ((ImageView) viewHolder.findViewById(R.id.home_zhong_iv_head)).setImageResource(R.mipmap.ic_launcher_round);
         //姓名
@@ -104,6 +107,24 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeResultBean.ExecDat
                 tv_status.setText(score.intValue() + "%");
             }
         }
-
+        LinearLayout home_zhong_ll_zhonchou = ((LinearLayout) viewHolder.findViewById(R.id.home_zhong_ll_zhonchou));
+        LinearLayout home_zhong_ll_expert = ((LinearLayout) viewHolder.findViewById(R.id.home_zhong_ll_experts));
+        home_zhong_ll_zhonchou.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, ZhongChouDetailActivity.class);
+                intent.putExtra("crowdingId", mList.get(position).getCrowdfundingId());
+                intent.putExtra("status", mList.get(position).getStatus());
+                mContext.startActivity(intent);
+            }
+        });
+        home_zhong_ll_expert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, ExpertsDetailActivity.class);
+                intent.putExtra("proId", mList.get(position).getProId());
+                mContext.startActivity(intent);
+            }
+        });
     }
 }

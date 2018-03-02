@@ -57,7 +57,7 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
             ((TextView) view.findViewById(R.id.pilu_tv_country1)).setText("" + matchBean.getHomeTeamName() + " ");
             TextView pilu_tv_score = ((TextView) view.findViewById(R.id.pilu_tv_score));
             if (infoBean.getStatus() == 6) {
-//                pilu_tv_score.setText(""+matchBean.);
+                pilu_tv_score.setText(""+matchBean.getHomeScore()+":"+matchBean.getGuestScore());
             } else {
                 pilu_tv_score.setText("VS");
             }
@@ -107,6 +107,32 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
                         pilu_content_touzhu3.setVisibility(View.VISIBLE);
                         pilu_content_touzhu3.setText("主负");
                     }
+                    if (matchBean.getResult().contains("3")) {
+                        tv_wanfa1_result.setVisibility(View.VISIBLE);
+                        tv_wanfa1_result.setText("主胜");
+                    }
+
+                    if (matchBean.getResult().contains("0")) {
+                        tv_wanfa1_result.setVisibility(View.VISIBLE);
+                        tv_wanfa1_result.setText("平");
+                    }
+                    if (matchBean.getResult().contains("1")) {
+                        tv_wanfa1_result.setVisibility(View.VISIBLE);
+                        tv_wanfa1_result.setText("主负");
+                    }
+                    if (matchBean.getResultr().contains("3R")) {
+                        tv_wanfa2_result.setVisibility(View.VISIBLE);
+                        tv_wanfa2_result.setText("让球胜");
+                    }
+
+                    if (matchBean.getResultr().contains("0R")) {
+                        tv_wanfa2_result.setVisibility(View.VISIBLE);
+                        tv_wanfa2_result.setText("让球平");
+                    }
+                    if (matchBean.getResultr().contains("1R")) {
+                        tv_wanfa2_result.setVisibility(View.VISIBLE);
+                        tv_wanfa2_result.setText("让球负");
+                    }
                 } else {
                     //让球
                     tv_wanfa1.setText("让球(" + matchBean.getHandicap() + ")");
@@ -122,7 +148,19 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
                         pilu_content_touzhu3.setVisibility(View.VISIBLE);
                         pilu_content_touzhu3.setText("让球负");
                     }
+                    if (matchBean.getResultr().contains("3R")) {
+                        tv_wanfa1_result.setVisibility(View.VISIBLE);
+                        tv_wanfa1_result.setText("让球胜");
+                    }
 
+                    if (matchBean.getResultr().contains("0R")) {
+                        tv_wanfa1_result.setVisibility(View.VISIBLE);
+                        tv_wanfa1_result.setText("让球平");
+                    }
+                    if (matchBean.getResultr().contains("1R")) {
+                        tv_wanfa1_result.setVisibility(View.VISIBLE);
+                        tv_wanfa1_result.setText("让球负");
+                    }
                 }
             } else {
                 //胜负平
@@ -139,6 +177,19 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
                 if (matchBean.getSelections().contains("1")) {
                     pilu_content_touzhu3.setVisibility(View.VISIBLE);
                     pilu_content_touzhu3.setText("主负");
+                }
+                if (matchBean.getResult().contains("3")) {
+                    tv_wanfa1_result.setVisibility(View.VISIBLE);
+                    tv_wanfa1_result.setText("主胜");
+                }
+
+                if (matchBean.getResult().contains("0")) {
+                    tv_wanfa1_result.setVisibility(View.VISIBLE);
+                    tv_wanfa1_result.setText("平");
+                }
+                if (matchBean.getResult().contains("1")) {
+                    tv_wanfa1_result.setVisibility(View.VISIBLE);
+                    tv_wanfa1_result.setText("主负");
                 }
             }
         }

@@ -238,6 +238,7 @@ public class DateUtil {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int week = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        LogUtil.e("YJL","week=="+week);
         if (week < 0)
             week = 0;
         return weekDays[week];
