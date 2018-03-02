@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
             android:layout_marginTop="30dp"
-            android:drawableLeft="@mipmap/ic_launcher_round"
+            android:drawableLeft="@mipmap/special"
+            android:drawablePadding="5dp"
             android:gravity="center"
             android:text="当前众筹项目暂无披露信息"
             android:textColor="@color/white" />
@@ -30,7 +31,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="55dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -57,28 +59,36 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/zhongchou_detail_tv_touzhu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="￥"
-                android:textColor="@color/red"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2000.00"
+                android:text="￥2000.00"
                 android:textColor="@color/red"
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/zhongchou_detail_iv_touzhu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="104dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="120dp"
                 android:layout_weight="1"
                 android:drawableRight="@mipmap/question"
+                android:gravity="center"
                 android:visibility="gone" />
 
             <TextView
+                android:id="@+id/zhongchou_detail_iv_yingshou"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="104dp"
+                android:layout_weight="1"
+                android:drawableRight="@mipmap/question"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/zhongchou_detail_tv_yingshou"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -86,7 +96,8 @@
                 android:gravity="center"
                 android:text="￥2000.00"
                 android:textColor="@color/red"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -116,6 +127,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/zhongchou_detail_ll_iv_money"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
@@ -170,6 +182,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/zhongchou_detail_ll_money"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
@@ -178,6 +191,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/zhongchou_detail_tv_touzhuyingli"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -187,6 +201,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/zhongchou_detail_tv_touzhuyingli_rate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -215,6 +230,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/zhongchou_detail_ll_tv_money"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
@@ -242,6 +258,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/zhongchou_detail_tv_duifuyingli"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -251,6 +268,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/zhongchou_detail_tv_duifuyingli_rate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -289,10 +307,13 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <ListView
+        <com.micai.fox.view.MyListView
+            android:id="@+id/lv_pilu"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="7dp"
-            android:layout_weight="1"></ListView>
+            android:background="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            android:scrollbars="none"></com.micai.fox.view.MyListView>
     </LinearLayout>
 </LinearLayout>

@@ -11,10 +11,15 @@ import android.widget.TextView;
 
 import com.micai.fox.R;
 import com.micai.fox.resultbean.HomeResultBean;
+import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.Tools;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
+
+import butterknife.Bind;
 
 /**
  * 作者：杨金玲 on 2017/12/27 08:45
@@ -41,7 +46,7 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeResultBean.ExecDat
         //专家简介
         ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_introduce)).setText(mList.get(position).getProAuth());
         //命中率
-        ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_rates)).setText(""+mList.get(position).getHitRate());
+        ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_rates)).setText("" + mList.get(position).getHitRate());
         //标题
         ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_talk)).setText(mList.get(position).getTitle());
         //进度条
@@ -59,6 +64,17 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeResultBean.ExecDat
         //未开始
         LinearLayout ll_start = ((LinearLayout) viewHolder.findViewById(R.id.home_zhong_ll_nostart));
         TextView tv_time = ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_daojishi));
+
+        TextView tv_status = ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_state));
+        BigDecimal score = null;
+        try {
+            score = Tools.div(mList.get(position).getRealAmount(), mList.get(position).getAmountDown(), 0);
+            LogUtil.e("YJL", mList.get(position).getRealAmount() + mList.get(position).getAmountDown() + "score==" + score);
+            score = score.multiply(new BigDecimal(100));
+            LogUtil.e("YJL", "score==" + score);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         if (null != mList.get(position).getStatus()) {
             if ("0".equals(mList.get(position).getStatus())) {
                 //未开始
@@ -66,6 +82,7 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeResultBean.ExecDat
                 ll_start.setVisibility(View.VISIBLE);
                 ll_people.setVisibility(View.GONE);
                 ll_have.setVisibility(View.GONE);
+                tv_status.setText("未开始");
             } else if ("9".equals(mList.get(position).getStatus())) {
                 //流标
                 pb_ing.setVisibility(View.GONE);
@@ -73,14 +90,18 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeResultBean.ExecDat
                 pb_liu.setProgress(50);
                 ll_start.setVisibility(View.GONE);
                 ll_people.setVisibility(View.VISIBLE);
-                tv_people.setText(""+mList.get(position).getSupNum());
+                tv_people.setText("" + mList.get(position).getSupNum());
+                tv_status.setText("流标");
                 ll_have.setVisibility(View.VISIBLE);
+                tv_have.setText("" + mList.get(position).getRealAmount());
             } else {
-                pb_ing.setProgress(80);
+                pb_ing.setProgress(score.intValue());
                 ll_start.setVisibility(View.GONE);
                 ll_people.setVisibility(View.VISIBLE);
-                tv_people.setText(""+mList.get(position).getSupNum());
+                tv_people.setText("" + mList.get(position).getSupNum());
                 ll_have.setVisibility(View.VISIBLE);
+                tv_have.setText("" + mList.get(position).getRealAmount());
+                tv_status.setText(score.intValue() + "%");
             }
         }
 

@@ -22,11 +22,9 @@ import java.util.List;
 public class MyZhonChouAdapter extends MyBaseAdapter<MyZhongChouResultBean.ExecDatasBean.RecordListBean> {
     private List<MyZhongChouResultBean.ExecDatasBean.RecordListBean> mLists;
     private Context context;
-    private int type;
 
-    public MyZhonChouAdapter(int type,List<MyZhongChouResultBean.ExecDatasBean.RecordListBean> list, Context context, int resId) {
+    public MyZhonChouAdapter(List<MyZhongChouResultBean.ExecDatasBean.RecordListBean> list, Context context, int resId) {
         super(list, context, resId);
-        this.type=type;
         this.mLists = list;
         this.context = context;
     }
@@ -34,20 +32,57 @@ public class MyZhonChouAdapter extends MyBaseAdapter<MyZhongChouResultBean.ExecD
     @Override
     public void setData(ViewHolder viewHolder, final int position) {
         ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_orderid)).setText(mLists.get(position).getOrderId());
-       if (type==1){
+        TextView orderStatus = ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_orderstate));
         Button pay = ((Button) viewHolder.findViewById(R.id.item_zhongchou_btn_pay));
-        pay.setVisibility(View.VISIBLE);
-        pay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, PayActivity.class);
-                intent.putExtra("orderId",mLists.get(position).getOrderId());
-                context.startActivity(intent);
+        TextView zhongchouStatus = ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_state));
+        switch (mLists.get(position).getOrderStatus()) {
+            case 0:
+                orderStatus.setText("待支付");
+                pay.setVisibility(View.VISIBLE);
+                pay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, PayActivity.class);
+                        intent.putExtra("orderId", mLists.get(position).getOrderId());
+                        context.startActivity(intent);
 //                Toast.makeText(context, "去支付", Toast.LENGTH_SHORT).show();
-            }
-        });}else if (type==2){
-           ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_orderstate)).setText("已支付");
-       }
+                    }
+                });
+                break;
+            case 1:
+                orderStatus.setText("已支付");
+                break;
+            case 3:
+                orderStatus.setText("已退款");
+                break;
+            case 4:
+                orderStatus.setText("已过期");
+                break;
+            case 7:
+                orderStatus.setText("已兑付");
+                break;
+        }
+        switch (mLists.get(position).getCrowdfundingStatus()) {
+            case 1://众筹中
+                zhongchouStatus.setText("众筹中");
+                break;
+            case 2://已满标
+                zhongchouStatus.setText("已满标");
+                break;
+            case 5://已披露
+                zhongchouStatus.setText("已披露");
+                break;
+            case 7:
+                //已兑付
+                zhongchouStatus.setText("已兑付");
+                break;
+            case 9:
+                //流标
+                zhongchouStatus.setText("流标");
+                break;
+        }
         ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_talk)).setText(mLists.get(position).getTitle());
+        ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_date)).setText(""+mLists.get(position).getCreateDate());
+        ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_money)).setText("￥"+mLists.get(position).getPurchaseAmount());
     }
 }

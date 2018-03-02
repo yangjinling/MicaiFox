@@ -131,7 +131,8 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ZhongChouDetailActivity.class);
-                intent.putExtra("crowdingId",crowdfundingBeanList.getRecordList().get(i).getCrowdfundingId());
+                intent.putExtra("crowdingId", crowdfundingBeanList.getRecordList().get(i).getCrowdfundingId());
+                intent.putExtra("status", crowdfundingBeanList.getRecordList().get(i).getStatus());
                 getContext().startActivity(intent);
             }
         });
@@ -161,7 +162,7 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
             public void onItemClick(View view, int position) {
 //                Toast.makeText(getContext(), "click " + position + " item", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), ExpertsDetailActivity.class);
-                intent.putExtra("proId",homeResultBean.getExecDatas().getProfessor().get(position).getProId());
+                intent.putExtra("proId", homeResultBean.getExecDatas().getProfessor().get(position).getProId());
                 startActivity(intent);
             }
 
@@ -229,19 +230,19 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
                     case "0":
                         //众筹
                         intent = new Intent(getActivity(), ZhongChouDetailActivity.class);
-                        intent.putExtra("crowdingId",bannerBeanList.get(position-1).getForwardPath());
+                        intent.putExtra("crowdingId", bannerBeanList.get(position - 1).getForwardPath());
                         startActivity(intent);
                         break;
                     case "1":
                         //报告
                         intent = new Intent(getActivity(), ReportDetailActivity.class);
-                        intent.putExtra("reportId",bannerBeanList.get(position-1).getForwardPath());
+                        intent.putExtra("reportId", bannerBeanList.get(position - 1).getForwardPath());
                         startActivity(intent);
                         break;
                     case "2":
                         //专家
                         intent = new Intent(getActivity(), ExpertsDetailActivity.class);
-                        intent.putExtra("proId",bannerBeanList.get(position-1).getForwardPath());
+                        intent.putExtra("proId", bannerBeanList.get(position - 1).getForwardPath());
                         startActivity(intent);
                         break;
                 }

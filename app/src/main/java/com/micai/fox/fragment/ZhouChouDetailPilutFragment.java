@@ -9,14 +9,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.micai.fox.R;
+import com.micai.fox.adapter.MyZhongchouPiLuAdapter;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.MyZhongchouPiluResultBean;
+import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
+import com.micai.fox.view.MyListView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -38,12 +43,37 @@ public class ZhouChouDetailPilutFragment extends Fragment {
     LinearLayout zhouchouDetailPiluLlIng;
     @Bind(R.id.zhouchou_detail_pilu_ll_ed)
     LinearLayout zhouchouDetailPiluLlEd;
+    @Bind(R.id.lv_pilu)
+    MyListView lvPilu;
+    @Bind(R.id.zhongchou_detail_tv_touzhu)
+    TextView zhongchouDetailTvTouzhu;
+    @Bind(R.id.zhongchou_detail_tv_yingshou)
+    TextView zhongchouDetailTvYingshou;
+    @Bind(R.id.zhongchou_detail_tv_touzhuyingli)
+    TextView zhongchouDetailTvTouzhuyingli;
+    @Bind(R.id.zhongchou_detail_tv_touzhuyingli_rate)
+    TextView zhongchouDetailTvTouzhuyingliRate;
+    @Bind(R.id.zhongchou_detail_tv_duifuyingli)
+    TextView zhongchouDetailTvDuifuyingli;
+    @Bind(R.id.zhongchou_detail_tv_duifuyingli_rate)
+    TextView zhongchouDetailTvDuifuyingliRate;
+    @Bind(R.id.zhongchou_detail_iv_touzhu)
+    TextView zhongchouDetailIvTouzhu;
+    @Bind(R.id.zhongchou_detail_iv_yingshou)
+    TextView zhongchouDetailIvYingshou;
+    @Bind(R.id.zhongchou_detail_ll_iv_money)
+    LinearLayout zhongchouDetailLlIvMoney;
+    @Bind(R.id.zhongchou_detail_ll_money)
+    LinearLayout zhongchouDetailLlMoney;
+    @Bind(R.id.zhongchou_detail_ll_tv_money)
+    LinearLayout zhongchouDetailLlTvMoney;
     private int kind;
     //    private TextView tv;
-    private ArrayList<String> data;
+    private ArrayList<MyZhongchouPiluResultBean.ExecDatasBean.BetInfoBean> data = new ArrayList<>();
     private CustomViewPager vp;
     private String crowdingId;
-
+    private MyZhongchouPiLuAdapter adapter;
+    private MyZhongchouPiluResultBean myZhongchouPiluResultBean;
 
     public ZhouChouDetailPilutFragment() {
     }
@@ -72,24 +102,13 @@ public class ZhouChouDetailPilutFragment extends Fragment {
                 zhouchouDetailPiluLlIng.setVisibility(View.GONE);
                 zhouchouDetailPiluLlEd.setVisibility(View.VISIBLE);
                 break;
-            case 2:
-//                tv.setText("命中榜");
-                break;
         }
-        data = getData();
+        lvPilu.setFocusable(false);
+        adapter = new MyZhongchouPiLuAdapter(data, getContext(), R.layout.item_lv_pilu);
+        lvPilu.setAdapter(adapter);
         getZhongchouPilu(crowdingId);
         vp.setObjectForPosition(view, 2);
         return view;
-    }
-
-    private ArrayList<String> getData() {
-        ArrayList<String> data = new ArrayList<>();
-        String temp = " item";
-        for (int i = 0; i < 50; i++) {
-            data.add(i + temp);
-        }
-
-        return data;
     }
 
     @Override
@@ -100,6 +119,7 @@ public class ZhouChouDetailPilutFragment extends Fragment {
 
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
+
     private void getZhongchouPilu(String crowingId) {
         paramBean = new ParamBean();
         paramData = new ParamBean.ParamData();
@@ -119,7 +139,17 @@ public class ZhouChouDetailPilutFragment extends Fragment {
             public void onResponse(String response, int id) throws Exception {
                 Log.e("yjl", "众筹详情-披露" + response);
                 if (Tools.isGoodJson(response)) {
-
+                    myZhongchouPiluResultBean = new Gson().fromJson(response, MyZhongchouPiluResultBean.class);
+                    if (myZhongchouPiluResultBean.isExecResult()) {
+                        data.addAll(myZhongchouPiluResultBean.getExecDatas().getBetInfo());
+                        LogUtil.e("YJL", "data.size" + data.size());
+                        adapter.notifyDataSetChanged();
+                        zhongchouDetailTvTouzhu.setText("￥"+myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getTotalBetAmount());
+                        zhongchouDetailTvYingshou.setText("￥"+myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getTotalRevenueAmount());
+                        zhongchouDetailLlMoney.setVisibility(View.VISIBLE);
+                        zhongchouDetailTvTouzhuyingli.setText(""+myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getTotalProfitAmount());
+                        zhongchouDetailTvTouzhuyingliRate.setText(""+myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate());
+                    }
                 }
             }
         });

@@ -135,7 +135,10 @@ public class ExpertsReportResultBean {
              * gameName : 墨超
              * homeTeamName : 普埃布拉
              * guestTeamName : 内卡萨
+             * homeScore : 1
+             * guestScore : 1
              * matchTime : 20180224110000
+             * issue : 20180223
              * totalMatchNum : 2
              * winMatchNum : 2
              */
@@ -146,7 +149,10 @@ public class ExpertsReportResultBean {
             private String gameName;
             private String homeTeamName;
             private String guestTeamName;
+            private int homeScore;
+            private int guestScore;
             private String matchTime;
+            private String issue;
             private int totalMatchNum;
             private int winMatchNum;
 
@@ -220,6 +226,30 @@ public class ExpertsReportResultBean {
 
             public void setWinMatchNum(int winMatchNum) {
                 this.winMatchNum = winMatchNum;
+            }
+
+            public int getHomeScore() {
+                return homeScore;
+            }
+
+            public void setHomeScore(int homeScore) {
+                this.homeScore = homeScore;
+            }
+
+            public int getGuestScore() {
+                return guestScore;
+            }
+
+            public void setGuestScore(int guestScore) {
+                this.guestScore = guestScore;
+            }
+
+            public String getIssue() {
+                return issue;
+            }
+
+            public void setIssue(String issue) {
+                this.issue = issue;
             }
         }
     }

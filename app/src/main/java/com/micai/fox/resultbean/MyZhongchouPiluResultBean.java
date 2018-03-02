@@ -10,7 +10,7 @@ public class MyZhongchouPiluResultBean {
 
     /**
      * execResult : true
-     * execDatas : {"profitInfo":{"totalBetAmount":"2.00","totalRevenueAmount":"0.00","totalProfitAmount":"0.00","DepotProfitRate":"0.0000"},"betInfo":[{"match":[{"id":"c119873082944dc689d9e93f786087f81519402283823","relId":"1","moduleType":0,"issue":"20180224","seq":"086","gameName":"墨超","homeTeamName":"帕丘卡","guestTeamName":"莱昂","matchTime":"20180225090600","handicap":-1,"sp":"3:1.79;1:3.65;0:3.38","spr":"3:3.25;1:3.70;0:1.82","selections":"0","createDate":1519402284000,"createBy":"ZJ100001","delFlag":"0","result":"1","resultr":"0R"},{"id":"ed48ff7eaed441a6a449c83a798951fd1519402283826","relId":"1","moduleType":0,"issue":"20180224","seq":"087","gameName":"墨超","homeTeamName":"墨美洲","guestTeamName":"蒂华纳","matchTime":"20180225110000","handicap":-1,"sp":"3:1.56;1:3.55;0:4.85","spr":"3:2.74;1:3.35;0:2.15","selections":"0","createDate":1519402284000,"createBy":"ZJ100001","delFlag":"0","result":"1","resultr":"3R"}],"multiple":0,"betnum":0,"seqnum":0,"betAmount":2,"revenueAmount":"","status":1}]}
+     * execDatas : {"profitInfo":{"totalBetAmount":"2.00","totalRevenueAmount":"0.00","totalProfitAmount":"0.00","depotProfitRate":"0.0000"},"betInfo":[{"match":[{"id":"02de0b95743b470db339d2f75f457a3c1519739990667","relId":"5","moduleType":0,"issue":"20180227","seq":"001","gameName":"西甲","homeTeamName":"西班牙人","guestTeamName":"皇马","matchTime":"20180228030000","handicap":1,"sp":"3:6.20;1:4.50;0:1.34","spr":"3:2.61;1:3.70;0:2.10","selections":"1","createDate":1519739991000,"createBy":"ZJ100001","delFlag":"0"},{"id":"adbae6146e01440da717982bfdbaa5511519739990668","relId":"5","moduleType":0,"issue":"20180227","seq":"002","gameName":"英冠","homeTeamName":"赫尔城","guestTeamName":"巴恩斯利","matchTime":"20180228034500","handicap":-1,"sp":"3:1.72;1:3.35;0:4.05","spr":"3:3.30;1:3.40;0:1.88","selections":"3R","createDate":1519739991000,"createBy":"ZJ100001","delFlag":"0"}],"multiple":1,"betnum":1,"seqnum":2,"betAmount":2,"revenueAmount":"","status":4}]}
      * count : 0
      * num : 0
      */
@@ -54,8 +54,8 @@ public class MyZhongchouPiluResultBean {
 
     public static class ExecDatasBean {
         /**
-         * profitInfo : {"totalBetAmount":"2.00","totalRevenueAmount":"0.00","totalProfitAmount":"0.00","DepotProfitRate":"0.0000"}
-         * betInfo : [{"match":[{"id":"c119873082944dc689d9e93f786087f81519402283823","relId":"1","moduleType":0,"issue":"20180224","seq":"086","gameName":"墨超","homeTeamName":"帕丘卡","guestTeamName":"莱昂","matchTime":"20180225090600","handicap":-1,"sp":"3:1.79;1:3.65;0:3.38","spr":"3:3.25;1:3.70;0:1.82","selections":"0","createDate":1519402284000,"createBy":"ZJ100001","delFlag":"0","result":"1","resultr":"0R"},{"id":"ed48ff7eaed441a6a449c83a798951fd1519402283826","relId":"1","moduleType":0,"issue":"20180224","seq":"087","gameName":"墨超","homeTeamName":"墨美洲","guestTeamName":"蒂华纳","matchTime":"20180225110000","handicap":-1,"sp":"3:1.56;1:3.55;0:4.85","spr":"3:2.74;1:3.35;0:2.15","selections":"0","createDate":1519402284000,"createBy":"ZJ100001","delFlag":"0","result":"1","resultr":"3R"}],"multiple":0,"betnum":0,"seqnum":0,"betAmount":2,"revenueAmount":"","status":1}]
+         * profitInfo : {"totalBetAmount":"2.00","totalRevenueAmount":"0.00","totalProfitAmount":"0.00","depotProfitRate":"0.0000"}
+         * betInfo : [{"match":[{"id":"02de0b95743b470db339d2f75f457a3c1519739990667","relId":"5","moduleType":0,"issue":"20180227","seq":"001","gameName":"西甲","homeTeamName":"西班牙人","guestTeamName":"皇马","matchTime":"20180228030000","handicap":1,"sp":"3:6.20;1:4.50;0:1.34","spr":"3:2.61;1:3.70;0:2.10","selections":"1","createDate":1519739991000,"createBy":"ZJ100001","delFlag":"0"},{"id":"adbae6146e01440da717982bfdbaa5511519739990668","relId":"5","moduleType":0,"issue":"20180227","seq":"002","gameName":"英冠","homeTeamName":"赫尔城","guestTeamName":"巴恩斯利","matchTime":"20180228034500","handicap":-1,"sp":"3:1.72;1:3.35;0:4.05","spr":"3:3.30;1:3.40;0:1.88","selections":"3R","createDate":1519739991000,"createBy":"ZJ100001","delFlag":"0"}],"multiple":1,"betnum":1,"seqnum":2,"betAmount":2,"revenueAmount":"","status":4}]
          */
 
         private ProfitInfoBean profitInfo;
@@ -82,13 +82,13 @@ public class MyZhongchouPiluResultBean {
              * totalBetAmount : 2.00
              * totalRevenueAmount : 0.00
              * totalProfitAmount : 0.00
-             * DepotProfitRate : 0.0000
+             * depotProfitRate : 0.0000
              */
 
             private String totalBetAmount;
             private String totalRevenueAmount;
             private String totalProfitAmount;
-            private String DepotProfitRate;
+            private String depotProfitRate;
 
             public String getTotalBetAmount() {
                 return totalBetAmount;
@@ -115,23 +115,23 @@ public class MyZhongchouPiluResultBean {
             }
 
             public String getDepotProfitRate() {
-                return DepotProfitRate;
+                return depotProfitRate;
             }
 
-            public void setDepotProfitRate(String DepotProfitRate) {
-                this.DepotProfitRate = DepotProfitRate;
+            public void setDepotProfitRate(String depotProfitRate) {
+                this.depotProfitRate = depotProfitRate;
             }
         }
 
         public static class BetInfoBean {
             /**
-             * match : [{"id":"c119873082944dc689d9e93f786087f81519402283823","relId":"1","moduleType":0,"issue":"20180224","seq":"086","gameName":"墨超","homeTeamName":"帕丘卡","guestTeamName":"莱昂","matchTime":"20180225090600","handicap":-1,"sp":"3:1.79;1:3.65;0:3.38","spr":"3:3.25;1:3.70;0:1.82","selections":"0","createDate":1519402284000,"createBy":"ZJ100001","delFlag":"0","result":"1","resultr":"0R"},{"id":"ed48ff7eaed441a6a449c83a798951fd1519402283826","relId":"1","moduleType":0,"issue":"20180224","seq":"087","gameName":"墨超","homeTeamName":"墨美洲","guestTeamName":"蒂华纳","matchTime":"20180225110000","handicap":-1,"sp":"3:1.56;1:3.55;0:4.85","spr":"3:2.74;1:3.35;0:2.15","selections":"0","createDate":1519402284000,"createBy":"ZJ100001","delFlag":"0","result":"1","resultr":"3R"}]
-             * multiple : 0
-             * betnum : 0
-             * seqnum : 0
+             * match : [{"id":"02de0b95743b470db339d2f75f457a3c1519739990667","relId":"5","moduleType":0,"issue":"20180227","seq":"001","gameName":"西甲","homeTeamName":"西班牙人","guestTeamName":"皇马","matchTime":"20180228030000","handicap":1,"sp":"3:6.20;1:4.50;0:1.34","spr":"3:2.61;1:3.70;0:2.10","selections":"1","createDate":1519739991000,"createBy":"ZJ100001","delFlag":"0"},{"id":"adbae6146e01440da717982bfdbaa5511519739990668","relId":"5","moduleType":0,"issue":"20180227","seq":"002","gameName":"英冠","homeTeamName":"赫尔城","guestTeamName":"巴恩斯利","matchTime":"20180228034500","handicap":-1,"sp":"3:1.72;1:3.35;0:4.05","spr":"3:3.30;1:3.40;0:1.88","selections":"3R","createDate":1519739991000,"createBy":"ZJ100001","delFlag":"0"}]
+             * multiple : 1
+             * betnum : 1
+             * seqnum : 2
              * betAmount : 2.0
              * revenueAmount :
-             * status : 1
+             * status : 4
              */
 
             private int multiple;
@@ -200,24 +200,22 @@ public class MyZhongchouPiluResultBean {
 
             public static class MatchBean {
                 /**
-                 * id : c119873082944dc689d9e93f786087f81519402283823
-                 * relId : 1
+                 * id : 02de0b95743b470db339d2f75f457a3c1519739990667
+                 * relId : 5
                  * moduleType : 0
-                 * issue : 20180224
-                 * seq : 086
-                 * gameName : 墨超
-                 * homeTeamName : 帕丘卡
-                 * guestTeamName : 莱昂
-                 * matchTime : 20180225090600
-                 * handicap : -1
-                 * sp : 3:1.79;1:3.65;0:3.38
-                 * spr : 3:3.25;1:3.70;0:1.82
-                 * selections : 0
-                 * createDate : 1519402284000
+                 * issue : 20180227
+                 * seq : 001
+                 * gameName : 西甲
+                 * homeTeamName : 西班牙人
+                 * guestTeamName : 皇马
+                 * matchTime : 20180228030000
+                 * handicap : 1
+                 * sp : 3:6.20;1:4.50;0:1.34
+                 * spr : 3:2.61;1:3.70;0:2.10
+                 * selections : 1
+                 * createDate : 1519739991000
                  * createBy : ZJ100001
                  * delFlag : 0
-                 * result : 1
-                 * resultr : 0R
                  */
 
                 private String id;
@@ -236,8 +234,6 @@ public class MyZhongchouPiluResultBean {
                 private long createDate;
                 private String createBy;
                 private String delFlag;
-                private String result;
-                private String resultr;
 
                 public String getId() {
                     return id;
@@ -365,22 +361,6 @@ public class MyZhongchouPiluResultBean {
 
                 public void setDelFlag(String delFlag) {
                     this.delFlag = delFlag;
-                }
-
-                public String getResult() {
-                    return result;
-                }
-
-                public void setResult(String result) {
-                    this.result = result;
-                }
-
-                public String getResultr() {
-                    return resultr;
-                }
-
-                public void setResultr(String resultr) {
-                    this.resultr = resultr;
                 }
             }
         }

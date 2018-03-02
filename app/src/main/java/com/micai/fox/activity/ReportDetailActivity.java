@@ -70,9 +70,10 @@ public class ReportDetailActivity extends AppCompatActivity {
     TextView reportDetailTvZhongchouTitle;
     @Bind(R.id.tv_fu)
     TextView tvFu;
-    private ArrayList<String> data;
+    private ArrayList<ReportDetailResultBean.ExecDatasBean.GameBean> data = new ArrayList<>();
     private String reportId;
     private ReportDetailResultBean reportDetailResultBean;
+    ReportDetailLvAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +84,8 @@ public class ReportDetailActivity extends AppCompatActivity {
         tvBack.setVisibility(View.VISIBLE);
         tvTitle.setText("报告详情");
         reportId = getIntent().getStringExtra("reportId");
-        getReportDetail();
-        ReportDetailLvAdapter adapter = new ReportDetailLvAdapter(data, this, R.layout.item_lv_report_detail);
+        getReportDetail(reportId);
+        adapter = new ReportDetailLvAdapter(data, this, R.layout.item_lv_report_detail);
         reportDetailLv.setAdapter(adapter);
     }
 
@@ -112,7 +113,7 @@ public class ReportDetailActivity extends AppCompatActivity {
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
 
-    private void getReportDetail() {
+    private void getReportDetail(String reportId) {
         paramBean = new ParamBean();
         paramData = new ParamBean.ParamData();
         paramData.setReportId(reportId);
@@ -138,7 +139,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                         reportDetailTvIntroduce.setText(reportDetailResultBean.getExecDatas().getReport().getProAuth());
                         reportDetailTvRate.setText("" + reportDetailResultBean.getExecDatas().getReport().getHitRate());
                         reportDetailTvZhongchouTitle.setText("" + reportDetailResultBean.getExecDatas().getReport().getCrowdfundingTitle());
-                        CharSequence charSequence=Html.fromHtml(reportDetailResultBean.getExecDatas().getReport().getContent(),new Html.ImageGetter(){
+                        CharSequence charSequence = Html.fromHtml(reportDetailResultBean.getExecDatas().getReport().getContent(), new Html.ImageGetter() {
 
                             @Override
                             public Drawable getDrawable(String arg0) {
@@ -149,12 +150,16 @@ public class ReportDetailActivity extends AppCompatActivity {
                                     d = new BitmapDrawable(bm);
                                     d.setBounds(0, 0, 200, 300);
 
-                                } catch (Exception e) {e.printStackTrace();}
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
 
                                 return d;
                             }
-                        },null);
+                        }, null);
                         tvFu.setText(charSequence);
+                        data.addAll(reportDetailResultBean.getExecDatas().getGame());
+                        adapter.notifyDataSetChanged();
                     }
                 }
             }

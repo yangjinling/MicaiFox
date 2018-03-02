@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ import com.micai.fox.view.CustomViewPager;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,6 +93,12 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
     TextView zhongchouDetailTvHave;
     @Bind(R.id.zhongchou_detail_tv_people)
     TextView zhongchouDetailTvPeople;
+    @Bind(R.id.zhongchou_detail_tv_state)
+    TextView zhongchouDetailTvState;
+    @Bind(R.id.zhongchou_detail_prograss1)
+    ProgressBar zhongchouDetailPrograss1;
+    @Bind(R.id.zhongchou_detail_prograss2)
+    ProgressBar zhongchouDetailPrograss2;
     private Fragment[] mFragments;
     private FragmentManager mManager;
     private FragmentTransaction transcation;
@@ -101,6 +109,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
     private List<String> list_title; //tab名称列表
     private String crowdingId;
     private ZhongChouDetailResultBean zhongChouDetailResultBean;
+    private String status;
 
     //    Runnable scrollViewRunable = new Runnable() {
 //        @Override
@@ -117,10 +126,10 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
         tvBack.setVisibility(View.VISIBLE);
         tvTitle.setText("众筹详情");
         crowdingId = getIntent().getStringExtra("crowdingId");
-        initControls(1);
+        status = getIntent().getStringExtra("status");
+//        LogUtil.e("YJL", "众筹状态" + status);
         getZhongChouDetail(crowdingId);
-//        initFragments(0);
-//        switchFragment(mFragments[0]);
+
         zhongchouDetailViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -138,6 +147,32 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
             }
         });
         zhongchouDetailViewpager.resetHeight(0);
+    }
+
+    private void initViewData() {
+        switch (status) {
+            case "0"://未开始
+                zhongchouDetailTvState.setText("预热中");
+                zhongchouDetailPrograss1.setProgress(0);
+                break;
+            case "1":
+                //进行中
+                zhongchouDetailTvState.setText("众筹中");
+                break;
+            case "5":
+                //已披露
+                zhongchouDetailTvState.setText("已披露");
+                break;
+            case "7":
+                //已兑付
+                zhongchouDetailTvState.setText("已兑付");
+                break;
+            case "9"://流标
+                zhongchouDetailTvState.setText("已结束");
+                zhongchouDetailPrograss1.setVisibility(View.GONE);
+                zhongchouDetailPrograss2.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 
     private void initFragments(int type) {
@@ -228,6 +263,17 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                 if (Tools.isGoodJson(response)) {
                     zhongChouDetailResultBean = new Gson().fromJson(response, ZhongChouDetailResultBean.class);
                     if (zhongChouDetailResultBean.isExecResult()) {
+                        status = "" + zhongChouDetailResultBean.getExecDatas().getStatus();
+                        if (null != status) {
+                            if (status.equals("5") || status.equals("7")) {
+                                //5：已披露  7：已兑付
+                                initControls(1);
+                            } else {
+                                initControls(0);
+                            }
+                        }
+                        if (null != status)
+                            initViewData();
                         zhongchouDetailTvTalk.setText("" + zhongChouDetailResultBean.getExecDatas().getTitle());
                         zhongchouDetailTvName.setText("" + zhongChouDetailResultBean.getExecDatas().getProName());
                         zhongchouDetailTvIntroduce.setText("" + zhongChouDetailResultBean.getExecDatas().getProAuth());
@@ -237,6 +283,22 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                         zhongchouDetailTv1.setText("" + zhongChouDetailResultBean.getExecDatas().getRemarks());
                         zhongchouDetailTv2.setText("" + zhongChouDetailResultBean.getExecDatas().getRemarks());
                         zhongchouDetailTvRate.setText("" + zhongChouDetailResultBean.getExecDatas().getHitRate());
+                        BigDecimal score = null;
+                        try {
+                            score = Tools.div(zhongChouDetailResultBean.getExecDatas().getRealAmount(), zhongChouDetailResultBean.getExecDatas().getAmountDown(), 0);
+                            score = score.multiply(new BigDecimal(100));
+                            LogUtil.e("YJL", "score==" + score);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                        if ("9".equals(status)) {
+                            //流标
+                            zhongchouDetailPrograss2.setProgress(score.intValue());
+                        } else {
+                            zhongchouDetailPrograss1.setProgress(score.intValue());
+                        }
+                        if (!"0".equals(status))
+                            homeZhongTvState.setText("" + score.intValue() + "%");
                     }
                 }
             }
@@ -318,21 +380,6 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        zhongchouDetailViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
 
             }
         });

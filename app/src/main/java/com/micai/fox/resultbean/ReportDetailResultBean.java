@@ -8,9 +8,10 @@ import java.util.List;
 
 public class ReportDetailResultBean {
 
+
     /**
      * execResult : true
-     * execDatas : {"report":{"reportId":"BG100001","title":"报告标题","createDate":1519401415000,"content":"<p>报告内容富文本<img src=\"/mcfox/userfiles/1/images/photo/2018/02/20180223235641_950.jpg\"><br><\/p>","proId":"ZJ100001","proPhoto":"/mcfox/userfiles/1/images/photo/2018/02/20180221222610_10.jpg","proName":"proName","proAuth":"认证","hitRate":0,"crowdfundingId":"ZC100001","crowdfundingTitle":"众筹标题"},"game":[{"id":"874040326fe74f7eb270ab04dff873a61519401415614","relId":"BG100001","moduleType":1,"issue":"20180223","seq":"032","gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","matchTime":"20180224110000","handicap":-1,"sp":"3:2.07;1:3.00;0:3.20","spr":"3:4.55;1:3.60;0:1.59","selections":"3,1","createDate":1519401416000,"createBy":"ZJ100001","delFlag":"0","result":"3","resultr":"1"}]}
+     * execDatas : {"report":{"reportId":"BG100001","title":"报告标题","createDate":1519401415000,"content":"<p>报告内容富文本<img src=\"/mcfox/userfiles/1/images/photo/2018/02/20180223235641_950.jpg\"><br><\/p>","proId":"ZJ100001","proPhoto":"/mcfox/userfiles/1/images/photo/2018/02/20180221222610_10.jpg","proName":"proName","proAuth":"认证","hitRate":0,"crowdfundingId":"ZC100001","crowdfundingTitle":"众筹标题"},"game":[{"id":"874040326fe74f7eb270ab04dff873a61519401415614","relId":"BG100001","moduleType":1,"issue":"20180223","seq":"032","gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","matchTime":"20180224110000","homeScore":1,"guestScore":1,"handicap":-1,"sp":"3:2.07;1:3.00;0:3.20","spr":"3:4.55;1:3.60;0:1.59","selections":"3,1","createDate":1519401416000,"createBy":"ZJ100001","updateDate":1519564204000,"updateBy":"task","delFlag":"0","result":"1","resultr":"0R"}]}
      * count : 0
      * num : 0
      */
@@ -55,7 +56,7 @@ public class ReportDetailResultBean {
     public static class ExecDatasBean {
         /**
          * report : {"reportId":"BG100001","title":"报告标题","createDate":1519401415000,"content":"<p>报告内容富文本<img src=\"/mcfox/userfiles/1/images/photo/2018/02/20180223235641_950.jpg\"><br><\/p>","proId":"ZJ100001","proPhoto":"/mcfox/userfiles/1/images/photo/2018/02/20180221222610_10.jpg","proName":"proName","proAuth":"认证","hitRate":0,"crowdfundingId":"ZC100001","crowdfundingTitle":"众筹标题"}
-         * game : [{"id":"874040326fe74f7eb270ab04dff873a61519401415614","relId":"BG100001","moduleType":1,"issue":"20180223","seq":"032","gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","matchTime":"20180224110000","handicap":-1,"sp":"3:2.07;1:3.00;0:3.20","spr":"3:4.55;1:3.60;0:1.59","selections":"3,1","createDate":1519401416000,"createBy":"ZJ100001","delFlag":"0","result":"3","resultr":"1"}]
+         * game : [{"id":"874040326fe74f7eb270ab04dff873a61519401415614","relId":"BG100001","moduleType":1,"issue":"20180223","seq":"032","gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","matchTime":"20180224110000","homeScore":1,"guestScore":1,"handicap":-1,"sp":"3:2.07;1:3.00;0:3.20","spr":"3:4.55;1:3.60;0:1.59","selections":"3,1","createDate":1519401416000,"createBy":"ZJ100001","updateDate":1519564204000,"updateBy":"task","delFlag":"0","result":"1","resultr":"0R"}]
          */
 
         private ReportBean report;
@@ -204,15 +205,19 @@ public class ReportDetailResultBean {
              * homeTeamName : 普埃布拉
              * guestTeamName : 内卡萨
              * matchTime : 20180224110000
+             * homeScore : 1
+             * guestScore : 1
              * handicap : -1
              * sp : 3:2.07;1:3.00;0:3.20
              * spr : 3:4.55;1:3.60;0:1.59
              * selections : 3,1
              * createDate : 1519401416000
              * createBy : ZJ100001
+             * updateDate : 1519564204000
+             * updateBy : task
              * delFlag : 0
-             * result : 3
-             * resultr : 1
+             * result : 1
+             * resultr : 0R
              */
 
             private String id;
@@ -224,12 +229,16 @@ public class ReportDetailResultBean {
             private String homeTeamName;
             private String guestTeamName;
             private String matchTime;
+            private int homeScore;
+            private int guestScore;
             private int handicap;
             private String sp;
             private String spr;
             private String selections;
             private long createDate;
             private String createBy;
+            private long updateDate;
+            private String updateBy;
             private String delFlag;
             private String result;
             private String resultr;
@@ -306,6 +315,22 @@ public class ReportDetailResultBean {
                 this.matchTime = matchTime;
             }
 
+            public int getHomeScore() {
+                return homeScore;
+            }
+
+            public void setHomeScore(int homeScore) {
+                this.homeScore = homeScore;
+            }
+
+            public int getGuestScore() {
+                return guestScore;
+            }
+
+            public void setGuestScore(int guestScore) {
+                this.guestScore = guestScore;
+            }
+
             public int getHandicap() {
                 return handicap;
             }
@@ -352,6 +377,22 @@ public class ReportDetailResultBean {
 
             public void setCreateBy(String createBy) {
                 this.createBy = createBy;
+            }
+
+            public long getUpdateDate() {
+                return updateDate;
+            }
+
+            public void setUpdateDate(long updateDate) {
+                this.updateDate = updateDate;
+            }
+
+            public String getUpdateBy() {
+                return updateBy;
+            }
+
+            public void setUpdateBy(String updateBy) {
+                this.updateBy = updateBy;
             }
 
             public String getDelFlag() {

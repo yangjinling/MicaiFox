@@ -17,6 +17,7 @@ import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.BaseResultBean;
 import com.micai.fox.resultbean.HomeResultBean;
 import com.micai.fox.resultbean.MineResultBean;
+import com.micai.fox.resultbean.NotificationResultBean;
 import com.micai.fox.util.Tools;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -42,9 +43,10 @@ public class NotificationActivity extends AppCompatActivity {
     RelativeLayout rl;
     @Bind(R.id.lv_notify)
     ListView lvNotify;
-    private ArrayList<String> data;
+    private ArrayList<NotificationResultBean.ExecDatasBean.RecordListBean> data = new ArrayList<>();
     private MyNotificationAdapter adapter;
     private BaseResultBean baseResultBean;
+    private NotificationResultBean notificationResultBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,6 @@ public class NotificationActivity extends AppCompatActivity {
         rl.setVisibility(View.VISIBLE);
         tvBack.setVisibility(View.VISIBLE);
         tvNotify.setVisibility(View.VISIBLE);
-        data = getData();
         getNotList("0");
         adapter = new MyNotificationAdapter(data, this, R.layout.item_lv_notification);
         lvNotify.setAdapter(adapter);
@@ -73,16 +74,6 @@ public class NotificationActivity extends AppCompatActivity {
                 clearList();
                 break;
         }
-    }
-
-    private ArrayList<String> getData() {
-        ArrayList<String> data = new ArrayList<>();
-        String temp = " item";
-        for (int i = 0; i < 50; i++) {
-            data.add(i + temp);
-        }
-
-        return data;
     }
 
     private ParamBean paramBean;
@@ -106,7 +97,11 @@ public class NotificationActivity extends AppCompatActivity {
             public void onResponse(String response, int id) throws Exception {
                 Log.e("yjl", "noti--data" + response);
                 if (Tools.isGoodJson(response)) {
-
+                    notificationResultBean = new Gson().fromJson(response, NotificationResultBean.class);
+                    if (notificationResultBean.isExecResult()) {
+                        data.addAll(notificationResultBean.getExecDatas().getRecordList());
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             }
         });

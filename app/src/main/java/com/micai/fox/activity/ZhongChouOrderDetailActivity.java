@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,7 +15,6 @@ import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.MyZhongChouOrderResultBean;
-import com.micai.fox.resultbean.ZhongChouDetailResultBean;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -47,10 +47,37 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
     TextView zhongchouDetailTv1;
     @Bind(R.id.zhongchou_detail_tv2)
     TextView zhongchouDetailTv2;
+    @Bind(R.id.zhongchou_detail_tv_status)
+    TextView zhongchouDetailTvStatus;
+    @Bind(R.id.orderdetail_money_pay)
+    LinearLayout orderdetailMoneyPay;
+    @Bind(R.id.orderdetail_money_benifate)
+    LinearLayout orderdetailMoneyBenifate;
+    @Bind(R.id.orderdetail_money_duifu)
+    LinearLayout orderdetailMoneyDuifu;
+    @Bind(R.id.orderdetail_ll_xiadan)
+    LinearLayout orderdetailLlXiadan;
+    @Bind(R.id.orderdetail_ll_pay)
+    LinearLayout orderdetailLlPay;
+    @Bind(R.id.orderdetail_ll_bank)
+    LinearLayout orderdetailLlBank;
+    @Bind(R.id.orderdetail_ll_way)
+    LinearLayout orderdetailLlWay;
+    @Bind(R.id.order_tv_money_pay)
+    TextView orderTvMoneyPay;
+    @Bind(R.id.order_tv_money_benifate)
+    TextView orderTvMoneyBenifate;
+    @Bind(R.id.order_tv_money_duifu)
+    TextView orderTvMoneyDuifu;
+    @Bind(R.id.order_tv_time_xiadan)
+    TextView orderTvTimeXiadan;
+    @Bind(R.id.order_tv_time_pay)
+    TextView orderTvTimePay;
     private View view;
     private String orderId;
-    private int type;
+    private int orderStatus;
     private MyZhongChouOrderResultBean myZhongChouOrderResultBean;
+    private int zhongchouStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,29 +86,62 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         tvTitle.setText("众筹订单详情");
         orderId = getIntent().getStringExtra("orderId");
-        type = getIntent().getIntExtra("type", 0);
-        switch (type) {
+        orderStatus = getIntent().getIntExtra("orderStatus", 0);
+        zhongchouStatus = getIntent().getIntExtra("zhongchouStatus", 0);
+        getZhongChouOrderDetail(orderId);
+        switch (orderStatus) {
             case 0:
-                //全部
-                btnZhongchouDetailOrderPay.setVisibility(View.GONE);
-                break;
-            case 1:
                 //待支付
                 btnZhongchouDetailOrderPay.setVisibility(View.VISIBLE);
                 break;
-            case 2:
+            case 1:
                 //已支付
                 btnZhongchouDetailOrderPay.setVisibility(View.GONE);
                 detailZhongchouTvOrderstate.setText("已支付");
+                orderdetailLlXiadan.setVisibility(View.VISIBLE);
+                orderdetailLlPay.setVisibility(View.VISIBLE);
+                orderdetailLlBank.setVisibility(View.VISIBLE);
                 break;
             case 3:
+                btnZhongchouDetailOrderPay.setVisibility(View.GONE);
+                detailZhongchouTvOrderstate.setText("已退款");
+                break;
+            case 4:
+                btnZhongchouDetailOrderPay.setVisibility(View.GONE);
+                detailZhongchouTvOrderstate.setText("已过期");
+                break;
+            case 7:
                 //已兑换
                 btnZhongchouDetailOrderPay.setVisibility(View.GONE);
-                detailZhongchouTvOrderstate.setText("已兑换");
-
+                detailZhongchouTvOrderstate.setText("已兑付");
+                orderdetailLlXiadan.setVisibility(View.VISIBLE);
+                orderdetailMoneyBenifate.setVisibility(View.VISIBLE);
+                orderdetailMoneyDuifu.setVisibility(View.VISIBLE);
+                orderdetailLlPay.setVisibility(View.VISIBLE);
+                orderdetailLlWay.setVisibility(View.VISIBLE);
+                orderdetailLlBank.setVisibility(View.VISIBLE);
                 break;
         }
-        getZhongChouOrderDetail(orderId);
+        switch (zhongchouStatus) {
+            case 1://众筹中
+                zhongchouDetailTvStatus.setText("众筹中");
+                break;
+            case 2://已满标
+                zhongchouDetailTvStatus.setText("已满标");
+                break;
+            case 5://已披露
+                zhongchouDetailTvStatus.setText("已披露");
+                break;
+            case 7:
+                //已兑付
+                zhongchouDetailTvStatus.setText("已兑付");
+                break;
+            case 9:
+                //流标
+                zhongchouDetailTvStatus.setText("流标");
+                break;
+        }
+
     }
 
     @Override
@@ -113,8 +173,12 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 LogUtil.e("yjl", "我的众筹订单-data" + response);
                 if (Tools.isGoodJson(response)) {
                     myZhongChouOrderResultBean = new Gson().fromJson(response, MyZhongChouOrderResultBean.class);
-                    detailZhongchouTvOrderid.setText(""+myZhongChouOrderResultBean.getExecDatas().getOrderId());
-                    zhongchouDetailTvTalk.setText(""+ myZhongChouOrderResultBean.getExecDatas().getTitle());
+                    detailZhongchouTvOrderid.setText("" + myZhongChouOrderResultBean.getExecDatas().getOrderId());
+                    zhongchouDetailTvTalk.setText("                " + myZhongChouOrderResultBean.getExecDatas().getTitle());
+                    orderTvTimeXiadan.setText("" + myZhongChouOrderResultBean.getExecDatas().getCreateDate());
+                    orderTvTimePay.setText(""+myZhongChouOrderResultBean.getExecDatas().getPayDate());
+                    orderTvMoneyPay.setText("￥"+myZhongChouOrderResultBean.getExecDatas().getPurchaseAmount());
+                    orderTvMoneyDuifu.setText("￥"+myZhongChouOrderResultBean.getExecDatas().getCashAmount());
                 }
             }
         });

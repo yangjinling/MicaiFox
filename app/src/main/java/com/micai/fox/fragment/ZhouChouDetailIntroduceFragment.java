@@ -54,19 +54,8 @@ public class ZhouChouDetailIntroduceFragment extends Fragment {
 //                tv.setText("命中榜");
                 break;
         }
-        data = getData();
         vp.setObjectForPosition(view,0);
         return view;
-    }
-
-    private ArrayList<String> getData() {
-        ArrayList<String> data = new ArrayList<>();
-        String temp = " item";
-        for (int i = 0; i < 50; i++) {
-            data.add(i + temp);
-        }
-
-        return data;
     }
 
     @Override

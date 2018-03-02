@@ -11,7 +11,7 @@ public class MyReportResultBean {
 
     /**
      * execResult : true
-     * execDatas : {"length":20,"pageNo":1,"totalRow":3,"from":0,"recordList":[{"reportId":"BG100001","title":"报告标题","createDate":1519401415000,"gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","matchTime":"20180224110000","totalMatchNum":2,"winMatchNum":2},{"reportId":"BG100001","title":"报告标题","createDate":1519401415000,"gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","matchTime":"20180224110000","totalMatchNum":2,"winMatchNum":2},{"reportId":"BG100001","title":"报告标题","createDate":1519401415000,"gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","matchTime":"20180224110000","totalMatchNum":2,"winMatchNum":2}],"needCount":true,"totalPage":1}
+     * execDatas : {"length":20,"pageNo":1,"totalRow":3,"from":0,"recordList":[{"reportId":"BG100001","title":"报告标题","createDate":1519401415000,"gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","homeScore":1,"guestScore":1,"matchTime":"20180224110000","issue":"20180223","totalMatchNum":2,"winMatchNum":1},{"reportId":"BG100001","title":"报告标题","createDate":1519401415000,"gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","homeScore":1,"guestScore":1,"matchTime":"20180224110000","issue":"20180223","totalMatchNum":2,"winMatchNum":1},{"reportId":"BG100001","title":"报告标题","createDate":1519401415000,"gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","homeScore":1,"guestScore":1,"matchTime":"20180224110000","issue":"20180223","totalMatchNum":2,"winMatchNum":1}],"needCount":true,"totalPage":1}
      * count : 0
      * num : 0
      */
@@ -59,7 +59,7 @@ public class MyReportResultBean {
          * pageNo : 1
          * totalRow : 3
          * from : 0
-         * recordList : [{"reportId":"BG100001","title":"报告标题","createDate":1519401415000,"gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","matchTime":"20180224110000","totalMatchNum":2,"winMatchNum":2},{"reportId":"BG100001","title":"报告标题","createDate":1519401415000,"gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","matchTime":"20180224110000","totalMatchNum":2,"winMatchNum":2},{"reportId":"BG100001","title":"报告标题","createDate":1519401415000,"gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","matchTime":"20180224110000","totalMatchNum":2,"winMatchNum":2}]
+         * recordList : [{"reportId":"BG100001","title":"报告标题","createDate":1519401415000,"gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","homeScore":1,"guestScore":1,"matchTime":"20180224110000","issue":"20180223","totalMatchNum":2,"winMatchNum":1},{"reportId":"BG100001","title":"报告标题","createDate":1519401415000,"gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","homeScore":1,"guestScore":1,"matchTime":"20180224110000","issue":"20180223","totalMatchNum":2,"winMatchNum":1},{"reportId":"BG100001","title":"报告标题","createDate":1519401415000,"gameName":"墨超","homeTeamName":"普埃布拉","guestTeamName":"内卡萨","homeScore":1,"guestScore":1,"matchTime":"20180224110000","issue":"20180223","totalMatchNum":2,"winMatchNum":1}]
          * needCount : true
          * totalPage : 1
          */
@@ -136,9 +136,12 @@ public class MyReportResultBean {
              * gameName : 墨超
              * homeTeamName : 普埃布拉
              * guestTeamName : 内卡萨
+             * homeScore : 1
+             * guestScore : 1
              * matchTime : 20180224110000
+             * issue : 20180223
              * totalMatchNum : 2
-             * winMatchNum : 2
+             * winMatchNum : 1
              */
 
             private String reportId;
@@ -147,7 +150,10 @@ public class MyReportResultBean {
             private String gameName;
             private String homeTeamName;
             private String guestTeamName;
+            private int homeScore;
+            private int guestScore;
             private String matchTime;
+            private String issue;
             private int totalMatchNum;
             private int winMatchNum;
 
@@ -199,12 +205,36 @@ public class MyReportResultBean {
                 this.guestTeamName = guestTeamName;
             }
 
+            public int getHomeScore() {
+                return homeScore;
+            }
+
+            public void setHomeScore(int homeScore) {
+                this.homeScore = homeScore;
+            }
+
+            public int getGuestScore() {
+                return guestScore;
+            }
+
+            public void setGuestScore(int guestScore) {
+                this.guestScore = guestScore;
+            }
+
             public String getMatchTime() {
                 return matchTime;
             }
 
             public void setMatchTime(String matchTime) {
                 this.matchTime = matchTime;
+            }
+
+            public String getIssue() {
+                return issue;
+            }
+
+            public void setIssue(String issue) {
+                this.issue = issue;
             }
 
             public int getTotalMatchNum() {

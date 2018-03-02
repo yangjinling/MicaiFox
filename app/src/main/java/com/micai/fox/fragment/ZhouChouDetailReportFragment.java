@@ -14,9 +14,11 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.micai.fox.R;
+import com.micai.fox.adapter.MyZhongchouReportAdapter;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.resultbean.ZhonchouReportResultBean;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -37,16 +39,19 @@ import okhttp3.MediaType;
 public class ZhouChouDetailReportFragment extends Fragment {
     @Bind(R.id.zhouchou_detail_report_ll_ing)
     LinearLayout zhouchouDetailReportLlIng;
-    @Bind(R.id.test)
-    TextView test;
+    @Bind(R.id.zhouchou_detail_report_ll_ed)
+    LinearLayout zhouchouDetailReportLlEd;
+    @Bind(R.id.lv_report)
+    ListView lv_report;
     private int kind;
     //    private TextView tv;
-    private ArrayList<String> data;
+    private ArrayList<ZhonchouReportResultBean.ExecDatasBean> data = new ArrayList<>();
     private ListView lv;
     private View footer_view;
     private View headView;
     private CustomViewPager vp;
     private String crowdingId;
+    private ZhonchouReportResultBean zhonchouReportResultBean;
 
     public ZhouChouDetailReportFragment() {
     }
@@ -56,6 +61,8 @@ public class ZhouChouDetailReportFragment extends Fragment {
         this.vp = vp;
     }
 
+    MyZhongchouReportAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,33 +70,23 @@ public class ZhouChouDetailReportFragment extends Fragment {
         ButterKnife.bind(this, view);
         kind = getArguments().getInt("KIND", 0);
         crowdingId = getArguments().getString("crowdingId");
-        switch (0) {
+        switch (kind) {
             case 0:
 //                tv.setText("全部");
                 zhouchouDetailReportLlIng.setVisibility(View.VISIBLE);
                 break;
             case 1:
 //                tv.setText("盈利榜");
-                test.setVisibility(View.VISIBLE);
-                break;
-            case 2:
-//                tv.setText("命中榜");
+                zhouchouDetailReportLlIng.setVisibility(View.GONE);
+                zhouchouDetailReportLlEd.setVisibility(View.VISIBLE);
                 break;
         }
-        data = getData();
+        lv_report.setFocusable(false);
+        adapter = new MyZhongchouReportAdapter(data, getContext(), R.layout.item_lv_report);
+        lv_report.setAdapter(adapter);
         getZhongChouReport(crowdingId);
         vp.setObjectForPosition(view, 1);
         return view;
-    }
-
-    private ArrayList<String> getData() {
-        ArrayList<String> data = new ArrayList<>();
-        String temp = " item";
-        for (int i = 0; i < 50; i++) {
-            data.add(i + temp);
-        }
-
-        return data;
     }
 
     private ParamBean paramBean;
@@ -98,7 +95,7 @@ public class ZhouChouDetailReportFragment extends Fragment {
     private void getZhongChouReport(String crowingId) {
         paramBean = new ParamBean();
         paramData = new ParamBean.ParamData();
-        paramData.setCrowdfundingId( crowingId);
+        paramData.setCrowdfundingId(crowingId);
         paramBean.setParamData(paramData);
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
@@ -114,7 +111,12 @@ public class ZhouChouDetailReportFragment extends Fragment {
             public void onResponse(String response, int id) throws Exception {
                 Log.e("yjl", "众筹详情-报告" + response);
                 if (Tools.isGoodJson(response)) {
+                    zhonchouReportResultBean = new Gson().fromJson(response, ZhonchouReportResultBean.class);
+                    if (zhonchouReportResultBean.isExecResult()) {
+                        data.add(zhonchouReportResultBean.getExecDatas());
+                        adapter.notifyDataSetChanged();
 
+                    }
                 }
             }
         });

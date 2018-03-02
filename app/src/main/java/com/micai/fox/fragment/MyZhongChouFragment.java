@@ -44,13 +44,14 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 /*我的--我的众筹模块*/
 public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrollListener {
-    private ArrayList<MyZhongChouResultBean.ExecDatasBean.RecordListBean> data=new ArrayList<>();
+    private ArrayList<MyZhongChouResultBean.ExecDatasBean.RecordListBean> data = new ArrayList<>();
     private ListView lv;
     private TextView tv;
     private int kind;
     private View headView;
     private MyZhongChouResultBean myZhongChouResultBean;
     MyZhonChouAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,24 +61,24 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
         kind = getArguments().getInt("KIND", 0);
         switch (kind) {
             case 0:
-                adapter = new MyZhonChouAdapter(0,data, getContext(), R.layout.item_lv_mine_zhongchou);
+                adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
 //                tv.setText("全部");
-                getMyZhongChouList(2,0);
+                getMyZhongChouList(2, 0);
                 break;
             case 1:
 //                tv.setText("待支付");
-                adapter = new MyZhonChouAdapter(1,data, getContext(), R.layout.item_lv_mine_zhongchou);
-                getMyZhongChouList(0,0);
+                adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
+                getMyZhongChouList(0, 0);
                 break;
             case 2:
 //                tv.setText("已支付");
-                adapter = new MyZhonChouAdapter(2,data, getContext(), R.layout.item_lv_mine_zhongchou);
-                getMyZhongChouList(1,0);
+                adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
+                getMyZhongChouList(1, 0);
                 break;
             case 3:
 //                tv.setText("已兑换");
-                adapter = new MyZhonChouAdapter(3,data, getContext(), R.layout.item_lv_mine_zhongchou);
-                getMyZhongChouList(7,0);
+                adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
+                getMyZhongChouList(7, 0);
                 break;
         }
 //        data = getData();
@@ -88,8 +89,9 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ZhongChouOrderDetailActivity.class);
-                intent.putExtra("orderId",myZhongChouResultBean.getExecDatas().getRecordList().get(i-1).getOrderId());
-                intent.putExtra("type",kind);
+                intent.putExtra("orderId", data.get(i - 1).getOrderId());
+                intent.putExtra("orderStatus", data.get(i - 1).getOrderStatus());
+                intent.putExtra("zhongchouStatus", data.get(i - 1).getCrowdfundingStatus());
                 startActivity(intent);
             }
         });
@@ -101,13 +103,14 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
     private ParamBean.ParamData paramData;
 
     private void getMyZhongChouList(int status, int curPageNum) {
-        Log.e("YJL","status=="+status);
+        Log.e("YJL", "status==" + status);
         paramBean = new ParamBean();
         paramBean.setLength("20");
         paramBean.setPageNum("" + curPageNum);
-        paramData = new ParamBean.ParamData();
-        if (2 != status){
-            paramData.setStatus(""+status);}else {
+        if (2 != status) {
+            paramData = new ParamBean.ParamData();
+            paramData.setStatus("" + status);
+        } else {
 //            paramData.setStatus("");
         }
         paramBean.setParamData(paramData);
@@ -126,7 +129,7 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
                 LogUtil.e("yjl", "我的众筹-data" + response);
                 if (Tools.isGoodJson(response)) {
                     myZhongChouResultBean = new Gson().fromJson(response, MyZhongChouResultBean.class);
-                    if (myZhongChouResultBean.isExecResult()){
+                    if (myZhongChouResultBean.isExecResult()) {
 //                        data.clear();
                         data.addAll(myZhongChouResultBean.getExecDatas().getRecordList());
                         adapter.notifyDataSetChanged();

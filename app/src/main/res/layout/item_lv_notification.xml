@@ -16,7 +16,7 @@
         android:layout_marginLeft="18dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/welldone" />
+        android:background="@mipmap/welldone" />
     <TextView
         android:id="@+id/notification_tv_title"
         android:textSize="15sp"
@@ -25,7 +25,7 @@
         android:layout_marginLeft="5dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        android:text="催付通知"
+        android:text="满标通知"
         android:textColor="@color/red" />
     <TextView
         android:id="@+id/notification_tv_time"
