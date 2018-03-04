@@ -1,6 +1,7 @@
 package com.micai.fox.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,15 +12,19 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import com.micai.fox.R;
+import com.micai.fox.app.Config;
 import com.micai.fox.base.BaseActivity;
 import com.micai.fox.fragment.ExpertsFragment;
 import com.micai.fox.fragment.HomeFragment;
 import com.micai.fox.fragment.MineFragmnet;
+import com.micai.fox.parambean.NotiBean;
 import com.micai.fox.util.ExitAppUtils;
+import com.micai.fox.util.LogUtil;
 import com.micai.fox.view.CyDownProgressView;
 import com.zhy.http.okhttp.callback.DialogInShow;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,12 +48,13 @@ public class MainActivity extends BaseActivity {
 
     private Fragment[] mFragments;
     private FragmentManager mManager;
-
+    private Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        handler=new Handler();
         ExitAppUtils.getInstance().addActivity(this);
         //初始化fragment
         initFragments();
@@ -75,6 +81,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         ButterKnife.unbind(this);
     }
 
@@ -82,7 +89,7 @@ public class MainActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rb_home:
-                homeMinePoint.setVisibility(View.GONE);
+//                homeMinePoint.setVisibility(View.GONE);
                 rbHome.setChecked(true);
                 rbExperts.setChecked(false);
                 rbMine.setChecked(false);
@@ -90,7 +97,7 @@ public class MainActivity extends BaseActivity {
                 transaction1.replace(R.id.main_fragment, mFragments[0]).commit();
                 break;
             case R.id.rb_experts:
-                homeMinePoint.setVisibility(View.GONE);
+//                homeMinePoint.setVisibility(View.GONE);
                 rbHome.setChecked(false);
                 rbExperts.setChecked(true);
                 rbMine.setChecked(false);
@@ -98,7 +105,7 @@ public class MainActivity extends BaseActivity {
                 transaction2.replace(R.id.main_fragment, mFragments[1]).commit();
                 break;
             case R.id.rb_mine:
-                homeMinePoint.setVisibility(View.VISIBLE);
+//                homeMinePoint.setVisibility(View.GONE);
                 rbHome.setChecked(false);
                 rbExperts.setChecked(false);
                 rbMine.setChecked(true);
@@ -107,4 +114,37 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Subscribe
+    public void onEventMainThread(NotiBean bean) {
+        LogUtil.e("eventbus",""+bean.isHaveN());
+
+        if (bean.isHaveN()){
+            Config.getInstance().setNoti(true);
+            handler.post(runnableUi);
+
+        }else {
+            Config.getInstance().setNoti(false);
+            handler.post(runnableUis);
+        }
+    }
+
+    // 构建Runnable对象，在runnable中更新界面
+    Runnable runnableUi=new Runnable(){
+        @Override
+        public void run() {
+//更新界面
+            homeMinePoint.setVisibility(View.VISIBLE);
+        }
+
+    };
+    // 构建Runnable对象，在runnable中更新界面
+    Runnable runnableUis=new Runnable(){
+        @Override
+        public void run() {
+//更新界面
+            homeMinePoint.setVisibility(View.GONE);
+        }
+
+    };
 }

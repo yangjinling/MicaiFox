@@ -7,6 +7,7 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.igexin.sdk.PushManager;
 import com.micai.fox.service.IntentService;
 import com.micai.fox.service.PushService;
+import com.micai.fox.util.LogUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.https.HttpsUtils;
 import com.zhy.http.okhttp.log.LoggerInterceptor;

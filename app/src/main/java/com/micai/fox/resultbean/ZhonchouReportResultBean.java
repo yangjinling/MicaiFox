@@ -72,7 +72,7 @@ public class ZhonchouReportResultBean {
         private String gameName;
         private String homeTeamName;
         private String guestTeamName;
-        private int homeScore;
+        private String homeScore;
         private int guestScore;
         private String matchTime;
         private String issue;
@@ -127,11 +127,11 @@ public class ZhonchouReportResultBean {
             this.guestTeamName = guestTeamName;
         }
 
-        public int getHomeScore() {
+        public String getHomeScore() {
             return homeScore;
         }
 
-        public void setHomeScore(int homeScore) {
+        public void setHomeScore(String homeScore) {
             this.homeScore = homeScore;
         }
 

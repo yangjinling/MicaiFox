@@ -151,7 +151,7 @@ public class MyReportResultBean {
             private String homeTeamName;
             private String guestTeamName;
             private int homeScore;
-            private int guestScore;
+            private String guestScore;
             private String matchTime;
             private String issue;
             private int totalMatchNum;
@@ -213,11 +213,11 @@ public class MyReportResultBean {
                 this.homeScore = homeScore;
             }
 
-            public int getGuestScore() {
+            public String getGuestScore() {
                 return guestScore;
             }
 
-            public void setGuestScore(int guestScore) {
+            public void setGuestScore(String guestScore) {
                 this.guestScore = guestScore;
             }
 

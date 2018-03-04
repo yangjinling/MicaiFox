@@ -8,6 +8,8 @@ public class Url {
     public static final String CONTENT_TYPE = "application/json; charset=utf-8";
     public static final String WEB_BASE_IP="http://39.106.29.117:18888";
     public static final String WEB_BASE_URL = "http://39.106.29.117:18888/mcfox/a/";
+//    public static final String WEB_BASE_IP="http://192.168.43.1:18888";
+//    public static final String WEB_BASE_URL = "http://192.168.43.1:18888/mcfox/a/";
     public static final String WEB_BASE_SESSION = ";JSESSIONID=%s?__ajax=true";
     /*2.1.1注册短信验证码*/
     public static final String WEB_VALIDATE_CODE_REGIST = WEB_BASE_URL + "sys/sms/send-code/m-reg";//自芳

@@ -25,7 +25,6 @@ public class WelcomeActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    PrefUtils.setBoolean(Config.getInstance().getmContext(), "ISFIRST", true);
                     Intent intent = new Intent(WelcomeActivity.this, IndexActivity.class);
                     startActivity(intent);
                     finish();

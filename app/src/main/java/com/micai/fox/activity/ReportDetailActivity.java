@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.adapter.ReportDetailLvAdapter;
@@ -54,7 +55,7 @@ public class ReportDetailActivity extends AppCompatActivity {
     @Bind(R.id.report_detail_tv_time)
     TextView reportDetailTvTime;
     @Bind(R.id.report_detail_iv_head)
-    ImageView reportDetailIvHead;
+    ImageView head;
     @Bind(R.id.report_detail_tv_name)
     TextView reportDetailTvName;
     @Bind(R.id.report_detail_tv_introduce)
@@ -141,6 +142,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                         reportDetailTvRate.setText("" + reportDetailResultBean.getExecDatas().getReport().getHitRate());
                         reportDetailTvZhongchouTitle.setText("" + reportDetailResultBean.getExecDatas().getReport().getCrowdfundingTitle());
                         reportDetailTvTime.setText("" + reportDetailResultBean.getExecDatas().getReport().getCreateDate());
+                        Glide.with(ReportDetailActivity.this).load(Url.WEB_BASE_IP + reportDetailResultBean.getExecDatas().getReport().getProPhoto()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(head);
                         CharSequence charSequence = Html.fromHtml(reportDetailResultBean.getExecDatas().getReport().getContent(), new Html.ImageGetter() {
 
                             @Override

@@ -13,6 +13,7 @@ import com.micai.fox.R;
 import com.micai.fox.adapter.MyNotificationAdapter;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
+import com.micai.fox.parambean.NotiBean;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.BaseResultBean;
 import com.micai.fox.resultbean.HomeResultBean;
@@ -21,6 +22,8 @@ import com.micai.fox.resultbean.NotificationResultBean;
 import com.micai.fox.util.Tools;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -53,6 +56,9 @@ public class NotificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
         ButterKnife.bind(this);
+        NotiBean bean=new NotiBean();
+        bean.setHaveN(false);
+        EventBus.getDefault().post(bean);
         tvTitle.setText("通知");
         tvNotify.setText("清空");
         tvNotify.setTextSize(16);

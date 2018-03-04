@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.adapter.ViewPageAdapter;
@@ -25,12 +26,16 @@ import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.fragment.ExpertsReportFragment;
 import com.micai.fox.fragment.ExpertsZhongChouFragment;
+import com.micai.fox.parambean.BotomBean;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.ExpertsDetailResultBean;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
+import com.micai.fox.view.PageListScrollView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +47,7 @@ import okhttp3.Call;
 import okhttp3.MediaType;
 
 /*专家详情页面*/
-public class ExpertsDetailActivity extends AppCompatActivity {
+public class ExpertsDetailActivity extends AppCompatActivity implements PageListScrollView.OnScrollToBottomListener {
 
     @Bind(R.id.tv_back)
     TextView tvBack;
@@ -51,7 +56,7 @@ public class ExpertsDetailActivity extends AppCompatActivity {
     @Bind(R.id.rl)
     RelativeLayout rl;
     @Bind(R.id.experts_detail_iv_head)
-    ImageView expertsDetailIvHead;
+    ImageView head;
     @Bind(R.id.experts_detail_tv_name)
     TextView expertsDetailTvName;
     @Bind(R.id.experts_detail_tv_introduce)
@@ -75,7 +80,7 @@ public class ExpertsDetailActivity extends AppCompatActivity {
     @Bind(R.id.experts_detail_ll)
     LinearLayout expertsDetailLl;
     @Bind(R.id.experts_detail_scroll)
-    ScrollView scrollView;
+    PageListScrollView scrollView;
     @Bind(R.id.experts_detail_moveview)
     LinearLayout expertsDetailMoveview;
     @Bind(R.id.experts_detail_parentcontent)
@@ -146,7 +151,7 @@ public class ExpertsDetailActivity extends AppCompatActivity {
             }
         });
         expertsDetailViewpager.resetHeight(0);
-
+        scrollView.setOnScrollToBottomListener(this);
     }
 
     @OnClick({R.id.tv_back, R.id.experts_detail_tv_zhongchou, R.id.experts_detail_tv_report})
@@ -320,7 +325,8 @@ public class ExpertsDetailActivity extends AppCompatActivity {
                         expertsDetailTvRate.setText("" + expertsDetailResultBean.getExecDatas().getProfessor().getHitRate());
                         expertsDetailTvYili.setText("" + expertsDetailResultBean.getExecDatas().getProfessor().getProfitRate());
                         expertsDetailTvMaxyili.setText("" + expertsDetailResultBean.getExecDatas().getProfessor().getMaxProfitRate());
-                        expertsDetailTvCount.setText("共"+expertsDetailResultBean.getExecDatas().getProfessor().getTotalNum()+"次众筹");
+                        expertsDetailTvCount.setText("共" + expertsDetailResultBean.getExecDatas().getProfessor().getTotalNum() + "次众筹");
+                        Glide.with(ExpertsDetailActivity.this).load(Url.WEB_BASE_IP + expertsDetailResultBean.getExecDatas().getProfessor().getProPhoto()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(head);
                     }
                 }
             }
@@ -334,4 +340,10 @@ public class ExpertsDetailActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onScrollBottomListener(boolean isBottom) {
+        BotomBean botomBean = new BotomBean();
+        botomBean.setBootom(isBottom);
+        EventBus.getDefault().post(botomBean);
+    }
 }

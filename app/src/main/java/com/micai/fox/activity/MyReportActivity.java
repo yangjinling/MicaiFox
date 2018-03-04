@@ -6,10 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.micai.fox.R;
@@ -33,7 +35,7 @@ import okhttp3.Call;
 import okhttp3.MediaType;
 
 /*我的报告界面*/
-public class MyReportActivity extends AppCompatActivity {
+public class MyReportActivity extends AppCompatActivity implements AbsListView.OnScrollListener {
 
     @Bind(R.id.tv_back)
     TextView tvBack;
@@ -59,7 +61,7 @@ public class MyReportActivity extends AppCompatActivity {
         tvTitle.setText("我的报告");
         headView = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.headview_lv, null);
         lvMyreport.addHeaderView(headView);
-        getReportList("0");
+        getReportList(""+curPageNum);
         adapter = new MyReportAdapter(data, this, R.layout.item_lv_myreport);
         lvMyreport.setAdapter(adapter);
         lvMyreport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -71,6 +73,7 @@ public class MyReportActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        lvMyreport.setOnScrollListener(this);
     }
 
     @OnClick(R.id.tv_back)
@@ -88,15 +91,6 @@ public class MyReportActivity extends AppCompatActivity {
         ButterKnife.unbind(this);
     }
 
-//    private ArrayList<String> getData() {
-//        ArrayList<String> data = new ArrayList<>();
-//        String temp = " item";
-//        for (int i = 0; i < 50; i++) {
-//            data.add(i + temp);
-//        }
-//
-//        return data;
-//    }
 
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
@@ -128,5 +122,52 @@ public class MyReportActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView absListView, int i) {
+        LogUtil.e("YJL---", "+进来了没有");
+        switch (i) {
+            case SCROLL_STATE_IDLE://空闲状态
+                LogUtil.e("YJL", "+进来了没有空闲");
+                break;
+            case SCROLL_STATE_TOUCH_SCROLL://滚状态
+                LogUtil.e("YJL", "+进来了没有滚");
+                break;
+            case SCROLL_STATE_FLING://飞状态
+                LogUtil.e("YJL", "+进来了没有飞");
+                break;
+        }
+    }
+    private boolean isBottom = false;//是否到第20条数据了
+    private int curPageNum = 0;
+    private int lastItem;
+    private int totalItem;
+    @Override
+    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+        this.lastItem = i + i1;
+        this.totalItem = i2;
+              /*i:屏幕中第一个可见item的下标
+              * i1:可见item数量
+            * i2:itme的总数量*/
+        if (i2 != 0 && i + i1 == i2) {
+            isBottom = true;
+            LogUtil.e("YJL", "isBottom111===" + isBottom);
+        } else {
+            isBottom = false;
+            LogUtil.e("YJL", "isBottom222===" + isBottom);
+        }
+        if (absListView.getLastVisiblePosition() >= 20 + (curPageNum * 20)) {
+            LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
+            if (++curPageNum <= myReportResultBean.getExecDatas().getTotalPage()) {
+                LogUtil.e("YJL", "curPageNum==" + curPageNum);
+//                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
+                getReportList("" + curPageNum);
+                Toast.makeText(this, "加载中…", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "没有更多了", Toast.LENGTH_SHORT).show();
+//                ToolsC.CenterToast(getContext(), "没有更多数据");
+            }
+        }
     }
 }

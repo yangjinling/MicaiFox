@@ -15,6 +15,7 @@ import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.MyZhongChouOrderResultBean;
+import com.micai.fox.util.DateUtil;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -43,9 +44,9 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
     TextView detailZhongchouTvOrderstate;
     @Bind(R.id.zhongchou_detail_tv_talk)
     TextView zhongchouDetailTvTalk;
-    @Bind(R.id.zhongchou_detail_tv1)
+    @Bind(R.id.zhongchou_order_detail_tv1)
     TextView zhongchouDetailTv1;
-    @Bind(R.id.zhongchou_detail_tv2)
+    @Bind(R.id.zhongchou_order_detail_tv2)
     TextView zhongchouDetailTv2;
     @Bind(R.id.zhongchou_detail_tv_status)
     TextView zhongchouDetailTvStatus;
@@ -89,39 +90,6 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
         orderStatus = getIntent().getIntExtra("orderStatus", 0);
         zhongchouStatus = getIntent().getIntExtra("zhongchouStatus", 0);
         getZhongChouOrderDetail(orderId);
-        switch (orderStatus) {
-            case 0:
-                //待支付
-                btnZhongchouDetailOrderPay.setVisibility(View.VISIBLE);
-                break;
-            case 1:
-                //已支付
-                btnZhongchouDetailOrderPay.setVisibility(View.GONE);
-                detailZhongchouTvOrderstate.setText("已支付");
-                orderdetailLlXiadan.setVisibility(View.VISIBLE);
-                orderdetailLlPay.setVisibility(View.VISIBLE);
-                orderdetailLlBank.setVisibility(View.VISIBLE);
-                break;
-            case 3:
-                btnZhongchouDetailOrderPay.setVisibility(View.GONE);
-                detailZhongchouTvOrderstate.setText("已退款");
-                break;
-            case 4:
-                btnZhongchouDetailOrderPay.setVisibility(View.GONE);
-                detailZhongchouTvOrderstate.setText("已过期");
-                break;
-            case 7:
-                //已兑换
-                btnZhongchouDetailOrderPay.setVisibility(View.GONE);
-                detailZhongchouTvOrderstate.setText("已兑付");
-                orderdetailLlXiadan.setVisibility(View.VISIBLE);
-                orderdetailMoneyBenifate.setVisibility(View.VISIBLE);
-                orderdetailMoneyDuifu.setVisibility(View.VISIBLE);
-                orderdetailLlPay.setVisibility(View.VISIBLE);
-                orderdetailLlWay.setVisibility(View.VISIBLE);
-                orderdetailLlBank.setVisibility(View.VISIBLE);
-                break;
-        }
         switch (zhongchouStatus) {
             case 1://众筹中
                 zhongchouDetailTvStatus.setText("众筹中");
@@ -142,6 +110,59 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 break;
         }
 
+    }
+
+    private void initStatus() {
+        switch (orderStatus) {
+            case 0:
+                //待支付
+                btnZhongchouDetailOrderPay.setVisibility(View.VISIBLE);
+                zhongchouDetailTv1.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + myZhongChouOrderResultBean.getExecDatas().getAmountDown() + "时结束众筹");
+//                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起开始兑付");
+
+                break;
+            case 1:
+                //已支付
+                btnZhongchouDetailOrderPay.setVisibility(View.GONE);
+                detailZhongchouTvOrderstate.setText("已支付");
+                orderdetailLlXiadan.setVisibility(View.VISIBLE);
+                orderdetailLlPay.setVisibility(View.VISIBLE);
+                orderdetailLlBank.setVisibility(View.VISIBLE);
+                zhongchouDetailTv1.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + myZhongChouOrderResultBean.getExecDatas().getAmountDown() + "时结束众筹");
+//                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起开始兑付");
+
+                break;
+            case 3:
+                btnZhongchouDetailOrderPay.setVisibility(View.GONE);
+                detailZhongchouTvOrderstate.setText("已退款");
+                orderdetailLlXiadan.setVisibility(View.VISIBLE);
+                orderdetailLlPay.setVisibility(View.VISIBLE);
+                orderdetailLlBank.setVisibility(View.VISIBLE);
+                zhongchouDetailTv1.setText("已于" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getEndDate()) + "结束众筹");
+                zhongchouDetailTv2.setText("项目未达成，支付金额原路退回。");
+                break;
+            case 4:
+                btnZhongchouDetailOrderPay.setVisibility(View.GONE);
+                detailZhongchouTvOrderstate.setText("已过期");
+                zhongchouDetailTv1.setText("已于" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getEndDate()) + "结束众筹");
+//                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起已兑付");
+
+                break;
+            case 7:
+                //已兑换
+                btnZhongchouDetailOrderPay.setVisibility(View.GONE);
+                detailZhongchouTvOrderstate.setText("已兑付");
+                orderdetailLlXiadan.setVisibility(View.VISIBLE);
+                orderdetailMoneyBenifate.setVisibility(View.VISIBLE);
+                orderdetailMoneyDuifu.setVisibility(View.VISIBLE);
+                orderdetailLlPay.setVisibility(View.VISIBLE);
+                orderdetailLlWay.setVisibility(View.VISIBLE);
+                orderdetailLlBank.setVisibility(View.VISIBLE);
+                zhongchouDetailTv1.setText("已于" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getEndDate()) + "结束众筹");
+//                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起已兑付");
+
+                break;
+        }
     }
 
     @Override
@@ -173,12 +194,22 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 LogUtil.e("yjl", "我的众筹订单-data" + response);
                 if (Tools.isGoodJson(response)) {
                     myZhongChouOrderResultBean = new Gson().fromJson(response, MyZhongChouOrderResultBean.class);
-                    detailZhongchouTvOrderid.setText("" + myZhongChouOrderResultBean.getExecDatas().getOrderId());
-                    zhongchouDetailTvTalk.setText("                " + myZhongChouOrderResultBean.getExecDatas().getTitle());
-                    orderTvTimeXiadan.setText("" + myZhongChouOrderResultBean.getExecDatas().getCreateDate());
-                    orderTvTimePay.setText(""+myZhongChouOrderResultBean.getExecDatas().getPayDate());
-                    orderTvMoneyPay.setText("￥"+myZhongChouOrderResultBean.getExecDatas().getPurchaseAmount());
-                    orderTvMoneyDuifu.setText("￥"+myZhongChouOrderResultBean.getExecDatas().getCashAmount());
+                    if (myZhongChouOrderResultBean.isExecResult()) {
+                        detailZhongchouTvOrderid.setText("" + myZhongChouOrderResultBean.getExecDatas().getOrderId());
+                        zhongchouDetailTvTalk.setText("                " + myZhongChouOrderResultBean.getExecDatas().getTitle());
+                        initStatus();
+                        String date = DateUtil.getDateToString(myZhongChouOrderResultBean.getExecDatas().getCreateDate());
+
+                        orderTvTimeXiadan.setText("" + date);
+
+                        orderTvMoneyPay.setText("￥" + myZhongChouOrderResultBean.getExecDatas().getPurchaseAmount());
+                        orderTvMoneyDuifu.setText("￥" + myZhongChouOrderResultBean.getExecDatas().getCashAmount());
+
+//                        String datePay = DateUtil.getDateToString(myZhongChouOrderResultBean.getExecDatas().getPayDate());
+//
+//                        orderTvTimePay.setText("" + datePay);
+
+                    }
                 }
             }
         });

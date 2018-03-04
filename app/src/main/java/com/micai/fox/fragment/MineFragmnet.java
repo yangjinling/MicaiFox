@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -34,6 +35,7 @@ import com.micai.fox.activity.NotificationActivity;
 import com.micai.fox.activity.SettingActivity;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
+import com.micai.fox.parambean.NotiBean;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.BaseResultBean;
 import com.micai.fox.resultbean.HeadResultBean;
@@ -44,6 +46,9 @@ import com.micai.fox.util.Tools;
 import com.micai.fox.view.ChooseDialog;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -77,7 +82,7 @@ public class MineFragmnet extends Fragment {
     RelativeLayout rl;
     @Bind(R.id.tv_notify)
     TextView tvNotify;
-    @Bind(iv_mine_head)
+    @Bind(R.id.iv_mine_head)
     CircleImageView ivMineHead;
     @Bind(R.id.tv_mine_nicheng)
     TextView tvMineNicheng;
@@ -110,16 +115,23 @@ public class MineFragmnet extends Fragment {
     File photo = null;
     private Uri uri;
     private MineResultBean mineResultBean;
+    private Handler handler;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         rl.setVisibility(View.VISIBLE);
         tvNotify.setVisibility(View.VISIBLE);
         tvTitle.setText("我的");
-        ivNotifyPoint.setVisibility(View.VISIBLE);
+        if (Config.getInstance().isNoti()){
+            ivNotifyPoint.setVisibility(View.VISIBLE);
+        }else {
+            ivNotifyPoint.setVisibility(View.GONE);
+        }
+        handler = new Handler();
         Drawable drawable = getResources().getDrawable(R.mipmap.message);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置边界
         // param 左上右下
@@ -132,7 +144,7 @@ public class MineFragmnet extends Fragment {
             Log.e("YJL", "personactivity恢复");
         }
         if (null != Config.getInstance().getPhotoUrl() || !TextUtils.isEmpty(Config.getInstance().getPhotoUrl())) {
-            Glide.with(this).load(Url.WEB_BASE_IP+Config.getInstance().getPhotoUrl()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(ivMineHead);
+            Glide.with(this).load(Url.WEB_BASE_IP + Config.getInstance().getPhotoUrl()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(ivMineHead);
         }
         getMineInfo();
         return view;
@@ -142,7 +154,39 @@ public class MineFragmnet extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
     }
+
+    @Subscribe
+    public void onEventMainThread(NotiBean bean) {
+        LogUtil.e("eventbus", "" + bean.isHaveN());
+
+        if (bean.isHaveN()) {
+            handler.post(runnableUi);
+
+        } else {
+            handler.post(runnableUis);
+        }
+    }
+
+    // 构建Runnable对象，在runnable中更新界面
+    Runnable runnableUi = new Runnable() {
+        @Override
+        public void run() {
+//更新界面
+            ivNotifyPoint.setVisibility(View.VISIBLE);
+        }
+
+    };
+    // 构建Runnable对象，在runnable中更新界面
+    Runnable runnableUis = new Runnable() {
+        @Override
+        public void run() {
+//更新界面
+            ivNotifyPoint.setVisibility(View.GONE);
+        }
+
+    };
 
     @OnClick({R.id.tv_notify, iv_mine_head, R.id.tv_mine_nicheng, R.id.ll_mine_zhongchou, R.id.ll_mine_report, R.id.ll_mine_set})
     public void onClick(View view) {
@@ -400,7 +444,7 @@ public class MineFragmnet extends Fragment {
                         String url = uploadResult.getExecDatas().getUrl();
                         Config.getInstance().setPhotoUrl(url);
                         LogUtil.e("YJL", "url :" + url);    // /website/userfiles/images/20170110/test.jpg}
-                            downLoadBitmap(url);
+                        downLoadBitmap(url);
                     }
                 }
 
@@ -408,9 +452,9 @@ public class MineFragmnet extends Fragment {
         });
     }
 
-    private void downLoadBitmap(String url){
+    private void downLoadBitmap(String url) {
         paramBean = new ParamBean();
-        paramData=new ParamBean.ParamData();
+        paramData = new ParamBean.ParamData();
         paramData.setPhoto(url);
         paramBean.setParamData(paramData);
         OkHttpUtils.postString()

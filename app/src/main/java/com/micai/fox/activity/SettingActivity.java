@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.igexin.sdk.PushManager;
 import com.micai.fox.R;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
@@ -200,6 +201,9 @@ public class SettingActivity extends AppCompatActivity {
                         Intent intent = new Intent(SettingActivity.this, IndexActivity.class);
                         ExitAppUtils.getInstance().finishAllActivities();
                         PrefUtils.setBoolean(Config.getInstance().getmContext(), "ISFIRST", false);
+//                        Config.getInstance().setClientId(loginResultBean.getExecDatas().getId());
+                        PushManager.getInstance().unBindAlias(getApplicationContext(),Config.getInstance().getClientId(),false);
+                        Config.getInstance().setClientId("");
                         startActivity(intent);
                     } else {
                     }

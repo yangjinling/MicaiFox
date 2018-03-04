@@ -39,7 +39,7 @@
             android:id="@+id/tv_country1_lv_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="18dp"
             android:text="西班牙"
             android:textColor="@color/red"
             android:textSize="15sp" />

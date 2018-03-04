@@ -40,7 +40,7 @@
             android:id="@+id/experts_report_tv_country1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="14dp"
             android:text="西班牙"
             android:textColor="@color/red"
             android:textSize="15sp" />
@@ -50,7 +50,7 @@
             android:id="@+id/experts_report_tv_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="14dp"
             android:gravity="center_horizontal"
             android:text="4:3"
             android:textColor="@color/red"
@@ -69,9 +69,9 @@
         <TextView
             android:id="@+id/experts_report_tv_date"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="14dp"
             android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:paddingRight="12dp"
             android:gravity="right"
             android:text="11月27日"
             android:textColor="@color/red"
@@ -81,7 +81,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
+        android:layout_marginBottom="14dp"
         android:layout_marginLeft="18dp"
         android:layout_marginTop="12dp">
 

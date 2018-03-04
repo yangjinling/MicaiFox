@@ -70,7 +70,7 @@
                         android:orientation="horizontal"
                         android:paddingBottom="15.5dp">
 
-                        <ImageView
+                        <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/report_detail_iv_head"
                             android:layout_width="65dp"
                             android:layout_height="65dp"

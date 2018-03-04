@@ -24,6 +24,7 @@ import com.micai.fox.adapter.MyExpertsReportAdapter;
 import com.micai.fox.adapter.MyExpertsZhonChouAdapter;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
+import com.micai.fox.parambean.BotomBean;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.ExpertsResultBean;
 import com.micai.fox.resultbean.ExpertsZhongchouResultBean;
@@ -31,7 +32,11 @@ import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.DialogInShow;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -70,6 +75,7 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
         View view = inflater.inflate(R.layout.fragment_zhong_report_detail_experts, container, false);
         lv = ((ListView) view.findViewById(R.id.experts_detail_zhong_report_lv));
         lv.setFocusable(false);
+        EventBus.getDefault().register(this);
         proId = getArguments().getString("proId");
         getExpertsZhongChouList(proId,"0");
        adapter = new MyExpertsZhonChouAdapter(data, getContext(), R.layout.item_lv_experts_zhongchou);
@@ -119,6 +125,8 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
                     if (expertsZhongchouResultBean.isExecResult()){
                         data.addAll(expertsZhongchouResultBean.getExecDatas().getRecordList());
                         adapter.notifyDataSetChanged();
+                        initLoadMoreTagOp();
+                        currentpage++;
                     }
                 }
             }
@@ -127,6 +135,7 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
 
     @Override
     public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
         super.onDestroyView();
     }
 
@@ -152,7 +161,7 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
     private int lastItem;
     private int totalItem;
     private boolean isBottom = false;//是否到第20条数据了
-    private int curPageNum = 1;
+    private int curPageNum = 0;
 
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
@@ -192,20 +201,12 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
             isBottom = false;
             LogUtil.e("YJL", "isBottom222===" + isBottom);
         }
-        if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum - 1) * 20)) {
+        if (absListView.getLastVisiblePosition() >= 20 + (curPageNum  * 20)) {
             LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
-            if (++curPageNum <= 2) {
+            if (++curPageNum <= expertsZhongchouResultBean.getExecDatas().getTotalPage()) {
                 LogUtil.e("YJL", "curPageNum==" + curPageNum);
 //                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
-                if (kind == 0) {
-//                    initDates("all", formatPage(curPageNum), 2);
-                }
-                if (kind == 1) {
-//                    initDates("in", formatPage(curPageNum), 2);
-                }
-                if (kind == 2) {
-//                    initDates("out", formatPage(curPageNum), 2);
-                }
+                getExpertsZhongChouList(proId,""+curPageNum);
                 Toast.makeText(getContext(), "加载中…", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getContext(), "没有更多了", Toast.LENGTH_SHORT).show();
@@ -213,5 +214,48 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
             }
         }
     }
+    private int pagesize = 20;
+    private int currentpage = 0;
+    private boolean judgeCanLoadMore = true;
+    private int totalCount = 20;//设置本次加载的数据的总数
+    //给网络请求加缓冲小黄圈
+    @Subscribe
+    public void onEventMainThread(BotomBean bean) {
+        LogUtil.e("YJL","isBootom" + bean.isBootom());
+        if (bean.isBootom()) {
+//            mDialog.show();
+        } else {
+//            mDialog.dismiss();
+        }
+        //模拟进行数据的分页加载
+        if (judgeCanLoadMore && bean.isBootom()) {
+//            commentLv.startLoading();
+//            if (currentpage == 0) {
+//                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(getContext(), "正在加载中", Toast.LENGTH_SHORT).show();
+//                getZhongChouList(currentpage);
+//            }
+            if (currentpage >= expertsZhongchouResultBean.getExecDatas().getTotalPage()) {
+                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "正在加载中", Toast.LENGTH_SHORT).show();
+                getExpertsZhongChouList(proId,""+currentpage);
+            }
+        }
+        if (!judgeCanLoadMore&&bean.isBootom()){
+            Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+        }
 
+    }
+
+    private void initLoadMoreTagOp() {
+        if (data.size() == 0 || data.size() <= currentpage * pagesize) {//当前获取的数目大于等于总共的数目时表示数据加载完毕，禁止滑动
+            judgeCanLoadMore = false;
+//            commentLv.loadComplete();
+            Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        currentpage++;
+    }
 }

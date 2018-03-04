@@ -57,6 +57,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/zhongchou_detail_ll_experts"
                     android:layout_width="match_parent"
                     android:layout_height="77dp"
                     android:layout_marginLeft="12.5dp"
@@ -66,11 +67,11 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/zhongchou_detail_iv_head"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:background="@mipmap/ic_launcher" />
+                        android:layout_marginLeft="10dp"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -115,6 +116,8 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/zhongchou_detail_ll_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
@@ -494,7 +497,8 @@
             android:layout_marginRight="12dp"
             android:textColor="@color/white"
             android:background="@drawable/buttonstyle2"
-            android:text="项目未开始"
+            android:text=""
+            android:clickable="false"
             android:textSize="20sp" />
     </RelativeLayout>
 

@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.adapter.ViewPageAdapter;
@@ -28,6 +29,7 @@ import com.micai.fox.fragment.ZhouChouDetailPilutFragment;
 import com.micai.fox.fragment.ZhouChouDetailReportFragment;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.ZhongChouDetailResultBean;
+import com.micai.fox.util.DateUtil;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
@@ -41,6 +43,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.MediaType;
 
@@ -99,6 +102,12 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
     ProgressBar zhongchouDetailPrograss1;
     @Bind(R.id.zhongchou_detail_prograss2)
     ProgressBar zhongchouDetailPrograss2;
+    @Bind(R.id.zhongchou_detail_ll_rate)
+    LinearLayout zhongchouDetailLlRate;
+    @Bind(R.id.zhongchou_detail_ll_experts)
+    LinearLayout zhongchouDetailLlExperts;
+    @Bind(R.id.zhongchou_detail_iv_head)
+    CircleImageView head;
     private Fragment[] mFragments;
     private FragmentManager mManager;
     private FragmentTransaction transcation;
@@ -154,23 +163,57 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
             case "0"://未开始
                 zhongchouDetailTvState.setText("预热中");
                 zhongchouDetailPrograss1.setProgress(0);
+                btnZhongchouDetailPay.setText("尚未开始");
+                btnZhongchouDetailPay.setClickable(false);
+//                yyyy.mm.dd或已筹金额达￥XXX时结束众筹
+                zhongchouDetailTv1.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + zhongChouDetailResultBean.getExecDatas().getAmountDown() + "时结束众筹");
+                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getCashDate()) + "起开始兑付");
                 break;
             case "1":
                 //进行中
                 zhongchouDetailTvState.setText("众筹中");
+                btnZhongchouDetailPay.setText("去支付");
+                btnZhongchouDetailPay.setClickable(true);
+                zhongchouDetailTv1.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + zhongChouDetailResultBean.getExecDatas().getAmountDown() + "时结束众筹");
+                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getCashDate()) + "起开始兑付");
+                break;
+            case "2":
+            case "3":
+            case "4":
+                //已结束
+                zhongchouDetailTvState.setText("已结束");
+                btnZhongchouDetailPay.setText("项目已结束");
+                btnZhongchouDetailPay.setClickable(false);
+                zhongchouDetailTv1.setText("已于" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getEndDate()) + "结束众筹");
+                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getCashDate()) + "起已兑付");
                 break;
             case "5":
+            case "6":
                 //已披露
                 zhongchouDetailTvState.setText("已披露");
+                btnZhongchouDetailPay.setText("项目已结束");
+                btnZhongchouDetailPay.setClickable(false);
+                zhongchouDetailTv1.setText("已于" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getEndDate()) + "结束众筹");
+                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getCashDate()) + "起已兑付");
                 break;
             case "7":
                 //已兑付
                 zhongchouDetailTvState.setText("已兑付");
+                zhongchouDetailLlRate.setVisibility(View.VISIBLE);
+                zhongchouDetailTvRate.setText("" + zhongChouDetailResultBean.getExecDatas().getHitRate());
+                btnZhongchouDetailPay.setText("项目已结束");
+                btnZhongchouDetailPay.setClickable(false);
+                zhongchouDetailTv1.setText("已于" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getEndDate()) + "结束众筹");
+                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getCashDate()) + "起已兑付");
                 break;
             case "9"://流标
                 zhongchouDetailTvState.setText("已结束");
                 zhongchouDetailPrograss1.setVisibility(View.GONE);
                 zhongchouDetailPrograss2.setVisibility(View.VISIBLE);
+                btnZhongchouDetailPay.setText("项目已结束");
+                btnZhongchouDetailPay.setClickable(false);
+                zhongchouDetailTv1.setText("已于" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getEndDate()) + "结束众筹");
+                zhongchouDetailTv2.setText("项目未达成，支付金额原路退回。");
                 break;
         }
     }
@@ -208,9 +251,14 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
         currentFragment = targetFragment;
     }
 
-    @OnClick({R.id.btn_zhongchou_detail_pay, R.id.tv_back, R.id.zhongchou_detail_tv_xiangmu, R.id.zhongchou_detail_tv_report, R.id.zhongchou_detail_tv_pilu})
+    @OnClick({R.id.zhongchou_detail_ll_experts, R.id.btn_zhongchou_detail_pay, R.id.tv_back, R.id.zhongchou_detail_tv_xiangmu, R.id.zhongchou_detail_tv_report, R.id.zhongchou_detail_tv_pilu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.zhongchou_detail_ll_experts:
+                Intent intent = new Intent(this, ExpertsDetailActivity.class);
+                intent.putExtra("proId", zhongChouDetailResultBean.getExecDatas().getProId());
+                startActivity(intent);
+                break;
             case R.id.tv_back:
                 finish();
                 break;
@@ -233,8 +281,8 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                 switchFragment(mFragments[2]);
                 break;
             case R.id.btn_zhongchou_detail_pay:
-                Intent intent = new Intent(ZhongChouDetailActivity.this, BuyZhongChouActivity.class);
-                startActivity(intent);
+                Intent intents = new Intent(ZhongChouDetailActivity.this, BuyZhongChouActivity.class);
+                startActivity(intents);
                 break;
         }
     }
@@ -265,8 +313,8 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                     if (zhongChouDetailResultBean.isExecResult()) {
                         status = "" + zhongChouDetailResultBean.getExecDatas().getStatus();
                         if (null != status) {
-                            if (status.equals("5") || status.equals("7")) {
-                                //5：已披露  7：已兑付
+                            if (status.equals("5") ||status.equals("6")|| status.equals("7")) {
+                                //5/6：已披露  7：已兑付
                                 initControls(1);
                             } else {
                                 initControls(0);
@@ -274,14 +322,15 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                         }
                         if (null != status)
                             initViewData();
+                        Glide.with(ZhongChouDetailActivity.this).load(Url.WEB_BASE_IP + zhongChouDetailResultBean.getExecDatas().getProPhoto()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(head);
                         zhongchouDetailTvTalk.setText("" + zhongChouDetailResultBean.getExecDatas().getTitle());
                         zhongchouDetailTvName.setText("" + zhongChouDetailResultBean.getExecDatas().getProName());
                         zhongchouDetailTvIntroduce.setText("" + zhongChouDetailResultBean.getExecDatas().getProAuth());
                         zhongchouDetailTvMubiao.setText("" + zhongChouDetailResultBean.getExecDatas().getAmountDown());
                         zhongchouDetailTvHave.setText("" + zhongChouDetailResultBean.getExecDatas().getRealAmount());
                         zhongchouDetailTvPeople.setText("" + zhongChouDetailResultBean.getExecDatas().getSupNum());
-                        zhongchouDetailTv1.setText("" + zhongChouDetailResultBean.getExecDatas().getRemarks());
-                        zhongchouDetailTv2.setText("" + zhongChouDetailResultBean.getExecDatas().getRemarks());
+//                        zhongchouDetailTv1.setText("" + zhongChouDetailResultBean.getExecDatas().getRemarks());
+//                        zhongchouDetailTv2.setText("" + zhongChouDetailResultBean.getExecDatas().getRemarks());
                         zhongchouDetailTvRate.setText("" + zhongChouDetailResultBean.getExecDatas().getHitRate());
                         BigDecimal score = null;
                         try {

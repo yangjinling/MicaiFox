@@ -33,10 +33,12 @@ import com.micai.fox.adapter.MyHomeZhongChouAdapter;
 import com.micai.fox.adapter.MyRecycleHAdapter;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
+import com.micai.fox.parambean.BotomBean;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.BaseResultBean;
 import com.micai.fox.resultbean.ExpertsResultBean;
 import com.micai.fox.resultbean.HomeResultBean;
+import com.micai.fox.resultbean.HomeZhongChouResultBean;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.MyDividerItemDecoration;
@@ -45,6 +47,9 @@ import com.micai.fox.view.PageListScrollView;
 import com.youth.banner.Banner;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +105,8 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         }
     };
     private HomeResultBean.ExecDatasBean.CrowdfundingBean crowdfundingBeanList;
+    private List<HomeZhongChouResultBean.ExecDatasBean.RecordListBean> data = new ArrayList<>();
+    private HomeZhongChouResultBean homeZhongChouResultBean;
 
     @Nullable
     @Override
@@ -109,6 +116,11 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         rl.setVisibility(View.GONE);
         tvTitle.setText("迷彩狐");
         getHomeData();
+        footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv_home_zhongchou, null);
+        listviewHome.addFooterView(footer_view);
+        adapter = new MyHomeZhongChouAdapter(data, getContext(), R.layout.item_v_listview);
+        listviewHome.setAdapter(adapter);
+        getZhongChouList(currentpage);
 //        homeScroll.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 //            @Override
 //            public void onGlobalLayout() {
@@ -137,22 +149,21 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         return view;
     }
 
+    private MyHomeZhongChouAdapter adapter;
+
     private void initView() {
         initBanner();
         //横向recycle
         LinearLayoutManager mLayoutManagerH = new LinearLayoutManager(getContext());
         mLayoutManagerH.setOrientation(LinearLayoutManager.HORIZONTAL);
-        MyRecycleHAdapter mAdapterH = new MyRecycleHAdapter(homeResultBean.getExecDatas().getProfessor());
+        MyRecycleHAdapter mAdapterH = new MyRecycleHAdapter(homeResultBean.getExecDatas().getProfessor(), getContext());
         // 设置布局管理器
         recycleviewH.setLayoutManager(mLayoutManagerH);
         // 设置adapter
         recycleviewH.setAdapter(mAdapterH);
         int itemSpacing = 13;
         recycleviewH.addItemDecoration(new MyDividerItemDecoration(itemSpacing));
-        footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv_home_zhongchou, null);
-        listviewHome.addFooterView(footer_view);
-        MyHomeZhongChouAdapter adapter = new MyHomeZhongChouAdapter(homeResultBean.getExecDatas().getCrowdfunding().getRecordList(), getContext(), R.layout.item_v_listview);
-        listviewHome.setAdapter(adapter);
+
 //        ToolUtils.setListViewHeightBasedOnChildren(listviewHome);
         mAdapterH.setOnItemClickListener(new MyRecycleHAdapter.OnItemClickListener() {
             @Override
@@ -276,10 +287,6 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
                     homeResultBean = new Gson().fromJson(response, HomeResultBean.class);
                     if (homeResultBean.isExecResult()) {
                         initView();
-                        crowdfundingBeanList = homeResultBean.getExecDatas().getCrowdfunding();
-                        if (crowdfundingBeanList.getRecordList().size() < 20) {
-//                            currentpage++;
-                        }
                     } else {
                     }
                 }
@@ -297,17 +304,26 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         //模拟进行数据的分页加载
         if (judgeCanLoadMore && isBottom) {
 //            commentLv.startLoading();
-            if (currentpage == 0) {
+//            if (currentpage == 0) {
+//                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(getContext(), "正在加载中", Toast.LENGTH_SHORT).show();
+//                getZhongChouList(currentpage);
+//            }
+            if (currentpage >= homeZhongChouResultBean.getExecDatas().getTotalPage()) {
                 Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getContext(), "正在加载中", Toast.LENGTH_SHORT).show();
                 getZhongChouList(currentpage);
             }
         }
+        if (!judgeCanLoadMore&&isBottom){
+            Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initLoadMoreTagOp() {
-        if (totalCount == 0 || totalCount <= currentpage * pagesize) {//当前获取的数目大于等于总共的数目时表示数据加载完毕，禁止滑动
+        if (data.size() == 0 || data.size() <= currentpage * pagesize) {//当前获取的数目大于等于总共的数目时表示数据加载完毕，禁止滑动
             judgeCanLoadMore = false;
 //            commentLv.loadComplete();
             Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
@@ -316,6 +332,7 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
     }
 
     private void getZhongChouList(int pageNum) {
+        paramBean = new ParamBean();
         paramBean.setPageNum("" + pageNum);
         paramBean.setLength("" + 20);
         OkHttpUtils.postString()
@@ -332,7 +349,18 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
             public void onResponse(String response, int id) throws Exception {
                 Log.e("yjl", "home-众筹-data" + response);
                 if (Tools.isGoodJson(response)) {
-                    initLoadMoreTagOp();
+                    homeZhongChouResultBean = new Gson().fromJson(response, HomeZhongChouResultBean.class);
+                    if (homeZhongChouResultBean.isExecResult()) {
+//                    crowdfundingBeanList = homeResultBean.getExecDatas().getCrowdfunding();
+                        data.addAll(homeZhongChouResultBean.getExecDatas().getRecordList());
+//                    if (crowdfundingBeanList.getTotalPage()>0) {
+//                        currentpage++;
+//                    }
+                        adapter.notifyDataSetChanged();
+                        initLoadMoreTagOp();
+                        currentpage++;
+                    }
+
                 }
             }
         });

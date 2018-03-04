@@ -10,10 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.micai.fox.R;
 import com.micai.fox.activity.ExpertsDetailActivity;
 import com.micai.fox.activity.ZhongChouDetailActivity;
+import com.micai.fox.app.Url;
 import com.micai.fox.resultbean.HomeResultBean;
+import com.micai.fox.resultbean.HomeZhongChouResultBean;
+import com.micai.fox.util.DateUtil;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 
@@ -23,6 +27,7 @@ import java.util.IdentityHashMap;
 import java.util.List;
 
 import butterknife.Bind;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * 作者：杨金玲 on 2017/12/27 08:45
@@ -30,11 +35,11 @@ import butterknife.Bind;
  */
 
 /*首页众筹列表*/
-public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeResultBean.ExecDatasBean.CrowdfundingBean.RecordListBean> {
-    private List<HomeResultBean.ExecDatasBean.CrowdfundingBean.RecordListBean> mList;
+public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeZhongChouResultBean.ExecDatasBean.RecordListBean> {
+    private List<HomeZhongChouResultBean.ExecDatasBean.RecordListBean> mList;
     private Context mContext;
 
-    public MyHomeZhongChouAdapter(List<HomeResultBean.ExecDatasBean.CrowdfundingBean.RecordListBean> list, Context context, int resId) {
+    public MyHomeZhongChouAdapter(List<HomeZhongChouResultBean.ExecDatasBean.RecordListBean> list, Context context, int resId) {
         super(list, context, resId);
         mList = list;
         mContext = context;
@@ -43,7 +48,8 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeResultBean.ExecDat
     @Override
     public void setData(ViewHolder viewHolder, final int position) {
         //头像
-        ((ImageView) viewHolder.findViewById(R.id.home_zhong_iv_head)).setImageResource(R.mipmap.ic_launcher_round);
+        CircleImageView head = ((CircleImageView) viewHolder.findViewById(R.id.home_zhong_iv_head));
+        Glide.with(mContext).load(Url.WEB_BASE_IP + mList.get(position).getProPhoto()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(head);
         //姓名
         ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_name)).setText(mList.get(position).getProName());
         //专家简介
@@ -86,11 +92,13 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeResultBean.ExecDat
                 ll_people.setVisibility(View.GONE);
                 ll_have.setVisibility(View.GONE);
                 tv_status.setText("未开始");
+                String time = DateUtil.getDistanceTime(System.currentTimeMillis(),mList.get(position).getStartDate());
+                tv_time.setText("" + time);
             } else if ("9".equals(mList.get(position).getStatus())) {
                 //流标
                 pb_ing.setVisibility(View.GONE);
                 pb_liu.setVisibility(View.VISIBLE);
-                pb_liu.setProgress(50);
+                pb_liu.setProgress(score.intValue());
                 ll_start.setVisibility(View.GONE);
                 ll_people.setVisibility(View.VISIBLE);
                 tv_people.setText("" + mList.get(position).getSupNum());

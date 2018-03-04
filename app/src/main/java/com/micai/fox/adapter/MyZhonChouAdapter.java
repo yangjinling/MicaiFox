@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.micai.fox.R;
 import com.micai.fox.activity.PayActivity;
 import com.micai.fox.resultbean.MyZhongChouResultBean;
+import com.micai.fox.util.DateUtil;
 
 import java.util.List;
 
@@ -82,7 +83,8 @@ public class MyZhonChouAdapter extends MyBaseAdapter<MyZhongChouResultBean.ExecD
                 break;
         }
         ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_talk)).setText(mLists.get(position).getTitle());
-        ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_date)).setText(""+mLists.get(position).getCreateDate());
+      String date=  DateUtil.getDateToString(mLists.get(position).getCreateDate());
+        ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_date)).setText(""+date);
         ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_money)).setText("￥"+mLists.get(position).getPurchaseAmount());
     }
 }

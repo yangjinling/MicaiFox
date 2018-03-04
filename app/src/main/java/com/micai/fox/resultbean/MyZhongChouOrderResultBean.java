@@ -8,7 +8,7 @@ public class MyZhongChouOrderResultBean {
 
     /**
      * execResult : true
-     * execDatas : {"orderId":"9c1531f782774f42afdd1693cd3c807b1519401914198","orderStatus":1,"purchaseAmount":200,"createDate":1519401914000,"payDate":"","cashDate":"","payType":"","cashAmount":"","title":"众筹标题","crowdfundingStatus":4,"endDate":1519488000000,"amountDown":300}
+     * execDatas : {"orderId":"23459453a7514a53b68eff75ff381cec1519401930691","orderStatus":1,"purchaseAmount":100,"createDate":1519401931000,"payDate":"","cashDate":"","payType":"","cashAmount":"","title":"众筹标题","crowdfundingStatus":4,"endDate":1519488000000,"amountDown":300}
      * count : 0
      * num : 0
      */
@@ -52,10 +52,10 @@ public class MyZhongChouOrderResultBean {
 
     public static class ExecDatasBean {
         /**
-         * orderId : 9c1531f782774f42afdd1693cd3c807b1519401914198
+         * orderId : 23459453a7514a53b68eff75ff381cec1519401930691
          * orderStatus : 1
-         * purchaseAmount : 200.0
-         * createDate : 1519401914000
+         * purchaseAmount : 100.0
+         * createDate : 1519401931000
          * payDate :
          * cashDate :
          * payType :

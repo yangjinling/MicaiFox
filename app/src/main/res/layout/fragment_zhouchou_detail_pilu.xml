@@ -292,8 +292,9 @@
             android:layout_marginLeft="23dp"
             android:layout_marginTop="14dp"
             android:drawableLeft="@mipmap/special"
-            android:drawablePadding="9dp"
-            android:text="文本文本"
+            android:drawablePadding="5dp"
+            android:paddingRight="28dp"
+            android:text="以上仅为截止目前已开奖的投注统计，最终以兑付日数据为准；兑付盈利金额为投注盈利金额的XX%"
             android:textColor="@color/white"
             android:textSize="14sp" />
 

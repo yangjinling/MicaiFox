@@ -1,16 +1,22 @@
 package com.micai.fox.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.micai.fox.R;
+import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
 import com.micai.fox.resultbean.HomeResultBean;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * 作者：杨金玲 on 2017/12/27 08:45
@@ -24,9 +30,11 @@ public class MyRecycleHAdapter extends RecyclerView.Adapter<MyRecycleHAdapter.Vi
      * 事件回调监听
      */
     private MyRecycleHAdapter.OnItemClickListener onItemClickListener;
+    private Context mContext;
 
-    public MyRecycleHAdapter(List<HomeResultBean.ExecDatasBean.ProfessorBean> data) {
+    public MyRecycleHAdapter(List<HomeResultBean.ExecDatasBean.ProfessorBean> data,Context context) {
         this.mData = data;
+        this.mContext=context;
     }
 
     public void updateData(List<HomeResultBean.ExecDatasBean.ProfessorBean> data) {
@@ -56,6 +64,7 @@ public class MyRecycleHAdapter extends RecyclerView.Adapter<MyRecycleHAdapter.Vi
     public void onBindViewHolder(final ViewHolder holder, int position) {
         // 绑定数据
         holder.mTv.setText(mData.get(position).getProName());
+        Glide.with(mContext).load(Url.WEB_BASE_IP+ mData.get(position).getProPhoto()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(holder.head);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -85,11 +94,13 @@ public class MyRecycleHAdapter extends RecyclerView.Adapter<MyRecycleHAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        CircleImageView head;
         TextView mTv;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mTv = (TextView) itemView.findViewById(R.id.home_experts_name);
+            head = ((CircleImageView) itemView.findViewById(R.id.home_experts_head));
         }
 
 

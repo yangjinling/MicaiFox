@@ -10,7 +10,7 @@
 
     <include layout="@layout/layout_title"></include>
 
-    <ScrollView
+    <com.micai.fox.view.PageListScrollView
         android:id="@+id/experts_detail_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,7 +37,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/experts_detail_iv_head"
                         android:layout_width="65dp"
                         android:layout_height="65dp"
@@ -329,7 +329,7 @@
         </LinearLayout>
 
 
-    </ScrollView>
+    </com.micai.fox.view.PageListScrollView>
 
     <LinearLayout
         android:id="@+id/xuantingquyu"

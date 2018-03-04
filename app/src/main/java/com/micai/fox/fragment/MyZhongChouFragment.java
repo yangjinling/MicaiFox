@@ -63,22 +63,22 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
             case 0:
                 adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
 //                tv.setText("全部");
-                getMyZhongChouList(2, 0);
+                getMyZhongChouList(2, ""+curPageNum);
                 break;
             case 1:
 //                tv.setText("待支付");
                 adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
-                getMyZhongChouList(0, 0);
+                getMyZhongChouList(0, ""+curPageNum);
                 break;
             case 2:
 //                tv.setText("已支付");
                 adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
-                getMyZhongChouList(1, 0);
+                getMyZhongChouList(1, ""+curPageNum);
                 break;
             case 3:
 //                tv.setText("已兑换");
                 adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
-                getMyZhongChouList(7, 0);
+                getMyZhongChouList(7, ""+curPageNum);
                 break;
         }
 //        data = getData();
@@ -102,7 +102,7 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
 
-    private void getMyZhongChouList(int status, int curPageNum) {
+    private void getMyZhongChouList(int status, String curPageNum) {
         Log.e("YJL", "status==" + status);
         paramBean = new ParamBean();
         paramBean.setLength("20");
@@ -144,17 +144,6 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
         super.onDestroyView();
     }
 
-    private ArrayList<String> getData() {
-        ArrayList<String> data = new ArrayList<>();
-        String temp = " item";
-        for (int i = 0; i < 50; i++) {
-            data.add(i + temp);
-        }
-
-        return data;
-    }
-
-
     public interface OnSwipeIsValid {
         public void setSwipeEnabledTrue();
 
@@ -177,7 +166,7 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
     private int lastItem;
     private int totalItem;
     private boolean isBottom = false;//是否到第20条数据了
-    private int curPageNum = 1;
+    private int curPageNum = 0;
 
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
@@ -217,20 +206,12 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
             isBottom = false;
             LogUtil.e("YJL", "isBottom222===" + isBottom);
         }
-        if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum - 1) * 20)) {
+        if (absListView.getLastVisiblePosition() >= 20 + (curPageNum  * 20)) {
             LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
-            if (++curPageNum <= 2) {
+            if (++curPageNum <= myZhongChouResultBean.getExecDatas().getTotalPage()) {
                 LogUtil.e("YJL", "curPageNum==" + curPageNum);
 //                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
-                if (kind == 0) {
-//                    initDates("all", formatPage(curPageNum), 2);
-                }
-                if (kind == 1) {
-//                    initDates("in", formatPage(curPageNum), 2);
-                }
-                if (kind == 2) {
-//                    initDates("out", formatPage(curPageNum), 2);
-                }
+                getMyZhongChouList(kind,""+curPageNum);
                 Toast.makeText(getContext(), "加载中…", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getContext(), "没有更多了", Toast.LENGTH_SHORT).show();

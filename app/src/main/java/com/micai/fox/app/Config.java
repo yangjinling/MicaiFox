@@ -13,6 +13,8 @@ public class Config {
     private String photoUrl;
     private String sessionId;
     private String phone;
+    private String clientId;
+    private boolean noti=false;
     private Config() {
     }
 
@@ -68,5 +70,21 @@ public class Config {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public boolean isNoti() {
+        return noti;
+    }
+
+    public void setNoti(boolean noti) {
+        this.noti = noti;
     }
 }

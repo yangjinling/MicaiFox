@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.igexin.sdk.PushManager;
 import com.micai.fox.R;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
@@ -187,6 +188,7 @@ public class LoginActivity extends BaseActivity {
         OkHttpUtils.post().url(Url.WEB_LOGIN)
                 .addParams("username", username)
                 .addParams("password", password)
+//                .addParams("clientID ",Config.getInstance().getClientId())
                 .addParams("mobileLogin", "true").build()
                 .execute(new StringCallback() {
 
@@ -209,6 +211,11 @@ public class LoginActivity extends BaseActivity {
                                 PrefUtils.setString(Config.getInstance().getmContext(), "SESSIONID", loginResultBean.getExecDatas().getSessionid());
                                 PrefUtils.setString(Config.getInstance().getmContext(), "PHONE", loginResultBean.getExecDatas().getUser().getPhone());
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                Config.getInstance().setClientId(loginResultBean.getExecDatas().getId());
+//                                PushManager.getInstance().bindAlias(getApplicationContext(),loginResultBean.getExecDatas().getId());
+                                PushManager.getInstance().bindAlias(getApplicationContext(), "user123");
+                                Config.getInstance().setClientId("user123");
+
                                 startActivity(intent);
                                 ExitAppUtils.getInstance().finishActivity(IndexActivity.class);
                                 ExitAppUtils.getInstance().finishActivity(LoginActivity.class);

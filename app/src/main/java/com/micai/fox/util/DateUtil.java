@@ -44,7 +44,7 @@ public class DateUtil {
          */
         ALL_TIME {
             public String getValue() {
-                return "yyyy.MM.dd HH:mm:ss";
+                return "yyyy.MM.dd HH:mm";
             }
         },
         ALL_TIMES {
@@ -234,7 +234,7 @@ public class DateUtil {
      * @return 返回值为： "周日", "周一", "周二", "周三", "周四", "周五", "周六"
      */
     public static String getWeekOfDate(Date date) {
-        String[] weekDays = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
+        String[] weekDays = {"周日" ,"周一", "周二", "周三", "周四", "周五", "周六"};
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int week = calendar.get(Calendar.DAY_OF_WEEK) - 1;
@@ -335,5 +335,48 @@ public class DateUtil {
                 return -1;
         }
     }
+    /**
+     * 时间戳转换成字符窜
+     * @param milSecond
+     * @param
+     * @return
+     */
+    public static String getDateToString(long milSecond) {
+        Date date = new Date(milSecond);
+        SimpleDateFormat format = new SimpleDateFormat(DatePattern.ALL_TIME.getValue(), Locale.CHINA);
+        return format.format(date);
+    }
+    /*
+    *计算time2减去time1的差值 差值只设置 几天 几个小时 或 几分钟
+    * 根据差值返回多长之间前或多长时间后
+    * */
+    public static String getDistanceTime(long time1, long time2) {
+        long day = 0;
+        long hour = 0;
+        long min = 0;
+        long sec = 0;
+        long diff;
 
+        if (time1 < time2) {
+            diff = time2 - time1;
+        } else {
+            diff = time1 - time2;
+        }
+        day = diff / (24 * 60 * 60 * 1000);
+        hour = (diff / (60 * 60 * 1000) - day * 24);
+        min = ((diff / (60 * 1000)) - day * 24 * 60 - hour * 60);
+        sec = (diff / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+        if (day != 0) return (day *24+hour) + ":"+min + ":" + sec ;
+        if (hour != 0) return hour + ":"+ min + ":" + sec ;
+        if (min != 0) return min + ":" + sec;
+        if (sec != 0) return sec+""  ;
+        return "00";
+    }
+
+    //ONLY_DAYS
+    public static String getDateToStrings(long milSecond) {
+        Date date = new Date(milSecond);
+        SimpleDateFormat format = new SimpleDateFormat(DatePattern.ONLY_DAYS.getValue(), Locale.CHINA);
+        return format.format(date);
+    }
 }

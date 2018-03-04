@@ -1,6 +1,7 @@
 package com.micai.fox.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.TextView;
 
 import com.micai.fox.R;
@@ -23,10 +24,32 @@ public class MyExpertsReportAdapter extends MyBaseAdapter<ExpertsReportResultBea
 
     @Override
     public void setData(ViewHolder viewHolder, int position) {
-        ((TextView) viewHolder.findViewById(R.id.experts_report_title)).setText(""+mList.get(position).getTitle());
-        ((TextView) viewHolder.findViewById(R.id.experts_report_tv_title)).setText("【"+mList.get(position).getGameName()+"】");
-        ((TextView) viewHolder.findViewById(R.id.experts_report_tv_country1)).setText(""+mList.get(position).getHomeTeamName());
-        ((TextView) viewHolder.findViewById(R.id.experts_report_tv_country2)).setText(""+mList.get(position).getGuestTeamName());
+        ((TextView) viewHolder.findViewById(R.id.experts_report_title)).setText("" + mList.get(position).getTitle());
+        ((TextView) viewHolder.findViewById(R.id.experts_report_tv_title)).setText("【" + mList.get(position).getGameName() + "】");
+        ((TextView) viewHolder.findViewById(R.id.experts_report_tv_country1)).setText("" + mList.get(position).getHomeTeamName());
+        ((TextView) viewHolder.findViewById(R.id.experts_report_tv_country2)).setText("" + mList.get(position).getGuestTeamName());
+        TextView tv_date = ((TextView) viewHolder.findViewById(R.id.experts_report_tv_date));
+        if (null != mList.get(position).getIssue()) {
+            String date = mList.get(position).getIssue();
+            if (date.substring(4).startsWith("0")) {
+                tv_date.setText("" + date.substring(5, 6) + "月" + date.substring(6) + "日");
+            } else {
+                tv_date.setText("" + date.substring(4, 6) + "月" + date.substring(6) + "日");
+            }
+        }
+        TextView tv_score= ((TextView) viewHolder.findViewById(R.id.experts_report_tv_score));
+        if (null==mList.get(position).getGuestScore()){
+            tv_score.setText("VS");
+        }else {
+            tv_score.setText("" + mList.get(position).getHomeScore() + ":" + mList.get(position).getGuestScore());
+        }
+        TextView tv_rate = ((TextView) viewHolder.findViewById(R.id.experts_report_tv_changci));
+        if (0 == mList.get(position).getTotalMatchNum()) {
+            tv_rate.setVisibility(View.GONE);
+        } else {
+            String result = mList.get(position).getTotalMatchNum() + "中" + mList.get(position).getWinMatchNum();
+            tv_rate.setText(result);
+        }
 
     }
 }
