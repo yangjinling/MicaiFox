@@ -61,7 +61,7 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
         tvTitle.setText("我的报告");
         headView = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.headview_lv, null);
         lvMyreport.addHeaderView(headView);
-        getReportList(""+curPageNum);
+        getReportList("0");
         adapter = new MyReportAdapter(data, this, R.layout.item_lv_myreport);
         lvMyreport.setAdapter(adapter);
         lvMyreport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -157,7 +157,7 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
             isBottom = false;
             LogUtil.e("YJL", "isBottom222===" + isBottom);
         }
-        if (absListView.getLastVisiblePosition() >= 20 + (curPageNum * 20)) {
+        if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum-1) * 20)) {
             LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
             if (++curPageNum <= myReportResultBean.getExecDatas().getTotalPage()) {
                 LogUtil.e("YJL", "curPageNum==" + curPageNum);

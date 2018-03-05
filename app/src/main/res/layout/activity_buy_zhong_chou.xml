@@ -27,28 +27,30 @@
             android:paddingBottom="10dp">
 
             <RelativeLayout
-                android:layout_gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
 
                 <TextView
+                    android:layout_width="53dp"
+                    android:layout_height="21dp"
                     android:layout_marginLeft="18dp"
                     android:layout_marginTop="12dp"
-                    android:layout_width="53dp"
                     android:background="@drawable/redbgtstyle"
-                    android:text="众筹中"
                     android:gravity="center"
-                    android:textSize="13sp"
+                    android:text="众筹中"
                     android:textColor="@color/white"
-                    android:layout_height="21dp" />
+                    android:textSize="13sp" />
+
                 <TextView
-                    android:paddingLeft="17dp"
-                    android:layout_marginRight="15dp"
+                    android:id="@+id/buy_tv_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
                     android:layout_marginTop="12dp"
-                    android:maxLines="2"
                     android:lineSpacingExtra="5dp"
+                    android:maxLines="2"
+                    android:paddingLeft="17dp"
                     android:text="                你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
@@ -56,6 +58,7 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/buy_tv1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dp"
@@ -68,6 +71,7 @@
                 android:textSize="13sp" />
 
             <TextView
+                android:id="@+id/buy_tv2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dp"
@@ -82,14 +86,14 @@
 
 
         <LinearLayout
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="12.5dp"
             android:layout_marginRight="12.5dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/edittextstyle"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -103,11 +107,13 @@
                 android:textSize="15sp" />
 
             <ImageView
+                android:id="@+id/buy_iv_minus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/plus" />
+                android:src="@mipmap/minus" />
 
             <EditText
+                android:id="@+id/buy_et_money"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -121,10 +127,11 @@
                 android:textColor="@color/red" />
 
             <ImageView
+                android:id="@+id/buy_iv_plus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
-                android:src="@mipmap/minus" />
+                android:src="@mipmap/plus" />
         </LinearLayout>
 
         <TextView
@@ -162,6 +169,7 @@
         android:orientation="horizontal">
 
         <CheckBox
+            android:id="@+id/buy_ck"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:background="@drawable/ck_regist"
@@ -199,6 +207,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/buy_pay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/buttonstyle"

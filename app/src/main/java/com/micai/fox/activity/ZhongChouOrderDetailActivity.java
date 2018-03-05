@@ -14,6 +14,7 @@ import com.micai.fox.R;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.parambean.ZhongChouBean;
 import com.micai.fox.resultbean.MyZhongChouOrderResultBean;
 import com.micai.fox.util.DateUtil;
 import com.micai.fox.util.LogUtil;
@@ -223,7 +224,9 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.btn_zhongchou_detail_order_pay:
+                ZhongChouBean bean = new ZhongChouBean(myZhongChouOrderResultBean.getExecDatas().getOrderId(), myZhongChouOrderResultBean.getExecDatas().getTitle(), "" + myZhongChouOrderResultBean.getExecDatas().getPurchaseAmount());
                 Intent intent = new Intent(ZhongChouOrderDetailActivity.this, PayActivity.class);
+                intent.putExtra("BEAN", bean);
                 startActivity(intent);
                 break;
         }

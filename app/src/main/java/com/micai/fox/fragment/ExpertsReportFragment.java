@@ -119,7 +119,7 @@ public class ExpertsReportFragment extends Fragment implements AbsListView.OnScr
                         data.addAll(expertsReportResultBean.getExecDatas().getRecordList());
                         reportAdapter.notifyDataSetChanged();
                         initLoadMoreTagOp();
-                        currentpage++;
+//                        currentpage++;
                     }
                 }
             }
@@ -208,7 +208,7 @@ public class ExpertsReportFragment extends Fragment implements AbsListView.OnScr
         }
     }
     private int pagesize = 20;
-    private int currentpage = 0;
+    private int currentpage = 1;
     private boolean judgeCanLoadMore = true;
     private int totalCount = 20;//设置本次加载的数据的总数
     //给网络请求加缓冲小黄圈
@@ -229,7 +229,7 @@ public class ExpertsReportFragment extends Fragment implements AbsListView.OnScr
 //                Toast.makeText(getContext(), "正在加载中", Toast.LENGTH_SHORT).show();
 //                getZhongChouList(currentpage);
 //            }
-            if (currentpage >= expertsReportResultBean.getExecDatas().getTotalPage()) {
+            if (++currentpage >= expertsReportResultBean.getExecDatas().getTotalPage()) {
                 Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getContext(), "正在加载中", Toast.LENGTH_SHORT).show();
@@ -243,7 +243,7 @@ public class ExpertsReportFragment extends Fragment implements AbsListView.OnScr
     }
 
     private void initLoadMoreTagOp() {
-        if (data.size() == 0 || data.size() <= currentpage * pagesize) {//当前获取的数目大于等于总共的数目时表示数据加载完毕，禁止滑动
+        if (data.size() == 0 || data.size() <= 20+((currentpage-1 )* 20)) {//当前获取的数目大于等于总共的数目时表示数据加载完毕，禁止滑动
             judgeCanLoadMore = false;
 //            commentLv.loadComplete();
             Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();

@@ -701,4 +701,27 @@ public class Tools {
         BigDecimal b2 = new BigDecimal(Double.valueOf(value2));
         return b1.divide(b2, scale,BigDecimal.ROUND_HALF_UP);
     }
+
+    /*放弃编辑的弹框*/
+    public static void showPayPopWindow(final Context activity, final View view,String content) {
+        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(LAYOUT_INFLATER_SERVICE);
+        View contentview = inflater.inflate(R.layout.popwindow_waitpay, null);
+        final PopupWindow popupWindowConfirm = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+//        要让点击PopupWindow之外的地方PopupWindow消失你需要调用
+        popupWindowConfirm.setBackgroundDrawable(new ColorDrawable(0x55000000));
+        popupWindowConfirm.setFocusable(true);
+        popupWindowConfirm.setOutsideTouchable(false);
+        popupWindowConfirm.showAtLocation(view, Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+        Button pop_cancle = ((Button) contentview.findViewById(R.id.waitpay_pop_btn_cancle));
+        ((TextView) contentview.findViewById(R.id.pop_tv_content)).setText(""+content);
+
+        pop_cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindowConfirm.dismiss();
+            }
+        });
+    }
+
 }

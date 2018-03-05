@@ -40,13 +40,14 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/pay_tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="17dp"
             android:layout_marginRight="17dp"
             android:layout_marginTop="15dp"
-            android:lines="2"
-            android:text="比你好啊后地撒谎第四季第哦释迦佛i速度集散地哦系啊覅哦就是都i放假哦"
+            android:maxLines="2"
+            android:text=""
             android:textColor="#23253C"
             android:textSize="15sp" />
 
@@ -75,6 +76,7 @@
                 android:text="需支付金额" />
 
             <TextView
+                android:id="@+id/pay_tv_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
@@ -111,7 +113,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="17.5dp"
             android:layout_weight="1"
-            android:text="支付宝"
+            android:text="银行卡"
             android:textColor="#23253C"
             android:textSize="15sp" />
 

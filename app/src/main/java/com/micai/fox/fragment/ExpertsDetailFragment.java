@@ -67,15 +67,15 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
         switch (kind) {
             case 0:
 //                tv.setText("全部");
-                getExpertsList(kind, "" + curPageNum);
+                getExpertsList(kind, "0" );
                 break;
             case 1:
 //                tv.setText("盈利榜");
-                getExpertsList(kind, "" + curPageNum);
+                getExpertsList(kind, "0");
                 break;
             case 2:
 //                tv.setText("命中榜");
-                getExpertsList(kind, "" + curPageNum);
+                getExpertsList(kind, "0" );
                 break;
         }
 
@@ -156,7 +156,7 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
     private int lastItem;
     private int totalItem;
     private boolean isBottom = false;//是否到第20条数据了
-    private int curPageNum = 0;
+    private int curPageNum = 1;
 
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
@@ -196,7 +196,7 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
             isBottom = false;
             LogUtil.e("YJL", "isBottom222===" + isBottom);
         }
-        if (absListView.getLastVisiblePosition() >= 20 + (curPageNum * 20)) {
+        if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum-1) * 20)) {
             LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
             if (++curPageNum <= expertsResultBean.getExecDatas().getTotalPage()) {
                 LogUtil.e("YJL", "curPageNum==" + curPageNum);

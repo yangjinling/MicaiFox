@@ -106,7 +106,7 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                     addImageSpan(context, rang_ke);
                     break;
             }
-            if (selections.contains(bean.getResult())) {
+            if (selections.contains(bean.getResultr())) {
                 rang_zhong.setVisibility(View.VISIBLE);
             } else {
                 rang_weizhong.setVisibility(View.VISIBLE);

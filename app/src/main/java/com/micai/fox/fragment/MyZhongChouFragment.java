@@ -63,22 +63,22 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
             case 0:
                 adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
 //                tv.setText("全部");
-                getMyZhongChouList(2, ""+curPageNum);
+                getMyZhongChouList(2, "0");
                 break;
             case 1:
 //                tv.setText("待支付");
                 adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
-                getMyZhongChouList(0, ""+curPageNum);
+                getMyZhongChouList(0, "0");
                 break;
             case 2:
 //                tv.setText("已支付");
                 adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
-                getMyZhongChouList(1, ""+curPageNum);
+                getMyZhongChouList(1, "0");
                 break;
             case 3:
 //                tv.setText("已兑换");
                 adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
-                getMyZhongChouList(7, ""+curPageNum);
+                getMyZhongChouList(7, "0");
                 break;
         }
 //        data = getData();
@@ -166,7 +166,7 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
     private int lastItem;
     private int totalItem;
     private boolean isBottom = false;//是否到第20条数据了
-    private int curPageNum = 0;
+    private int curPageNum = 1;
 
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
@@ -206,7 +206,7 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
             isBottom = false;
             LogUtil.e("YJL", "isBottom222===" + isBottom);
         }
-        if (absListView.getLastVisiblePosition() >= 20 + (curPageNum  * 20)) {
+        if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum-1)  * 20)) {
             LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
             if (++curPageNum <= myZhongChouResultBean.getExecDatas().getTotalPage()) {
                 LogUtil.e("YJL", "curPageNum==" + curPageNum);

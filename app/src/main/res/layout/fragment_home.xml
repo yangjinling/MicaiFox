@@ -125,10 +125,9 @@
             <com.micai.fox.view.MyListView
                 android:id="@+id/listview_home"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_weight="1"
                 android:listSelector="@android:color/transparent"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="10dp"

@@ -53,8 +53,9 @@ public class ParamBean implements Serializable {
         String proId;
         String reportId;
         String orderId;
-        String  status;
+        String status;
         String photo;
+        String purchaseAmount;
 
         public String getPhone() {
             return phone;
@@ -206,6 +207,14 @@ public class ParamBean implements Serializable {
 
         public void setPhoto(String photo) {
             this.photo = photo;
+        }
+
+        public String getPurchaseAmount() {
+            return purchaseAmount;
+        }
+
+        public void setPurchaseAmount(String purchaseAmount) {
+            this.purchaseAmount = purchaseAmount;
         }
     }
 }

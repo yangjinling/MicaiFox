@@ -1,10 +1,12 @@
 package com.micai.fox.resultbean;
 
+import java.io.Serializable;
+
 /**
  * Created by louqiang on 2018/2/24.
  */
 
-public class ZhongChouDetailResultBean {
+public class ZhongChouDetailResultBean implements Serializable{
 
     /**
      * execResult : true
@@ -50,7 +52,7 @@ public class ZhongChouDetailResultBean {
         this.num = num;
     }
 
-    public static class ExecDatasBean {
+    public static class ExecDatasBean implements Serializable{
         /**
          * crowdfundingId : ZC100001
          * status : 4

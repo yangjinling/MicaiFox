@@ -282,6 +282,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                 break;
             case R.id.btn_zhongchou_detail_pay:
                 Intent intents = new Intent(ZhongChouDetailActivity.this, BuyZhongChouActivity.class);
+                intents.putExtra("BEAN",zhongChouDetailResultBean);
                 startActivity(intents);
                 break;
         }
