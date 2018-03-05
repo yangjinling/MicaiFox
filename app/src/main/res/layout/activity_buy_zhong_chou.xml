@@ -135,6 +135,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_per"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
@@ -142,7 +143,7 @@
             android:drawableLeft="@mipmap/special"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
-            android:text="购买金额需为xx元整数倍，100元起"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="15sp" />
 

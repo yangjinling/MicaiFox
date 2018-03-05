@@ -87,7 +87,9 @@ public class ZhongChouDetailResultBean implements Serializable{
         private String proAuth;
         private String proId;
         private float hitRate;
-
+        private String oneAmountDown;
+        private String oneAmountUp;
+        private String incrementQuota;
         public String getCrowdfundingId() {
             return crowdfundingId;
         }
@@ -214,6 +216,30 @@ public class ZhongChouDetailResultBean implements Serializable{
 
         public void setHitRate(float hitRate) {
             this.hitRate = hitRate;
+        }
+
+        public String getOneAmountDown() {
+            return oneAmountDown;
+        }
+
+        public void setOneAmountDown(String oneAmountDown) {
+            this.oneAmountDown = oneAmountDown;
+        }
+
+        public String getOneAmountUp() {
+            return oneAmountUp;
+        }
+
+        public void setOneAmountUp(String oneAmountUp) {
+            this.oneAmountUp = oneAmountUp;
+        }
+
+        public String getIncrementQuota() {
+            return incrementQuota;
+        }
+
+        public void setIncrementQuota(String incrementQuota) {
+            this.incrementQuota = incrementQuota;
         }
     }
 }

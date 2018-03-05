@@ -172,7 +172,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
             case "1":
                 //进行中
                 zhongchouDetailTvState.setText("众筹中");
-                btnZhongchouDetailPay.setText("去支付");
+                btnZhongchouDetailPay.setText("去支持（￥）" + zhongChouDetailResultBean.getExecDatas().getOneAmountDown() + "起");
                 btnZhongchouDetailPay.setClickable(true);
                 zhongchouDetailTv1.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + zhongChouDetailResultBean.getExecDatas().getAmountDown() + "时结束众筹");
                 zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getCashDate()) + "起开始兑付");
@@ -282,7 +282,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                 break;
             case R.id.btn_zhongchou_detail_pay:
                 Intent intents = new Intent(ZhongChouDetailActivity.this, BuyZhongChouActivity.class);
-                intents.putExtra("BEAN",zhongChouDetailResultBean);
+                intents.putExtra("BEAN", zhongChouDetailResultBean);
                 startActivity(intents);
                 break;
         }
@@ -314,7 +314,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                     if (zhongChouDetailResultBean.isExecResult()) {
                         status = "" + zhongChouDetailResultBean.getExecDatas().getStatus();
                         if (null != status) {
-                            if (status.equals("5") ||status.equals("6")|| status.equals("7")) {
+                            if (status.equals("5") || status.equals("6") || status.equals("7")) {
                                 //5/6：已披露  7：已兑付
                                 initControls(1);
                             } else {
