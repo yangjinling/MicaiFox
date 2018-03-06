@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.micai.fox.R;
 import com.micai.fox.activity.PayActivity;
+import com.micai.fox.parambean.ZhongChouBean;
 import com.micai.fox.resultbean.MyZhongChouResultBean;
 import com.micai.fox.util.DateUtil;
 
@@ -44,7 +45,8 @@ public class MyZhonChouAdapter extends MyBaseAdapter<MyZhongChouResultBean.ExecD
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(context, PayActivity.class);
-                        intent.putExtra("orderId", mLists.get(position).getOrderId());
+                        ZhongChouBean bean = new ZhongChouBean(mLists.get(position).getOrderId(), mLists.get(position).getTitle(), "" + mLists.get(position).getPurchaseAmount());
+                        intent.putExtra("BEAN", bean);
                         context.startActivity(intent);
 //                Toast.makeText(context, "去支付", Toast.LENGTH_SHORT).show();
                     }

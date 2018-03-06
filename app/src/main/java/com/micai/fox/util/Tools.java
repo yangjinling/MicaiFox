@@ -715,7 +715,6 @@ public class Tools {
         popupWindowConfirm.showAtLocation(view, Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
         Button pop_cancle = ((Button) contentview.findViewById(R.id.waitpay_pop_btn_cancle));
         ((TextView) contentview.findViewById(R.id.pop_tv_content)).setText(""+content);
-
         pop_cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

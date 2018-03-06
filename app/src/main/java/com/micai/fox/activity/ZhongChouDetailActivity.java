@@ -172,7 +172,8 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
             case "1":
                 //进行中
                 zhongchouDetailTvState.setText("众筹中");
-                btnZhongchouDetailPay.setText("去支持（￥）" + zhongChouDetailResultBean.getExecDatas().getOneAmountDown() + "起");
+                btnZhongchouDetailPay.setText("去支持(￥" + zhongChouDetailResultBean.getExecDatas().getOneAmountDown() + ")起");
+                btnZhongchouDetailPay.setBackgroundResource(R.drawable.buttonstyle);
                 btnZhongchouDetailPay.setClickable(true);
                 zhongchouDetailTv1.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + zhongChouDetailResultBean.getExecDatas().getAmountDown() + "时结束众筹");
                 zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getCashDate()) + "起开始兑付");
