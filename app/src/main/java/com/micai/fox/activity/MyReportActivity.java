@@ -140,7 +140,7 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
         }
     }
     private boolean isBottom = false;//是否到第20条数据了
-    private int curPageNum = 0;
+    private int curPageNum = 1;
     private int lastItem;
     private int totalItem;
     @Override

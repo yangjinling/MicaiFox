@@ -40,7 +40,7 @@ public class PayActivity extends AppCompatActivity {
         tvTitle.setText("支付");
         bean = ((ZhongChouBean) getIntent().getSerializableExtra("BEAN"));
         payTvTitle.setText("" + bean.getTitle());
-        payTvMoney.setText("" + bean.getMoney());
+        payTvMoney.setText("￥" + bean.getMoney());
         payBtnPay.setText("支付￥" + bean.getMoney());
     }
 

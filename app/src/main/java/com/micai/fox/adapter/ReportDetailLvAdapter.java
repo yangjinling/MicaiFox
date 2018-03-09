@@ -50,7 +50,7 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
         TextView pop_ping = ((TextView) viewHolder.findViewById(R.id.pop_ping));
         TextView pop_ke = ((TextView) viewHolder.findViewById(R.id.pop_ke));
         LinearLayout popRang = ((LinearLayout) viewHolder.findViewById(R.id.report_detail_ll_rang));
-        String selections = bean.getSelections().replace(",", "");
+        String selections = bean.getSelections().replace(",","");
         CornerLabelView pop_zhong = ((CornerLabelView) viewHolder.findViewById(R.id.pop_zhong));
         CornerLabelView pop_weizhong = ((CornerLabelView) viewHolder.findViewById(R.id.pop_weizhong));
         CornerLabelView rang_zhong = ((CornerLabelView) viewHolder.findViewById(R.id.rang_zhong));
@@ -65,102 +65,258 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
         TextView rang_ping = ((TextView) viewHolder.findViewById(R.id.rang_ping));
         TextView rang_ke = ((TextView) viewHolder.findViewById(R.id.rang_ke));
         TextView rang_num = ((TextView) viewHolder.findViewById(R.id.rang_num));
+        String[] split = bean.getSelections().split(",");
         if (selections.contains("R")) {
-            popRang.setVisibility(View.VISIBLE);
-            LogUtil.e("YJL", "日期"+ bean.getIssue().substring(0, 4)+bean.getIssue().substring(4, 6)+bean.getIssue().substring(6)+ new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)), Integer.parseInt(bean.getIssue().substring(6)))/*+date*/);
-            Date date = new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6))-1, Integer.parseInt(bean.getIssue().substring(6)));
-            String data = DateUtil.getWeekOfDate(date);
-            rang_changci.setText("" + data + bean.getSeq());
-            rang_title.setText("[" + bean.getGameName()+"]");
-            rang_time.setText("" + bean.getMatchTime().substring(0,4)+"年"+bean.getMatchTime().substring(5,7)+"月"+bean.getMatchTime().substring(8,10)+"日 "+bean.getMatchTime().substring(11,bean.getMatchTime().lastIndexOf(":")));
-            rang_homename.setText("" + bean.getHomeTeamName());
-            rang_guestname.setText("" + bean.getGuestTeamName());
-            rang_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
-            rang_homewin.setText("主胜" + bean.getSp().split(";")[0].split(":")[1]);
-            rang_ping.setText("平" + bean.getSp().split(";")[1].split(":")[1]);
-            rang_ke.setText("客胜" + bean.getSp().split(";")[2].split(":")[1]);
-            rang_num.setText("" + bean.getHandicap());
-            if (selections.contains("3")) {
-                //主胜
-                LogUtil.e("YJL", "主胜" + selections);
-                rang_homewin.setBackgroundResource(R.drawable.redbgtstyle);
-            }
-            if (selections.contains("1")) {
-                //平
-                LogUtil.e("YJL", "平");
-                rang_ping.setBackgroundResource(R.drawable.redbgtstyle);
-            }
-            if (selections.contains("0")) {
-                //客胜
-                LogUtil.e("YJL", "客胜");
-                rang_ke.setBackgroundResource(R.drawable.redbgtstyle);
-            }
-            switch (bean.getResult()) {
-                case "3":
-                    addImageSpan(context, rang_homewin);
-                    break;
-                case "1":
-                    addImageSpan(context, rang_ping);
-                    break;
-                case "0":
-                    addImageSpan(context, rang_ke);
-                    break;
-            }
-            if (selections.contains(bean.getResultr())) {
-                rang_zhong.setVisibility(View.VISIBLE);
+            //让球
+            popLl.setVisibility(View.VISIBLE);
+            if (selections.contains("3") || selections.contains("0") || selections.contains("1")) {
+                //让球+胜负平
+                popRang.setVisibility(View.VISIBLE);
+                LogUtil.e("YJL", "让球+胜负平");
+                LogUtil.e("YJL", "日期" + Integer.parseInt(bean.getIssue().substring(0, 4)) + (Integer.parseInt(bean.getIssue().substring(4, 6)) - 1) + bean.getIssue().substring(6) + new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)), Integer.parseInt(bean.getIssue().substring(6)))/*+date*/);
+                Date date = new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)) - 1, Integer.parseInt(bean.getIssue().substring(6)));
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    date = format.parse(bean.getIssue());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                String data = DateUtil.getWeekOfDate(date);
+                pop_changci.setText("" + data + bean.getSeq());
+                pop_title.setText("[" + bean.getGameName() + "]");
+                pop_time.setText("" + bean.getMatchTime().substring(0, 4) + "年" + bean.getMatchTime().substring(5, 7) + "月" + bean.getMatchTime().substring(8, 10) + "日 " + bean.getMatchTime().substring(11, bean.getMatchTime().lastIndexOf(":")));
+                pop_homename.setText("" + bean.getHomeTeamName());
+                pop_guestname.setText("" + bean.getGuestTeamName());
+                pop_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+                pop_homewin.setText("主胜" + bean.getSp().split(";")[0].split(":")[1]);
+                pop_ping.setText("平" + bean.getSp().split(";")[1].split(":")[1]);
+                pop_ke.setText("客胜" + bean.getSp().split(";")[2].split(":")[1]);
+                if (null != bean.getResult()) {
+                    switch (bean.getResult()) {
+                        case "3":
+                            addImageSpan(context, pop_homewin);
+                            break;
+                        case "1":
+                            addImageSpan(context, pop_ping);
+                            break;
+                        case "0":
+                            addImageSpan(context, pop_ke);
+                            break;
+                    }
+                }
+                LogUtil.e("YJL", "selection" + bean.getSelections() + "result" + bean.getResult());
+                if (null != selections && null != bean.getResult()) {
+                    if (selections.contains(bean.getResult())) {
+                        LogUtil.e("YJL", "中了");
+                        pop_weizhong.setVisibility(View.GONE);
+                        pop_zhong.setVisibility(View.VISIBLE);
+                    } else {
+                        LogUtil.e("YJL", "没中");
+                        pop_weizhong.setVisibility(View.VISIBLE);
+                        pop_zhong.setVisibility(View.GONE);
+                    }
+                }
+                LogUtil.e("YJL", "日期" + bean.getIssue().substring(0, 4) + bean.getIssue().substring(4, 6) + bean.getIssue().substring(6) + new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)), Integer.parseInt(bean.getIssue().substring(6)))/*+date*/);
+                rang_changci.setText("" + data + bean.getSeq());
+                rang_title.setText("[" + bean.getGameName() + "]");
+                rang_time.setText("" + bean.getMatchTime().substring(0, 4) + "年" + bean.getMatchTime().substring(5, 7) + "月" + bean.getMatchTime().substring(8, 10) + "日 " + bean.getMatchTime().substring(11, bean.getMatchTime().lastIndexOf(":")));
+                rang_homename.setText("" + bean.getHomeTeamName());
+                rang_guestname.setText("" + bean.getGuestTeamName());
+                rang_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+                rang_homewin.setText("主胜" + bean.getSpr().split(";")[0].split(":")[1]);
+                rang_ping.setText("平" + bean.getSpr().split(";")[1].split(":")[1]);
+                rang_ke.setText("客胜" + bean.getSpr().split(";")[2].split(":")[1]);
+                rang_num.setText("" + bean.getHandicap());
+                if (null != selections) {
+                    if (selections.contains("3")&&!selections.contains("3R")) {
+                        //主胜
+                        LogUtil.e("YJL", "主胜" + selections);
+                        pop_homewin.setBackgroundResource(R.drawable.redbgtstyle);
+                    }
+                    if (selections.contains("1")&&!selections.contains("1R")) {
+                        //平
+                        LogUtil.e("YJL", "平");
+                        pop_ping.setBackgroundResource(R.drawable.redbgtstyle);
+                    }
+                    if (selections.contains("0")&&!selections.contains("0R")) {
+                        //客胜
+                        LogUtil.e("YJL", "客胜");
+                        pop_ke.setBackgroundResource(R.drawable.redbgtstyle);
+                    }
+                    if (selections.contains("3R")) {
+                        //主胜
+                        LogUtil.e("YJL", "rang_主胜" + selections);
+                        rang_homewin.setBackgroundResource(R.drawable.redbgtstyle);
+                    }
+                    if (selections.contains("1R")) {
+                        //平
+                        LogUtil.e("YJL", "rang_平");
+                        rang_ping.setBackgroundResource(R.drawable.redbgtstyle);
+                    }
+                    if (selections.contains("0R")) {
+                        //客胜
+                        LogUtil.e("YJL", "rang_客胜");
+                        rang_ke.setBackgroundResource(R.drawable.redbgtstyle);
+                    }
+
+                }
+                if (null != bean.getResultr()) {
+                    switch (bean.getResultr()) {
+                        case "3R":
+                            addImageSpan(context, rang_homewin);
+                            break;
+                        case "1R":
+                            addImageSpan(context, rang_ping);
+                            break;
+                        case "0R":
+                            addImageSpan(context, rang_ke);
+                            break;
+                    }
+                }
+                if (null != selections && null != bean.getResultr()) {
+                    if (selections.contains(bean.getResultr())) {
+                        rang_weizhong.setVisibility(View.GONE);
+                        rang_zhong.setVisibility(View.VISIBLE);
+                    } else {
+                        rang_zhong.setVisibility(View.GONE);
+                        rang_weizhong.setVisibility(View.VISIBLE);
+                    }
+                }
             } else {
-                rang_weizhong.setVisibility(View.VISIBLE);
-            }
-        } else {
+                //只有让球
+                LogUtil.e("YJL", "让球");
+                LogUtil.e("YJL", "胜负平");
+                popLl.setVisibility(View.VISIBLE);
+                popRang.setVisibility(View.GONE);
 //            String date = DateUtil.getWeekOfDate(DateUtil.stringToDate(bean.getIssue(), DateUtil.DatePattern.ONLY_DAYS));
-            LogUtil.e("YJL", "日期"+ Integer.parseInt(bean.getIssue().substring(0, 4))+(Integer.parseInt(bean.getIssue().substring(4, 6))-1)+bean.getIssue().substring(6)+ new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)), Integer.parseInt(bean.getIssue().substring(6)))/*+date*/);
-            Date date = new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6))-1, Integer.parseInt(bean.getIssue().substring(6)));
+                LogUtil.e("YJL", "日期" + Integer.parseInt(bean.getIssue().substring(0, 4)) + (Integer.parseInt(bean.getIssue().substring(4, 6)) - 1) + bean.getIssue().substring(6) + new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)), Integer.parseInt(bean.getIssue().substring(6)))/*+date*/);
+                Date date = new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)) - 1, Integer.parseInt(bean.getIssue().substring(6)));
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    date = format.parse(bean.getIssue());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                String data = DateUtil.getWeekOfDate(date);
+                pop_changci.setText("" + data + bean.getSeq());
+                pop_title.setText("[" + bean.getGameName() + "]");
+                pop_time.setText("" + bean.getMatchTime().substring(0, 4) + "年" + bean.getMatchTime().substring(5, 7) + "月" + bean.getMatchTime().substring(8, 10) + "日 " + bean.getMatchTime().substring(11, bean.getMatchTime().lastIndexOf(":")));
+                pop_homename.setText("" + bean.getHomeTeamName());
+                pop_guestname.setText("" + bean.getGuestTeamName());
+                pop_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+                pop_homewin.setText("主胜" + bean.getSpr().split(";")[0].split(":")[1]);
+                pop_ping.setText("平" + bean.getSpr().split(";")[1].split(":")[1]);
+                pop_ke.setText("客胜" + bean.getSpr().split(";")[2].split(":")[1]);
+                if (null != selections) {
+                    if (selections.contains("3R")) {
+                        //主胜
+                        LogUtil.e("YJL", "主胜" + selections);
+                        pop_homewin.setBackgroundResource(R.drawable.redbgtstyle);
+                    }
+                    if (selections.contains("1R")) {
+                        //平
+                        LogUtil.e("YJL", "平");
+                        pop_ping.setBackgroundResource(R.drawable.redbgtstyle);
+                    }
+                    if (selections.contains("0R")) {
+                        //客胜
+                        LogUtil.e("YJL", "客胜");
+                        pop_ke.setBackgroundResource(R.drawable.redbgtstyle);
+                    }
+                }
+                if (null != bean.getResultr()) {
+                    switch (bean.getResult()) {
+                        case "3R":
+                            addImageSpan(context, pop_homewin);
+                            break;
+                        case "1R":
+                            addImageSpan(context, pop_ping);
+                            break;
+                        case "0R":
+                            addImageSpan(context, pop_ke);
+                            break;
+                    }
+                }
+                LogUtil.e("YJL", "selection" + bean.getSelections() + "result" + bean.getResult());
+                if (null != selections && null != bean.getResult()) {
+                    if (selections.contains(bean.getResultr())) {
+                        LogUtil.e("YJL", "中了");
+                        pop_weizhong.setVisibility(View.GONE);
+                        pop_zhong.setVisibility(View.VISIBLE);
+                    } else {
+                        LogUtil.e("YJL", "没中");
+                        pop_weizhong.setVisibility(View.VISIBLE);
+                        pop_zhong.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+
+        } else {
+            //胜负平
+            LogUtil.e("YJL", "胜负平");
+            popLl.setVisibility(View.VISIBLE);
+            popRang.setVisibility(View.GONE);
+//            String date = DateUtil.getWeekOfDate(DateUtil.stringToDate(bean.getIssue(), DateUtil.DatePattern.ONLY_DAYS));
+            LogUtil.e("YJL", "日期" + Integer.parseInt(bean.getIssue().substring(0, 4)) + (Integer.parseInt(bean.getIssue().substring(4, 6)) - 1) + bean.getIssue().substring(6) + new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)), Integer.parseInt(bean.getIssue().substring(6)))/*+date*/);
+            Date date = new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)) - 1, Integer.parseInt(bean.getIssue().substring(6)));
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             try {
-                 date  =  format.parse(bean.getIssue());
+                date = format.parse(bean.getIssue());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
             String data = DateUtil.getWeekOfDate(date);
             pop_changci.setText("" + data + bean.getSeq());
-            pop_title.setText("[" + bean.getGameName()+"]");
-            pop_time.setText("" + bean.getMatchTime().substring(0,4)+"年"+bean.getMatchTime().substring(5,7)+"月"+bean.getMatchTime().substring(8,10)+"日 "+bean.getMatchTime().substring(11,bean.getMatchTime().lastIndexOf(":")));
+            pop_title.setText("[" + bean.getGameName() + "]");
+            pop_time.setText("" + bean.getMatchTime().substring(0, 4) + "年" + bean.getMatchTime().substring(5, 7) + "月" + bean.getMatchTime().substring(8, 10) + "日 " + bean.getMatchTime().substring(11, bean.getMatchTime().lastIndexOf(":")));
             pop_homename.setText("" + bean.getHomeTeamName());
             pop_guestname.setText("" + bean.getGuestTeamName());
             pop_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
             pop_homewin.setText("主胜" + bean.getSp().split(";")[0].split(":")[1]);
             pop_ping.setText("平" + bean.getSp().split(";")[1].split(":")[1]);
             pop_ke.setText("客胜" + bean.getSp().split(";")[2].split(":")[1]);
-            if (selections.contains("3")) {
-                //主胜
-                LogUtil.e("YJL", "主胜" + selections);
-                pop_homewin.setBackgroundResource(R.drawable.redbgtstyle);
+            if (null != selections) {
+                if (selections.contains("3")) {
+                    //主胜
+                    LogUtil.e("YJL", "主胜" + selections);
+                    pop_homewin.setBackgroundResource(R.drawable.redbgtstyle);
+                }
+                if (selections.contains("1")) {
+                    //平
+                    LogUtil.e("YJL", "平");
+                    pop_ping.setBackgroundResource(R.drawable.redbgtstyle);
+                }
+                if (selections.contains("0")) {
+                    //客胜
+                    LogUtil.e("YJL", "客胜");
+                    pop_ke.setBackgroundResource(R.drawable.redbgtstyle);
+                }
             }
-            if (selections.contains("1")) {
-                //平
-                LogUtil.e("YJL", "平");
-                pop_ping.setBackgroundResource(R.drawable.redbgtstyle);
+            if (null != bean.getResult()) {
+                switch (bean.getResult()) {
+                    case "3":
+                        addImageSpan(context, pop_homewin);
+                        break;
+                    case "1":
+                        addImageSpan(context, pop_ping);
+                        break;
+                    case "0":
+                        addImageSpan(context, pop_ke);
+                        break;
+                }
             }
-            if (selections.contains("0")) {
-                //客胜
-                LogUtil.e("YJL", "客胜");
-                pop_ke.setBackgroundResource(R.drawable.redbgtstyle);
-            }
-            switch (bean.getResult()) {
-                case "3":
-                    addImageSpan(context, pop_homewin);
-                    break;
-                case "1":
-                    addImageSpan(context, pop_ping);
-                    break;
-                case "0":
-                    addImageSpan(context, pop_ke);
-                    break;
-            }
-            if (selections.contains(bean.getResult())) {
-                pop_zhong.setVisibility(View.VISIBLE);
-            } else {
-                pop_weizhong.setVisibility(View.VISIBLE);
+            LogUtil.e("YJL", "selection" + bean.getSelections() + "result" + bean.getResult());
+            if (null != selections && null != bean.getResult()) {
+                if (selections.contains(bean.getResult())) {
+                    LogUtil.e("YJL", "中了");
+                    pop_weizhong.setVisibility(View.GONE);
+                    pop_zhong.setVisibility(View.VISIBLE);
+                } else {
+                    LogUtil.e("YJL", "没中");
+                    pop_weizhong.setVisibility(View.VISIBLE);
+                    pop_zhong.setVisibility(View.GONE);
+                }
             }
         }
     }
