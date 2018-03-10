@@ -20,7 +20,7 @@ public class AgreementActivity extends AppCompatActivity {
     @Bind(R.id.tv_title)
     TextView tvTitle;
     @Bind(R.id.agree_web)
-    WebView agreeWeb;
+    TextView agreeWeb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -115,6 +115,7 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         ButterKnife.bind(this, view);
         rl.setVisibility(View.GONE);
         tvTitle.setText("迷彩狐");
+        listviewHome.setFocusable(false);
         getHomeData();
         footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv_home_zhongchou, null);
         listviewHome.addFooterView(footer_view);
@@ -179,7 +180,6 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
                 Toast.makeText(getContext(), "long click " + position + " item", Toast.LENGTH_SHORT).show();
             }
         });
-        mHandler.post(scrollViewRunable);
     }
 
     private void initBanner() {
@@ -214,7 +214,7 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         //自定义图片加载框架
         List<String> images = new ArrayList<String>();
         for (HomeResultBean.ExecDatasBean.BannerBean bannerBean : bannerBeanList) {
-            images.add(bannerBean.getImgPath());
+            images.add(Url.WEB_BASE_IP + bannerBean.getImgPath());
         }
         banner.setImages(images, new Banner.OnLoadImageListener() {
             @Override
@@ -317,16 +317,16 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
                 getZhongChouList(currentpage);
             }
         }
-        if (!judgeCanLoadMore&&isBottom){
+        if (!judgeCanLoadMore && isBottom) {
             Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void initLoadMoreTagOp() {
-        if (data.size() == 0 || data.size() <= 20+((currentpage-1) * 20)) {//当前获取的数目大于等于总共的数目时表示数据加载完毕，禁止滑动
+        if (data.size() == 0 || data.size() <= 20 + ((currentpage - 1) * 20)) {//当前获取的数目大于等于总共的数目时表示数据加载完毕，禁止滑动
             judgeCanLoadMore = false;
 //            commentLv.loadComplete();
-            Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
             return;
         }
     }
@@ -351,12 +351,14 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
                 if (Tools.isGoodJson(response)) {
                     homeZhongChouResultBean = new Gson().fromJson(response, HomeZhongChouResultBean.class);
                     if (homeZhongChouResultBean.isExecResult()) {
+                        data.clear();
 //                    crowdfundingBeanList = homeResultBean.getExecDatas().getCrowdfunding();
                         data.addAll(homeZhongChouResultBean.getExecDatas().getRecordList());
 //                    if (crowdfundingBeanList.getTotalPage()>0) {
 //                        currentpage++;
 //                    }
                         adapter.notifyDataSetChanged();
+//                        mHandler.post(scrollViewRunable);
                         initLoadMoreTagOp();
 //                        currentpage++;
                     }

@@ -81,6 +81,7 @@ public class BuyZhongChouActivity extends AppCompatActivity {
         tvTitle.setText("购买众筹");
         detailResultBean = ((ZhongChouDetailResultBean) getIntent().getSerializableExtra("BEAN"));
         if (null != detailResultBean) {
+            buyTvTitle.setText("                "+detailResultBean.getExecDatas().getTitle());
             buyTv1.setText("" + DateUtil.getDateToStrings(detailResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + detailResultBean.getExecDatas().getAmountDown() + "时结束众筹");
             buyTv2.setText("" + DateUtil.getDateToStrings(detailResultBean.getExecDatas().getCashDate()) + "起开始兑付");
             tv_per.setText("购买金额需为" + detailResultBean.getExecDatas().getIncrementQuota() + "元整数倍，100元起");

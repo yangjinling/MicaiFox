@@ -24,12 +24,12 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_marginTop="9dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="12.5dp"
                     android:layout_marginRight="12.5dp"
+                    android:layout_marginTop="9dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -39,7 +39,7 @@
                         android:layout_height="23dp"
                         android:background="@drawable/edittextstyle"
                         android:gravity="center"
-                        android:text="预热中"
+                        android:text=""
                         android:textColor="@color/red"
                         android:textSize="14sp" />
 
@@ -50,8 +50,8 @@
                         android:layout_marginLeft="12dp"
                         android:gravity="center_vertical"
                         android:maxLines="2"
-                        android:textColor="@color/white"
                         android:text=""
+                        android:textColor="@color/white"
                         android:textSize="15sp" />
                 </LinearLayout>
 
@@ -69,9 +69,10 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/zhongchou_detail_iv_head"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"/>
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_marginLeft="10dp"
+                         />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -84,7 +85,7 @@
                             android:id="@+id/zhongchou_detail_tv_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="专家甲"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -97,10 +98,10 @@
 
                             <TextView
                                 android:id="@+id/zhongchou_detail_tv_introduce"
-                                android:textColor="@color/black"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="专家一句话简介"
+                                android:text=""
+                                android:textColor="@color/black"
                                 android:textSize="15sp" />
 
                             <TextView
@@ -116,13 +117,13 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
                         android:id="@+id/zhongchou_detail_ll_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
                         android:gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -162,9 +163,9 @@
                     android:layout_marginLeft="12.5dp"
                     android:layout_marginRight="12.5dp"
                     android:layout_marginTop="12.5dp"
-                   android:paddingBottom="20dp"
                     android:background="@drawable/edittextstyle"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="20dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -238,7 +239,7 @@
                                     android:id="@+id/zhongchou_detail_tv_mubiao"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="20000"
+                                    android:text=""
                                     android:textColor="@android:color/black"
                                     android:textSize="24sp" />
                             </LinearLayout>
@@ -276,7 +277,7 @@
                                     android:id="@+id/zhongchou_detail_tv_have"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="20000"
+                                    android:text=""
                                     android:textColor="@android:color/black"
                                     android:textSize="24sp" />
                             </LinearLayout>
@@ -312,7 +313,7 @@
                                     android:id="@+id/zhongchou_detail_tv_people"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="20000"
+                                    android:text=""
                                     android:textColor="@android:color/black"
                                     android:textSize="25sp" />
 
@@ -365,7 +366,7 @@
                         android:drawableLeft="@mipmap/group"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:text="你好" />
+                        android:text="" />
 
                     <TextView
                         android:id="@+id/zhongchou_detail_tv2"
@@ -376,7 +377,7 @@
                         android:drawableLeft="@mipmap/payment"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:text="你好" />
+                        android:text="" />
                 </LinearLayout>
 
 
@@ -465,12 +466,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
                     app:tabBackground="@android:color/transparent"
                     app:tabIndicatorColor="@android:color/transparent"
                     app:tabIndicatorHeight="3dp"
                     app:tabSelectedTextColor="#ffffff"
                     app:tabTextAppearance="@style/CustomeTextSize"
-                    android:layout_marginTop="10dp"
                     app:tabTextColor="#ffffff"></android.support.design.widget.TabLayout>
 
                 <com.micai.fox.view.CustomViewPager
@@ -495,10 +496,10 @@
             android:layout_marginBottom="18dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:textColor="@color/white"
             android:background="@drawable/buttonstyle2"
-            android:text=""
             android:clickable="false"
+            android:text=""
+            android:textColor="@color/white"
             android:textSize="20sp" />
     </RelativeLayout>
 

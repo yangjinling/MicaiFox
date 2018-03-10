@@ -8,12 +8,11 @@
     android:orientation="horizontal"
     android:gravity="center_vertical">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/experts_iv_head"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:src="@mipmap/ic_launcher_round" />
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginLeft="10dp"/>
 
     <LinearLayout
         android:layout_width="0dp"

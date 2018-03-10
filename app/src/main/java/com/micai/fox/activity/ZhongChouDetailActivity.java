@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -156,6 +157,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
             }
         });
         zhongchouDetailViewpager.resetHeight(0);
+        zhongchouDetailViewpager.setOffscreenPageLimit(3);
     }
 
     private void initViewData() {
@@ -333,6 +335,9 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                         zhongchouDetailTvPeople.setText("" + zhongChouDetailResultBean.getExecDatas().getSupNum());
 //                        zhongchouDetailTv1.setText("" + zhongChouDetailResultBean.getExecDatas().getRemarks());
 //                        zhongchouDetailTv2.setText("" + zhongChouDetailResultBean.getExecDatas().getRemarks());
+                        if (null != zhongChouDetailResultBean.getExecDatas().getRemarks() && !TextUtils.isEmpty(zhongChouDetailResultBean.getExecDatas().getRemarks())) {
+                            Config.getInstance().setContent("" + zhongChouDetailResultBean.getExecDatas().getRemarks());
+                        }
                         zhongchouDetailTvRate.setText("" + zhongChouDetailResultBean.getExecDatas().getHitRate());
                         BigDecimal score = null;
                         try {

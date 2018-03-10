@@ -143,9 +143,6 @@ public class MineFragmnet extends Fragment {
             photo = (File) savedInstanceState.getSerializable("PHOTOFILE");
             Log.e("YJL", "personactivity恢复");
         }
-        if (null != Config.getInstance().getPhotoUrl() || !TextUtils.isEmpty(Config.getInstance().getPhotoUrl())) {
-            Glide.with(this).load(Url.WEB_BASE_IP + Config.getInstance().getPhotoUrl()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(ivMineHead);
-        }
         getMineInfo();
         return view;
     }
@@ -535,6 +532,9 @@ public class MineFragmnet extends Fragment {
                         tvMineAmount.setText(mineResultBean.getExecDatas().getProfitTotal());
                         if (null != mineResultBean.getExecDatas().getPhoto())
                             Config.getInstance().setPhotoUrl(mineResultBean.getExecDatas().getPhoto());
+                        if (null != Config.getInstance().getPhotoUrl() || !TextUtils.isEmpty(Config.getInstance().getPhotoUrl())) {
+                            Glide.with(getContext()).load(Url.WEB_BASE_IP + Config.getInstance().getPhotoUrl()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(ivMineHead);
+                        }
                     }
                 }
             }

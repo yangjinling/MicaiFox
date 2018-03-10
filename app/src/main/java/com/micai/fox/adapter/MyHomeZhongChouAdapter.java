@@ -92,7 +92,7 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeZhongChouResultBea
                 ll_people.setVisibility(View.GONE);
                 ll_have.setVisibility(View.GONE);
                 tv_status.setText("未开始");
-                String time = DateUtil.getDistanceTime(System.currentTimeMillis(),mList.get(position).getStartDate());
+                String time = DateUtil.getDistanceTime(mList.get(position).getStartDate(),System.currentTimeMillis());
                 tv_time.setText("" + time);
             } else if ("9".equals(mList.get(position).getStatus())) {
                 //流标

@@ -155,12 +155,10 @@ public class LoginActivity extends BaseActivity {
             case R.id.login_tv_regist:
                 intent = new Intent(LoginActivity.this, RegistActivity.class);
                 startActivity(intent);
-                ExitAppUtils.getInstance().addActivity(this);
                 break;
             case R.id.login_tv_forgetpass:
                 intent = new Intent(LoginActivity.this, ResetPassActivity.class);
                 startActivity(intent);
-                ExitAppUtils.getInstance().addActivity(this);
                 break;
         }
     }
@@ -211,10 +209,10 @@ public class LoginActivity extends BaseActivity {
                                 PrefUtils.setString(Config.getInstance().getmContext(), "SESSIONID", loginResultBean.getExecDatas().getSessionid());
                                 PrefUtils.setString(Config.getInstance().getmContext(), "PHONE", loginResultBean.getExecDatas().getUser().getPhone());
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                                Config.getInstance().setClientId(loginResultBean.getExecDatas().getId());
-//                                PushManager.getInstance().bindAlias(getApplicationContext(),loginResultBean.getExecDatas().getId());
-                                PushManager.getInstance().bindAlias(getApplicationContext(), "user123");
-                                Config.getInstance().setClientId("user123");
+                                Config.getInstance().setClientId(loginResultBean.getExecDatas().getId());
+                                PushManager.getInstance().bindAlias(getApplicationContext(),loginResultBean.getExecDatas().getId());
+//                                PushManager.getInstance().bindAlias(getApplicationContext(), "user123");
+//                                Config.getInstance().setClientId("user123");
 
                                 startActivity(intent);
                                 ExitAppUtils.getInstance().finishActivity(IndexActivity.class);

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.micai.fox.R;
 import com.micai.fox.resultbean.MyReportResultBean;
+import com.micai.fox.util.DateUtil;
 
 import java.util.List;
 
@@ -38,22 +39,23 @@ public class MyReportAdapter extends MyBaseAdapter<MyReportResultBean.ExecDatasB
             tv_rate.setText(result);
         }
         TextView tv_score = ((TextView) viewHolder.findViewById(R.id.tv_score_lv_report));
-        if (null==list.get(position).getGuestScore()){
+        if (null == list.get(position).getGuestScore()) {
             tv_score.setText("VS");
-        }else {
+        } else {
             tv_score.setText("" + list.get(position).getHomeScore() + ":" + list.get(position).getGuestScore());
         }
 
-        MyReportResultBean.ExecDatasBean.RecordListBean  recordListBean = list.get(position);
+        MyReportResultBean.ExecDatasBean.RecordListBean recordListBean = list.get(position);
         TextView tv_date = ((TextView) viewHolder.findViewById(R.id.tv_date_lv_report));
-        if (null!=recordListBean.getIssue()){
-            String date=recordListBean.getIssue();
-            if (date.substring(4).startsWith("0")){
-                tv_date.setText(""+date.substring(5,6)+"月"+date.substring(6)+"日");
-            }else {
-                tv_date.setText(""+date.substring(4,6)+"月"+date.substring(6)+"日");
+        if (null != recordListBean.getIssue()) {
+            String date = recordListBean.getIssue();
+            if (date.substring(4).startsWith("0")) {
+                tv_date.setText("" + date.substring(5, 6) + "月" + date.substring(6) + "日");
+            } else {
+                tv_date.setText("" + date.substring(4, 6) + "月" + date.substring(6) + "日");
             }
         }
-
+        TextView tv_state = ((TextView) viewHolder.findViewById(R.id.tv_state_lv_report));
+        tv_state.setText("" + DateUtil.getDistanceTimes(list.get(position).getCreateDate(), System.currentTimeMillis()) + "发布");
     }
 }

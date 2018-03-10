@@ -119,7 +119,7 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 //待支付
                 btnZhongchouDetailOrderPay.setVisibility(View.VISIBLE);
                 zhongchouDetailTv1.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + myZhongChouOrderResultBean.getExecDatas().getAmountDown() + "时结束众筹");
-//                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起开始兑付");
+                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起开始兑付");
 
                 break;
             case 1:
@@ -130,7 +130,7 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 orderdetailLlPay.setVisibility(View.VISIBLE);
                 orderdetailLlBank.setVisibility(View.VISIBLE);
                 zhongchouDetailTv1.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + myZhongChouOrderResultBean.getExecDatas().getAmountDown() + "时结束众筹");
-//                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起开始兑付");
+                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起开始兑付");
 
                 break;
             case 3:
@@ -146,7 +146,7 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 btnZhongchouDetailOrderPay.setVisibility(View.GONE);
                 detailZhongchouTvOrderstate.setText("已过期");
                 zhongchouDetailTv1.setText("已于" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getEndDate()) + "结束众筹");
-//                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起已兑付");
+                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起已兑付");
 
                 break;
             case 7:
@@ -160,7 +160,7 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 orderdetailLlWay.setVisibility(View.VISIBLE);
                 orderdetailLlBank.setVisibility(View.VISIBLE);
                 zhongchouDetailTv1.setText("已于" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getEndDate()) + "结束众筹");
-//                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起已兑付");
+                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起已兑付");
 
                 break;
         }

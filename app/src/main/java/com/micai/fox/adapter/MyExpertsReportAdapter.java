@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.micai.fox.R;
 import com.micai.fox.resultbean.ExpertsReportResultBean;
+import com.micai.fox.util.DateUtil;
 
 import java.util.List;
 
@@ -37,10 +38,10 @@ public class MyExpertsReportAdapter extends MyBaseAdapter<ExpertsReportResultBea
                 tv_date.setText("" + date.substring(4, 6) + "月" + date.substring(6) + "日");
             }
         }
-        TextView tv_score= ((TextView) viewHolder.findViewById(R.id.experts_report_tv_score));
-        if (null==mList.get(position).getGuestScore()){
+        TextView tv_score = ((TextView) viewHolder.findViewById(R.id.experts_report_tv_score));
+        if (null == mList.get(position).getGuestScore()) {
             tv_score.setText("VS");
-        }else {
+        } else {
             tv_score.setText("" + mList.get(position).getHomeScore() + ":" + mList.get(position).getGuestScore());
         }
         TextView tv_rate = ((TextView) viewHolder.findViewById(R.id.experts_report_tv_changci));
@@ -50,6 +51,8 @@ public class MyExpertsReportAdapter extends MyBaseAdapter<ExpertsReportResultBea
             String result = mList.get(position).getTotalMatchNum() + "中" + mList.get(position).getWinMatchNum();
             tv_rate.setText(result);
         }
+        TextView tv_state = ((TextView) viewHolder.findViewById(R.id.experts_report_tv_state));
+        tv_state.setText("" + DateUtil.getDistanceTimes(mList.get(position).getCreateDate(), System.currentTimeMillis()) + "发布");
 
     }
 }

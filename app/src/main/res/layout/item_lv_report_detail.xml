@@ -121,6 +121,7 @@
                 android:paddingRight="5dp">
 
                 <TextView
+                    android:id="@+id/pop_rang"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"

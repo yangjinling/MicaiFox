@@ -76,78 +76,99 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
             Date date = new Date(Integer.parseInt(matchBean.getIssue().substring(0, 4)), Integer.parseInt(matchBean.getIssue().substring(4, 6)) - 1, Integer.parseInt(matchBean.getIssue().substring(6)));
             String data = DateUtil.getWeekOfDate(date);
             changci.setText("" + data + matchBean.getSeq());
+            String[] split = matchBean.getSelections().split(",");
+            boolean all = false;
             if (matchBean.getSelections().contains("R")) {
-                if (matchBean.getSelections().contains("3") || matchBean.getSelections().contains("1") || matchBean.getSelections().contains("0")) {
+                for (String s : split) {
+                    if (s.equals("3") || s.equals("1") || s.equals("0")) {
+                        all = true;
+                    }
+                }
+                if (all) {
                     //让球+胜负平
                     rang_ll.setVisibility(View.VISIBLE);
                     pilu_view_rang.setVisibility(View.VISIBLE);
+                    pilu_content_rang_touzhu1.setVisibility(View.GONE);
+                    pilu_content_rang_touzhu2.setVisibility(View.GONE);
+                    pilu_content_rang_touzhu3.setVisibility(View.GONE);
+                    pilu_content_touzhu1.setVisibility(View.GONE);
+                    pilu_content_touzhu2.setVisibility(View.GONE);
+                    pilu_content_touzhu2.setVisibility(View.GONE);
                     tv_wanfa1.setText("胜负平");
                     tv_wanfa2.setText("让球(" + matchBean.getHandicap() + ")");
-                    if (matchBean.getSelections().contains("3R")) {
-                        pilu_content_rang_touzhu1.setVisibility(View.VISIBLE);
-                        pilu_content_rang_touzhu1.setText("让球胜" + matchBean.getSpr().split(";")[0].substring(2));
-                    }
-                    if (matchBean.getSelections().contains("0R")) {
-                        pilu_content_rang_touzhu2.setVisibility(View.VISIBLE);
-                        pilu_content_rang_touzhu2.setText("让球平" + matchBean.getSpr().split(";")[1].substring(2));
-                    }
-                    if (matchBean.getSelections().contains("1R")) {
-                        pilu_content_rang_touzhu3.setVisibility(View.VISIBLE);
-                        pilu_content_rang_touzhu3.setText("让球负" + matchBean.getSpr().split(";")[2].substring(2));
-                    }
-                    if (matchBean.getSelections().contains("3")) {
-                        pilu_content_touzhu1.setVisibility(View.VISIBLE);
-                        pilu_content_touzhu1.setText("主胜" + matchBean.getSp().split(";")[0].substring(2));
-                    }
-
-                    if (matchBean.getSelections().contains("0")) {
-                        pilu_content_touzhu2.setVisibility(View.VISIBLE);
-                        pilu_content_touzhu2.setText("平" + matchBean.getSp().split(";")[1].substring(2));
-                    }
-                    if (matchBean.getSelections().contains("1")) {
-                        pilu_content_touzhu3.setVisibility(View.VISIBLE);
-                        pilu_content_touzhu3.setText("主负" + matchBean.getSp().split(";")[1].substring(2));
-                    }
-                    if (matchBean.getResult().contains("3")) {
-                        tv_wanfa1_result.setVisibility(View.VISIBLE);
-                        tv_wanfa1_result.setText("主胜");
-                        if (5 == infoBean.getStatus())
-                            addImageSpan(context, pilu_content_touzhu1);
+                    if (null != split) {
+                        for (String content : split) {
+                            if (content.equals("3R")) {
+                                pilu_content_rang_touzhu1.setVisibility(View.VISIBLE);
+                                pilu_content_rang_touzhu1.setText("让球胜" + matchBean.getSpr().split(";")[0].substring(2));
+                            } else if (content.equals("0R")) {
+                                pilu_content_rang_touzhu2.setVisibility(View.VISIBLE);
+                                pilu_content_rang_touzhu2.setText("让球平" + matchBean.getSpr().split(";")[2].substring(2));
+                            } else if (content.equals("1R")) {
+                                pilu_content_rang_touzhu3.setVisibility(View.VISIBLE);
+                                pilu_content_rang_touzhu3.setText("让球负" + matchBean.getSpr().split(";")[1].substring(2));
+                            } else if (content.equals("3")) {
+                                pilu_content_touzhu1.setVisibility(View.VISIBLE);
+                                pilu_content_touzhu1.setText("主胜" + matchBean.getSp().split(";")[0].substring(2));
+                            } else if (content.equals("0")) {
+                                pilu_content_touzhu2.setVisibility(View.VISIBLE);
+                                pilu_content_touzhu2.setText("平" + matchBean.getSp().split(";")[2].substring(2));
+                            } else if (content.equals("1")) {
+                                pilu_content_touzhu3.setVisibility(View.VISIBLE);
+                                pilu_content_touzhu3.setText("主负" + matchBean.getSp().split(";")[1].substring(2));
+                            }
+                        }
                     }
 
-                    if (matchBean.getResult().contains("0")) {
-                        tv_wanfa1_result.setVisibility(View.VISIBLE);
-                        tv_wanfa1_result.setText("平");
-                        if (5 == infoBean.getStatus())
-                            addImageSpan(context, pilu_content_touzhu2);
-                    }
-                    if (matchBean.getResult().contains("1")) {
-                        tv_wanfa1_result.setVisibility(View.VISIBLE);
-                        tv_wanfa1_result.setText("主负");
-                        if (5 == infoBean.getStatus())
-                            addImageSpan(context, pilu_content_touzhu3);
-                    }
-                    if (matchBean.getResultr().contains("3R")) {
-                        tv_wanfa2_result.setVisibility(View.VISIBLE);
-                        tv_wanfa2_result.setText("让球胜");
-                        if (5 == infoBean.getStatus())
-                            addImageSpan(context, pilu_content_rang_touzhu1);
-                    }
+                    if (null != matchBean.getResult()) {
+                        if (matchBean.getResult().contains("3")) {
+                            tv_wanfa1_result.setVisibility(View.VISIBLE);
+                            tv_wanfa1_result.setText("主胜");
+                            if (5 == infoBean.getStatus())
+                                addImageSpan(context, pilu_content_touzhu1);
+                        }
 
-                    if (matchBean.getResultr().contains("0R")) {
-                        tv_wanfa2_result.setVisibility(View.VISIBLE);
-                        tv_wanfa2_result.setText("让球平");
-                        if (5 == infoBean.getStatus())
-                            addImageSpan(context, pilu_content_rang_touzhu2);
+                        if (matchBean.getResult().contains("0")) {
+                            tv_wanfa1_result.setVisibility(View.VISIBLE);
+                            tv_wanfa1_result.setText("平");
+                            if (5 == infoBean.getStatus())
+                                addImageSpan(context, pilu_content_touzhu2);
+                        }
+                        if (matchBean.getResult().contains("1")) {
+                            tv_wanfa1_result.setVisibility(View.VISIBLE);
+                            tv_wanfa1_result.setText("主负");
+                            if (5 == infoBean.getStatus())
+                                addImageSpan(context, pilu_content_touzhu3);
+                        }
                     }
-                    if (matchBean.getResultr().contains("1R")) {
-                        tv_wanfa2_result.setVisibility(View.VISIBLE);
-                        tv_wanfa2_result.setText("让球负");
-                        if (5 == infoBean.getStatus())
-                            addImageSpan(context, pilu_content_rang_touzhu3);
+                    if (null != matchBean.getResultr()) {
+                        if (matchBean.getResultr().contains("3R")) {
+                            tv_wanfa2_result.setVisibility(View.VISIBLE);
+                            tv_wanfa2_result.setText("让球胜");
+                            if (5 == infoBean.getStatus())
+                                addImageSpan(context, pilu_content_rang_touzhu1);
+                        }
+
+                        if (matchBean.getResultr().contains("0R")) {
+                            tv_wanfa2_result.setVisibility(View.VISIBLE);
+                            tv_wanfa2_result.setText("让球平");
+                            if (5 == infoBean.getStatus())
+                                addImageSpan(context, pilu_content_rang_touzhu2);
+                        }
+                        if (matchBean.getResultr().contains("1R")) {
+                            tv_wanfa2_result.setVisibility(View.VISIBLE);
+                            tv_wanfa2_result.setText("让球负");
+                            if (5 == infoBean.getStatus())
+                                addImageSpan(context, pilu_content_rang_touzhu3);
+                        }
                     }
                 } else {
                     //让球
+                    rang_ll.setVisibility(View.GONE);
+                    pilu_view_rang.setVisibility(View.GONE);
+                    pilu_content_touzhu1.setVisibility(View.GONE);
+                    pilu_content_touzhu2.setVisibility(View.GONE);
+                    pilu_content_touzhu2.setVisibility(View.GONE);
                     tv_wanfa1.setText("让球(" + matchBean.getHandicap() + ")");
                     if (matchBean.getSelections().contains("3R")) {
                         pilu_content_touzhu1.setVisibility(View.VISIBLE);
@@ -155,11 +176,11 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
                     }
                     if (matchBean.getSelections().contains("0R")) {
                         pilu_content_touzhu2.setVisibility(View.VISIBLE);
-                        pilu_content_touzhu2.setText("让球平" + matchBean.getSpr().split(";")[1].substring(2));
+                        pilu_content_touzhu2.setText("让球平" + matchBean.getSpr().split(";")[2].substring(2));
                     }
                     if (matchBean.getSelections().contains("1R")) {
                         pilu_content_touzhu3.setVisibility(View.VISIBLE);
-                        pilu_content_touzhu3.setText("让球负" + matchBean.getSpr().split(";")[2]);
+                        pilu_content_touzhu3.setText("让球负" + matchBean.getSpr().split(";")[1].substring(2));
                     }
                     if (matchBean.getResultr().contains("3R")) {
                         tv_wanfa1_result.setVisibility(View.VISIBLE);
@@ -183,6 +204,11 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
                 }
             } else {
                 //胜负平
+                rang_ll.setVisibility(View.GONE);
+                pilu_view_rang.setVisibility(View.GONE);
+                pilu_content_touzhu1.setVisibility(View.GONE);
+                pilu_content_touzhu2.setVisibility(View.GONE);
+                pilu_content_touzhu2.setVisibility(View.GONE);
                 tv_wanfa1.setText("胜负平");
                 if (matchBean.getSelections().contains("3")) {
                     pilu_content_touzhu1.setVisibility(View.VISIBLE);
@@ -191,11 +217,11 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
 
                 if (matchBean.getSelections().contains("0")) {
                     pilu_content_touzhu2.setVisibility(View.VISIBLE);
-                    pilu_content_touzhu2.setText("平" + matchBean.getSp().split(";")[1].substring(2));
+                    pilu_content_touzhu2.setText("平" + matchBean.getSp().split(";")[2].substring(2));
                 }
                 if (matchBean.getSelections().contains("1")) {
                     pilu_content_touzhu3.setVisibility(View.VISIBLE);
-                    pilu_content_touzhu3.setText("主负" + matchBean.getSp().split(";")[2].substring(2));
+                    pilu_content_touzhu3.setText("主负" + matchBean.getSp().split(";")[1].substring(2));
                 }
                 if (matchBean.getResult().contains("3")) {
                     tv_wanfa1_result.setVisibility(View.VISIBLE);

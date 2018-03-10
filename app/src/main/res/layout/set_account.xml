@@ -152,7 +152,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/ic_launcher_round"
+            android:drawableLeft="@mipmap/special"
             android:drawablePadding="7.5dp"
             android:gravity="center_vertical"
             android:text="开户支行可拔打账户所属银行客服查询"
@@ -163,7 +163,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:drawableLeft="@mipmap/ic_launcher_round"
+            android:drawableLeft="@mipmap/special"
             android:drawablePadding="7.5dp"
             android:gravity="center_vertical"
             android:text="如在平台兑付过程中修改收款账户，兑付资金可能会转账至原有收款账户内"

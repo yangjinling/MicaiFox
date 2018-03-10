@@ -14,6 +14,7 @@ public class Config {
     private String sessionId;
     private String phone;
     private String clientId;
+    private String content;
     private boolean noti=false;
     private Config() {
     }
@@ -86,5 +87,13 @@ public class Config {
 
     public void setNoti(boolean noti) {
         this.noti = noti;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

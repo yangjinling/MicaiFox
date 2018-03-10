@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    android:orientation="vertical"
     tools:context="com.micai.fox.activity.ReportDetailActivity">
 
     <include layout="@layout/layout_title"></include>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <ScrollView
+            android:layout_marginTop="48dp"
             android:layout_width="match_parent"
+            android:layout_marginBottom="50dp"
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="50dp"
                 android:orientation="vertical"
                 android:paddingLeft="12.5dp"
                 android:paddingRight="12.5dp">
@@ -39,7 +37,7 @@
                         android:layout_marginRight="13.5dp"
                         android:layout_marginTop="14.5dp"
                         android:maxLines="2"
-                        android:text="你好"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="15sp" />
 
@@ -49,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16.5dp"
                         android:layout_marginTop="2dp"
-                        android:text="6小时前发布"
+                        android:text=""
                         android:textSize="13sp" />
 
                     <View
@@ -133,7 +131,7 @@
                                     android:id="@+id/report_detail_tv_rate"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="80"
+                                    android:text=""
                                     android:textColor="@color/red"
                                     android:textSize="30sp" />
 
@@ -191,7 +189,7 @@
                         android:drawablePadding="4dp"
                         android:drawableRight="@mipmap/next"
                         android:gravity="right|center_vertical"
-                        android:text="第02期足球众筹"
+                        android:text=""
                         android:textColor="@color/text_gray" />
                 </LinearLayout>
 
@@ -236,6 +234,5 @@
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
-    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

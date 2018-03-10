@@ -89,6 +89,10 @@ public class MyZhongchouPiluResultBean {
             private String totalRevenueAmount;
             private String totalProfitAmount;
             private String DepotProfitRate;
+            private int winStatus;
+            private String cashPercent;
+            private String cashProfitAmount;
+            private String cashProfitRate;
 
             public String getTotalBetAmount() {
                 return totalBetAmount;
@@ -120,6 +124,38 @@ public class MyZhongchouPiluResultBean {
 
             public void setDepotProfitRate(String DepotProfitRate) {
                 this.DepotProfitRate = DepotProfitRate;
+            }
+
+            public int getWinStatus() {
+                return winStatus;
+            }
+
+            public void setWinStatus(int winStatus) {
+                this.winStatus = winStatus;
+            }
+
+            public String getCashPercent() {
+                return cashPercent;
+            }
+
+            public void setCashPercent(String cashPercent) {
+                this.cashPercent = cashPercent;
+            }
+
+            public String getCashProfitAmount() {
+                return cashProfitAmount;
+            }
+
+            public void setCashProfitAmount(String cashProfitAmount) {
+                this.cashProfitAmount = cashProfitAmount;
+            }
+
+            public String getCashProfitRate() {
+                return cashProfitRate;
+            }
+
+            public void setCashProfitRate(String cashProfitRate) {
+                this.cashProfitRate = cashProfitRate;
             }
         }
 

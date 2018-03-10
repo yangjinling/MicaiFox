@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.micai.fox.R;
 import com.micai.fox.resultbean.ExpertsReportResultBean;
 import com.micai.fox.resultbean.ZhonchouReportResultBean;
+import com.micai.fox.util.DateUtil;
 
 import java.util.List;
 
@@ -41,16 +42,17 @@ public class MyZhongchouReportAdapter extends MyBaseAdapter<ZhonchouReportResult
             tv_rate.setText("" + mList.get(position).getTotalMatchNum() + "中" + mList.get(position).getWinMatchNum());
 
         }
-        TextView tv_date=((TextView) viewHolder.findViewById(R.id.zhouchou_detail_report_tv_date));
-        if (null!=mList.get(position).getIssue()){
-            String date=mList.get(position).getIssue();
-            if (date.substring(4).startsWith("0")){
-                tv_date.setText(""+date.substring(5,6)+"月"+date.substring(6)+"日");
-            }else {
-                tv_date.setText(""+date.substring(4,6)+"月"+date.substring(6)+"日");
+        TextView tv_date = ((TextView) viewHolder.findViewById(R.id.zhouchou_detail_report_tv_date));
+        if (null != mList.get(position).getIssue()) {
+            String date = mList.get(position).getIssue();
+            if (date.substring(4).startsWith("0")) {
+                tv_date.setText("" + date.substring(5, 6) + "月" + date.substring(6) + "日");
+            } else {
+                tv_date.setText("" + date.substring(4, 6) + "月" + date.substring(6) + "日");
             }
         }
-
+        TextView tv_state = ((TextView) viewHolder.findViewById(R.id.zhouchou_detail_report_tv_state));
+        tv_state.setText("" + DateUtil.getDistanceTimes(mList.get(position).getCreateDate(), System.currentTimeMillis()) + "发布");
 
 
     }

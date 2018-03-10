@@ -110,9 +110,11 @@ public class SettingActivity extends AppCompatActivity {
 
             case R.id.ll_set_aggrement:
                 //用户协议
-                type = 4;
-                intent.putExtra("VALUE", type);
-                startActivity(intent);
+//                type = 4;
+//                intent.putExtra("VALUE", type);
+//                startActivity(intent);
+                Intent intent1=new Intent(this,AgreementActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.ll_set_about:
                 //关于我们

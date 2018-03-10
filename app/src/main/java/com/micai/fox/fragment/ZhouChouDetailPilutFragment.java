@@ -25,6 +25,7 @@ import com.micai.fox.view.MyListView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -67,6 +68,8 @@ public class ZhouChouDetailPilutFragment extends Fragment {
     LinearLayout zhongchouDetailLlMoney;
     @Bind(R.id.zhongchou_detail_ll_tv_money)
     LinearLayout zhongchouDetailLlTvMoney;
+    @Bind(R.id.zhongchou_detail_info)
+    TextView tv_info;
     private int kind;
     //    private TextView tv;
     private ArrayList<MyZhongchouPiluResultBean.ExecDatasBean.BetInfoBean> data = new ArrayList<>();
@@ -141,14 +144,48 @@ public class ZhouChouDetailPilutFragment extends Fragment {
                 if (Tools.isGoodJson(response)) {
                     myZhongchouPiluResultBean = new Gson().fromJson(response, MyZhongchouPiluResultBean.class);
                     if (myZhongchouPiluResultBean.isExecResult()) {
-                        data.addAll(myZhongchouPiluResultBean.getExecDatas().getBetInfo());
+                        zhongchouDetailTvTouzhu.setText("￥" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getTotalBetAmount());
+                        switch (myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getWinStatus()) {
+                            case 0://全未开奖
+                                zhongchouDetailLlIvMoney.setVisibility(View.VISIBLE);
+                                zhongchouDetailLlMoney.setVisibility(View.GONE);
+                                zhongchouDetailLlTvMoney.setVisibility(View.GONE);
+                                zhongchouDetailIvYingshou.setVisibility(View.VISIBLE);
+                                zhongchouDetailTvYingshou.setVisibility(View.GONE);
+                                if (null == myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitAmount()) {
+                                    tv_info.setText("以上仅为截止目前已开奖的投注统计，最终以兑付日数据为准；");
+                                } else {
+                                    if (new BigDecimal("" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitAmount()).compareTo(new BigDecimal(0)) == 1) {
+                                        tv_info.setText("以上仅为截止目前已开奖的投注统计，最终以兑付日数据为准；兑付盈利金额为投注盈利金额的" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashPercent() + "%");
+                                    } else {
+                                        tv_info.setText("以上仅为截止目前已开奖的投注统计，最终以兑付日数据为准；");
+                                    }
+                                    tv_info.setText("营收金额、盈利金额、盈利率数据将在投注开奖后展示；兑付盈利金额为投注盈利金额的" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashPercent() + "%");
+                                }
+                                break;
+                            case 1:
+                            default://有开奖的
+                                zhongchouDetailLlIvMoney.setVisibility(View.GONE);
+                                zhongchouDetailLlMoney.setVisibility(View.VISIBLE);
+                                zhongchouDetailLlTvMoney.setVisibility(View.VISIBLE);
+                                zhongchouDetailIvYingshou.setVisibility(View.GONE);
+                                zhongchouDetailTvYingshou.setVisibility(View.VISIBLE);
+                                zhongchouDetailTvYingshou.setText("￥" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getTotalRevenueAmount());
+                                zhongchouDetailTvTouzhuyingli.setText("" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getTotalProfitAmount());
+                                zhongchouDetailTvTouzhuyingliRate.setText("" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate());
+                                zhongchouDetailTvDuifuyingli.setText("¥" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitAmount());
+                                zhongchouDetailTvDuifuyingliRate.setText("" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitRate());
+                                if (new BigDecimal("" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitAmount()).compareTo(new BigDecimal(0)) == 1) {
+                                    tv_info.setText("以上仅为截止目前已开奖的投注统计，最终以兑付日数据为准；兑付盈利金额为投注盈利金额的" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashPercent() + "%");
+                                } else {
+                                    tv_info.setText("以上仅为截止目前已开奖的投注统计，最终以兑付日数据为准；");
+                                }
+                                break;
+                        }
                         LogUtil.e("YJL", "data.size" + data.size());
+                        data.addAll(myZhongchouPiluResultBean.getExecDatas().getBetInfo());
                         adapter.notifyDataSetChanged();
-                        zhongchouDetailTvTouzhu.setText("￥"+myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getTotalBetAmount());
-                        zhongchouDetailTvYingshou.setText("￥"+myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getTotalRevenueAmount());
-                        zhongchouDetailLlMoney.setVisibility(View.VISIBLE);
-                        zhongchouDetailTvTouzhuyingli.setText(""+myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getTotalProfitAmount());
-                        zhongchouDetailTvTouzhuyingliRate.setText(""+myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate());
+
                     }
                 }
             }

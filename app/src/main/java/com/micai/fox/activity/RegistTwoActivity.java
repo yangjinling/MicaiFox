@@ -1,6 +1,7 @@
 package com.micai.fox.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -100,9 +101,11 @@ public class RegistTwoActivity extends AppCompatActivity {
                     break;
                 case 5:
                     dialog.dismiss();
-                    ExitAppUtils.getInstance().finishActivity(RegistActivity.class);
-                    ExitAppUtils.getInstance().finishActivity(LoginActivity.class);
-                    finish();
+//                    ExitAppUtils.getInstance().finishActivity(RegistActivity.class);
+                    ExitAppUtils.getInstance().finishAllActivities();
+                    Intent intent=new Intent(RegistTwoActivity.this,IndexActivity.class);
+                    startActivity(intent);
+//                    finish();
                     break;
             }
         }

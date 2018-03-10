@@ -129,6 +129,7 @@
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginLeft="16dp"
+            android:checked="true"
             android:background="@drawable/ck_regist"
             android:button="@null" />
 

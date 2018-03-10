@@ -8,10 +8,12 @@
     android:orientation="vertical"
     tools:context="com.micai.fox.activity.AgreementActivity">
 <include layout="@layout/layout_title"></include>
-<WebView
+<TextView
     android:id="@+id/agree_web"
-    android:background="@android:color/transparent"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"></WebView>
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:textColor="@color/white"
+    android:text="本文仅介绍了 SpannableString 常用的一些场景，例如修改特定文本的颜色，替换特定文本，特定文本的点击事件，但是 SpannableString 的强大远不止如此。SpannableString 的更多用法可阅读官方文档。好了，以上就是这篇文章的全部内容了，希望本文的内容对大家的学习或者工作能带来一定的帮助，如果有疑问大家可以留言交流，谢谢大家对脚本之家的支持。本文仅介绍了 SpannableString 常用的一些场景，例如修改特定文本的颜色，替换特定文本，特定文本的点击事件，但是 SpannableString 的强大远不止如此。SpannableString 的更多用法可阅读官方文档。好了，以上就是这篇文章的全部内容了，希望本文的内容对大家的学习或者工作能带来一定的帮助，如果有疑问大家可以留言交流，谢谢大家对脚本之家的支持。本文仅介绍了 SpannableString 常用的一些场景，例如修改特定文本的颜色，替换特定文本，特定文本的点击事件，但是 SpannableString 的强大远不止如此。SpannableString 的更多用法可阅读官方文档。好了，以上就是这篇文章的全部内容了，希望本文的内容对大家的学习或者工作能带来一定的帮助，如果有疑问大家可以留言交流，谢谢大家对脚本之家的支持。"/>
 </LinearLayout>

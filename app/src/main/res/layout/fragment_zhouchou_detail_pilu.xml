@@ -27,12 +27,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/zhouchou_detail_pilu_ll_ed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="55dp"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -95,9 +95,9 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="￥2000.00"
+                android:visibility="gone"
                 android:textColor="@color/red"
-                android:textSize="15sp"
-                android:visibility="gone" />
+                android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -133,8 +133,7 @@
             android:layout_marginLeft="24dp"
             android:layout_marginRight="27dp"
             android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
@@ -182,6 +181,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/zhongchou_detail_ll_money"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -211,6 +211,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/zhongchou_detail_tv_duifuyingli"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -220,6 +221,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/zhongchou_detail_tv_duifuyingli_rate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -235,8 +237,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="27dp"
-
             android:layout_marginTop="5dp"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <TextView
@@ -258,7 +260,6 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/zhongchou_detail_tv_duifuyingli"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -268,7 +269,6 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/zhongchou_detail_tv_duifuyingli_rate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -287,6 +287,7 @@
             android:background="@color/white"></View>
 
         <TextView
+            android:id="@+id/zhongchou_detail_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="23dp"

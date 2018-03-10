@@ -70,8 +70,8 @@ public class MyZhongChouOrderResultBean {
         private int orderStatus;
         private double purchaseAmount;
         private long createDate;
-        private String payDate;
-        private String cashDate;
+        private long payDate;
+        private long cashDate;
         private String payType;
         private String cashAmount;
         private String title;
@@ -111,19 +111,19 @@ public class MyZhongChouOrderResultBean {
             this.createDate = createDate;
         }
 
-        public String getPayDate() {
+        public long getPayDate() {
             return payDate;
         }
 
-        public void setPayDate(String payDate) {
+        public void setPayDate(long payDate) {
             this.payDate = payDate;
         }
 
-        public String getCashDate() {
+        public long getCashDate() {
             return cashDate;
         }
 
-        public void setCashDate(String cashDate) {
+        public void setCashDate(long cashDate) {
             this.cashDate = cashDate;
         }
 

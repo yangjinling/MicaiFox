@@ -44,7 +44,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScrollListener {
     private int kind;
     //    private TextView tv;
-    private List<ExpertsResultBean.ExecDatasBean.RecordListBean> resultBeanList;
+    private List<ExpertsResultBean.ExecDatasBean.RecordListBean> resultBeanList=new ArrayList<>();
     private ListView lv;
     private View footer_view;
     private View headView;
@@ -62,12 +62,12 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
         lv.addHeaderView(headView);
         footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv_home_zhongchou, null);
         lv.addFooterView(footer_view);
-//        adapter = new MyExpertsListAdapter(resultBeanList, getContext(), R.layout.item_lv_experts);
-//        lv.setAdapter(adapter);
+        adapter = new MyExpertsListAdapter(resultBeanList, getContext(), R.layout.item_lv_experts);
+        lv.setAdapter(adapter);
         switch (kind) {
             case 0:
 //                tv.setText("全部");
-                getExpertsList(kind, "0" );
+                getExpertsList(kind, "0");
                 break;
             case 1:
 //                tv.setText("盈利榜");
@@ -75,7 +75,7 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
                 break;
             case 2:
 //                tv.setText("命中榜");
-                getExpertsList(kind, "0" );
+                getExpertsList(kind, "0");
                 break;
         }
 
@@ -117,11 +117,9 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
                 if (Tools.isGoodJson(response)) {
                     expertsResultBean = new Gson().fromJson(response, ExpertsResultBean.class);
                     if (expertsResultBean.isExecResult()) {
-                        resultBeanList.clear();
-                        resultBeanList = expertsResultBean.getExecDatas().getRecordList();
-                        resultBeanList.addAll(resultBeanList);
-                        adapter = new MyExpertsListAdapter(resultBeanList, getContext(), R.layout.item_lv_experts);
-                        lv.setAdapter(adapter);
+//                        resultBeanList.clear();
+                        resultBeanList.addAll( expertsResultBean.getExecDatas().getRecordList());
+                        adapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -196,7 +194,7 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
             isBottom = false;
             LogUtil.e("YJL", "isBottom222===" + isBottom);
         }
-        if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum-1) * 20)) {
+        if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum - 1) * 20)) {
             LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
             if (++curPageNum <= expertsResultBean.getExecDatas().getTotalPage()) {
                 LogUtil.e("YJL", "curPageNum==" + curPageNum);

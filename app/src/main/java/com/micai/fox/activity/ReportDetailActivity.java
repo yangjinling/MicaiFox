@@ -23,6 +23,7 @@ import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.ReportDetailResultBean;
+import com.micai.fox.util.DateUtil;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.MyListView;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -84,6 +85,7 @@ public class ReportDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         rl.setVisibility(View.VISIBLE);
         tvBack.setVisibility(View.VISIBLE);
+        reportDetailLv.setFocusable(false);
         tvTitle.setText("报告详情");
         reportId = getIntent().getStringExtra("reportId");
         getReportDetail(reportId);
@@ -141,7 +143,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                         reportDetailTvIntroduce.setText(reportDetailResultBean.getExecDatas().getReport().getProAuth());
                         reportDetailTvRate.setText("" + reportDetailResultBean.getExecDatas().getReport().getHitRate());
                         reportDetailTvZhongchouTitle.setText("" + reportDetailResultBean.getExecDatas().getReport().getCrowdfundingTitle());
-                        reportDetailTvTime.setText("" + reportDetailResultBean.getExecDatas().getReport().getCreateDate());
+                        reportDetailTvTime.setText("" +DateUtil.getDistanceTimes(reportDetailResultBean.getExecDatas().getReport().getCreateDate(),System.currentTimeMillis())+"发布");
                         Glide.with(ReportDetailActivity.this).load(Url.WEB_BASE_IP + reportDetailResultBean.getExecDatas().getReport().getProPhoto()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(head);
                         CharSequence charSequence = Html.fromHtml(reportDetailResultBean.getExecDatas().getReport().getContent(), new Html.ImageGetter() {
 

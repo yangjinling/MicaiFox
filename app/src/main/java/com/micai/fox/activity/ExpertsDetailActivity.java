@@ -29,6 +29,7 @@ import com.micai.fox.fragment.ExpertsZhongChouFragment;
 import com.micai.fox.parambean.BotomBean;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.ExpertsDetailResultBean;
+import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
 import com.micai.fox.view.PageListScrollView;
@@ -250,6 +251,7 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
         //tab_FindFragment_title.setViewPager(vp_FindFragment_pager);
         //TabLayout加载viewpager
         expertsDetailTablayout.setupWithViewPager(expertsDetailViewpager);
+        expertsDetailViewpager.setOffscreenPageLimit(2);
         //为TabLayout添加tab名称
         /* for (int i = 0; i < 4; i++) {
             tabLayout.addTab(tabLayout.newTab().setText(list_title.get(i)));
@@ -342,6 +344,7 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
 
     @Override
     public void onScrollBottomListener(boolean isBottom) {
+        LogUtil.e("YJL","专家isBottom=="+isBottom);
         BotomBean botomBean = new BotomBean();
         botomBean.setBootom(isBottom);
         EventBus.getDefault().post(botomBean);
