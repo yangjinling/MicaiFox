@@ -116,10 +116,14 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                     pop_changci.setText("" + data + bean.getSeq());
                 }
                 pop_title.setText("[" + bean.getGameName() + "]");
-                pop_time.setText("" + bean.getMatchTime().substring(0, 4) + "年" + bean.getMatchTime().substring(5, 7) + "月" + bean.getMatchTime().substring(8, 10) + "日 " + bean.getMatchTime().substring(11, bean.getMatchTime().lastIndexOf(":")));
+                pop_time.setText("" + DateUtil.getDateToMatchString(bean.getMatchTime()));
                 pop_homename.setText("" + bean.getHomeTeamName());
                 pop_guestname.setText("" + bean.getGuestTeamName());
-                pop_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+                if (null != bean.getHomeScore() && null != bean.getGuestScore()) {
+                    pop_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+                } else {
+                    pop_score.setText("VS");
+                }
                 pop_homewin.setText("主胜" + bean.getSp().split(";")[0].split(":")[1]);
                 pop_ping.setText("平" + bean.getSp().split(";")[1].split(":")[1]);
                 pop_ke.setText("客胜" + bean.getSp().split(";")[2].split(":")[1]);
@@ -150,10 +154,13 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                 }
                 rang_changci.setText("" + data + bean.getSeq());
                 rang_title.setText("[" + bean.getGameName() + "]");
-                rang_time.setText("" + bean.getMatchTime().substring(0, 4) + "年" + bean.getMatchTime().substring(5, 7) + "月" + bean.getMatchTime().substring(8, 10) + "日 " + bean.getMatchTime().substring(11, bean.getMatchTime().lastIndexOf(":")));
+                rang_time.setText("" + DateUtil.getDateToMatchString(bean.getMatchTime()));
                 rang_homename.setText("" + bean.getHomeTeamName());
                 rang_guestname.setText("" + bean.getGuestTeamName());
-                rang_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+                if (null != bean.getHomeScore() && null != bean.getGuestScore()) {
+                    rang_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+                    rang_score.setText("VS");
+                }
                 rang_homewin.setText("主胜" + bean.getSpr().split(";")[0].split(":")[1]);
                 rang_ping.setText("平" + bean.getSpr().split(";")[1].split(":")[1]);
                 rang_ke.setText("客胜" + bean.getSpr().split(";")[2].split(":")[1]);
@@ -245,12 +252,14 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                 String data = DateUtil.getWeekOfDate(date);
                 pop_changci.setText("" + data + bean.getSeq());
                 pop_title.setText("[" + bean.getGameName() + "]");
-                if (null != bean.getMatchTime())
-                    pop_time.setText("" + bean.getMatchTime().substring(0, 4) + "年" + bean.getMatchTime().substring(5, 7) + "月" + bean.getMatchTime().substring(8, 10) + "日 " + bean.getMatchTime().substring(11, bean.getMatchTime().lastIndexOf(":")));
+                pop_time.setText("" + DateUtil.getDateToMatchString(bean.getMatchTime()));
                 pop_homename.setText("" + bean.getHomeTeamName());
                 pop_guestname.setText("" + bean.getGuestTeamName());
                 rang_num.setText("" + bean.getHandicap());
-                pop_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+                if (null != bean.getHomeScore() && null != bean.getGuestScore()) {
+                    pop_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+                    pop_score.setText("VS");
+                }
                 pop_homewin.setText("主胜" + bean.getSpr().split(";")[0].split(":")[1]);
                 pop_ping.setText("平" + bean.getSpr().split(";")[1].split(":")[1]);
                 pop_ke.setText("客胜" + bean.getSpr().split(";")[2].split(":")[1]);
@@ -327,10 +336,13 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
             String data = DateUtil.getWeekOfDate(date);
             pop_changci.setText("" + data + bean.getSeq());
             pop_title.setText("[" + bean.getGameName() + "]");
-            pop_time.setText("" + bean.getMatchTime().substring(0, 4) + "年" + bean.getMatchTime().substring(5, 7) + "月" + bean.getMatchTime().substring(8, 10) + "日 " + bean.getMatchTime().substring(11, bean.getMatchTime().lastIndexOf(":")));
+            pop_time.setText("" + DateUtil.getDateToMatchString(bean.getMatchTime()));
             pop_homename.setText("" + bean.getHomeTeamName());
             pop_guestname.setText("" + bean.getGuestTeamName());
-            pop_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+            if (null != bean.getHomeScore() && null != bean.getGuestScore()) {
+                pop_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+                pop_score.setText("VS");
+            }
             pop_homewin.setText("主胜" + bean.getSp().split(";")[0].split(":")[1]);
             pop_ping.setText("平" + bean.getSp().split(";")[1].split(":")[1]);
             pop_ke.setText("客胜" + bean.getSp().split(";")[2].split(":")[1]);

@@ -47,6 +47,11 @@ public class DateUtil {
                 return "yyyy.MM.dd HH:mm";
             }
         },
+        ALL_TIMESS {
+            public String getValue() {
+                return "yyyy年MM月dd日 HH:mm";
+            }
+        },
         ALL_TIMES {
             public String getValue() {
                 return "yyyy-MM-dd HH:mm:ss";
@@ -348,7 +353,11 @@ public class DateUtil {
         SimpleDateFormat format = new SimpleDateFormat(DatePattern.ALL_TIME.getValue(), Locale.CHINA);
         return format.format(date);
     }
-
+    public static String getDateToMatchString(long milSecond) {
+        Date date = new Date(milSecond);
+        SimpleDateFormat format = new SimpleDateFormat(DatePattern.ALL_TIMESS.getValue(), Locale.CHINA);
+        return format.format(date);
+    }
     /*
     *计算time2减去time1的差值 差值只设置 几天 几个小时 或 几分钟
     * 根据差值返回多长之间前或多长时间后

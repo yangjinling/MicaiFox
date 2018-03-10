@@ -186,7 +186,7 @@ public class LoginActivity extends BaseActivity {
         OkHttpUtils.post().url(Url.WEB_LOGIN)
                 .addParams("username", username)
                 .addParams("password", password)
-//                .addParams("clientID ",Config.getInstance().getClientId())
+                .addParams("deviceSys ","安卓")
                 .addParams("mobileLogin", "true").build()
                 .execute(new StringCallback() {
 

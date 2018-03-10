@@ -228,9 +228,9 @@ public class ReportDetailResultBean {
             private String gameName;
             private String homeTeamName;
             private String guestTeamName;
-            private String matchTime;
-            private int homeScore;
-            private int guestScore;
+            private long matchTime;
+            private String homeScore;
+            private String guestScore;
             private int handicap;
             private String sp;
             private String spr;
@@ -307,27 +307,27 @@ public class ReportDetailResultBean {
                 this.guestTeamName = guestTeamName;
             }
 
-            public String getMatchTime() {
+            public long getMatchTime() {
                 return matchTime;
             }
 
-            public void setMatchTime(String matchTime) {
+            public void setMatchTime(long matchTime) {
                 this.matchTime = matchTime;
             }
 
-            public int getHomeScore() {
+            public String getHomeScore() {
                 return homeScore;
             }
 
-            public void setHomeScore(int homeScore) {
+            public void setHomeScore(String homeScore) {
                 this.homeScore = homeScore;
             }
 
-            public int getGuestScore() {
+            public String getGuestScore() {
                 return guestScore;
             }
 
-            public void setGuestScore(int guestScore) {
+            public void setGuestScore(String guestScore) {
                 this.guestScore = guestScore;
             }
 
