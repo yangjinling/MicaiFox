@@ -321,10 +321,14 @@
                 app:tabTextColor="#ffffff"></android.support.design.widget.TabLayout>
 
             <com.micai.fox.view.CustomViewPager
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:id="@+id/experts_detail_viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent"></View>
         </LinearLayout>
 
 

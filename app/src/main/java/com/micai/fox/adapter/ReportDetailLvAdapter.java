@@ -27,70 +27,65 @@ import java.util.List;
 
 /*报告详情里面的列表*/
 public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.ExecDatasBean.GameBean> {
-    private List<ReportDetailResultBean.ExecDatasBean.GameBean> mList;
     private Context context;
+    private List<ReportDetailResultBean.ExecDatasBean.GameBean> mList;
 
     public ReportDetailLvAdapter(List<ReportDetailResultBean.ExecDatasBean.GameBean> list, Context context, int resId) {
         super(list, context, resId);
-        mList = list;
         this.context = context;
+        this.mList = list;
     }
 
     @Override
     public void setData(ViewHolder viewHolder, int position) {
-        boolean all = false;
         ReportDetailResultBean.ExecDatasBean.GameBean bean = mList.get(position);
         LinearLayout popLl = ((LinearLayout) viewHolder.findViewById(R.id.report_detail_ll_pop));
-        CornerLabelView pop_zhong;
-        CornerLabelView pop_weizhong;
-        CornerLabelView rang_zhong;
-        CornerLabelView rang_weizhong;
-        TextView pop_changci;
-        TextView pop_title;
-        TextView pop_time;
-        TextView pop_homename;
-        TextView pop_guestname;
-        TextView pop_score;
-        TextView pop_homewin;
-        TextView pop_ping;
-        TextView pop_ke;
         LinearLayout popRang = ((LinearLayout) viewHolder.findViewById(R.id.report_detail_ll_rang));
+        CornerLabelView pop_zhong = ((CornerLabelView) viewHolder.findViewById(R.id.pop_zhong));
+        CornerLabelView pop_weizhong = ((CornerLabelView) viewHolder.findViewById(R.id.pop_weizhong));
+        CornerLabelView rang_zhong = ((CornerLabelView) viewHolder.findViewById(R.id.rang_zhong));
+        CornerLabelView rang_weizhong = ((CornerLabelView) viewHolder.findViewById(R.id.rang_weizhong));
+        TextView pop_changci = ((TextView) viewHolder.findViewById(R.id.pop_changci));
+        TextView pop_title = ((TextView) viewHolder.findViewById(R.id.pop_title));
+        TextView pop_time = ((TextView) viewHolder.findViewById(R.id.pop_time));
+        TextView pop_homename = ((TextView) viewHolder.findViewById(R.id.pop_homename));
+        TextView pop_guestname = ((TextView) viewHolder.findViewById(R.id.pop_guestname));
+        TextView pop_score = ((TextView) viewHolder.findViewById(R.id.pop_score));
+        TextView pop_homewin = ((TextView) viewHolder.findViewById(R.id.pop_homewin));
+        TextView pop_ping = ((TextView) viewHolder.findViewById(R.id.pop_ping));
+        TextView pop_ke = ((TextView) viewHolder.findViewById(R.id.pop_ke));
+        TextView rang_changci = ((TextView) viewHolder.findViewById(R.id.rang_changci));
+        TextView rang_title = ((TextView) viewHolder.findViewById(R.id.rang_title));
+        TextView rang_time = ((TextView) viewHolder.findViewById(R.id.rang_time));
+        TextView rang_homename = ((TextView) viewHolder.findViewById(R.id.rang_homename));
+        TextView rang_guestname = ((TextView) viewHolder.findViewById(R.id.rang_guestname));
+        TextView rang_score = ((TextView) viewHolder.findViewById(R.id.rang_score));
+        TextView rang_homewin = ((TextView) viewHolder.findViewById(R.id.rang_homewin));
+        TextView rang_ping = ((TextView) viewHolder.findViewById(R.id.rang_ping));
+        TextView rang_ke = ((TextView) viewHolder.findViewById(R.id.rang_ke));
+        TextView rang_num = ((TextView) viewHolder.findViewById(R.id.rang_num));
         String selections = bean.getSelections().replace(",", "");
-        String[] split = bean.getSelections().split(",");
+        String[] split;
+        if (bean.getSelections().contains(",")) {
+            split = bean.getSelections().split(",");
+        } else {
+            split = new String[1];
+            split[0] = selections;
+        }
         if (selections.contains("R")) {
             //让球
-            popLl.setVisibility(View.VISIBLE);
-            pop_changci = ((TextView) viewHolder.findViewById(R.id.pop_changci));
-            pop_title = ((TextView) viewHolder.findViewById(R.id.pop_title));
-            pop_time = ((TextView) viewHolder.findViewById(R.id.pop_time));
-            pop_homename = ((TextView) viewHolder.findViewById(R.id.pop_homename));
-            pop_guestname = ((TextView) viewHolder.findViewById(R.id.pop_guestname));
-            pop_score = ((TextView) viewHolder.findViewById(R.id.pop_score));
-            pop_homewin = ((TextView) viewHolder.findViewById(R.id.pop_homewin));
-            pop_ping = ((TextView) viewHolder.findViewById(R.id.pop_ping));
-            pop_ke = ((TextView) viewHolder.findViewById(R.id.pop_ke));
+            boolean all = false;
             for (String s : split) {
                 if (s.equals("3") || s.equals("1") || s.equals("0")) {
                     all = true;
+                } else {
                 }
             }
             if (all) {
                 //让球+胜负平
+                viewHolder.needReInflate=true;
+                popLl.setVisibility(View.VISIBLE);
                 popRang.setVisibility(View.VISIBLE);
-                pop_zhong = ((CornerLabelView) viewHolder.findViewById(R.id.pop_zhong));
-                pop_weizhong = ((CornerLabelView) viewHolder.findViewById(R.id.pop_weizhong));
-                rang_zhong = ((CornerLabelView) viewHolder.findViewById(R.id.rang_zhong));
-                rang_weizhong = ((CornerLabelView) viewHolder.findViewById(R.id.rang_weizhong));
-                TextView rang_changci = ((TextView) viewHolder.findViewById(R.id.rang_changci));
-                TextView rang_title = ((TextView) viewHolder.findViewById(R.id.rang_title));
-                TextView rang_time = ((TextView) viewHolder.findViewById(R.id.rang_time));
-                TextView rang_homename = ((TextView) viewHolder.findViewById(R.id.rang_homename));
-                TextView rang_guestname = ((TextView) viewHolder.findViewById(R.id.rang_guestname));
-                TextView rang_score = ((TextView) viewHolder.findViewById(R.id.rang_score));
-                TextView rang_homewin = ((TextView) viewHolder.findViewById(R.id.rang_homewin));
-                TextView rang_ping = ((TextView) viewHolder.findViewById(R.id.rang_ping));
-                TextView rang_ke = ((TextView) viewHolder.findViewById(R.id.rang_ke));
-                TextView rang_num = ((TextView) viewHolder.findViewById(R.id.rang_num));
                 LogUtil.e("YJL", "让球+胜负平");
                 pop_homewin.setBackground(null);
                 pop_ping.setBackground(null);
@@ -159,6 +154,7 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                 rang_guestname.setText("" + bean.getGuestTeamName());
                 if (null != bean.getHomeScore() && null != bean.getGuestScore()) {
                     rang_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+                } else {
                     rang_score.setText("VS");
                 }
                 rang_homewin.setText("主胜" + bean.getSpr().split(";")[0].split(":")[1]);
@@ -220,21 +216,11 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                 }
             } else {
                 //只有让球
+                viewHolder.needReInflate=true;
                 LogUtil.e("YJL", "让球");
                 popLl.setVisibility(View.VISIBLE);
                 popRang.setVisibility(View.GONE);
-                pop_zhong = ((CornerLabelView) viewHolder.findViewById(R.id.pop_zhong));
-                pop_weizhong = ((CornerLabelView) viewHolder.findViewById(R.id.pop_weizhong));
-                pop_changci = ((TextView) viewHolder.findViewById(R.id.pop_changci));
-                pop_title = ((TextView) viewHolder.findViewById(R.id.pop_title));
-                pop_time = ((TextView) viewHolder.findViewById(R.id.pop_time));
-                TextView rang_num = ((TextView) viewHolder.findViewById(R.id.pop_rang));
-                pop_homename = ((TextView) viewHolder.findViewById(R.id.pop_homename));
-                pop_guestname = ((TextView) viewHolder.findViewById(R.id.pop_guestname));
-                pop_score = ((TextView) viewHolder.findViewById(R.id.pop_score));
-                pop_homewin = ((TextView) viewHolder.findViewById(R.id.pop_homewin));
-                pop_ping = ((TextView) viewHolder.findViewById(R.id.pop_ping));
-                pop_ke = ((TextView) viewHolder.findViewById(R.id.pop_ke));
+                TextView rang_nums = ((TextView) viewHolder.findViewById(R.id.pop_rang));
                 pop_homewin.setBackground(null);
                 pop_ping.setBackground(null);
                 pop_ke.setBackground(null);
@@ -255,9 +241,10 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                 pop_time.setText("" + DateUtil.getDateToMatchString(bean.getMatchTime()));
                 pop_homename.setText("" + bean.getHomeTeamName());
                 pop_guestname.setText("" + bean.getGuestTeamName());
-                rang_num.setText("" + bean.getHandicap());
+                rang_nums.setText("" + bean.getHandicap());
                 if (null != bean.getHomeScore() && null != bean.getGuestScore()) {
                     pop_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+                } else {
                     pop_score.setText("VS");
                 }
                 pop_homewin.setText("主胜" + bean.getSpr().split(";")[0].split(":")[1]);
@@ -294,7 +281,7 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                     }
                 }
                 LogUtil.e("YJL", "selection" + bean.getSelections() + "result" + bean.getResult());
-                if (null != selections && null != bean.getResult()) {
+                if (null != selections && null != bean.getResultr()) {
                     if (selections.contains(bean.getResultr())) {
                         LogUtil.e("YJL", "中了");
                         pop_weizhong.setVisibility(View.GONE);
@@ -308,20 +295,10 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
             }
         } else {
             //胜负平
+            viewHolder.needReInflate=true;
             LogUtil.e("YJL", "胜负平");
             popLl.setVisibility(View.VISIBLE);
             popRang.setVisibility(View.GONE);
-            pop_zhong = ((CornerLabelView) viewHolder.findViewById(R.id.pop_zhong));
-            pop_weizhong = ((CornerLabelView) viewHolder.findViewById(R.id.pop_weizhong));
-            pop_changci = ((TextView) viewHolder.findViewById(R.id.pop_changci));
-            pop_title = ((TextView) viewHolder.findViewById(R.id.pop_title));
-            pop_time = ((TextView) viewHolder.findViewById(R.id.pop_time));
-            pop_homename = ((TextView) viewHolder.findViewById(R.id.pop_homename));
-            pop_guestname = ((TextView) viewHolder.findViewById(R.id.pop_guestname));
-            pop_score = ((TextView) viewHolder.findViewById(R.id.pop_score));
-            pop_homewin = ((TextView) viewHolder.findViewById(R.id.pop_homewin));
-            pop_ping = ((TextView) viewHolder.findViewById(R.id.pop_ping));
-            pop_ke = ((TextView) viewHolder.findViewById(R.id.pop_ke));
             pop_weizhong.setVisibility(View.GONE);
             pop_zhong.setVisibility(View.GONE);
 //            String date = DateUtil.getWeekOfDate(DateUtil.stringToDate(bean.getIssue(), DateUtil.DatePattern.ONLY_DAYS));
@@ -341,6 +318,7 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
             pop_guestname.setText("" + bean.getGuestTeamName());
             if (null != bean.getHomeScore() && null != bean.getGuestScore()) {
                 pop_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+            } else {
                 pop_score.setText("VS");
             }
             pop_homewin.setText("主胜" + bean.getSp().split(";")[0].split(":")[1]);
@@ -364,7 +342,6 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                         LogUtil.e("YJL", "客胜");
                         pop_ke.setBackgroundResource(R.drawable.redbgtstyle);
                     }
-                    notifyDataSetInvalidated();
                 }
             }
             if (null != bean.getResult()) {
@@ -392,8 +369,9 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                     pop_zhong.setVisibility(View.GONE);
                 }
             }
-            notifyDataSetChanged();
         }
+//        notifyDataSetChanged();
+//        notifyDataSetInvalidated();
     }
 
     private void addImageSpan(Context context, TextView tv) {

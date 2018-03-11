@@ -89,7 +89,7 @@ public class ReportDetailActivity extends AppCompatActivity {
         tvTitle.setText("报告详情");
         reportId = getIntent().getStringExtra("reportId");
         getReportDetail(reportId);
-        adapter = new ReportDetailLvAdapter(data, this, R.layout.item_lv_report_detail);
+        adapter = new ReportDetailLvAdapter(data, ReportDetailActivity.this, R.layout.item_lv_report_detail);
         reportDetailLv.setAdapter(adapter);
     }
 
@@ -143,7 +143,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                         reportDetailTvIntroduce.setText(reportDetailResultBean.getExecDatas().getReport().getProAuth());
                         reportDetailTvRate.setText("" + reportDetailResultBean.getExecDatas().getReport().getHitRate());
                         reportDetailTvZhongchouTitle.setText("" + reportDetailResultBean.getExecDatas().getReport().getCrowdfundingTitle());
-                        reportDetailTvTime.setText("" +DateUtil.getDistanceTimes(reportDetailResultBean.getExecDatas().getReport().getCreateDate(),System.currentTimeMillis())+"发布");
+                        reportDetailTvTime.setText("" + DateUtil.getDistanceTimes(reportDetailResultBean.getExecDatas().getReport().getCreateDate(), System.currentTimeMillis()) + "发布");
                         Glide.with(ReportDetailActivity.this).load(Url.WEB_BASE_IP + reportDetailResultBean.getExecDatas().getReport().getProPhoto()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(head);
                         CharSequence charSequence = Html.fromHtml(reportDetailResultBean.getExecDatas().getReport().getContent(), new Html.ImageGetter() {
 

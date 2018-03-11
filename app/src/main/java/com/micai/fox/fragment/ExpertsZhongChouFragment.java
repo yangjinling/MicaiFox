@@ -61,6 +61,7 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
     private String proId;
     private ExpertsZhongchouResultBean expertsZhongchouResultBean;
     MyExpertsZhonChouAdapter adapter;
+    private boolean toast = false;
 
     public ExpertsZhongChouFragment() {
     }
@@ -228,6 +229,7 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
 //            mDialog.show();
         } else {
 //            mDialog.dismiss();
+            toast = false;
         }
         //模拟进行数据的分页加载
         if (judgeCanLoadMore && bean.isBootom()) {
@@ -239,14 +241,20 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
 //                getZhongChouList(currentpage);
 //            }
             if (++currentpage >= expertsZhongchouResultBean.getExecDatas().getTotalPage()) {
-                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+                if (!toast) {
+                    Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+                    toast = true;
+                }
             } else {
                 Toast.makeText(getContext(), "正在加载中", Toast.LENGTH_SHORT).show();
                 getExpertsZhongChouList(proId, "" + currentpage);
             }
         }
         if (!judgeCanLoadMore && bean.isBootom()) {
-            Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+            if (!toast) {
+                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+                toast = true;
+            }
         }
 
     }

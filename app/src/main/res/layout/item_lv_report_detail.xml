@@ -371,7 +371,7 @@
         android:id="@+id/rang_zhong"
         style="@style/CornerLabelView.Default"
         app:clvFillColor="@color/red"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="163dp"
         android:layout_alignParentRight="true"
         app:clvFlags="triangle"
         app:clvPaddingCenter="-9dp"
@@ -379,13 +379,12 @@
         android:visibility="gone"
         app:clvText1Color="@color/black"
         app:clvText1="已中" />
-        />
     <com.github.czy1121.view.CornerLabelView
         android:id="@+id/rang_weizhong"
         android:visibility="gone"
         style="@style/CornerLabelView.Default"
         app:clvFillColor="@color/white"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="163dp"
         android:layout_alignParentRight="true"
         app:clvFlags="triangle"
         app:clvPaddingCenter="-9dp"

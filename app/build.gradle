@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.micai.fox"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
         manifestPlaceholders = [
@@ -50,7 +50,7 @@ android {
         }
         useLibrary 'org.apache.http.legacy'
     }
-    flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有..
+    /*flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有..
     productFlavors {
         xiaomi {}
         _360 {}
@@ -60,7 +60,7 @@ android {
 
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
-    }
+    }*/
 }
 
 dependencies {

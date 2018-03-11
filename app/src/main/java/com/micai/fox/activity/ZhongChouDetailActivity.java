@@ -341,7 +341,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                         zhongchouDetailTvRate.setText("" + zhongChouDetailResultBean.getExecDatas().getHitRate());
                         BigDecimal score = null;
                         try {
-                            score = Tools.div(zhongChouDetailResultBean.getExecDatas().getRealAmount(), zhongChouDetailResultBean.getExecDatas().getAmountDown(), 0);
+                            score = Tools.div(zhongChouDetailResultBean.getExecDatas().getRealAmount(), zhongChouDetailResultBean.getExecDatas().getAmountDown(), 2);
                             score = score.multiply(new BigDecimal(100));
                             LogUtil.e("YJL", "score==" + score);
                         } catch (IllegalAccessException e) {

@@ -77,8 +77,8 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeZhongChouResultBea
         TextView tv_status = ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_state));
         BigDecimal score = null;
         try {
-            score = Tools.div(mList.get(position).getRealAmount(), mList.get(position).getAmountDown(), 0);
-            LogUtil.e("YJL", mList.get(position).getRealAmount() + mList.get(position).getAmountDown() + "score==" + score);
+            score = Tools.div(mList.get(position).getRealAmount(), mList.get(position).getAmountDown(), 2);
+            LogUtil.e("YJL", mList.get(position).getRealAmount()+"====" + mList.get(position).getAmountDown() + "score==" + score);
             score = score.multiply(new BigDecimal(100));
             LogUtil.e("YJL", "score==" + score);
         } catch (IllegalAccessException e) {

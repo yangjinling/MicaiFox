@@ -3,6 +3,7 @@ package com.micai.fox.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -198,7 +199,9 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                     if (myZhongChouOrderResultBean.isExecResult()) {
                         detailZhongchouTvOrderid.setText("" + myZhongChouOrderResultBean.getExecDatas().getOrderId());
                         zhongchouDetailTvTalk.setText("                " + myZhongChouOrderResultBean.getExecDatas().getTitle());
+
                         initStatus();
+
                         String date = DateUtil.getDateToString(myZhongChouOrderResultBean.getExecDatas().getCreateDate());
 
                         orderTvTimeXiadan.setText("" + date);
@@ -206,9 +209,11 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                         orderTvMoneyPay.setText("￥" + myZhongChouOrderResultBean.getExecDatas().getPurchaseAmount());
                         orderTvMoneyDuifu.setText("￥" + myZhongChouOrderResultBean.getExecDatas().getCashAmount());
 
-//                        String datePay = DateUtil.getDateToString(myZhongChouOrderResultBean.getExecDatas().getPayDate());
-//
-//                        orderTvTimePay.setText("" + datePay);
+                        if (null != myZhongChouOrderResultBean.getExecDatas().getPayDate() && !TextUtils.isEmpty(myZhongChouOrderResultBean.getExecDatas().getPayDate())) {
+                            String datePay = DateUtil.getDateToString(Long.parseLong(myZhongChouOrderResultBean.getExecDatas().getPayDate()));
+                            orderTvTimePay.setText("" + datePay);
+                        }
+
 
                     }
                 }

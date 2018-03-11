@@ -8,7 +8,7 @@ public class MyZhongChouOrderResultBean {
 
     /**
      * execResult : true
-     * execDatas : {"orderId":"23459453a7514a53b68eff75ff381cec1519401930691","orderStatus":1,"purchaseAmount":100,"createDate":1519401931000,"payDate":"","cashDate":"","payType":"","cashAmount":"","title":"众筹标题","crowdfundingStatus":4,"endDate":1519488000000,"amountDown":300}
+     * execDatas : {"orderId":"f25322e548514c4b875ea319c8ad28411520683867501","orderStatus":0,"purchaseAmount":10,"createDate":1520683868000,"payDate":"","payType":"","cashAmount":"","title":"test031001","crowdfundingStatus":1,"endDate":1520784000000,"amountDown":100,"cashDate":1520870400000}
      * count : 0
      * num : 0
      */
@@ -52,32 +52,32 @@ public class MyZhongChouOrderResultBean {
 
     public static class ExecDatasBean {
         /**
-         * orderId : 23459453a7514a53b68eff75ff381cec1519401930691
-         * orderStatus : 1
-         * purchaseAmount : 100.0
-         * createDate : 1519401931000
+         * orderId : f25322e548514c4b875ea319c8ad28411520683867501
+         * orderStatus : 0
+         * purchaseAmount : 10.0
+         * createDate : 1520683868000
          * payDate :
-         * cashDate :
          * payType :
          * cashAmount :
-         * title : 众筹标题
-         * crowdfundingStatus : 4
-         * endDate : 1519488000000
-         * amountDown : 300.0
+         * title : test031001
+         * crowdfundingStatus : 1
+         * endDate : 1520784000000
+         * amountDown : 100.0
+         * cashDate : 1520870400000
          */
 
         private String orderId;
         private int orderStatus;
         private double purchaseAmount;
         private long createDate;
-        private long payDate;
-        private long cashDate;
+        private String payDate;
         private String payType;
         private String cashAmount;
         private String title;
         private int crowdfundingStatus;
         private long endDate;
         private double amountDown;
+        private long cashDate;
 
         public String getOrderId() {
             return orderId;
@@ -111,20 +111,12 @@ public class MyZhongChouOrderResultBean {
             this.createDate = createDate;
         }
 
-        public long getPayDate() {
+        public String getPayDate() {
             return payDate;
         }
 
-        public void setPayDate(long payDate) {
+        public void setPayDate(String payDate) {
             this.payDate = payDate;
-        }
-
-        public long getCashDate() {
-            return cashDate;
-        }
-
-        public void setCashDate(long cashDate) {
-            this.cashDate = cashDate;
         }
 
         public String getPayType() {
@@ -173,6 +165,14 @@ public class MyZhongChouOrderResultBean {
 
         public void setAmountDown(double amountDown) {
             this.amountDown = amountDown;
+        }
+
+        public long getCashDate() {
+            return cashDate;
+        }
+
+        public void setCashDate(long cashDate) {
+            this.cashDate = cashDate;
         }
     }
 }

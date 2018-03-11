@@ -47,7 +47,7 @@ public class MyExpertsZhonChouAdapter extends MyBaseAdapter<ExpertsZhongchouResu
         ProgressBar pb_liu = ((ProgressBar) viewHolder.findViewById(R.id.experts_zhongchou_prograss_liubiao));
         BigDecimal score = null;
         try {
-            score = Tools.div(list.get(position).getRealAmount(), list.get(position).getAmountDown(), 0);
+            score = Tools.div(list.get(position).getRealAmount(), list.get(position).getAmountDown(), 2);
             LogUtil.e("YJL", list.get(position).getRealAmount() + list.get(position).getAmountDown() + "score==" + score);
             score = score.multiply(new BigDecimal(100));
             LogUtil.e("YJL", "score==" + score);

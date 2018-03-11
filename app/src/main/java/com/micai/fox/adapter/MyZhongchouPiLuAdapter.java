@@ -86,6 +86,7 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
                 }
                 if (all) {
                     //让球+胜负平
+                    viewHolder.needReInflate=true;
                     rang_ll.setVisibility(View.VISIBLE);
                     pilu_view_rang.setVisibility(View.VISIBLE);
                     pilu_content_rang_touzhu1.setVisibility(View.GONE);
@@ -164,6 +165,7 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
                     }
                 } else {
                     //让球
+                    viewHolder.needReInflate=true;
                     rang_ll.setVisibility(View.GONE);
                     pilu_view_rang.setVisibility(View.GONE);
                     pilu_content_touzhu1.setVisibility(View.GONE);
@@ -204,6 +206,7 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
                 }
             } else {
                 //胜负平
+                viewHolder.needReInflate=true;
                 rang_ll.setVisibility(View.GONE);
                 pilu_view_rang.setVisibility(View.GONE);
                 pilu_content_touzhu1.setVisibility(View.GONE);

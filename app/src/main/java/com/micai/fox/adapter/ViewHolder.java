@@ -14,7 +14,7 @@ public class ViewHolder {
     public View getmConvertView() {
         return mConvertView;
     }
-
+    public  boolean needReInflate;
     public ViewHolder(Context Context,int resId) {
         mConvertView = LayoutInflater.from(Context).inflate(resId, null);
         mConvertView.setTag(this);//给 view 设置 tag
@@ -23,6 +23,8 @@ public class ViewHolder {
     public static ViewHolder getHolder(View convertView,Context context,int resId) {
         ViewHolder viewHolder = null;
         if (convertView == null) {
+            viewHolder = new ViewHolder(context,resId);
+        }else if (((ViewHolder) convertView.getTag()).needReInflate){
             viewHolder = new ViewHolder(context,resId);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();

@@ -191,12 +191,12 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <!--友盟-->
-        <meta-data
+       <!-- <meta-data
             android:name="UMENG_APPKEY"
             android:value="YOUR_APP_KEY" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}" />
+            android:value="${UMENG_CHANNEL_VALUE}" />-->
 
         <service
             android:name="com.micai.fox.service.PushService"

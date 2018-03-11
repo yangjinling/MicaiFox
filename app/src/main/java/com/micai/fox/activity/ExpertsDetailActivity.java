@@ -134,7 +134,7 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
         proId = getIntent().getStringExtra("proId");
         getExpertsDetail(proId);
         initControls();
-        mHandler.post(scrollViewRunable);
+//        mHandler.post(scrollViewRunable);
         expertsDetailViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -152,6 +152,7 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
             }
         });
         expertsDetailViewpager.resetHeight(0);
+        expertsDetailViewpager.setOffscreenPageLimit(2);
         scrollView.setOnScrollToBottomListener(this);
     }
 
@@ -251,7 +252,6 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
         //tab_FindFragment_title.setViewPager(vp_FindFragment_pager);
         //TabLayout加载viewpager
         expertsDetailTablayout.setupWithViewPager(expertsDetailViewpager);
-        expertsDetailViewpager.setOffscreenPageLimit(2);
         //为TabLayout添加tab名称
         /* for (int i = 0; i < 4; i++) {
             tabLayout.addTab(tabLayout.newTab().setText(list_title.get(i)));

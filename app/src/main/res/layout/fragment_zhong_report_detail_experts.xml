@@ -15,7 +15,8 @@
         android:layout_height="match_parent"
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp"
-        android:footerDividersEnabled="false"
+        android:paddingBottom="10dp"
+        android:footerDividersEnabled="true"
         android:scrollbars="none"></com.micai.fox.view.MyListView>
 
 </LinearLayout>

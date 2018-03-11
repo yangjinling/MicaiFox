@@ -11,8 +11,8 @@ import java.util.List;
 /**
  * Created by yjl on 15/12/7.
  */
-public abstract class MyBaseAdapter <T> extends BaseAdapter {
-    private  List<T> list;//封装有数据的数据源
+public abstract class MyBaseAdapter<T> extends BaseAdapter {
+    private List<T> list;//封装有数据的数据源
     private Context context;
     private int resId;//listview item 的资源 id
 
@@ -24,10 +24,7 @@ public abstract class MyBaseAdapter <T> extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (list != null) {
-            return list.size();
-        }
-        return 0;
+        return list.size();
     }
 
     @Override
@@ -44,8 +41,9 @@ public abstract class MyBaseAdapter <T> extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = ViewHolder.getHolder(convertView, context, resId);
         //需要显示内容
-        setData(holder,position);
+        setData(holder, position);
         return holder.getmConvertView();
     }
-    public abstract void setData(ViewHolder viewHolder,int position);
+
+    public abstract void setData(ViewHolder viewHolder, int position);
 }
