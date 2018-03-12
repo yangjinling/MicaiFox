@@ -73,9 +73,11 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
             TextView pilu_content_rang_touzhu1 = ((TextView) view.findViewById(R.id.pilu_content_rang_touzhu1));
             TextView pilu_content_rang_touzhu2 = ((TextView) view.findViewById(R.id.pilu_content_rang_touzhu2));
             TextView pilu_content_rang_touzhu3 = ((TextView) view.findViewById(R.id.pilu_content_rang_touzhu3));
-            Date date = new Date(Integer.parseInt(matchBean.getIssue().substring(0, 4)), Integer.parseInt(matchBean.getIssue().substring(4, 6)) - 1, Integer.parseInt(matchBean.getIssue().substring(6)));
-            String data = DateUtil.getWeekOfDate(date);
-            changci.setText("" + data + matchBean.getSeq());
+//            Date date = new Date(Integer.parseInt(matchBean.getIssue().substring(0, 4)), Integer.parseInt(matchBean.getIssue().substring(4, 6)) - 1, Integer.parseInt(matchBean.getIssue().substring(6)));
+            if (null != matchBean.getIssue()) {
+                String data = DateUtil.getWeekByDateStr(matchBean.getIssue());
+                changci.setText("" + data + matchBean.getSeq());
+            }
             String[] split = matchBean.getSelections().split(",");
             boolean all = false;
             if (matchBean.getSelections().contains("R")) {
@@ -86,7 +88,7 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
                 }
                 if (all) {
                     //让球+胜负平
-                    viewHolder.needReInflate=true;
+                    viewHolder.needReInflate = true;
                     rang_ll.setVisibility(View.VISIBLE);
                     pilu_view_rang.setVisibility(View.VISIBLE);
                     pilu_content_rang_touzhu1.setVisibility(View.GONE);
@@ -165,7 +167,7 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
                     }
                 } else {
                     //让球
-                    viewHolder.needReInflate=true;
+                    viewHolder.needReInflate = true;
                     rang_ll.setVisibility(View.GONE);
                     pilu_view_rang.setVisibility(View.GONE);
                     pilu_content_touzhu1.setVisibility(View.GONE);
@@ -206,7 +208,7 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
                 }
             } else {
                 //胜负平
-                viewHolder.needReInflate=true;
+                viewHolder.needReInflate = true;
                 rang_ll.setVisibility(View.GONE);
                 pilu_view_rang.setVisibility(View.GONE);
                 pilu_content_touzhu1.setVisibility(View.GONE);

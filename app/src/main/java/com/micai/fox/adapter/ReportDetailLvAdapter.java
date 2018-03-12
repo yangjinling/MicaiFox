@@ -83,7 +83,7 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
             }
             if (all) {
                 //让球+胜负平
-                viewHolder.needReInflate=true;
+                viewHolder.needReInflate = true;
                 popLl.setVisibility(View.VISIBLE);
                 popRang.setVisibility(View.VISIBLE);
                 LogUtil.e("YJL", "让球+胜负平");
@@ -99,14 +99,15 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                 rang_zhong.setVisibility(View.GONE);
                 String data = "";
                 if (null != bean.getIssue() && !"undefined".equals(bean.getIssue())) {
-                    Date dates = new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)) - 1, Integer.parseInt(bean.getIssue().substring(6)));
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                    try {
-                        dates = format.parse(bean.getIssue());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    data = DateUtil.getWeekOfDate(dates);
+//                    Date dates = new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)) - 1, Integer.parseInt(bean.getIssue().substring(6)));
+//                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//                    try {
+//                        dates = format.parse(bean.getIssue());
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+                    data = DateUtil.getWeekByDateStr(bean.getIssue());
+//                    data = DateUtil.getWeekOfDate(dates);
                     LogUtil.e("YJL", "日期" + Integer.parseInt(bean.getIssue().substring(0, 4)) + (Integer.parseInt(bean.getIssue().substring(4, 6)) - 1) + bean.getIssue().substring(6) + new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)), Integer.parseInt(bean.getIssue().substring(6))) + data);
                     pop_changci.setText("" + data + bean.getSeq());
                 }
@@ -216,7 +217,7 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                 }
             } else {
                 //只有让球
-                viewHolder.needReInflate=true;
+                viewHolder.needReInflate = true;
                 LogUtil.e("YJL", "让球");
                 popLl.setVisibility(View.VISIBLE);
                 popRang.setVisibility(View.GONE);
@@ -228,15 +229,18 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                 pop_zhong.setVisibility(View.GONE);
 //            String date = DateUtil.getWeekOfDate(DateUtil.stringToDate(bean.getIssue(), DateUtil.DatePattern.ONLY_DAYS));
                 LogUtil.e("YJL", "日期" + Integer.parseInt(bean.getIssue().substring(0, 4)) + (Integer.parseInt(bean.getIssue().substring(4, 6)) - 1) + bean.getIssue().substring(6) + new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)), Integer.parseInt(bean.getIssue().substring(6)))/*+date*/);
-                Date date = new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)) - 1, Integer.parseInt(bean.getIssue().substring(6)));
+             /*   Date date = new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)) - 1, Integer.parseInt(bean.getIssue().substring(6)));
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     date = format.parse(bean.getIssue());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                String data = DateUtil.getWeekOfDate(date);
-                pop_changci.setText("" + data + bean.getSeq());
+                String data = DateUtil.getWeekOfDate(date);*/
+                if (null != bean.getIssue()) {
+                    String data = DateUtil.getWeekByDateStr(bean.getIssue());
+                    pop_changci.setText("" + data + bean.getSeq());
+                }
                 pop_title.setText("[" + bean.getGameName() + "]");
                 pop_time.setText("" + DateUtil.getDateToMatchString(bean.getMatchTime()));
                 pop_homename.setText("" + bean.getHomeTeamName());
@@ -295,7 +299,7 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
             }
         } else {
             //胜负平
-            viewHolder.needReInflate=true;
+            viewHolder.needReInflate = true;
             LogUtil.e("YJL", "胜负平");
             popLl.setVisibility(View.VISIBLE);
             popRang.setVisibility(View.GONE);
@@ -303,15 +307,18 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
             pop_zhong.setVisibility(View.GONE);
 //            String date = DateUtil.getWeekOfDate(DateUtil.stringToDate(bean.getIssue(), DateUtil.DatePattern.ONLY_DAYS));
             LogUtil.e("YJL", "日期" + Integer.parseInt(bean.getIssue().substring(0, 4)) + (Integer.parseInt(bean.getIssue().substring(4, 6)) - 1) + bean.getIssue().substring(6) + new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)), Integer.parseInt(bean.getIssue().substring(6)))/*+date*/);
-            Date date = new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)) - 1, Integer.parseInt(bean.getIssue().substring(6)));
+           /* Date date = new Date(Integer.parseInt(bean.getIssue().substring(0, 4)), Integer.parseInt(bean.getIssue().substring(4, 6)) - 1, Integer.parseInt(bean.getIssue().substring(6)));
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 date = format.parse(bean.getIssue());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            String data = DateUtil.getWeekOfDate(date);
-            pop_changci.setText("" + data + bean.getSeq());
+            String data = DateUtil.getWeekOfDate(date);*/
+            if (null != bean.getIssue()) {
+                String data = DateUtil.getWeekByDateStr(bean.getIssue());
+                pop_changci.setText("" + data + bean.getSeq());
+            }
             pop_title.setText("[" + bean.getGameName() + "]");
             pop_time.setText("" + DateUtil.getDateToMatchString(bean.getMatchTime()));
             pop_homename.setText("" + bean.getHomeTeamName());
