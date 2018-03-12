@@ -8,18 +8,26 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp">
-        <com.micai.fox.view.CyDownProgressView
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:layout_centerInParent="true"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/progress"
+            style="@style/SpinKitView.Circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:SpinKit_Color="@color/white" />
+        <!--<com.micai.fox.view.CyDownProgressView
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:id="@+id/progress"
             android:layout_centerInParent="true"
-            />
+            />-->
         <TextView
             android:layout_below="@id/progress"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_centerInParent="true"
-            android:textColor="@android:color/holo_orange_light"
+            android:textColor="@color/white"
             android:text="正在加载"/>
     </RelativeLayout>
 
