@@ -50,6 +50,7 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
     MyReportAdapter adapter;
     private MyReportResultBean myReportResultBean;
     private List<MyReportResultBean.ExecDatasBean.RecordListBean> recordList;
+    private View footer_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,9 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
         tvTitle.setText("我的报告");
         headView = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.headview_lv, null);
         lvMyreport.addHeaderView(headView);
+        footer_view = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv, null);
+        lvMyreport.addFooterView(footer_view);
+        tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
         getReportList("0");
         adapter = new MyReportAdapter(data, this, R.layout.item_lv_myreport);
         lvMyreport.setAdapter(adapter);
@@ -68,8 +72,8 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MyReportActivity.this, ReportDetailActivity.class);
-                LogUtil.e("YJl","size=="+data.size()+"position=="+i);
-                intent.putExtra("reportId",data.get(i-1).getReportId());
+                LogUtil.e("YJl", "size==" + data.size() + "position==" + i);
+                intent.putExtra("reportId", data.get(i - 1).getReportId());
                 startActivity(intent);
             }
         });
@@ -118,6 +122,9 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
                         recordList = myReportResultBean.getExecDatas().getRecordList();
                         data.addAll(recordList);
                         adapter.notifyDataSetChanged();
+                        if (tv_foot.getVisibility() == View.VISIBLE) {
+                            tv_foot.setVisibility(View.GONE);
+                        }
                     }
                 }
             }
@@ -139,14 +146,13 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
                 break;
         }
     }
+
     private boolean isBottom = false;//是否到第20条数据了
     private int curPageNum = 1;
-    private int lastItem;
-    private int totalItem;
+    TextView tv_foot;
+
     @Override
     public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-        this.lastItem = i + i1;
-        this.totalItem = i2;
               /*i:屏幕中第一个可见item的下标
               * i1:可见item数量
             * i2:itme的总数量*/
@@ -157,16 +163,22 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
             isBottom = false;
             LogUtil.e("YJL", "isBottom222===" + isBottom);
         }
-        if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum-1) * 20)) {
+        if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum - 1) * 20)) {
             LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
             if (++curPageNum <= myReportResultBean.getExecDatas().getTotalPage()) {
                 LogUtil.e("YJL", "curPageNum==" + curPageNum);
 //                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
+                tv_foot.setVisibility(View.VISIBLE);
+                tv_foot.setText("加载中…");
                 getReportList("" + curPageNum);
-                Toast.makeText(this, "加载中…", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "加载中…", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "没有更多了", Toast.LENGTH_SHORT).show();
-//                ToolsC.CenterToast(getContext(), "没有更多数据");
+                tv_foot.setVisibility(View.VISIBLE);
+                tv_foot.setText("没有更多了");//                ToolsC.CenterToast(getContext(), "没有更多数据");
+            }
+        } else {
+            if (tv_foot.getVisibility() == View.VISIBLE) {
+                tv_foot.setVisibility(View.GONE);
             }
         }
     }

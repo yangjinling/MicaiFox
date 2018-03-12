@@ -298,11 +298,16 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
     private int currentpage = 1;
     private boolean judgeCanLoadMore = true;
     private int totalCount = 20;//设置本次加载的数据的总数
+    TextView tv_foot;
 
     @Override
     public void onScrollBottomListener(boolean isBottom) {
-        //模拟进行数据的分页加载
-        if (judgeCanLoadMore && isBottom) {
+        if (!isBottom) {
+            tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
+            tv_foot.setVisibility(View.GONE);
+        } else {
+            //模拟进行数据的分页加载
+            if (judgeCanLoadMore && isBottom) {
 //            commentLv.startLoading();
 //            if (currentpage == 0) {
 //                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
@@ -310,15 +315,25 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
 //                Toast.makeText(getContext(), "正在加载中", Toast.LENGTH_SHORT).show();
 //                getZhongChouList(currentpage);
 //            }
-            if (++currentpage >= homeZhongChouResultBean.getExecDatas().getTotalPage()) {
-                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getContext(), "正在加载中", Toast.LENGTH_SHORT).show();
-                getZhongChouList(currentpage);
+                if (++currentpage > homeZhongChouResultBean.getExecDatas().getTotalPage()) {
+                    tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
+                    tv_foot.setVisibility(View.VISIBLE);
+                    tv_foot.setText("没有更多了");
+//                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+                } else {
+                    tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
+                    tv_foot.setVisibility(View.VISIBLE);
+                    tv_foot.setText("加载中...");
+//                Toast.makeText(getContext(), "正在加载中", Toast.LENGTH_SHORT).show();
+                    getZhongChouList(currentpage);
+                }
             }
-        }
-        if (!judgeCanLoadMore && isBottom) {
-            Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+            if (!judgeCanLoadMore && isBottom) {
+                tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
+                tv_foot.setVisibility(View.VISIBLE);
+                tv_foot.setText("没有更多了");
+//            Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -359,6 +374,9 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
 //                    }
                         adapter.notifyDataSetChanged();
 //                        mHandler.post(scrollViewRunable);
+                        tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
+                        if (tv_foot.getVisibility() == View.VISIBLE)
+                            tv_foot.setVisibility(View.GONE);
                         initLoadMoreTagOp();
 //                        currentpage++;
                     }

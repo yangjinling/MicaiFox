@@ -353,8 +353,13 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                         } else {
                             zhongchouDetailPrograss1.setProgress(score.intValue());
                         }
-                        if (!"0".equals(status))
+                        if ("0".equals(status)) {
+                            homeZhongTvState.setText("未开始");
+                        } else if ("9".equals(status)) {
+                            homeZhongTvState.setText("流标");
+                        } else {
                             homeZhongTvState.setText("" + score.intValue() + "%");
+                        }
                     }
                 }
             }

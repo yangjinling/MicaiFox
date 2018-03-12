@@ -346,6 +346,7 @@
     </ScrollView>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_zhongchou_detail_order_pay"
         android:layout_width="match_parent"
         android:layout_height="50dp"

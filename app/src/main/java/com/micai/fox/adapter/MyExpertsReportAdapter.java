@@ -25,6 +25,7 @@ public class MyExpertsReportAdapter extends MyBaseAdapter<ExpertsReportResultBea
 
     @Override
     public void setData(ViewHolder viewHolder, int position) {
+        viewHolder.needReInflate=true;
         ((TextView) viewHolder.findViewById(R.id.experts_report_title)).setText("" + mList.get(position).getTitle());
         ((TextView) viewHolder.findViewById(R.id.experts_report_tv_title)).setText("【" + mList.get(position).getGameName() + "】");
         ((TextView) viewHolder.findViewById(R.id.experts_report_tv_country1)).setText("" + mList.get(position).getHomeTeamName());

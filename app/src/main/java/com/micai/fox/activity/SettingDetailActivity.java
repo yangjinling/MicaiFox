@@ -124,6 +124,9 @@ public class SettingDetailActivity extends AppCompatActivity {
                     phoneBtnConfirm.setClickable(true);
                     break;
                 case 5://phone---修改成功
+                    if (null != phoneDialog && phoneDialog.isShowing()) {
+                        phoneDialog.dismiss();
+                    }
                     finish();
                     break;
                 case 6:

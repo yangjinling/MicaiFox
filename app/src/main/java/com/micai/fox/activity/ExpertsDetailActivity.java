@@ -152,7 +152,7 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
             }
         });
         expertsDetailViewpager.resetHeight(0);
-        expertsDetailViewpager.setOffscreenPageLimit(2);
+        expertsDetailViewpager.setOffscreenPageLimit(0);
         scrollView.setOnScrollToBottomListener(this);
     }
 

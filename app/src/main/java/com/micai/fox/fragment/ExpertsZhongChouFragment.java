@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -29,6 +30,7 @@ import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.ExpertsResultBean;
 import com.micai.fox.resultbean.ExpertsZhongchouResultBean;
 import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.LvUtil;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -51,7 +53,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  */
 
 /*专家--众筹模块*/
-public class ExpertsZhongChouFragment extends Fragment implements AbsListView.OnScrollListener {
+public class ExpertsZhongChouFragment extends Fragment {
     private int kind;
     //    private TextView tv;
     private ArrayList<ExpertsZhongchouResultBean.ExecDatasBean.RecordListBean> data = new ArrayList<>();
@@ -79,9 +81,12 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
         lv.setFocusable(false);
         EventBus.getDefault().register(this);
         proId = getArguments().getString("proId");
-        getExpertsZhongChouList(proId, "0");
+//        LvUtil.setListViewHeightBasedOnChildren(lv);
+        footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv, null);
+        lv.addFooterView(footer_view);
         adapter = new MyExpertsZhonChouAdapter(data, getContext(), R.layout.item_lv_experts_zhongchou);
         lv.setAdapter(adapter);
+        getExpertsZhongChouList(proId, "0");
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -126,6 +131,9 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
                     if (expertsZhongchouResultBean.isExecResult()) {
                         data.addAll(expertsZhongchouResultBean.getExecDatas().getRecordList());
                         adapter.notifyDataSetChanged();
+                        tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
+                        if (tv_foot.getVisibility() == View.VISIBLE)
+                            tv_foot.setVisibility(View.GONE);
                         initLoadMoreTagOp();
 //                        currentpage++;
                     }
@@ -140,86 +148,9 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
         super.onDestroyView();
     }
 
-    public interface OnSwipeIsValid {
-        public void setSwipeEnabledTrue();
-
-        public void setSwipeEnabledFalse();
-    }
-
-    private ExpertsZhongChouFragment.OnSwipeIsValid isValid = new ExpertsZhongChouFragment.OnSwipeIsValid() {
-        @Override
-        public void setSwipeEnabledTrue() {
-//            walletSwiperefresh.setEnabled(true);//让swipe起作用，能够刷新
-//            isCanRefresh = true;
-        }
-
-        @Override
-        public void setSwipeEnabledFalse() {
-//            walletSwiperefresh.setEnabled(false);//让swipe不能够刷新
-//            isCanRefresh = false;
-        }
-    };
-    private int lastItem;
-    private int totalItem;
-    private boolean isBottom = false;//是否到第20条数据了
-    private int curPageNum = 0;
-
-    @Override
-    public void onScrollStateChanged(AbsListView absListView, int i) {
-        LogUtil.e("YJL---", "+进来了没有");
-        switch (i) {
-            case SCROLL_STATE_IDLE://空闲状态
-                LogUtil.e("YJL", "+进来了没有空闲");
-                break;
-            case SCROLL_STATE_TOUCH_SCROLL://滚状态
-                LogUtil.e("YJL", "+进来了没有滚");
-                break;
-            case SCROLL_STATE_FLING://飞状态
-                LogUtil.e("YJL", "+进来了没有飞");
-                break;
-        }
-        //判断ListView是否滑动到第一个Item的顶部
-        if (isValid != null && lv.getChildCount() > 0 && lv.getFirstVisiblePosition() == 0
-                && lv.getChildAt(0).getTop() >= lv.getPaddingTop()) {
-            //解决滑动冲突，当滑动到第一个item，下拉刷新才起作用
-            isValid.setSwipeEnabledTrue();
-        } else {
-            isValid.setSwipeEnabledFalse();
-        }
-    }
-
-    @Override
-    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-        this.lastItem = i + i1;
-        this.totalItem = i2;
-              /*i:屏幕中第一个可见item的下标
-              * i1:可见item数量
-            * i2:itme的总数量*/
-        if (i2 != 0 && i + i1 == i2) {
-            isBottom = true;
-            LogUtil.e("YJL", "isBottom111===" + isBottom);
-        } else {
-            isBottom = false;
-            LogUtil.e("YJL", "isBottom222===" + isBottom);
-        }
-        if (absListView.getLastVisiblePosition() >= 20 + (curPageNum * 20)) {
-            LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
-            if (++curPageNum <= expertsZhongchouResultBean.getExecDatas().getTotalPage()) {
-                LogUtil.e("YJL", "curPageNum==" + curPageNum);
-//                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
-                getExpertsZhongChouList(proId, "" + curPageNum);
-                Toast.makeText(getContext(), "加载中…", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getContext(), "没有更多了", Toast.LENGTH_SHORT).show();
-//                ToolsC.CenterToast(getContext(), "没有更多数据");
-            }
-        }
-    }
-
-    private int pagesize = 20;
     private int currentpage = 1;
     private boolean judgeCanLoadMore = true;
-    private int totalCount = 20;//设置本次加载的数据的总数
+    TextView tv_foot;
 
     //给网络请求加缓冲小黄圈
     @Subscribe
@@ -227,12 +158,8 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
         LogUtil.e("YJL", "isBootom" + bean.isBootom());
         if (bean.isBootom()) {
 //            mDialog.show();
-        } else {
-//            mDialog.dismiss();
-            toast = false;
-        }
-        //模拟进行数据的分页加载
-        if (judgeCanLoadMore && bean.isBootom()) {
+            //模拟进行数据的分页加载
+            if (judgeCanLoadMore && bean.isBootom()) {
 //            commentLv.startLoading();
 //            if (currentpage == 0) {
 //                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
@@ -240,22 +167,29 @@ public class ExpertsZhongChouFragment extends Fragment implements AbsListView.On
 //                Toast.makeText(getContext(), "正在加载中", Toast.LENGTH_SHORT).show();
 //                getZhongChouList(currentpage);
 //            }
-            if (++currentpage >= expertsZhongchouResultBean.getExecDatas().getTotalPage()) {
-                if (!toast) {
-                    Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+                if (++currentpage >= expertsZhongchouResultBean.getExecDatas().getTotalPage()) {
+                    tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
+                    tv_foot.setVisibility(View.VISIBLE);
+                    tv_foot.setText("没有更多了");
                     toast = true;
+                } else {
+                    tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
+                    tv_foot.setVisibility(View.VISIBLE);
+                    tv_foot.setText("加载中...");
+                    getExpertsZhongChouList(proId, "" + currentpage);
                 }
-            } else {
-                Toast.makeText(getContext(), "正在加载中", Toast.LENGTH_SHORT).show();
-                getExpertsZhongChouList(proId, "" + currentpage);
             }
-        }
-        if (!judgeCanLoadMore && bean.isBootom()) {
-            if (!toast) {
-                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
-                toast = true;
+            if (!judgeCanLoadMore && bean.isBootom()) {
+                tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
+                tv_foot.setVisibility(View.VISIBLE);
+                tv_foot.setText("没有更多了");
             }
+        } else {
+//            mDialog.dismiss();
+            tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
+            tv_foot.setVisibility(View.GONE);
         }
+
 
     }
 

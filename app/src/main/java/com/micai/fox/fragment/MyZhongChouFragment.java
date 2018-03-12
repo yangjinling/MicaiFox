@@ -51,6 +51,7 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
     private View headView;
     private MyZhongChouResultBean myZhongChouResultBean;
     MyZhonChouAdapter adapter;
+    private View footer_view;
 
     @Nullable
     @Override
@@ -84,6 +85,9 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
 //        data = getData();
         headView = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.headview_lv, null);
         lv.addHeaderView(headView);
+        footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv, null);
+        lv.addFooterView(footer_view);
+        tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -133,6 +137,9 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
 //                        data.clear();
                         data.addAll(myZhongChouResultBean.getExecDatas().getRecordList());
                         adapter.notifyDataSetChanged();
+                        if (tv_foot.getVisibility() == View.VISIBLE) {
+                            tv_foot.setVisibility(View.GONE);
+                        }
                     }
                 }
             }
@@ -144,27 +151,6 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
         super.onDestroyView();
     }
 
-    public interface OnSwipeIsValid {
-        public void setSwipeEnabledTrue();
-
-        public void setSwipeEnabledFalse();
-    }
-
-    private MyZhongChouFragment.OnSwipeIsValid isValid = new MyZhongChouFragment.OnSwipeIsValid() {
-        @Override
-        public void setSwipeEnabledTrue() {
-//            walletSwiperefresh.setEnabled(true);//让swipe起作用，能够刷新
-//            isCanRefresh = true;
-        }
-
-        @Override
-        public void setSwipeEnabledFalse() {
-//            walletSwiperefresh.setEnabled(false);//让swipe不能够刷新
-//            isCanRefresh = false;
-        }
-    };
-    private int lastItem;
-    private int totalItem;
     private boolean isBottom = false;//是否到第20条数据了
     private int curPageNum = 1;
 
@@ -182,20 +168,13 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
                 LogUtil.e("YJL", "+进来了没有飞");
                 break;
         }
-        //判断ListView是否滑动到第一个Item的顶部
-        if (isValid != null && lv.getChildCount() > 0 && lv.getFirstVisiblePosition() == 0
-                && lv.getChildAt(0).getTop() >= lv.getPaddingTop()) {
-            //解决滑动冲突，当滑动到第一个item，下拉刷新才起作用
-            isValid.setSwipeEnabledTrue();
-        } else {
-            isValid.setSwipeEnabledFalse();
-        }
+
     }
+
+    TextView tv_foot;
 
     @Override
     public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-        this.lastItem = i + i1;
-        this.totalItem = i2;
               /*i:屏幕中第一个可见item的下标
               * i1:可见item数量
             * i2:itme的总数量*/
@@ -206,16 +185,23 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
             isBottom = false;
             LogUtil.e("YJL", "isBottom222===" + isBottom);
         }
-        if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum-1)  * 20)) {
+        if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum - 1) * 20)) {
             LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
             if (++curPageNum <= myZhongChouResultBean.getExecDatas().getTotalPage()) {
                 LogUtil.e("YJL", "curPageNum==" + curPageNum);
 //                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
-                getMyZhongChouList(kind,""+curPageNum);
-                Toast.makeText(getContext(), "加载中…", Toast.LENGTH_SHORT).show();
+                tv_foot.setVisibility(View.VISIBLE);
+                tv_foot.setText("加载中…");
+                getMyZhongChouList(kind, "" + curPageNum);
+//                Toast.makeText(getContext(), "加载中…", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getContext(), "没有更多了", Toast.LENGTH_SHORT).show();
-//                ToolsC.CenterToast(getContext(), "没有更多数据");
+//                Toast.makeText(getContext(), "没有更多了", Toast.LENGTH_SHORT).show();
+                tv_foot.setVisibility(View.VISIBLE);
+                tv_foot.setText("没有更多了");
+            }
+        } else {
+            if (tv_foot.getVisibility() == View.VISIBLE) {
+                tv_foot.setVisibility(View.GONE);
             }
         }
     }

@@ -14,6 +14,7 @@
         android:id="@+id/experts_detail_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:layout_marginTop="48dp">
 
         <LinearLayout
