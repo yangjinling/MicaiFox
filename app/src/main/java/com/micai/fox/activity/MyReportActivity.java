@@ -126,6 +126,8 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
                             tv_foot.setVisibility(View.GONE);
                         }
                     }
+                }else {
+                    //TODO 状态禁用
                 }
             }
         });

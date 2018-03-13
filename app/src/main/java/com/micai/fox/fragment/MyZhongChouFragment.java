@@ -141,6 +141,8 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
                             tv_foot.setVisibility(View.GONE);
                         }
                     }
+                }else {
+                    //TODO 状态禁用
                 }
             }
         });

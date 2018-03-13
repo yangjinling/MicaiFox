@@ -205,7 +205,7 @@ public class MineFragmnet extends Fragment {
 
     };
 
-    @OnClick({R.id.btn_login, R.id.btn_regist,R.id.tv_notify, iv_mine_head, R.id.tv_mine_nicheng, R.id.ll_mine_zhongchou, R.id.ll_mine_report, R.id.ll_mine_set})
+    @OnClick({R.id.btn_login, R.id.btn_regist, R.id.tv_notify, iv_mine_head, R.id.tv_mine_nicheng, R.id.ll_mine_zhongchou, R.id.ll_mine_report, R.id.ll_mine_set})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -566,6 +566,9 @@ public class MineFragmnet extends Fragment {
                             Glide.with(getContext()).load(Url.WEB_BASE_IP + Config.getInstance().getPhotoUrl()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(ivMineHead);
                         }
                     }
+                } else {
+                    login_mine.setVisibility(View.GONE);
+                    nologin_mine.setVisibility(View.VISIBLE);
                 }
             }
         });
