@@ -120,17 +120,18 @@
 
 
                 <TextView
-                    android:id="@+id/experts_detail_tv_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="13dp"
-                    android:layout_marginTop="10dp"
-                    android:lineSpacingExtra="5dp"
-                    android:maxLines="2"
-                    android:text=""
-                    android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                android:id="@+id/experts_detail_tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="5dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="15sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

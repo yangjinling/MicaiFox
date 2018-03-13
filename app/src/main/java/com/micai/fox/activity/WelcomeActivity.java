@@ -15,22 +15,29 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        new Handler().postDelayed(new Runnable() {
+       /* new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (PrefUtils.getBoolean(Config.getInstance().getmContext(), "ISFIRST", false)) {
                     Config.getInstance().setSessionId(PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", ""));
                     Config.getInstance().setPhone(PrefUtils.getString(Config.getInstance().getmContext(), "PHONE", ""));
-                    Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+                   *//* Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
                     startActivity(intent);
-                    finish();
+                    finish();*//*
                 } else {
                     Intent intent = new Intent(WelcomeActivity.this, IndexActivity.class);
                     startActivity(intent);
                     finish();
                 }
             }
-        },1500);
-
+        },1500);*/
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, 1500);
     }
 }

@@ -301,7 +301,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
         paramBean.setParamData(paramData);
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
-                .url(String.format(Url.WEB_HOME_ZHONGCHOU_DETAIL, Config.getInstance().getSessionId()))
+                .url(Url.WEB_HOME_ZHONGCHOU_DETAIL)
                 .content(new Gson().toJson(paramBean))
                 .build().execute(new StringCallback() {
             @Override

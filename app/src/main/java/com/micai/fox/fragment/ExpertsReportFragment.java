@@ -86,9 +86,11 @@ public class ExpertsReportFragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), ReportDetailActivity.class);
-                intent.putExtra("reportId", data.get(i).getReportId());
-                startActivity(intent);
+                if (i < data.size()) {
+                    Intent intent = new Intent(getActivity(), ReportDetailActivity.class);
+                    intent.putExtra("reportId", data.get(i).getReportId());
+                    startActivity(intent);
+                }
             }
         });
 //        lv.setOnScrollListener(this);
@@ -110,7 +112,7 @@ public class ExpertsReportFragment extends Fragment {
         paramBean.setPageNum(pageNum);
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
-                .url(String.format(Url.WEB_EXPERTS_REPORT, Config.getInstance().getSessionId()))
+                .url(Url.WEB_EXPERTS_REPORT)
                 .content(new Gson().toJson(paramBean))
                 .build().execute(new StringCallback() {
             @Override
@@ -163,7 +165,7 @@ public class ExpertsReportFragment extends Fragment {
 //                getZhongChouList(currentpage);
 //            }
                 if (++currentpage >= expertsReportResultBean.getExecDatas().getTotalPage()) {
-                        tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
+                    tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
                     tv_foot.setVisibility(View.VISIBLE);
                     tv_foot.setText("没有更多了");
                 } else {
@@ -174,9 +176,9 @@ public class ExpertsReportFragment extends Fragment {
                 }
             }
             if (!judgeCanLoadMore && bean.isBootom()) {
-                    tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
-                    tv_foot.setVisibility(View.VISIBLE);
-                    tv_foot.setText("没有更多了");
+                tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
+                tv_foot.setVisibility(View.VISIBLE);
+                tv_foot.setText("没有更多了");
             }
         } else {
             tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));

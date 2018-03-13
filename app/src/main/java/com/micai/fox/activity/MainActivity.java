@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import com.micai.fox.fragment.MineFragmnet;
 import com.micai.fox.parambean.NotiBean;
 import com.micai.fox.util.ExitAppUtils;
 import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.PrefUtils;
 import com.micai.fox.view.CyDownProgressView;
 import com.zhy.http.okhttp.callback.DialogInShow;
 
@@ -49,17 +51,20 @@ public class MainActivity extends BaseActivity {
     private Fragment[] mFragments;
     private FragmentManager mManager;
     private Handler handler;
+    private int type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        handler=new Handler();
+        handler = new Handler();
         ExitAppUtils.getInstance().addActivity(this);
         //初始化fragment
         initFragments();
+        type = getIntent().getIntExtra("TYPE", 0);
         //初始化布局
-        initLinearLayout();
+        initLinearLayout(type);
     }
 
 
@@ -71,11 +76,21 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    private void initLinearLayout() {
+    private void initLinearLayout(int type) {
         //导航
         // mMainTabBar.setOnClickListener(this);
         mManager = getSupportFragmentManager();
-        mManager.beginTransaction().replace(R.id.main_fragment, mFragments[0]).commit();
+        if (type == 1) {
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("LOGIN", true);
+            mFragments[2].setArguments(bundle);
+            rbHome.setChecked(false);
+            rbExperts.setChecked(false);
+            rbMine.setChecked(true);
+            mManager.beginTransaction().replace(R.id.main_fragment, mFragments[2]).commit();
+        } else {
+            mManager.beginTransaction().replace(R.id.main_fragment, mFragments[0]).commit();
+        }
     }
 
     @Override
@@ -109,7 +124,14 @@ public class MainActivity extends BaseActivity {
                 rbHome.setChecked(false);
                 rbExperts.setChecked(false);
                 rbMine.setChecked(true);
+                Bundle bundle = new Bundle();
+                if (null == PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", null) || TextUtils.isEmpty(PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", ""))) {
+                    bundle.putBoolean("LOGIN", false);
+                } else {
+                    bundle.putBoolean("LOGIN", true);
+                }
                 FragmentTransaction transaction3 = mManager.beginTransaction();
+                mFragments[2].setArguments(bundle);
                 transaction3.replace(R.id.main_fragment, mFragments[2]).commit();
                 break;
         }
@@ -117,20 +139,20 @@ public class MainActivity extends BaseActivity {
 
     @Subscribe
     public void onEventMainThread(NotiBean bean) {
-        LogUtil.e("eventbus",""+bean.isHaveN());
+        LogUtil.e("eventbus", "" + bean.isHaveN());
 
-        if (bean.isHaveN()){
+        if (bean.isHaveN()) {
             Config.getInstance().setNoti(true);
             handler.post(runnableUi);
 
-        }else {
+        } else {
             Config.getInstance().setNoti(false);
             handler.post(runnableUis);
         }
     }
 
     // 构建Runnable对象，在runnable中更新界面
-    Runnable runnableUi=new Runnable(){
+    Runnable runnableUi = new Runnable() {
         @Override
         public void run() {
 //更新界面
@@ -139,7 +161,7 @@ public class MainActivity extends BaseActivity {
 
     };
     // 构建Runnable对象，在runnable中更新界面
-    Runnable runnableUis=new Runnable(){
+    Runnable runnableUis = new Runnable() {
         @Override
         public void run() {
 //更新界面

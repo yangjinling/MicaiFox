@@ -80,6 +80,7 @@ public class LoginActivity extends BaseActivity {
             }
         }
     };
+    private int type;
 
 
     @Override
@@ -89,6 +90,7 @@ public class LoginActivity extends BaseActivity {
         ExitAppUtils.getInstance().addActivity(this);
         ButterKnife.bind(this);
         tvTitle.setText("登录");
+        type = getIntent().getIntExtra("TYPE", 0);
     }
 
     @Override
@@ -186,7 +188,7 @@ public class LoginActivity extends BaseActivity {
         OkHttpUtils.post().url(Url.WEB_LOGIN)
                 .addParams("username", username)
                 .addParams("password", password)
-                .addParams("deviceSys ","安卓")
+                .addParams("deviceSys ", "安卓")
                 .addParams("mobileLogin", "true").build()
                 .execute(new StringCallback() {
 
@@ -210,13 +212,15 @@ public class LoginActivity extends BaseActivity {
                                 PrefUtils.setString(Config.getInstance().getmContext(), "PHONE", loginResultBean.getExecDatas().getUser().getPhone());
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 Config.getInstance().setClientId(loginResultBean.getExecDatas().getId());
-                                PushManager.getInstance().bindAlias(getApplicationContext(),loginResultBean.getExecDatas().getId());
-//                                PushManager.getInstance().bindAlias(getApplicationContext(), "user123");
-//                                Config.getInstance().setClientId("user123");
-
-                                startActivity(intent);
-                                ExitAppUtils.getInstance().finishActivity(IndexActivity.class);
-                                ExitAppUtils.getInstance().finishActivity(LoginActivity.class);
+                                PushManager.getInstance().bindAlias(getApplicationContext(), loginResultBean.getExecDatas().getId());
+//                                startActivity(intent);
+//                                ExitAppUtils.getInstance().finishActivity(IndexActivity.class);
+//                                ExitAppUtils.getInstance().finishActivity(MainActivity.class);
+                                if (type == 0) {
+                                    ExitAppUtils.getInstance().finishAllActivities();
+                                    intent.putExtra("TYPE", 1);
+                                    startActivity(intent);
+                                }
                                 finish();
                             } else {
                                 loginEtPhone.setText("");

@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -28,10 +29,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.micai.fox.R;
+import com.micai.fox.activity.IndexActivity;
+import com.micai.fox.activity.LoginActivity;
 import com.micai.fox.activity.ModifyNiChengActivity;
 import com.micai.fox.activity.MyReportActivity;
 import com.micai.fox.activity.MyZhongChouActivity;
 import com.micai.fox.activity.NotificationActivity;
+import com.micai.fox.activity.RegistActivity;
 import com.micai.fox.activity.SettingActivity;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
@@ -41,6 +45,7 @@ import com.micai.fox.resultbean.BaseResultBean;
 import com.micai.fox.resultbean.HeadResultBean;
 import com.micai.fox.resultbean.MineResultBean;
 import com.micai.fox.util.Bimp;
+import com.micai.fox.util.ExitAppUtils;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.ChooseDialog;
@@ -98,8 +103,14 @@ public class MineFragmnet extends Fragment {
     TextView tvBack;
     @Bind(R.id.tv_mine_amount)
     TextView tvMineAmount;
-
-
+    @Bind(R.id.btn_login)
+    Button btnLogin;
+    @Bind(R.id.btn_regist)
+    Button btnRegist;
+    @Bind(R.id.nologin_mine)
+    RelativeLayout nologin_mine;
+    @Bind(R.id.login_mine)
+    LinearLayout login_mine;
     private File file;
     private Uri photoUri = null;
     private static String fileName;
@@ -116,6 +127,7 @@ public class MineFragmnet extends Fragment {
     private Uri uri;
     private MineResultBean mineResultBean;
     private Handler handler;
+    private boolean isLogin;
 
     @Nullable
     @Override
@@ -123,27 +135,35 @@ public class MineFragmnet extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
-        rl.setVisibility(View.VISIBLE);
-        tvNotify.setVisibility(View.VISIBLE);
-        tvTitle.setText("我的");
-        if (Config.getInstance().isNoti()){
-            ivNotifyPoint.setVisibility(View.VISIBLE);
-        }else {
-            ivNotifyPoint.setVisibility(View.GONE);
-        }
-        handler = new Handler();
-        Drawable drawable = getResources().getDrawable(R.mipmap.message);
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置边界
-        // param 左上右下
-        tvNotify.setCompoundDrawables(null, null, drawable, null);
+        isLogin = getArguments().getBoolean("LOGIN");
+        LogUtil.e("YJL", "isLogin==" + isLogin);
+        if (isLogin) {
+            login_mine.setVisibility(View.VISIBLE);
+            rl.setVisibility(View.VISIBLE);
+            tvNotify.setVisibility(View.VISIBLE);
+            tvTitle.setText("我的");
+            if (Config.getInstance().isNoti()) {
+                ivNotifyPoint.setVisibility(View.VISIBLE);
+            } else {
+                ivNotifyPoint.setVisibility(View.GONE);
+            }
+            handler = new Handler();
+            Drawable drawable = getResources().getDrawable(R.mipmap.message);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置边界
+            // param 左上右下
+            tvNotify.setCompoundDrawables(null, null, drawable, null);
 
-        if (savedInstanceState == null) {
-            Log.e("YJL", "personactivity第一次创建");
+            if (savedInstanceState == null) {
+                Log.e("YJL", "personactivity第一次创建");
+            } else {
+                photo = (File) savedInstanceState.getSerializable("PHOTOFILE");
+                Log.e("YJL", "personactivity恢复");
+            }
+            getMineInfo();
         } else {
-            photo = (File) savedInstanceState.getSerializable("PHOTOFILE");
-            Log.e("YJL", "personactivity恢复");
+            nologin_mine.setVisibility(View.VISIBLE);
         }
-        getMineInfo();
+
         return view;
     }
 
@@ -185,7 +205,7 @@ public class MineFragmnet extends Fragment {
 
     };
 
-    @OnClick({R.id.tv_notify, iv_mine_head, R.id.tv_mine_nicheng, R.id.ll_mine_zhongchou, R.id.ll_mine_report, R.id.ll_mine_set})
+    @OnClick({R.id.btn_login, R.id.btn_regist,R.id.tv_notify, iv_mine_head, R.id.tv_mine_nicheng, R.id.ll_mine_zhongchou, R.id.ll_mine_report, R.id.ll_mine_set})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -218,6 +238,16 @@ public class MineFragmnet extends Fragment {
                 //设置
                 intent = new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.btn_login:
+                intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+//                ExitAppUtils.getInstance().addActivity(this);
+                break;
+            case R.id.btn_regist:
+                intent = new Intent(getContext(), RegistActivity.class);
+                startActivity(intent);
+//                ExitAppUtils.getInstance().addActivity(this);
                 break;
         }
     }

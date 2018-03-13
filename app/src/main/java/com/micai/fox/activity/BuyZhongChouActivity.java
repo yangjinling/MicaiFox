@@ -28,6 +28,7 @@ import com.micai.fox.resultbean.BaseResultBean;
 import com.micai.fox.resultbean.ZhongChouDetailResultBean;
 import com.micai.fox.util.DateUtil;
 import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.PrefUtils;
 import com.micai.fox.util.Tools;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -81,7 +82,7 @@ public class BuyZhongChouActivity extends AppCompatActivity {
         tvTitle.setText("购买众筹");
         detailResultBean = ((ZhongChouDetailResultBean) getIntent().getSerializableExtra("BEAN"));
         if (null != detailResultBean) {
-            buyTvTitle.setText("                "+detailResultBean.getExecDatas().getTitle());
+            buyTvTitle.setText("                " + detailResultBean.getExecDatas().getTitle());
             buyTv1.setText("" + DateUtil.getDateToStrings(detailResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + detailResultBean.getExecDatas().getAmountDown() + "时结束众筹");
             buyTv2.setText("" + DateUtil.getDateToStrings(detailResultBean.getExecDatas().getCashDate()) + "起开始兑付");
             tv_per.setText("购买金额需为" + detailResultBean.getExecDatas().getIncrementQuota() + "元整数倍，100元起");
@@ -217,7 +218,13 @@ public class BuyZhongChouActivity extends AppCompatActivity {
             Tools.showPayPopWindow(this, view, content);
             return;
         }
-        buyZhongChou(view);
+        if (null == PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", null) || TextUtils.isEmpty(PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", ""))) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.putExtra("TYPE", 1);
+            startActivity(intent);
+        } else {
+            buyZhongChou(view);
+        }
     }
 
     private void buyZhongChou(final View view) {

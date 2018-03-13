@@ -272,7 +272,7 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         paramBean = new ParamBean();
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
-                .url(String.format(Url.WEB_HOME, Config.getInstance().getSessionId()))
+                .url(Url.WEB_HOME)
                 .content(new Gson().toJson(paramBean))
                 .build().execute(new StringCallback() {
             @Override
@@ -352,7 +352,7 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         paramBean.setLength("" + 20);
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
-                .url(String.format(Url.WEB_HOME_ZHONGCHOU, Config.getInstance().getSessionId()))
+                .url((Url.WEB_HOME_ZHONGCHOU))
                 .content(new Gson().toJson(paramBean))
                 .build().execute(new StringCallback() {
             @Override

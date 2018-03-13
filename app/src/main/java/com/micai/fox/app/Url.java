@@ -42,25 +42,25 @@ public class Url {
     /*2.2.7字典查询银行*/
     public static final String WEB_SET_BANK = WEB_BASE_URL + "sys/dict/queryDict" + WEB_BASE_SESSION;
     /*2.3.1首页--首页接口*/
-    public static final String WEB_HOME = WEB_BASE_URL + "bd/home/index" + WEB_BASE_SESSION;
+    public static final String WEB_HOME = WEB_BASE_URL + "bd/home/index" ;
     /*2.3.2首页--众筹项目列表*/
-    public static final String WEB_HOME_ZHONGCHOU = WEB_BASE_URL + "crowdfunding/listAll" + WEB_BASE_SESSION;
+    public static final String WEB_HOME_ZHONGCHOU = WEB_BASE_URL + "crowdfunding/listAll" ;
     /*2.4.1专家--专家列表*/
-    public static final String WEB_EXPERTS = WEB_BASE_URL + "sys/pro/list" + WEB_BASE_SESSION;
+    public static final String WEB_EXPERTS = WEB_BASE_URL + "sys/pro/list" ;
     /*2.4.2专家--专家详情*/
-    public static final String WEB_EXPERTS_DETAIL = WEB_BASE_URL + "sys/pro/info" + WEB_BASE_SESSION;
+    public static final String WEB_EXPERTS_DETAIL = WEB_BASE_URL + "sys/pro/info";
     /*2.4.3专家--众筹列表*/
-    public static final String WEB_EXPERTS_ZHONCHOU = WEB_BASE_URL + "crowdfunding/listByPro" + WEB_BASE_SESSION;
+    public static final String WEB_EXPERTS_ZHONCHOU = WEB_BASE_URL + "crowdfunding/listByPro" ;
     /*2.4.4专家--报告列表*/
-    public static final String WEB_EXPERTS_REPORT = WEB_BASE_URL + "report/listByPro" + WEB_BASE_SESSION;
+    public static final String WEB_EXPERTS_REPORT = WEB_BASE_URL + "report/listByPro";
     /*2.4.5众筹--众筹详情*/
-    public static final String WEB_HOME_ZHONGCHOU_DETAIL = WEB_BASE_URL + "crowdfunding/info" + WEB_BASE_SESSION;
+    public static final String WEB_HOME_ZHONGCHOU_DETAIL = WEB_BASE_URL + "crowdfunding/info" ;
     /*2.4.6众筹--众筹详情-报告Tab*/
-    public static final String WEB_HOME_ZHONGCHOU_DETAIL_REPORT = WEB_BASE_URL + "crowdfunding/report" + WEB_BASE_SESSION;
+    public static final String WEB_HOME_ZHONGCHOU_DETAIL_REPORT = WEB_BASE_URL + "crowdfunding/report" ;
     /*2.4.6众筹--众筹详情-披露Tab*/
-    public static final String WEB_HOME_ZHONGCHOU_DETAIL_PILU = WEB_BASE_URL + "crowdfunding/lotteryTicket" + WEB_BASE_SESSION;
+    public static final String WEB_HOME_ZHONGCHOU_DETAIL_PILU = WEB_BASE_URL + "crowdfunding/lotteryTicket";
     /*2.4.8报告详情*/
-    public static final String WEB_REPORT_DETAIL = WEB_BASE_URL + "report/info" + WEB_BASE_SESSION;
+    public static final String WEB_REPORT_DETAIL = WEB_BASE_URL + "report/info" ;
     /*2.4.7众筹--众筹详情-众筹下单*/
     public static final String WEB_HOME_ZHONGCHOU_DETAIL_BUY = WEB_BASE_URL + "crowdfunding/orderSave" + WEB_BASE_SESSION;
     /*2.5.1我的*/

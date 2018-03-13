@@ -8,6 +8,7 @@ import com.igexin.sdk.PushManager;
 import com.micai.fox.service.IntentService;
 import com.micai.fox.service.PushService;
 import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.PrefUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.https.HttpsUtils;
 import com.zhy.http.okhttp.log.LoggerInterceptor;
@@ -49,6 +50,8 @@ public class MyApplication extends Application {
                 .build();
         OkHttpUtils.initClient(okHttpClient);
         Config.getInstance().setmContext(getApplicationContext());
+        Config.getInstance().setSessionId(PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", ""));
+        Config.getInstance().setPhone(PrefUtils.getString(Config.getInstance().getmContext(), "PHONE", ""));
         super.onCreate();
         // com.getui.demo.DemoPushService 为第三方自定义推送服务
         PushManager.getInstance().initialize(this.getApplicationContext(), PushService.class);

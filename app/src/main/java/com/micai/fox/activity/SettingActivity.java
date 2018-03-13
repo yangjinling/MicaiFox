@@ -200,13 +200,15 @@ public class SettingActivity extends AppCompatActivity {
                     baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
                     if (baseResultBean.isExecResult()) {
                         dialog.dismiss();
-                        Intent intent = new Intent(SettingActivity.this, IndexActivity.class);
+                        Intent intent = new Intent(SettingActivity.this, MainActivity.class);
                         ExitAppUtils.getInstance().finishAllActivities();
                         PrefUtils.setBoolean(Config.getInstance().getmContext(), "ISFIRST", false);
 //                        Config.getInstance().setClientId(loginResultBean.getExecDatas().getId());
+                        PrefUtils.setString(Config.getInstance().getmContext(), "SESSIONID", null);
                         PushManager.getInstance().unBindAlias(getApplicationContext(),Config.getInstance().getClientId(),false);
                         Config.getInstance().setClientId("");
                         startActivity(intent);
+                        finish();
                     } else {
                     }
                 }

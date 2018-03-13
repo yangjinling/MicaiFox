@@ -124,7 +124,7 @@ public class ReportDetailActivity extends AppCompatActivity {
         paramBean.setParamData(paramData);
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
-                .url(String.format(Url.WEB_REPORT_DETAIL, Config.getInstance().getSessionId()))
+                .url(Url.WEB_REPORT_DETAIL)
                 .content(new Gson().toJson(paramBean))
                 .build().execute(new StringCallback() {
             @Override

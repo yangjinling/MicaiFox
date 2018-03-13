@@ -84,12 +84,14 @@ public class RegistActivity extends BaseActivity {
                 case 0:
                     registEtPhone.setHintTextColor(getResources().getColor(R.color.gray));
                     registEtPhone.setHint("请输入手机号");
+                    registBtnCode.setClickable(true);
                     registBtnNext.setClickable(true);
                     break;
                 case 1:
                     registEtPhone.requestFocus();
                     registEtPhone.setHintTextColor(getResources().getColor(R.color.gray));
                     registEtPhone.setHint("请输入手机号");
+                    registBtnCode.setClickable(true);
                     registBtnNext.setClickable(true);
                     break;
                 case 2:

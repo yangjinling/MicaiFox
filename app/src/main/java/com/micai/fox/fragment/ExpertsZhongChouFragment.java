@@ -90,9 +90,10 @@ public class ExpertsZhongChouFragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i < data.size()) {
                 Intent intent = new Intent(getActivity(), ZhongChouDetailActivity.class);
                 intent.putExtra("crowdingId", expertsZhongchouResultBean.getExecDatas().getRecordList().get(i).getCrowdfundingId());
-                startActivity(intent);
+                startActivity(intent);}
             }
         });
 //        lv.setOnScrollListener(this);
@@ -115,7 +116,7 @@ public class ExpertsZhongChouFragment extends Fragment {
         paramBean.setPageNum(pageNnum);
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
-                .url(String.format(Url.WEB_EXPERTS_ZHONCHOU, Config.getInstance().getSessionId()))
+                .url(Url.WEB_EXPERTS_ZHONCHOU)
                 .content(new Gson().toJson(paramBean))
                 .build().execute(new StringCallback() {
             @Override

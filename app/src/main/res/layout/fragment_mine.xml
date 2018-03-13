@@ -1,200 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    android:orientation="vertical">
-    <include layout="@layout/layout_title"></include>
+    android:background="@android:color/transparent">
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/login_mine"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <include layout="@layout/layout_title"></include>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_mine_head"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="28dp" />
+
+                <TextView
+                    android:id="@+id/tv_mine_nicheng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:drawablePadding="7.5dp"
+                    android:drawableRight="@mipmap/change"
+                    android:gravity="center_vertical"
+                    android:text=""
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="12.5dp"
+                    android:layout_marginRight="12.5dp"
+                    android:layout_marginTop="55dp"
+                    android:background="@drawable/edittextstyle"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:src="@mipmap/earnings" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8.5dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="累计收益"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="￥"
+                        android:textColor="@android:color/holo_red_light"
+                        android:textSize="15sp" />
+
+
+                    <TextView
+                        android:id="@+id/tv_mine_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:text="0.00"
+                        android:textColor="@android:color/holo_red_light"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_mine_zhongchou"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="12.5dp"
+                    android:layout_marginRight="12.5dp"
+                    android:layout_marginTop="13dp"
+                    android:background="@drawable/edittextstyle"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:src="@mipmap/funds" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8.5dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="我的众筹"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:src="@mipmap/next" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_mine_report"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="12.5dp"
+                    android:layout_marginRight="12.5dp"
+                    android:layout_marginTop="1dp"
+                    android:background="@drawable/edittextstyle"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:src="@mipmap/report" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8.5dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="我的报告"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:src="@mipmap/next" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_mine_set"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="12.5dp"
+                    android:layout_marginRight="12.5dp"
+                    android:layout_marginTop="13dp"
+                    android:background="@drawable/edittextstyle"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:src="@mipmap/setting" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8.5dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="设置"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:src="@mipmap/next" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/nologin_mine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_login"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="72dp"
+            android:src="@mipmap/logo" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_above="@+id/btn_regist"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/buttonstyle"
+            android:text="登录"
+            android:textColor="#FFFFFFFF"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btn_regist"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/index_bottom"
+            android:layout_marginBottom="150dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/buttonstyle"
+            android:text="注册"
+            android:textColor="#FFFFFFFF"
+            android:textSize="20sp" />
 
         <LinearLayout
+            android:id="@+id/index_bottom"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:alpha="0.9"
+            android:background="#23253C"
+            android:orientation="horizontal"
+            android:visibility="invisible">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_marginTop="28dp"
-                android:id="@+id/iv_mine_head"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                 />
-
-            <TextView
-                android:id="@+id/tv_mine_nicheng"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="15dp"
-                android:drawableRight="@mipmap/change"
-                android:gravity="center_vertical"
-                android:text=""
-                android:drawablePadding="7.5dp"
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:layout_gravity="bottom"
+                android:layout_weight="1">
 
-
-
-            <LinearLayout
-                android:layout_marginTop="55dp"
-                android:background="@drawable/edittextstyle"
-                android:layout_marginLeft="12.5dp"
-                android:layout_marginRight="12.5dp"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:src="@mipmap/earnings" />
-
-                <TextView
+                <RadioButton
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="8.5dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="累计收益"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="￥"
-                    android:textColor="@android:color/holo_red_light"
-                    android:textSize="15sp" />
-
-
-
-                <TextView
-                    android:id="@+id/tv_mine_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:text="0.00"
-                    android:textColor="@android:color/holo_red_light"
-                    android:textSize="20sp" />
+                    android:button="@null"
+                    android:clickable="false"
+                    android:drawablePadding="0dp"
+                    android:drawableTop="@drawable/rb_home" />
             </LinearLayout>
 
-
-
             <LinearLayout
-                android:background="@drawable/edittextstyle"
-                android:layout_marginLeft="12.5dp"
-                android:layout_marginRight="12.5dp"
-                android:layout_marginTop="13dp"
-                android:id="@+id/ll_mine_zhongchou"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:src="@mipmap/funds" />
-
-                <TextView
+                <RadioButton
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="8.5dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="我的众筹"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:src="@mipmap/next" />
-
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:clickable="false"
+                    android:drawablePadding="0dp"
+                    android:drawableTop="@drawable/rb_experts" />
             </LinearLayout>
 
-
             <LinearLayout
-                android:layout_marginTop="1dp"
-                android:background="@drawable/edittextstyle"
-                android:layout_marginLeft="12.5dp"
-                android:layout_marginRight="12.5dp"
-                android:id="@+id/ll_mine_report"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:src="@mipmap/report" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="8.5dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="我的报告"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    <ImageView
+                        android:id="@+id/home_mine_point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="48dp"
+                        android:src="@drawable/point_notice_main"
+                        android:visibility="gone" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:src="@mipmap/next" />
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:checked="true"
+                        android:clickable="false"
+                        android:drawableTop="@drawable/rb_mine" />
+                </RelativeLayout>
 
             </LinearLayout>
-
-
-
-            <LinearLayout
-                android:layout_marginTop="13dp"
-                android:id="@+id/ll_mine_set"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/edittextstyle"
-                android:layout_marginLeft="12.5dp"
-                android:layout_marginRight="12.5dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:src="@mipmap/setting" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="8.5dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="设置"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:src="@mipmap/next" />
-
-            </LinearLayout>
-
         </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

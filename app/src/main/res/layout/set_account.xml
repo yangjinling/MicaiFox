@@ -69,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
+                android:inputType="number"
                 android:maxLength="19"
                 android:textColorHint="@color/gray"
                 android:hint="请输入账户号码"

@@ -103,7 +103,7 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
         paramBean.setPageNum(pageNnum);
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
-                .url(String.format(Url.WEB_EXPERTS, Config.getInstance().getSessionId()))
+                .url(Url.WEB_EXPERTS)
                 .content(new Gson().toJson(paramBean))
                 .build().execute(new StringCallback() {
             @Override
