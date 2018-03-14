@@ -140,6 +140,7 @@ public class MineFragmnet extends Fragment {
         if (isLogin) {
             login_mine.setVisibility(View.VISIBLE);
             rl.setVisibility(View.VISIBLE);
+            tvBack.setVisibility(View.GONE);
             tvNotify.setVisibility(View.VISIBLE);
             tvTitle.setText("我的");
             if (Config.getInstance().isNoti()) {

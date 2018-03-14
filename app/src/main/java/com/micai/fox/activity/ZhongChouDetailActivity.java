@@ -168,7 +168,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                 btnZhongchouDetailPay.setText("尚未开始");
                 btnZhongchouDetailPay.setClickable(false);
 //                yyyy.mm.dd或已筹金额达￥XXX时结束众筹
-                zhongchouDetailTv1.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + zhongChouDetailResultBean.getExecDatas().getAmountDown() + "时结束众筹");
+                zhongchouDetailTv1.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + zhongChouDetailResultBean.getExecDatas().getAmountUp() + "时结束众筹");
                 zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getCashDate()) + "起开始兑付");
                 break;
             case "1":
@@ -177,7 +177,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                 btnZhongchouDetailPay.setText("去支持(￥" + zhongChouDetailResultBean.getExecDatas().getOneAmountDown() + ")起");
                 btnZhongchouDetailPay.setBackgroundResource(R.drawable.buttonstyle);
                 btnZhongchouDetailPay.setClickable(true);
-                zhongchouDetailTv1.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + zhongChouDetailResultBean.getExecDatas().getAmountDown() + "时结束众筹");
+                zhongchouDetailTv1.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + zhongChouDetailResultBean.getExecDatas().getAmountUp() + "时结束众筹");
                 zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getCashDate()) + "起开始兑付");
                 break;
             case "2":

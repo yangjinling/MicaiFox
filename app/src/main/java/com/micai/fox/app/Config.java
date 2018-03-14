@@ -16,6 +16,7 @@ public class Config {
     private String clientId;
     private String content;
     private boolean noti=false;
+    private boolean isSet=false;
     private Config() {
     }
 
@@ -95,5 +96,13 @@ public class Config {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public boolean isSet() {
+        return isSet;
+    }
+
+    public void setSet(boolean set) {
+        isSet = set;
     }
 }

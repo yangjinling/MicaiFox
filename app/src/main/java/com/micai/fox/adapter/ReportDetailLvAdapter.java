@@ -272,7 +272,7 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                     }
                 }
                 if (null != bean.getResultr()) {
-                    switch (bean.getResult()) {
+                    switch (bean.getResultr()) {
                         case "3R":
                             addImageSpan(context, pop_homewin);
                             break;

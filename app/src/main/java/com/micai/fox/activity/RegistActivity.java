@@ -214,8 +214,8 @@ public class RegistActivity extends BaseActivity {
                 break;
             case R.id.regist_tv_have:
                 //已有账号
-//                intent = new Intent(RegistActivity.this, LoginActivity.class);
-//                startActivity(intent);
+                intent = new Intent(RegistActivity.this, LoginActivity.class);
+                startActivity(intent);
                 finish();
                 break;
             case R.id.regist_tv_agreement:

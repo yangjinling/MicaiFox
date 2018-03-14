@@ -144,8 +144,8 @@ public class LoginActivity extends BaseActivity {
 //                        loginEtPassword.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});//20
                         loginEtPhone.setHintTextColor(getResources().getColor(R.color.red));
                         loginEtPassword.setHintTextColor(getResources().getColor(R.color.red));
-                        loginEtPhone.setHint("手机号或密码错误，请重新输入！");
-                        loginEtPassword.setHint("手机号或密码错误，请重新输入！");
+                        loginEtPhone.setHint("手机号或密码错误!");
+                        loginEtPassword.setHint("手机号或密码错误!");
                         loginBtnLogin.setClickable(false);
                         mHandler.sendEmptyMessageDelayed(2, 3000);
                         break;
@@ -155,6 +155,7 @@ public class LoginActivity extends BaseActivity {
                 }
                 break;
             case R.id.login_tv_regist:
+                finish();
                 intent = new Intent(LoginActivity.this, RegistActivity.class);
                 startActivity(intent);
                 break;
@@ -188,7 +189,7 @@ public class LoginActivity extends BaseActivity {
         OkHttpUtils.post().url(Url.WEB_LOGIN)
                 .addParams("username", username)
                 .addParams("password", password)
-                .addParams("deviceSys ", "安卓")
+                .addParams("deviceSys", "安卓")
                 .addParams("mobileLogin", "true").build()
                 .execute(new StringCallback() {
 
@@ -220,6 +221,7 @@ public class LoginActivity extends BaseActivity {
                                     ExitAppUtils.getInstance().finishAllActivities();
                                     intent.putExtra("TYPE", 1);
                                     startActivity(intent);
+                                    Config.getInstance().setSet(false);
                                 }
                                 finish();
                             } else {
@@ -227,8 +229,8 @@ public class LoginActivity extends BaseActivity {
                                 loginEtPassword.setText("");
                                 loginEtPhone.setHintTextColor(getResources().getColor(R.color.red));
                                 loginEtPassword.setHintTextColor(getResources().getColor(R.color.red));
-                                loginEtPhone.setHint("手机号或密码错误，请重新输入！");
-                                loginEtPassword.setHint("手机号或密码错误，请重新输入！");
+                                loginEtPhone.setHint("手机号或密码错误!");
+                                loginEtPassword.setHint("手机号或密码错误!");
                                 loginBtnLogin.setClickable(false);
                                 mHandler.sendEmptyMessageDelayed(2, 3000);
                             }

@@ -112,7 +112,7 @@
                             android:layout_marginLeft="9dp"
                             android:background="@android:color/transparent"
                             android:gravity="center_vertical"
-                            android:text="众筹"
+                            android:text="众筹项目"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 

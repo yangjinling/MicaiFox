@@ -79,11 +79,24 @@ public class MainActivity extends BaseActivity {
     private void initLinearLayout(int type) {
         //导航
         // mMainTabBar.setOnClickListener(this);
+        Bundle bundle = new Bundle();
         mManager = getSupportFragmentManager();
         if (type == 1) {
-            Bundle bundle = new Bundle();
-            bundle.putBoolean("LOGIN", true);
-            mFragments[2].setArguments(bundle);
+            if (!Config.getInstance().isSet()) {
+                bundle.putBoolean("LOGIN", true);
+                mFragments[2].setArguments(bundle);
+                Config.getInstance().setSet(true);
+            }
+            rbHome.setChecked(false);
+            rbExperts.setChecked(false);
+            rbMine.setChecked(true);
+            mManager.beginTransaction().replace(R.id.main_fragment, mFragments[2]).commit();
+        } else if (type == 2) {
+            if (!Config.getInstance().isSet()) {
+                bundle.putBoolean("LOGIN", false);
+                mFragments[2].setArguments(bundle);
+                Config.getInstance().setSet(true);
+            }
             rbHome.setChecked(false);
             rbExperts.setChecked(false);
             rbMine.setChecked(true);
@@ -125,13 +138,16 @@ public class MainActivity extends BaseActivity {
                 rbExperts.setChecked(false);
                 rbMine.setChecked(true);
                 Bundle bundle = new Bundle();
-                if (null == PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", null) || TextUtils.isEmpty(PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", ""))) {
-                    bundle.putBoolean("LOGIN", false);
-                } else {
-                    bundle.putBoolean("LOGIN", true);
+                if (!Config.getInstance().isSet()) {
+                    if (null == PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", null) || TextUtils.isEmpty(PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", ""))) {
+                        bundle.putBoolean("LOGIN", false);
+                    } else {
+                        bundle.putBoolean("LOGIN", true);
+                    }
+                    mFragments[2].setArguments(bundle);
+                    Config.getInstance().setSet(true);
                 }
                 FragmentTransaction transaction3 = mManager.beginTransaction();
-                mFragments[2].setArguments(bundle);
                 transaction3.replace(R.id.main_fragment, mFragments[2]).commit();
                 break;
         }
