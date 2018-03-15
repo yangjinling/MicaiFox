@@ -136,6 +136,9 @@ public class MineFragmnet extends Fragment {
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         isLogin = getArguments().getBoolean("LOGIN");
+        if (Config.getInstance().isJin()) {
+            isLogin = false;
+        }
         LogUtil.e("YJL", "isLogin==" + isLogin);
         if (isLogin) {
             login_mine.setVisibility(View.VISIBLE);
@@ -557,6 +560,7 @@ public class MineFragmnet extends Fragment {
             public void onResponse(String response, int id) throws Exception {
                 Log.e("yjl", "mine--data" + response);
                 if (Tools.isGoodJson(response)) {
+                    Config.getInstance().setJin(false);
                     mineResultBean = new Gson().fromJson(response, MineResultBean.class);
                     if (mineResultBean.isExecResult()) {
                         tvMineNicheng.setText(mineResultBean.getExecDatas().getNickName());
@@ -568,6 +572,7 @@ public class MineFragmnet extends Fragment {
                         }
                     }
                 } else {
+                    Config.getInstance().setJin(true);
                     login_mine.setVisibility(View.GONE);
                     nologin_mine.setVisibility(View.VISIBLE);
                 }

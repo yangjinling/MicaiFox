@@ -132,27 +132,6 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
         super.onDestroyView();
     }
 
-    public interface OnSwipeIsValid {
-        public void setSwipeEnabledTrue();
-
-        public void setSwipeEnabledFalse();
-    }
-
-    private OnSwipeIsValid isValid = new OnSwipeIsValid() {
-        @Override
-        public void setSwipeEnabledTrue() {
-//            walletSwiperefresh.setEnabled(true);//让swipe起作用，能够刷新
-//            isCanRefresh = true;
-        }
-
-        @Override
-        public void setSwipeEnabledFalse() {
-//            walletSwiperefresh.setEnabled(false);//让swipe不能够刷新
-//            isCanRefresh = false;
-        }
-    };
-    private int lastItem;
-    private int totalItem;
     private boolean isBottom = false;//是否到第20条数据了
     private int curPageNum = 1;
 
@@ -170,20 +149,10 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
                 LogUtil.e("YJL", "+进来了没有飞");
                 break;
         }
-        //判断ListView是否滑动到第一个Item的顶部
-        if (isValid != null && lv.getChildCount() > 0 && lv.getFirstVisiblePosition() == 0
-                && lv.getChildAt(0).getTop() >= lv.getPaddingTop()) {
-            //解决滑动冲突，当滑动到第一个item，下拉刷新才起作用
-            isValid.setSwipeEnabledTrue();
-        } else {
-            isValid.setSwipeEnabledFalse();
-        }
     }
 
     @Override
     public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-        this.lastItem = i + i1;
-        this.totalItem = i2;
               /*i:屏幕中第一个可见item的下标
               * i1:可见item数量
             * i2:itme的总数量*/

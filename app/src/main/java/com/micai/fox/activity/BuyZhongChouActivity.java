@@ -83,9 +83,9 @@ public class BuyZhongChouActivity extends AppCompatActivity {
         detailResultBean = ((ZhongChouDetailResultBean) getIntent().getSerializableExtra("BEAN"));
         if (null != detailResultBean) {
             buyTvTitle.setText("                " + detailResultBean.getExecDatas().getTitle());
-            buyTv1.setText("" + DateUtil.getDateToStrings(detailResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + detailResultBean.getExecDatas().getAmountDown() + "时结束众筹");
+            buyTv1.setText("" + DateUtil.getDateToStrings(detailResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + Tools.fomatMoney(String.valueOf(detailResultBean.getExecDatas().getAmountUp())) + "时结束众筹");
             buyTv2.setText("" + DateUtil.getDateToStrings(detailResultBean.getExecDatas().getCashDate()) + "起开始兑付");
-            tv_per.setText("购买金额需为" + detailResultBean.getExecDatas().getIncrementQuota() + "元整数倍，100元起");
+            tv_per.setText("购买金额需为" + detailResultBean.getExecDatas().getIncrementQuota() + "元整数倍，" + detailResultBean.getExecDatas().getOneAmountDown() + "元起");
             buyEtMoney.setHint("￥" + detailResultBean.getExecDatas().getOneAmountDown() + "~" + detailResultBean.getExecDatas().getOneAmountUp());
         }
         buyEtMoney.addTextChangedListener(new TextWatcher() {
@@ -164,7 +164,7 @@ public class BuyZhongChouActivity extends AppCompatActivity {
                 break;
             case R.id.buy_iv_plus:
                 if (TextUtils.isEmpty(buyEtMoney.getText().toString())) {
-                    int add = add("100", detailResultBean.getExecDatas().getIncrementQuota());
+                    int add = add("0", detailResultBean.getExecDatas().getIncrementQuota());
                     tv_money.setText("￥" + add);
                     buyEtMoney.setText("" + tv_money.getText().toString().substring(1));
                     buyEtMoney.setVisibility(View.GONE);
@@ -253,7 +253,7 @@ public class BuyZhongChouActivity extends AppCompatActivity {
                     //  content ="抱歉，该众筹已结束，请选择其他众筹";
                     baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
                     if (baseResultBean.isExecResult()) {
-                        ZhongChouBean bean = new ZhongChouBean(detailResultBean.getExecDatas().getCrowdfundingId(), detailResultBean.getExecDatas().getTitle(), buyEtMoney.getText().toString());
+                        ZhongChouBean bean = new ZhongChouBean(detailResultBean.getExecDatas().getCrowdfundingId(), detailResultBean.getExecDatas().getTitle(), tv_money.getText().toString().substring(1));
                         Intent intent = new Intent(BuyZhongChouActivity.this, PayActivity.class);
                         intent.putExtra("BEAN", bean);
                         startActivity(intent);

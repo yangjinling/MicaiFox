@@ -82,6 +82,7 @@ public class MainActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         mManager = getSupportFragmentManager();
         if (type == 1) {
+            //众筹过来的
             if (!Config.getInstance().isSet()) {
                 bundle.putBoolean("LOGIN", true);
                 mFragments[2].setArguments(bundle);
@@ -92,6 +93,7 @@ public class MainActivity extends BaseActivity {
             rbMine.setChecked(true);
             mManager.beginTransaction().replace(R.id.main_fragment, mFragments[2]).commit();
         } else if (type == 2) {
+            //设置退出
             if (!Config.getInstance().isSet()) {
                 bundle.putBoolean("LOGIN", false);
                 mFragments[2].setArguments(bundle);
@@ -138,12 +140,12 @@ public class MainActivity extends BaseActivity {
                 rbExperts.setChecked(false);
                 rbMine.setChecked(true);
                 Bundle bundle = new Bundle();
+                if (null == PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", null) || TextUtils.isEmpty(PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", ""))) {
+                    bundle.putBoolean("LOGIN", false);
+                } else {
+                    bundle.putBoolean("LOGIN", true);
+                }
                 if (!Config.getInstance().isSet()) {
-                    if (null == PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", null) || TextUtils.isEmpty(PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", ""))) {
-                        bundle.putBoolean("LOGIN", false);
-                    } else {
-                        bundle.putBoolean("LOGIN", true);
-                    }
                     mFragments[2].setArguments(bundle);
                     Config.getInstance().setSet(true);
                 }

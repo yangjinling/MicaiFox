@@ -722,5 +722,16 @@ public class Tools {
             }
         });
     }
-
+    public static String fomatMoney(String money) {
+        if (money.contains(".")) {
+            if ("00".equals(money.substring(money.indexOf(".")+1))) {
+                money = money.substring(0, money.indexOf("."));
+            } else if ("0".equals(money.substring(money.indexOf(".") + 1))) {
+                money = money.substring(0, money.indexOf("."));
+            } else if (!money.substring(money.indexOf(".") + 1).equals(0) && money.endsWith("0")) {
+                money = money.substring(0, money.length() - 1);
+            }
+        }
+        return money;
+    }
 }

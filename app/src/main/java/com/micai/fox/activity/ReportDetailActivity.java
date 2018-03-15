@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,20 +19,26 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.micai.fox.R;
+import com.micai.fox.adapter.CopyReportDetailLvAdapter;
 import com.micai.fox.adapter.ReportDetailLvAdapter;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.ReportDetailResultBean;
 import com.micai.fox.util.DateUtil;
+import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
+import com.micai.fox.util.URLImageParser;
 import com.micai.fox.view.MyListView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -77,6 +84,8 @@ public class ReportDetailActivity extends AppCompatActivity {
     private String reportId;
     private ReportDetailResultBean reportDetailResultBean;
     ReportDetailLvAdapter adapter;
+    CopyReportDetailLvAdapter adapters;
+    private DisplayImageOptions options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +98,24 @@ public class ReportDetailActivity extends AppCompatActivity {
         tvTitle.setText("报告详情");
         reportId = getIntent().getStringExtra("reportId");
         getReportDetail(reportId);
-        adapter = new ReportDetailLvAdapter(data, ReportDetailActivity.this, R.layout.item_lv_report_detail);
-        reportDetailLv.setAdapter(adapter);
+//        adapter = new ReportDetailLvAdapter(data, ReportDetailActivity.this, R.layout.item_lv_report_detail);
+//        reportDetailLv.setAdapter(adapter);
+        adapters = new CopyReportDetailLvAdapter(data, ReportDetailActivity.this, R.layout.copy_item_lv_report_detail);
+        reportDetailLv.setAdapter(adapters);
+        initOption();
+    }
+
+    private void initOption() {
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.mipmap.ic_launcher)
+                .showImageForEmptyUri(R.mipmap.ic_launcher)
+                .showImageOnFail(R.mipmap.ic_launcher)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .displayer(new FadeInBitmapDisplayer(300))
+                .build();
     }
 
     @Override
@@ -142,20 +167,18 @@ public class ReportDetailActivity extends AppCompatActivity {
                         reportDetailTvName.setText(reportDetailResultBean.getExecDatas().getReport().getProName());
                         reportDetailTvIntroduce.setText(reportDetailResultBean.getExecDatas().getReport().getProAuth());
                         reportDetailTvRate.setText("" + reportDetailResultBean.getExecDatas().getReport().getHitRate());
-                        reportDetailTvZhongchouTitle.setText("" + reportDetailResultBean.getExecDatas().getReport().getCrowdfundingTitle());
                         reportDetailTvTime.setText("" + DateUtil.getDistanceTimes(reportDetailResultBean.getExecDatas().getReport().getCreateDate(), System.currentTimeMillis()) + "发布");
                         Glide.with(ReportDetailActivity.this).load(Url.WEB_BASE_IP + reportDetailResultBean.getExecDatas().getReport().getProPhoto()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(head);
-                        CharSequence charSequence = Html.fromHtml(reportDetailResultBean.getExecDatas().getReport().getContent(), new Html.ImageGetter() {
-
+          /*              CharSequence charSequence = Html.fromHtml(reportDetailResultBean.getExecDatas().getReport().getContent(), new Html.ImageGetter() {
                             @Override
                             public Drawable getDrawable(String arg0) {
                                 Drawable d = null;
                                 try {
-                                    InputStream is = new DefaultHttpClient().execute(new HttpGet(arg0)).getEntity().getContent();
+                                    LogUtil.e("YJL", "arg0===" + arg0);
+                                    InputStream is = new DefaultHttpClient().execute(new HttpGet(Url.WEB_BASE_IP + arg0)).getEntity().getContent();
                                     Bitmap bm = BitmapFactory.decodeStream(is);
                                     d = new BitmapDrawable(bm);
-                                    d.setBounds(0, 0, 200, 300);
-
+                                    d.setBounds(0, 0, bm.getWidth(), bm.getHeight());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -164,8 +187,19 @@ public class ReportDetailActivity extends AppCompatActivity {
                             }
                         }, null);
                         tvFu.setText(charSequence);
+                        tvFu.getPaint().setAntiAlias(true);
+                     */
+                        if (null != reportDetailResultBean.getExecDatas().getReport().getStatus()) {
+                            if ("0".equals(reportDetailResultBean.getExecDatas().getReport().getStatus())) {
+                                reportDetailLlAbout.setVisibility(View.GONE);
+                            }else {
+                                reportDetailLlAbout.setVisibility(View.VISIBLE);
+                                reportDetailTvZhongchouTitle.setText("" + reportDetailResultBean.getExecDatas().getReport().getCrowdfundingTitle());
+                            }
+                        }
+                        tvFu.setText(Html.fromHtml(reportDetailResultBean.getExecDatas().getReport().getContent(), new URLImageParser(reportDetailResultBean.getExecDatas().getReport().getContent(), ReportDetailActivity.this, tvFu, options), null));
                         data.addAll(reportDetailResultBean.getExecDatas().getGame());
-                        adapter.notifyDataSetChanged();
+                        adapters.notifyDataSetChanged();
                     }
                 }
             }

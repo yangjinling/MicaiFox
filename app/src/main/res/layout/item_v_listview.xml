@@ -289,7 +289,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right"
+                android:gravity="center"
                 android:orientation="vertical">
 
 
@@ -297,7 +297,6 @@
                     android:id="@+id/home_zhong_tv_daojishi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="15dp"
                     android:text="48:00:00"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
@@ -306,8 +305,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="45dp"
-                    android:text="距开始"
+                    android:text="距开始倒计时"
                     android:textColor="@android:color/black"
                     android:textSize="15sp" />
             </LinearLayout>

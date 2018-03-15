@@ -54,6 +54,7 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
         TextView pop_homewin = ((TextView) viewHolder.findViewById(R.id.pop_homewin));
         TextView pop_ping = ((TextView) viewHolder.findViewById(R.id.pop_ping));
         TextView pop_ke = ((TextView) viewHolder.findViewById(R.id.pop_ke));
+        TextView pop_status = ((TextView) viewHolder.findViewById(R.id.pop_status));
         TextView rang_changci = ((TextView) viewHolder.findViewById(R.id.rang_changci));
         TextView rang_title = ((TextView) viewHolder.findViewById(R.id.rang_title));
         TextView rang_time = ((TextView) viewHolder.findViewById(R.id.rang_time));
@@ -64,6 +65,7 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
         TextView rang_ping = ((TextView) viewHolder.findViewById(R.id.rang_ping));
         TextView rang_ke = ((TextView) viewHolder.findViewById(R.id.rang_ke));
         TextView rang_num = ((TextView) viewHolder.findViewById(R.id.rang_num));
+        TextView rang_status = ((TextView) viewHolder.findViewById(R.id.rang_status));
         String selections = bean.getSelections().replace(",", "");
         String[] split;
         if (bean.getSelections().contains(",")) {
@@ -116,6 +118,8 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                 pop_homename.setText("" + bean.getHomeTeamName());
                 pop_guestname.setText("" + bean.getGuestTeamName());
                 if (null != bean.getHomeScore() && null != bean.getGuestScore()) {
+                    //已结束
+                    pop_status.setText("已结束");
                     pop_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
                 } else {
                     pop_score.setText("VS");
@@ -154,6 +158,7 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                 rang_homename.setText("" + bean.getHomeTeamName());
                 rang_guestname.setText("" + bean.getGuestTeamName());
                 if (null != bean.getHomeScore() && null != bean.getGuestScore()) {
+                    rang_status.setText("已结束");
                     rang_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
                 } else {
                     rang_score.setText("VS");
@@ -248,6 +253,7 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
                 rang_nums.setText("" + bean.getHandicap());
                 if (null != bean.getHomeScore() && null != bean.getGuestScore()) {
                     pop_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+                    rang_status.setText("已结束");
                 } else {
                     pop_score.setText("VS");
                 }
@@ -325,6 +331,7 @@ public class ReportDetailLvAdapter extends MyBaseAdapter<ReportDetailResultBean.
             pop_guestname.setText("" + bean.getGuestTeamName());
             if (null != bean.getHomeScore() && null != bean.getGuestScore()) {
                 pop_score.setText("" + bean.getHomeScore() + ":" + bean.getGuestScore());
+                rang_status.setText("已结束");
             } else {
                 pop_score.setText("VS");
             }

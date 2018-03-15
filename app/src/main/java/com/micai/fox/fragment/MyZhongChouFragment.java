@@ -143,6 +143,7 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
                     }
                 }else {
                     //TODO 状态禁用
+                    Config.getInstance().setJin(true);
                 }
             }
         });

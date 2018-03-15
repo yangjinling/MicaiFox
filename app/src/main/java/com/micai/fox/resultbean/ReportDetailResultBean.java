@@ -104,7 +104,7 @@ public class ReportDetailResultBean {
             private double hitRate;
             private String crowdfundingId;
             private String crowdfundingTitle;
-
+            private String status;//0：未关联  1：已关联
             public String getReportId() {
                 return reportId;
             }
@@ -191,6 +191,14 @@ public class ReportDetailResultBean {
 
             public void setCrowdfundingTitle(String crowdfundingTitle) {
                 this.crowdfundingTitle = crowdfundingTitle;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
             }
         }
 

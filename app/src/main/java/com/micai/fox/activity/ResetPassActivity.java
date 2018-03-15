@@ -191,13 +191,14 @@ public class ResetPassActivity extends AppCompatActivity {
     }
 
     private void clearMessage() {
-        if (null!=mHandler){
-        mHandler.removeMessages(0);
-        mHandler.removeMessages(1);
-        mHandler.removeMessages(2);
-        mHandler.removeMessages(3);
-        mHandler.removeMessages(4);
-        mHandler = null;}
+        if (null != mHandler) {
+            mHandler.removeMessages(0);
+            mHandler.removeMessages(1);
+            mHandler.removeMessages(2);
+            mHandler.removeMessages(3);
+            mHandler.removeMessages(4);
+            mHandler = null;
+        }
     }
 
     @Override
@@ -245,6 +246,12 @@ public class ResetPassActivity extends AppCompatActivity {
                             }
                         });
                     } else {
+                        resetBtnCode.setText("");
+                        resetEtCode.setHintTextColor(getResources().getColor(R.color.red));
+                        resetEtCode.setHint("" + baseResultBean.getExecMsg());
+                        resetBtnNext.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(2, 3000);
+
                     }
                 }
             }
@@ -288,6 +295,11 @@ public class ResetPassActivity extends AppCompatActivity {
                         intent.putExtra("BEAN", paramBean);
                         startActivity(intent);
                     } else {
+                        resetEtCode.setText("");
+                        resetEtCode.setHintTextColor(getResources().getColor(R.color.red));
+                        resetEtCode.setHint("" + baseResultBean.getExecMsg());
+                        resetBtnNext.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(2, 3000);
                     }
                 }
             }

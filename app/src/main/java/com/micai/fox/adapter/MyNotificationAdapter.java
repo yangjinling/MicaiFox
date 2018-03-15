@@ -17,6 +17,8 @@ import java.util.List;
 public class MyNotificationAdapter extends MyBaseAdapter<NotificationResultBean.ExecDatasBean.RecordListBean> {
     private List<NotificationResultBean.ExecDatasBean.RecordListBean> mLists;
     private Context context;
+    //首先设置一个变量，因为最初没有选择任何Item，所以我设为-1了，如果默认是第一个，也可以设为0
+    private int selectedId = -1;
 
     public MyNotificationAdapter(List<NotificationResultBean.ExecDatasBean.RecordListBean> list, Context context, int resId) {
         super(list, context, resId);
@@ -24,9 +26,21 @@ public class MyNotificationAdapter extends MyBaseAdapter<NotificationResultBean.
         this.context = context;
     }
 
+    //这里新写一个方法，用来设置选中的id
+    public void setSelectedId(int position) {
+        selectedId = position;
+    }
+
     @Override
     public void setData(ViewHolder viewHolder, int position) {
-        ((TextView) viewHolder.findViewById(R.id.notification_tv_content)).setText("" + mLists.get(position).getContent());
+        TextView content = ((TextView) viewHolder.findViewById(R.id.notification_tv_content));
+        content.setText("" + mLists.get(position).getContent());
+        if (1 == mLists.get(position).getReviewFlag()) {
+            content.setTextColor(context.getResources().getColor(R.color.text_gray));
+        }
+        if (selectedId == position) {
+            content.setTextColor(context.getResources().getColor(R.color.text_gray));
+        }
         TextView title = ((TextView) viewHolder.findViewById(R.id.notification_tv_title));
         ImageView iv = ((ImageView) viewHolder.findViewById(R.id.notification_iv));
         switch (mLists.get(position).getType()) {
@@ -56,5 +70,6 @@ public class MyNotificationAdapter extends MyBaseAdapter<NotificationResultBean.
                 iv.setBackgroundResource(R.mipmap.charge);
                 break;
         }
+
     }
 }

@@ -90,4 +90,5 @@ dependencies {
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.getui:sdk:2.12.1.0'
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }

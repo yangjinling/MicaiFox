@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static com.micai.fox.util.DateUtil.DatePattern.ALL_TIMES;
+
 public class DateUtil {
     private static Handler handler = new Handler() {
         @Override
@@ -182,7 +184,7 @@ public class DateUtil {
                     } else if (type == 2) {
                         sdf = new SimpleDateFormat(DatePattern.ONLY_DAYS.getValue(), Locale.CHINA);// 输出北京时间
                     } else if (type == 3) {
-                        sdf = new SimpleDateFormat(DatePattern.ALL_TIMES.getValue(), Locale.CHINA);// 输出北京时间
+                        sdf = new SimpleDateFormat(ALL_TIMES.getValue(), Locale.CHINA);// 输出北京时间
                     }
                     LogUtil.e("YJL----", "date====" + sdf.format(date));
                     String dates = sdf.format(date);
@@ -353,11 +355,13 @@ public class DateUtil {
         SimpleDateFormat format = new SimpleDateFormat(DatePattern.ALL_TIME.getValue(), Locale.CHINA);
         return format.format(date);
     }
+
     public static String getDateToMatchString(long milSecond) {
         Date date = new Date(milSecond);
         SimpleDateFormat format = new SimpleDateFormat(DatePattern.ALL_TIMESS.getValue(), Locale.CHINA);
         return format.format(date);
     }
+
     /*
     *计算time2减去time1的差值 差值只设置 几天 几个小时 或 几分钟
     * 根据差值返回多长之间前或多长时间后
@@ -414,6 +418,7 @@ public class DateUtil {
         if (sec != 0) return sec + "秒前";
         return "刚刚";
     }
+
     /**
      * <pre>
      * 根据指定的日期字符串获取星期几
@@ -421,16 +426,15 @@ public class DateUtil {
      *
      * @param strDate 指定的日期字符串(yyyy-MM-dd 或 yyyy/MM/dd)
      * @return week
-     *         星期几(MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY)
+     * 星期几(MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY)
      */
-    public static String getWeekByDateStr(String strDate)
-    {
+    public static String getWeekByDateStr(String strDate) {
 //        yyyyMMdd
 //        int year = Integer.parseInt(strDate.substring(0, 4));
 //        int month = Integer.parseInt(strDate.substring(5, 7));
 //        int day = Integer.parseInt(strDate.substring(8, 10));
         int year = Integer.parseInt(strDate.substring(0, 4));
-        int month = Integer.parseInt(strDate.substring(4,6));
+        int month = Integer.parseInt(strDate.substring(4, 6));
         int day = Integer.parseInt(strDate.substring(6));
         Calendar c = Calendar.getInstance();
 
@@ -441,8 +445,7 @@ public class DateUtil {
         String week = "";
         int weekIndex = c.get(Calendar.DAY_OF_WEEK);
 
-        switch (weekIndex)
-        {
+        switch (weekIndex) {
             case 1:
                 week = "周日";
                 break;
@@ -466,5 +469,35 @@ public class DateUtil {
                 break;
         }
         return week;
+    }
+
+    public static boolean comPareToTime(String nowDate, String matchTime) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(ALL_TIMES.getValue());//年-月-日 时-分
+        try {
+            Date date2 = dateFormat.parse(matchTime);//结束时间
+            Date date1 = dateFormat.parse(nowDate);//开始时间
+
+            if (date2.getTime() < date1.getTime()) {
+                //比赛完了
+                return true;
+//                Toast.makeText(PostActivity.this,"结束时间小于开始时间", Toast.LENGTH_SHORT).show();
+            } else if (date2.getTime() == date1.getTime()) {
+//                Toast.makeText(PostActivity.this,"开始时间与结束时间相同", Toast.LENGTH_SHORT).show();
+                return true;
+            } else if (date2.getTime() > date1.getTime()) {
+                //正常情况下的逻辑操作.
+                //未开始
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static String getDateToStringToReport(long milSecond) {
+        Date date = new Date(milSecond);
+        SimpleDateFormat format = new SimpleDateFormat(ALL_TIMES.getValue(), Locale.CHINA);
+        return format.format(date);
     }
 }

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.micai.fox.R;
 import com.micai.fox.resultbean.ExpertsZhongchouResultBean;
+import com.micai.fox.util.DateUtil;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 
@@ -62,6 +63,8 @@ public class MyExpertsZhonChouAdapter extends MyBaseAdapter<ExpertsZhongchouResu
                 ll_people.setVisibility(View.GONE);
                 ll_have.setVisibility(View.GONE);
                 tv_status.setText("未开始");
+                String time = DateUtil.getDistanceTime(list.get(position).getStartDate(),System.currentTimeMillis());
+                tv_time.setText(""+time);
             } else if ("9".equals(list.get(position).getStatus())) {
                 //流标
                 pb_ing.setVisibility(View.GONE);

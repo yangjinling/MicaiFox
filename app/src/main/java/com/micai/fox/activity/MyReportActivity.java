@@ -128,6 +128,7 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
                     }
                 }else {
                     //TODO 状态禁用
+                    Config.getInstance().setJin(true);
                 }
             }
         });

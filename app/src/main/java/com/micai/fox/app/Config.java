@@ -17,6 +17,7 @@ public class Config {
     private String content;
     private boolean noti=false;
     private boolean isSet=false;
+    private boolean isJin=false;
     private Config() {
     }
 
@@ -104,5 +105,13 @@ public class Config {
 
     public void setSet(boolean set) {
         isSet = set;
+    }
+
+    public boolean isJin() {
+        return isJin;
+    }
+
+    public void setJin(boolean jin) {
+        isJin = jin;
     }
 }

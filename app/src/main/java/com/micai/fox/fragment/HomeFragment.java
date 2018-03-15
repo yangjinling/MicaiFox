@@ -155,7 +155,13 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
     private void initView() {
         initBanner();
         //横向recycle
-        LinearLayoutManager mLayoutManagerH = new LinearLayoutManager(getContext());
+        LinearLayoutManager mLayoutManagerH = new LinearLayoutManager(getContext()){
+            //禁止水平滑动
+            @Override
+            public boolean canScrollHorizontally() {
+                return false;
+            }
+        };
         mLayoutManagerH.setOrientation(LinearLayoutManager.HORIZONTAL);
         MyRecycleHAdapter mAdapterH = new MyRecycleHAdapter(homeResultBean.getExecDatas().getProfessor(), getContext());
         // 设置布局管理器

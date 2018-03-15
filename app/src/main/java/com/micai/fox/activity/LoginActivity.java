@@ -221,8 +221,11 @@ public class LoginActivity extends BaseActivity {
                                     ExitAppUtils.getInstance().finishAllActivities();
                                     intent.putExtra("TYPE", 1);
                                     startActivity(intent);
-                                    Config.getInstance().setSet(false);
+                                    Config.getInstance().setSet(true);
                                 }
+//                                众筹过来
+                                Config.getInstance().setSet(false);
+                                Config.getInstance().setJin(false);
                                 finish();
                             } else {
                                 loginEtPhone.setText("");
@@ -234,6 +237,8 @@ public class LoginActivity extends BaseActivity {
                                 loginBtnLogin.setClickable(false);
                                 mHandler.sendEmptyMessageDelayed(2, 3000);
                             }
+                        } else {
+                            Config.getInstance().setJin(true);
                         }
                     }
                 });

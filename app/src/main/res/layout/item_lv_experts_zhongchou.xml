@@ -180,14 +180,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="right"
+            android:gravity="center"
             android:orientation="vertical">
 
 
 
             <TextView
                 android:id="@+id/experts_zhong_tv_daojishi"
-                android:layout_marginRight="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="48:00:00"
@@ -196,11 +195,9 @@
 
 
             <TextView
-                android:layout_marginRight="45dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
-                android:text="距开始"
+                android:text="距开始倒计时"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
         </LinearLayout>
