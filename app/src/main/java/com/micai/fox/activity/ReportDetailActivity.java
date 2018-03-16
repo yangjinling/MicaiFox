@@ -168,7 +168,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                         reportDetailTvIntroduce.setText(reportDetailResultBean.getExecDatas().getReport().getProAuth());
                         reportDetailTvRate.setText("" + reportDetailResultBean.getExecDatas().getReport().getHitRate());
                         reportDetailTvTime.setText("" + DateUtil.getDistanceTimes(reportDetailResultBean.getExecDatas().getReport().getCreateDate(), System.currentTimeMillis()) + "发布");
-                        Glide.with(ReportDetailActivity.this).load(Url.WEB_BASE_IP + reportDetailResultBean.getExecDatas().getReport().getProPhoto()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(head);
+                        Glide.with(ReportDetailActivity.this).load(Url.WEB_BASE_IP + reportDetailResultBean.getExecDatas().getReport().getProPhoto()).asBitmap().placeholder(R.drawable.circle).error(R.drawable.circle).into(head);
           /*              CharSequence charSequence = Html.fromHtml(reportDetailResultBean.getExecDatas().getReport().getContent(), new Html.ImageGetter() {
                             @Override
                             public Drawable getDrawable(String arg0) {

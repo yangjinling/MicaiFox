@@ -39,7 +39,7 @@ public class URLImageParser implements Html.ImageGetter {
 
         final URLDrawable urlDrawable = new URLDrawable();
         ImageSize imageSize = new ImageSize(480, 320);
-        NonViewAware nonViewAware = new NonViewAware(imageSize, ViewScaleType.CROP);
+        NonViewAware nonViewAware = new NonViewAware(imageSize, ViewScaleType.FIT_INSIDE);
         ImageLoader.getInstance().displayImage(Url.WEB_BASE_IP + source, nonViewAware, options, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {

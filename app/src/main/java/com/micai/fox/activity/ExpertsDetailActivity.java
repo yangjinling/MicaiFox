@@ -30,6 +30,7 @@ import com.micai.fox.parambean.BotomBean;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.ExpertsDetailResultBean;
 import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.TextUtil;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.CustomViewPager;
 import com.micai.fox.view.PageListScrollView;
@@ -110,6 +111,7 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
     private List<String> list_title; //tab名称列表
     String proId;
     private ExpertsDetailResultBean expertsDetailResultBean;
+    boolean isExpandDescripe = false;// 初始展开状态为false，即未展开；
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,9 +158,23 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
         scrollView.setOnScrollToBottomListener(this);
     }
 
-    @OnClick({R.id.tv_back, R.id.experts_detail_tv_zhongchou, R.id.experts_detail_tv_report})
+    @OnClick({R.id.experts_detail_tv_content, R.id.tv_back, R.id.experts_detail_tv_zhongchou, R.id.experts_detail_tv_report})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.experts_detail_tv_content:
+                if (isExpandDescripe) {
+                    isExpandDescripe = false;
+                    expertsDetailTvContent.setMaxLines(2);// 收起
+                } else {
+                    isExpandDescripe = true;
+                    expertsDetailTvContent.setMaxLines(Integer.MAX_VALUE);// 展开
+                }
+                TextUtil.toggleEllipsize(ExpertsDetailActivity.this,
+                        expertsDetailTvContent, 2,
+                        expertsDetailResultBean.getExecDatas().getProfessor().getSelfIntro(),
+                        "展开全",
+                        R.color.red, isExpandDescripe);
+                break;
             case R.id.tv_back:
                 finish();
                 break;
@@ -328,7 +344,12 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
                         expertsDetailTvYili.setText("" + expertsDetailResultBean.getExecDatas().getProfessor().getProfitRate());
                         expertsDetailTvMaxyili.setText("" + expertsDetailResultBean.getExecDatas().getProfessor().getMaxProfitRate());
                         expertsDetailTvCount.setText("共" + expertsDetailResultBean.getExecDatas().getProfessor().getTotalNum() + "次众筹");
-                        Glide.with(ExpertsDetailActivity.this).load(Url.WEB_BASE_IP + expertsDetailResultBean.getExecDatas().getProfessor().getProPhoto()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(head);
+                        Glide.with(ExpertsDetailActivity.this).load(Url.WEB_BASE_IP + expertsDetailResultBean.getExecDatas().getProfessor().getProPhoto()).asBitmap().placeholder(R.drawable.circle).error(R.drawable.circle).into(head);
+                        TextUtil.toggleEllipsize(ExpertsDetailActivity.this,
+                                expertsDetailTvContent, 2,
+                                expertsDetailResultBean.getExecDatas().getProfessor().getSelfIntro(),
+                                "展开全",
+                                R.color.red, isExpandDescripe);
                     }
                 }
             }
@@ -344,7 +365,7 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
 
     @Override
     public void onScrollBottomListener(boolean isBottom) {
-        LogUtil.e("YJL","专家isBottom=="+isBottom);
+        LogUtil.e("YJL", "专家isBottom==" + isBottom);
         BotomBean botomBean = new BotomBean();
         botomBean.setBootom(isBottom);
         EventBus.getDefault().post(botomBean);

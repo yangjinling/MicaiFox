@@ -64,7 +64,7 @@ public class MyRecycleHAdapter extends RecyclerView.Adapter<MyRecycleHAdapter.Vi
     public void onBindViewHolder(final ViewHolder holder, int position) {
         // 绑定数据
         holder.mTv.setText(mData.get(position).getProName());
-        Glide.with(mContext).load(Url.WEB_BASE_IP+ mData.get(position).getProPhoto()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(holder.head);
+        Glide.with(mContext).load(Url.WEB_BASE_IP+ mData.get(position).getProPhoto()).asBitmap().placeholder(R.drawable.circle).error(R.drawable.circle).into(holder.head);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {

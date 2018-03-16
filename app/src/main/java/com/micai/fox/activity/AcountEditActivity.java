@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.micai.fox.R;
@@ -85,6 +86,11 @@ public class AcountEditActivity extends AppCompatActivity implements View.OnClic
                     accountEtBankname.setHint("请输入开户支行");
                     tvNotify.setClickable(true);
                     break;
+                case 3:
+                    updateAccountTvBank.setTextColor(getResources().getColor(R.color.gray));
+                    updateAccountTvBank.setText("请选择");
+                    tvNotify.setClickable(true);
+                    break;
             }
         }
     };
@@ -119,16 +125,22 @@ public class AcountEditActivity extends AppCompatActivity implements View.OnClic
                         accountEtNum.setHintTextColor(getResources().getColor(R.color.red));
                         accountEtNum.setHint("请输入账户号码");
                         tvTitle.setClickable(false);
-                        mHandler.sendEmptyMessageDelayed(0, 3000);
+                        mHandler.sendEmptyMessageDelayed(1, 3000);
                         break;
                     case 2:
                         accountEtBankname.setHintTextColor(getResources().getColor(R.color.red));
                         accountEtBankname.setHint("请输入开户支行");
                         tvTitle.setClickable(false);
-                        mHandler.sendEmptyMessageDelayed(0, 3000);
+                        mHandler.sendEmptyMessageDelayed(2, 3000);
                         break;
                     case 3:
                         updateAccount(accountEtName.getText().toString(), accountEtNum.getText().toString(), bankResultBean.getExecDatas().get(0).getValue(), accountEtBankname.getText().toString());
+                        break;
+                    case 4:
+                        updateAccountTvBank.setTextColor(getResources().getColor(R.color.red));
+                        updateAccountTvBank.setText("请输入开户支行");
+                        tvTitle.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(3, 3000);
                         break;
                 }
                 break;
@@ -162,6 +174,8 @@ public class AcountEditActivity extends AppCompatActivity implements View.OnClic
             return 1;
         } else if (TextUtils.isEmpty(bankName)) {
             return 2;
+        } else if ("请选择".equals(updateAccountTvBank.getText().toString())) {
+            return 4;
         } else {
             return 3;
         }

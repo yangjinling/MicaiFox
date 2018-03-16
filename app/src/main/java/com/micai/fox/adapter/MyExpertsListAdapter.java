@@ -35,7 +35,7 @@ public class MyExpertsListAdapter extends MyBaseAdapter<ExpertsResultBean.ExecDa
         ((TextView) viewHolder.findViewById(R.id.experts_tv_talk)).setText(mLists.get(position).getProAuth());
         ((TextView) viewHolder.findViewById(R.id.experts_tv_rate)).setText("" + mLists.get(position).getHitRate());
         CircleImageView iv = ((CircleImageView) viewHolder.findViewById(R.id.experts_iv_head));
-        Glide.with(mContext).load(Url.WEB_BASE_IP + mLists.get(position).getProPhoto()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(iv);
+        Glide.with(mContext).load(Url.WEB_BASE_IP + mLists.get(position).getProPhoto()).asBitmap().placeholder(R.drawable.circle).error(R.drawable.circle).into(iv);
 
 
     }

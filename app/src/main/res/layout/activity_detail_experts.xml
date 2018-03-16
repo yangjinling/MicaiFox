@@ -14,8 +14,8 @@
         android:id="@+id/experts_detail_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:layout_marginTop="48dp">
+        android:layout_marginTop="48dp"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,7 +42,8 @@
                         android:id="@+id/experts_detail_iv_head"
                         android:layout_width="65dp"
                         android:layout_height="65dp"
-                        android:layout_marginLeft="13dp" />
+                        android:layout_marginLeft="13dp"
+                        android:background="@drawable/circle" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -120,18 +121,15 @@
 
 
                 <TextView
-                android:id="@+id/experts_detail_tv_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="13dp"
-                android:layout_marginTop="10dp"
-                android:lineSpacingExtra="5dp"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:text=""
-                android:textColor="@android:color/black"
-                android:textSize="15sp" />
+                    android:id="@+id/experts_detail_tv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="13dp"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="2"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -323,10 +321,11 @@
                 app:tabTextColor="#ffffff"></android.support.design.widget.TabLayout>
 
             <com.micai.fox.view.CustomViewPager
-                android:layout_marginTop="5dp"
                 android:id="@+id/experts_detail_viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"

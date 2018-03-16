@@ -20,6 +20,7 @@ public class LoginResultBean implements Serializable {
     private ExecDatasBean execDatas;
     private int count;
     private int num;
+    private String execMsg;
 
     public boolean isExecResult() {
         return execResult;
@@ -53,7 +54,15 @@ public class LoginResultBean implements Serializable {
         this.num = num;
     }
 
-    public static class ExecDatasBean implements Serializable{
+    public String getExecMsg() {
+        return execMsg;
+    }
+
+    public void setExecMsg(String execMsg) {
+        this.execMsg = execMsg;
+    }
+
+    public static class ExecDatasBean implements Serializable {
         /**
          * id : 749e45bc8d7b4aceb9d8851e051088d01516457894981
          * loginName : 18363820101
@@ -128,7 +137,7 @@ public class LoginResultBean implements Serializable {
             this.sessionid = sessionid;
         }
 
-        public static class UserBean implements Serializable{
+        public static class UserBean implements Serializable {
             /**
              * id : 749e45bc8d7b4aceb9d8851e051088d01516457894981
              * isNewRecord : false

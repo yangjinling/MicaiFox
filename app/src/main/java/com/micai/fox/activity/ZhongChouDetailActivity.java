@@ -326,7 +326,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                         }
                         if (null != status)
                             initViewData();
-                        Glide.with(ZhongChouDetailActivity.this).load(Url.WEB_BASE_IP + zhongChouDetailResultBean.getExecDatas().getProPhoto()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(head);
+                        Glide.with(ZhongChouDetailActivity.this).load(Url.WEB_BASE_IP + zhongChouDetailResultBean.getExecDatas().getProPhoto()).asBitmap().placeholder(R.drawable.circle).error(R.drawable.circle).into(head);
                         zhongchouDetailTvTalk.setText("" + zhongChouDetailResultBean.getExecDatas().getTitle());
                         zhongchouDetailTvName.setText("" + zhongChouDetailResultBean.getExecDatas().getProName());
                         zhongchouDetailTvIntroduce.setText("" + zhongChouDetailResultBean.getExecDatas().getProAuth());
@@ -358,7 +358,11 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                         } else if ("9".equals(status)) {
                             homeZhongTvState.setText("流标");
                         } else {
-                            homeZhongTvState.setText("" + score.intValue() + "%");
+                            if ("4".equals(status) || "3".equals(status) || "2".equals(status)) {
+                                homeZhongTvState.setText("已结束");
+                            } else {
+                                homeZhongTvState.setText(score.intValue() + "%");
+                            }
                         }
                     }
                 }

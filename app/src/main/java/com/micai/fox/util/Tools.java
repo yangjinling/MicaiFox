@@ -48,6 +48,7 @@ import android.widget.Toast;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.micai.fox.R;
+import com.micai.fox.view.UploadHeader;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -68,6 +69,9 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
+import in.srain.cube.views.ptr.util.PtrLocalDisplay;
 import okhttp3.Call;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
@@ -734,4 +738,22 @@ public class Tools {
         }
         return money;
     }
+
+    //带向下挤压的下拉刷新
+    public static void upLoadGagrProgress(String color, PtrFrameLayout mPtrFrame, Context context, PtrHandler ptrHandler) {
+        if (null != mPtrFrame) {
+            mPtrFrame.setLoadingMinTime(1000);
+//            mPtrFrame.setLoadingMinTime(500);
+            final UploadHeader header = new UploadHeader(context);
+
+            header.setBackgroundColor(Color.parseColor(color));
+            header.setPadding(0, PtrLocalDisplay.dp2px(15), 0, 0);
+
+            mPtrFrame.setHeaderView(header);
+            mPtrFrame.addPtrUIHandler(header);
+            mPtrFrame.setPtrHandler(ptrHandler);
+        }
+
+    }
+
 }

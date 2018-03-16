@@ -49,7 +49,7 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeZhongChouResultBea
     public void setData(ViewHolder viewHolder, final int position) {
         //头像
         CircleImageView head = ((CircleImageView) viewHolder.findViewById(R.id.home_zhong_iv_head));
-        Glide.with(mContext).load(Url.WEB_BASE_IP + mList.get(position).getProPhoto()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(head);
+        Glide.with(mContext).load(Url.WEB_BASE_IP + mList.get(position).getProPhoto()).asBitmap().placeholder(R.drawable.circle).error(R.drawable.circle).into(head);
         //姓名
         ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_name)).setText(mList.get(position).getProName());
         //专家简介
@@ -78,7 +78,7 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeZhongChouResultBea
         BigDecimal score = null;
         try {
             score = Tools.div(mList.get(position).getRealAmount(), mList.get(position).getAmountDown(), 2);
-            LogUtil.e("YJL", mList.get(position).getRealAmount()+"====" + mList.get(position).getAmountDown() + "score==" + score);
+            LogUtil.e("YJL", mList.get(position).getRealAmount() + "====" + mList.get(position).getAmountDown() + "score==" + score);
             score = score.multiply(new BigDecimal(100));
             LogUtil.e("YJL", "score==" + score);
         } catch (IllegalAccessException e) {
@@ -92,7 +92,7 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeZhongChouResultBea
                 ll_people.setVisibility(View.GONE);
                 ll_have.setVisibility(View.GONE);
                 tv_status.setText("未开始");
-                String time = DateUtil.getDistanceTime(mList.get(position).getStartDate(),System.currentTimeMillis());
+                String time = DateUtil.getDistanceTime(mList.get(position).getStartDate(), System.currentTimeMillis());
                 tv_time.setText("" + time);
             } else if ("9".equals(mList.get(position).getStatus())) {
                 //流标
@@ -112,7 +112,11 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeZhongChouResultBea
                 tv_people.setText("" + mList.get(position).getSupNum());
                 ll_have.setVisibility(View.VISIBLE);
                 tv_have.setText("" + mList.get(position).getRealAmount());
-                tv_status.setText(score.intValue() + "%");
+                if ("4".equals(mList.get(position).getStatus()) || "3".equals(mList.get(position).getStatus()) || "2".equals(mList.get(position).getStatus())) {
+                    tv_status.setText("已结束");
+                } else {
+                    tv_status.setText(score.intValue() + "%");
+                }
             }
         }
         LinearLayout home_zhong_ll_zhonchou = ((LinearLayout) viewHolder.findViewById(R.id.home_zhong_ll_zhonchou));

@@ -1,5 +1,6 @@
 package com.micai.fox.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +9,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -69,7 +71,9 @@ public class LoginActivity extends BaseActivity {
 //                    loginEtPhone.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});//20
 //                    loginEtPassword.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});//20
                     loginEtPhone.requestFocus();
+                    hideSoftInput(loginEtPhone);
                     loginEtPhone.setText("");
+                    loginEtPassword.setText("");
                     loginEtPhone.setHintTextColor(getResources().getColor(R.color.gray));
                     loginEtPhone.setHint("请输入手机号");
                     loginEtPassword.setHintTextColor(getResources().getColor(R.color.gray));
@@ -232,8 +236,8 @@ public class LoginActivity extends BaseActivity {
                                 loginEtPassword.setText("");
                                 loginEtPhone.setHintTextColor(getResources().getColor(R.color.red));
                                 loginEtPassword.setHintTextColor(getResources().getColor(R.color.red));
-                                loginEtPhone.setHint("手机号或密码错误!");
-                                loginEtPassword.setHint("手机号或密码错误!");
+                                loginEtPhone.setHint("" + loginResultBean.getExecMsg());
+                                loginEtPassword.setHint("" + loginResultBean.getExecMsg());
                                 loginBtnLogin.setClickable(false);
                                 mHandler.sendEmptyMessageDelayed(2, 3000);
                             }
@@ -243,4 +247,29 @@ public class LoginActivity extends BaseActivity {
                     }
                 });
     }
+
+    /**
+     * 隐藏软键盘输入法
+     *
+     * @param v
+     */
+    private void hideSoftInput(View v) {
+//        if(TextUtils.isEmpty(writeComment.getText())){//清空写回复信息，准备评论楼主
+//            pid="";
+//            writeComment.setHint(getResources().getString(R.string.hint_write_comment));
+//        }
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
+    /**
+     * 显示软键盘输入法
+     *
+     * @param v
+     */
+    private void showSoftInput(View v) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(v, InputMethodManager.SHOW_FORCED);
+    }
+
 }

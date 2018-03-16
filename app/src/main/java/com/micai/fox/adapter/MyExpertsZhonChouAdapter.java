@@ -24,13 +24,13 @@ public class MyExpertsZhonChouAdapter extends MyBaseAdapter<ExpertsZhongchouResu
 
     public MyExpertsZhonChouAdapter(List<ExpertsZhongchouResultBean.ExecDatasBean.RecordListBean> list, Context context, int resId) {
         super(list, context, resId);
-        this.list=list;
+        this.list = list;
     }
 
     @Override
     public void setData(ViewHolder viewHolder, int position) {
         ((TextView) viewHolder.findViewById(R.id.experts_zhongchou_tv_title)).setText(list.get(position).getTitle());
-        ((TextView) viewHolder.findViewById(R.id.experts_zhongchou_mubiao)).setText(""+list.get(position).getAmountDown());
+        ((TextView) viewHolder.findViewById(R.id.experts_zhongchou_mubiao)).setText("" + list.get(position).getAmountDown());
         //已筹
         LinearLayout ll_have = ((LinearLayout) viewHolder.findViewById(R.id.experts_zhong_ll_have));
         TextView tv_have = ((TextView) viewHolder.findViewById(R.id.experts_zhongchou_have));
@@ -63,8 +63,8 @@ public class MyExpertsZhonChouAdapter extends MyBaseAdapter<ExpertsZhongchouResu
                 ll_people.setVisibility(View.GONE);
                 ll_have.setVisibility(View.GONE);
                 tv_status.setText("未开始");
-                String time = DateUtil.getDistanceTime(list.get(position).getStartDate(),System.currentTimeMillis());
-                tv_time.setText(""+time);
+                String time = DateUtil.getDistanceTime(list.get(position).getStartDate(), System.currentTimeMillis());
+                tv_time.setText("" + time);
             } else if ("9".equals(list.get(position).getStatus())) {
                 //流标
                 pb_ing.setVisibility(View.GONE);
@@ -75,7 +75,7 @@ public class MyExpertsZhonChouAdapter extends MyBaseAdapter<ExpertsZhongchouResu
                 tv_people.setText("" + list.get(position).getSupNum());
                 tv_status.setText("流标");
                 ll_have.setVisibility(View.VISIBLE);
-                tv_have.setText("" +  list.get(position).getRealAmount());
+                tv_have.setText("" + list.get(position).getRealAmount());
             } else {
                 pb_ing.setProgress(score.intValue());
                 ll_start.setVisibility(View.GONE);
@@ -83,7 +83,11 @@ public class MyExpertsZhonChouAdapter extends MyBaseAdapter<ExpertsZhongchouResu
                 tv_people.setText("" + list.get(position).getSupNum());
                 ll_have.setVisibility(View.VISIBLE);
                 tv_have.setText("" + list.get(position).getRealAmount());
-                tv_status.setText(score.intValue() + "%");
+                if ("4".equals(list.get(position).getStatus()) || "3".equals(list.get(position).getStatus()) || "2".equals(list.get(position).getStatus())) {
+                    tv_status.setText("已结束");
+                } else {
+                    tv_status.setText(score.intValue() + "%");
+                }
             }
         }
     }

@@ -1,7 +1,9 @@
 package com.micai.fox.activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +13,8 @@ import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -80,6 +84,8 @@ public class SettingDetailActivity extends AppCompatActivity {
     Button phoneBtnConfirm;
     @Bind(R.id.idea_tv)
     TextView ideaTv;
+    @Bind(R.id.set_idea_ll)
+    LinearLayout ll_idea;
     @Bind(R.id.account_tv_name)
     TextView accountTvName;
     @Bind(R.id.account_tv_num)
@@ -307,9 +313,16 @@ public class SettingDetailActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick({R.id.tv_back, R.id.tv_notify, R.id.account_ll_bank, R.id.pass_btn_confirm, R.id.idea_btn_submit, R.id.phone_btn_code, R.id.phone_btn_confirm})
+    @OnClick({R.id.set_idea_ll, R.id.tv_back, R.id.tv_notify, R.id.account_ll_bank, R.id.pass_btn_confirm, R.id.idea_btn_submit, R.id.phone_btn_code, R.id.phone_btn_confirm})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.set_idea_ll:
+                ideaEt.setFocusable(true);
+                ideaEt.setFocusableInTouchMode(true);
+                ideaEt.requestFocus();
+                InputMethodManager imm = (InputMethodManager) ideaEt.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+                break;
             case R.id.tv_back:
                 finish();
                 break;
@@ -625,6 +638,12 @@ public class SettingDetailActivity extends AppCompatActivity {
                         phoneDialog = Tools.showDialog(SettingDetailActivity.this, 2);
                         mHandler.sendEmptyMessageDelayed(5, 1500);
                     } else {
+                        passEtOrigin.setText("");
+                        passEtOrigin.setHintTextColor(getResources().getColor(R.color.red));
+                        passEtOrigin.setHint("" + baseResultBean.getExecMsg());
+                        phoneBtnConfirm.setClickable(false);
+                        mHandler.sendEmptyMessageDelayed(12, 3000);
+
                     }
                 }
 

@@ -75,21 +75,19 @@
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <!-- 注册界面 -->
         <activity
             android:name=".activity.RegistActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <!-- 注册的下一步 -->
         <activity
             android:name=".activity.RegistTwoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <!-- 用户协议界面 -->
         <activity
             android:name=".activity.AgreementActivity"
@@ -100,18 +98,19 @@
             android:name=".activity.ResetPassActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <!-- 忘记密码的下一步 -->
         <activity
             android:name=".activity.ResetPassTwoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"></activity>
         <!-- 忘记密码界面 -->
         <activity
             android:name=".activity.ForgetPassActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ActivityTheme" />
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <!-- 专家详情界面 -->
         <activity
             android:name=".activity.ExpertsDetailActivity"
@@ -126,7 +125,8 @@
         <activity
             android:name=".activity.BuyZhongChouActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ActivityTheme" />
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <!-- 报告详情界面 -->
         <activity
@@ -172,12 +172,14 @@
         <activity
             android:name=".activity.SettingDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ActivityTheme" />
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <!-- 收款账户编辑界面 -->
         <activity
             android:name=".activity.AcountEditActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ActivityTheme" />
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
         <!-- //微信支付的界面 -->
         <activity

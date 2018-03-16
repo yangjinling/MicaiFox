@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.adapter.MyNotificationAdapter;
 import com.micai.fox.app.Config;
+import com.micai.fox.app.Constant;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.NotiBean;
 import com.micai.fox.parambean.ParamBean;
@@ -36,6 +37,8 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 import okhttp3.Call;
 import okhttp3.MediaType;
 
@@ -52,13 +55,17 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
     RelativeLayout rl;
     @Bind(R.id.lv_notify)
     ListView lvNotify;
+    @Bind(R.id.ptr)
+    PtrFrameLayout mPtr;
     private ArrayList<NotificationResultBean.ExecDatasBean.RecordListBean> data = new ArrayList<>();
     private MyNotificationAdapter adapter;
     private BaseResultBean baseResultBean;
     private NotificationResultBean notificationResultBean;
     private View footer_view;
     private TextView tv_foot;
+
     private boolean isFirst = false;
+    private boolean isCanRefresh = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +87,8 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
         tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
         adapter = new MyNotificationAdapter(data, this, R.layout.item_lv_notification);
         lvNotify.setAdapter(adapter);
-        getNotList("0");
+        getNotList("0", 1);
+        lvNotify.setOnScrollListener(this);
         lvNotify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -99,7 +107,25 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
                 startActivity(intent);
             }
         });
-        lvNotify.setOnScrollListener(this);
+        //刷新
+        Tools.upLoadGagrProgress(Constant.HOME_BACKGROUND_COLOR, mPtr, this, new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                LogUtil.e("YJL", "" + isCanRefresh);
+                return isCanRefresh;
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                LogUtil.e("YJL", "的点点滴滴" + isCanRefresh);
+                getNotList("0", 0);
+                //进行刷新
+//                frame.autoRefresh();
+                frame.refreshComplete();
+
+            }
+        });
+
     }
 
     @OnClick({R.id.tv_back, R.id.tv_notify})
@@ -117,7 +143,7 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
 
-    private void getNotList(String pageNum) {
+    private void getNotList(String pageNum, final int type) {
         paramBean = new ParamBean();
         paramBean.setLength("20");
         paramBean.setPageNum(pageNum);
@@ -137,8 +163,21 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
                 if (Tools.isGoodJson(response)) {
                     notificationResultBean = new Gson().fromJson(response, NotificationResultBean.class);
                     if (notificationResultBean.isExecResult()) {
-                        data.addAll(notificationResultBean.getExecDatas().getRecordList());
-                        adapter.notifyDataSetChanged();
+                        if (null != notificationResultBean.getExecDatas()) {
+                            if (type == 0) {
+                                //下拉刷新
+                                isCanRefresh = false;
+                                data.clear();
+                                data.addAll(notificationResultBean.getExecDatas().getRecordList());
+                                adapter.notifyDataSetChanged();
+                            } else {
+                                isCanRefresh = true;
+                                data.addAll(notificationResultBean.getExecDatas().getRecordList());
+                                adapter.notifyDataSetChanged();
+                            }
+                        } else {
+                            isCanRefresh = false;
+                        }
                     }
                 } else {
                     //TODO 状态禁用
@@ -184,20 +223,42 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
     private boolean isBottom = false;//是否到第20条数据了
     private int curPageNum = 1;
 
+    // 下拉刷新
+    public interface OnSwipeIsValid {
+        void setSwipeEnabledTrue();
+
+        void setSwipeEnabledFalse();
+    }
+
+    private OnSwipeIsValid isValid = new OnSwipeIsValid() {
+        @Override
+        public void setSwipeEnabledTrue() {
+//            srfOrderDetailMsg.setEnabled(true);//让swipe起作用，能够刷新
+            isCanRefresh = true;
+        }
+
+        @Override
+        public void setSwipeEnabledFalse() {
+//            srfOrderDetailMsg.setEnabled(false);//让swipe不能够刷新
+            isCanRefresh = false;
+        }
+    };
+
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
         LogUtil.e("YJL---", "+进来了没有");
-        switch (i) {
-            case SCROLL_STATE_IDLE://空闲状态
-                LogUtil.e("YJL", "+进来了没有空闲");
-                break;
-            case SCROLL_STATE_TOUCH_SCROLL://滚状态
-                LogUtil.e("YJL", "+进来了没有滚");
-                break;
-            case SCROLL_STATE_FLING://飞状态
-                LogUtil.e("YJL", "+进来了没有飞");
-                break;
+        //判断ListView是否滑动到第一个Item的顶部
+        if (isValid != null && lvNotify.getChildCount() > 0 && lvNotify.getFirstVisiblePosition() == 0
+                && lvNotify.getChildAt(0).getTop() >= lvNotify.getPaddingTop()) {
+            //解决滑动冲突，当滑动到第一个item，下拉刷新才起作用
+            LogUtil.e("YJL", "刷新啊");
+            isValid.setSwipeEnabledTrue();
+//            isCanRefresh = true;
+        } else {
+            isValid.setSwipeEnabledFalse();
+//            isCanRefresh = false;
         }
+
     }
 
     @Override
@@ -219,7 +280,7 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
                 if (++curPageNum <= notificationResultBean.getExecDatas().getTotalPage()) {
                     LogUtil.e("YJL", "curPageNum==" + curPageNum);
 //                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
-                    getNotList("" + curPageNum);
+                    getNotList("" + curPageNum, 1);
                     tv_foot.setVisibility(View.VISIBLE);
                     tv_foot.setText("加载中…");
 //                Toast.makeText(this, "", Toast.LENGTH_SHORT).show();

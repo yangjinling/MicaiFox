@@ -6,4 +6,5 @@ package com.micai.fox.app;
 
 public class Constant {
     public final static String TAG = "YJL";
+    public static final String  HOME_BACKGROUND_COLOR = "#FFEC7C64";
 }

@@ -340,7 +340,7 @@ public class MineFragmnet extends Fragment {
             return;
         } else if (resultCode != RESULT_OK) {
         } else {
-            startActivityForResult(cropp(Uri.parse(isimg), 240, 300, 4, 5), REQUEST_CODE_CLIP_PHOTO);
+            startActivityForResult(cropp(Uri.parse(isimg), 240, 300, 4, 4), REQUEST_CODE_CLIP_PHOTO);
         }
     }
 
@@ -358,7 +358,7 @@ public class MineFragmnet extends Fragment {
                 } else {
                     startActivityForResult(cropp(uri, 240, 300, 4, 5), REQUEST_CODE_CLIP_PHOTO);
                 }*/
-                startActivityForResult(cropp(uri, 240, 300, 4, 5), REQUEST_CODE_CLIP_PHOTO);
+                startActivityForResult(cropp(uri, 240, 300, 4, 4), REQUEST_CODE_CLIP_PHOTO);
             }
 
         }
@@ -568,7 +568,7 @@ public class MineFragmnet extends Fragment {
                         if (null != mineResultBean.getExecDatas().getPhoto())
                             Config.getInstance().setPhotoUrl(mineResultBean.getExecDatas().getPhoto());
                         if (null != Config.getInstance().getPhotoUrl() || !TextUtils.isEmpty(Config.getInstance().getPhotoUrl())) {
-                            Glide.with(getContext()).load(Url.WEB_BASE_IP + Config.getInstance().getPhotoUrl()).asBitmap().placeholder(R.mipmap.ic_launcher_round).error(R.mipmap.ic_launcher_round).into(ivMineHead);
+                            Glide.with(getContext()).load(Url.WEB_BASE_IP + Config.getInstance().getPhotoUrl()).asBitmap().placeholder(R.drawable.circle).error(R.drawable.circle).into(ivMineHead);
                         }
                     }
                 } else {
