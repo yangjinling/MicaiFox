@@ -10,13 +10,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -33,6 +36,7 @@ import com.micai.fox.resultbean.ZhongChouDetailResultBean;
 import com.micai.fox.util.DateUtil;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
+import com.micai.fox.view.CountdownTextView;
 import com.micai.fox.view.CustomViewPager;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -49,7 +53,7 @@ import okhttp3.Call;
 import okhttp3.MediaType;
 
 /*众筹详情页面*/
-public class ZhongChouDetailActivity extends AppCompatActivity {
+public class ZhongChouDetailActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnTouchListener {
 
     @Bind(R.id.tv_back)
     TextView tvBack;
@@ -109,13 +113,25 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
     LinearLayout zhongchouDetailLlExperts;
     @Bind(R.id.zhongchou_detail_iv_head)
     CircleImageView head;
+    @Bind(R.id.zhongchou_detail_swp)
+    SwipeRefreshLayout swipeRefreshLayout;
+    @Bind(R.id.zhongchou_detail_ll_have)
+    LinearLayout zhongchouDetailLlHave;
+    @Bind(R.id.zhongchou_detail_ll_pepole)
+    LinearLayout zhongchouDetailLlPepole;
+    @Bind(R.id.zhongchou_detail_daojishi)
+    LinearLayout zhongchouDetailDaojishi;
+    @Bind(R.id.zhongchou_detail_scoll)
+    ScrollView scrollView;
+    @Bind(R.id.zhongchou_detail_tv_time)
+    CountdownTextView zhongchouDetailTvTime;
     private Fragment[] mFragments;
     private FragmentManager mManager;
     private FragmentTransaction transcation;
     private int kind = 0;
     private Handler mHandler = new Handler();
     private FragmentPagerAdapter fAdapter; //定义adapter
-    private List<Fragment> list_fragment; //定义要装fragment的列表
+    private List<Fragment> list_fragment;//定义要装fragment的列表
     private List<String> list_title; //tab名称列表
     private String crowdingId;
     private ZhongChouDetailResultBean zhongChouDetailResultBean;
@@ -138,7 +154,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
         crowdingId = getIntent().getStringExtra("crowdingId");
         status = getIntent().getStringExtra("status");
 //        LogUtil.e("YJL", "众筹状态" + status);
-        getZhongChouDetail(crowdingId);
+        getZhongChouDetail(crowdingId, 1);
         zhongchouDetailViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -157,6 +173,10 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
         });
         zhongchouDetailViewpager.resetHeight(0);
         zhongchouDetailViewpager.setOffscreenPageLimit(3);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        zhongchouDetailViewpager.setOnTouchListener(this);
     }
 
     private void initViewData() {
@@ -294,7 +314,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
 
-    private void getZhongChouDetail(String crowdfundingId) {
+    private void getZhongChouDetail(String crowdfundingId, final int type) {
         paramBean = new ParamBean();
         paramData = new ParamBean.ParamData();
         paramData.setCrowdfundingId(crowdfundingId);
@@ -306,7 +326,9 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
@@ -315,13 +337,25 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                 if (Tools.isGoodJson(response)) {
                     zhongChouDetailResultBean = new Gson().fromJson(response, ZhongChouDetailResultBean.class);
                     if (zhongChouDetailResultBean.isExecResult()) {
+
                         status = "" + zhongChouDetailResultBean.getExecDatas().getStatus();
                         if (null != status) {
                             if (status.equals("5") || status.equals("6") || status.equals("7")) {
                                 //5/6：已披露  7：已兑付
-                                initControls(1);
+                                if (type == 0) {
+                                    swipeRefreshLayout.setRefreshing(false);
+//                                    initControls(1, 0);
+                                } else {
+                                    initControls(1, 1);
+                                }
                             } else {
-                                initControls(0);
+                                if (type == 0) {
+                                    swipeRefreshLayout.setRefreshing(false);
+//                                    initControls(1, 0);
+
+                                } else {
+                                    initControls(0, 1);
+                                }
                             }
                         }
                         if (null != status)
@@ -353,17 +387,37 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
                         } else {
                             zhongchouDetailPrograss1.setProgress(score.intValue());
                         }
-                        if ("0".equals(status)) {
-                            homeZhongTvState.setText("未开始");
-                        } else if ("9".equals(status)) {
-                            homeZhongTvState.setText("流标");
-                        } else {
-                            if ("4".equals(status) || "3".equals(status) || "2".equals(status)) {
-                                homeZhongTvState.setText("已结束");
+                        if (null != status) {
+                            if ("0".equals(status)) {
+                                zhongchouDetailLlHave.setVisibility(View.GONE);
+                                zhongchouDetailLlPepole.setVisibility(View.GONE);
+                                zhongchouDetailDaojishi.setVisibility(View.VISIBLE);
+                                homeZhongTvState.setText("未开始");
+//                                String time = DateUtil.getDistanceTime(zhongChouDetailResultBean.getExecDatas().getStartDate(), System.currentTimeMillis());
+                                zhongchouDetailTvTime.setTimes(zhongChouDetailResultBean.getExecDatas().getStartDate());
+                            } else if ("9".equals(status)) {
+                                homeZhongTvState.setText("流标");
                             } else {
-                                homeZhongTvState.setText(score.intValue() + "%");
+                                if ("4".equals(status) || "3".equals(status) || "2".equals(status)) {
+                                    homeZhongTvState.setText("已结束");
+                                } else if ("5".equals(status) || "6".equals(status)) {
+                                    homeZhongTvState.setText("已披露");
+                                } else if ("7".equals(status)) {
+                                    homeZhongTvState.setText("已兑付");
+                                } else {
+                                    homeZhongTvState.setText(score.intValue() + "%");
+                                }
+
                             }
                         }
+                    } else {
+                        if (swipeRefreshLayout.isRefreshing()) {
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                } else {
+                    if (swipeRefreshLayout.isRefreshing()) {
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }
             }
@@ -372,17 +426,24 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        zhongchouDetailTvTime.stop();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+
     }
 
     /**
      * 初始化各控件
      */
-    private void initControls(int type) {
+    private void initControls(int kind, int type) {
         Bundle bundle = new Bundle();
-        bundle.putInt("KIND", type);
+        bundle.putInt("KIND", kind);
         bundle.putString("crowdingId", crowdingId);
         list_fragment = new ArrayList<>();
         //初始化各fragment
@@ -450,4 +511,50 @@ public class ZhongChouDetailActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onRefresh() {
+        getZhongChouDetail(crowdingId, 0);
+    }
+
+    /**
+     * 解决swip嵌套scroll中viewpager滑动冲突
+     */
+    int downX;
+    int downY;
+    int dragthreshold = 30;
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        switch (motionEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                downX = (int) motionEvent.getRawX();
+                downY = (int) motionEvent.getRawY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                int distanceX = Math.abs((int) motionEvent.getRawX() - downX);
+                int distanceY = Math.abs((int) motionEvent.getRawY() - downY);
+                if (distanceX > distanceY) {
+                    swipeRefreshLayout.setEnabled(false);
+                }
+                if (distanceY > distanceX && distanceY > dragthreshold) {
+                    zhongchouDetailViewpager.getParent().requestDisallowInterceptTouchEvent(false);
+                    scrollView.getParent().requestDisallowInterceptTouchEvent(true);
+                    swipeRefreshLayout.setEnabled(true);
+                } else if (distanceX > distanceY && distanceX > dragthreshold) {
+                    swipeRefreshLayout.setEnabled(false);
+                    zhongchouDetailViewpager.getParent().requestDisallowInterceptTouchEvent(true);
+                    scrollView.getParent().requestDisallowInterceptTouchEvent(false);
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                zhongchouDetailViewpager.getParent().requestDisallowInterceptTouchEvent(false);
+                scrollView.getParent().requestDisallowInterceptTouchEvent(false);
+                swipeRefreshLayout.setEnabled(true);
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                swipeRefreshLayout.setEnabled(true);
+                break;
+        }
+        return false;
+    }
 }

@@ -7,6 +7,10 @@
 
     <include layout="@layout/layout_title"></include>
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/home_swp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <com.micai.fox.view.PageListScrollView
         android:id="@+id/home_scroll"
         android:layout_width="match_parent"
@@ -21,7 +25,7 @@
             <com.youth.banner.Banner xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
-                android:layout_height="170dp" />
+                android:layout_height="200dp" />
             <!--推荐专家标题-->
             <LinearLayout
                 android:id="@+id/home_experts_parent"
@@ -141,8 +145,9 @@
             </LinearLayout>
         </LinearLayout>
     </com.micai.fox.view.PageListScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-    <LinearLayout
+   <!-- <LinearLayout
         android:id="@+id/home_xuanting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -158,5 +163,5 @@
         android:background="#FF23253C"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone"></LinearLayout>
+        android:visibility="gone"></LinearLayout>-->
 </FrameLayout>

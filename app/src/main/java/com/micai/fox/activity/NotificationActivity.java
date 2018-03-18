@@ -2,6 +2,7 @@ package com.micai.fox.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,7 +44,7 @@ import okhttp3.Call;
 import okhttp3.MediaType;
 
 /*消息通知界面*/
-public class NotificationActivity extends AppCompatActivity implements AbsListView.OnScrollListener {
+public class NotificationActivity extends AppCompatActivity implements AbsListView.OnScrollListener, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.tv_back)
     TextView tvBack;
@@ -55,17 +56,16 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
     RelativeLayout rl;
     @Bind(R.id.lv_notify)
     ListView lvNotify;
-    @Bind(R.id.ptr)
-    PtrFrameLayout mPtr;
+    @Bind(R.id.notice_sw)
+    SwipeRefreshLayout swipeRefreshLayout;
+    //    @Bind(R.id.ptr)
+//    PtrFrameLayout mPtr;
     private ArrayList<NotificationResultBean.ExecDatasBean.RecordListBean> data = new ArrayList<>();
     private MyNotificationAdapter adapter;
     private BaseResultBean baseResultBean;
     private NotificationResultBean notificationResultBean;
     private View footer_view;
     private TextView tv_foot;
-
-    private boolean isFirst = false;
-    private boolean isCanRefresh = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,31 +100,37 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
                 if (4 == data.get(i).getType()) {
                     intent = new Intent(NotificationActivity.this, ReportDetailActivity.class);
                     intent.putExtra("reportId", data.get(i).getRelId());
-                } else {
+                } else if (3==data.get(i).getType()){
                     intent = new Intent(NotificationActivity.this, ZhongChouOrderDetailActivity.class);
                     intent.putExtra("orderId", data.get(i).getRelId());
+                }else {
+                    intent = new Intent(NotificationActivity.this, ZhongChouDetailActivity.class);
+                    intent.putExtra("crowdingId", data.get(i).getRelId());
                 }
                 startActivity(intent);
             }
         });
         //刷新
-        Tools.upLoadGagrProgress(Constant.HOME_BACKGROUND_COLOR, mPtr, this, new PtrHandler() {
-            @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                LogUtil.e("YJL", "" + isCanRefresh);
-                return isCanRefresh;
-            }
-
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                LogUtil.e("YJL", "的点点滴滴" + isCanRefresh);
-                getNotList("0", 0);
-                //进行刷新
-//                frame.autoRefresh();
-                frame.refreshComplete();
-
-            }
-        });
+//        Tools.upLoadGagrProgress(Constant.HOME_BACKGROUND_COLOR, mPtr, this, new PtrHandler() {
+//            @Override
+//            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+//                LogUtil.e("YJL", "" + isCanRefresh);
+//                return isCanRefresh;
+//            }
+//
+//            @Override
+//            public void onRefreshBegin(PtrFrameLayout frame) {
+//                LogUtil.e("YJL", "的点点滴滴" + isCanRefresh);
+//                getNotList("0", 0);
+//                //进行刷新
+////                frame.autoRefresh();
+//                frame.refreshComplete();
+//
+//            }
+//        });
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
     }
 
@@ -154,7 +160,9 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-
+                if (type == 0) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
@@ -166,21 +174,25 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
                         if (null != notificationResultBean.getExecDatas()) {
                             if (type == 0) {
                                 //下拉刷新
-                                isCanRefresh = false;
                                 data.clear();
                                 data.addAll(notificationResultBean.getExecDatas().getRecordList());
                                 adapter.notifyDataSetChanged();
+                                swipeRefreshLayout.setRefreshing(false);
                             } else {
-                                isCanRefresh = true;
                                 data.addAll(notificationResultBean.getExecDatas().getRecordList());
                                 adapter.notifyDataSetChanged();
                             }
                         } else {
-                            isCanRefresh = false;
+                            if (type == 0) {
+                                swipeRefreshLayout.setRefreshing(false);
+                            }
                         }
                     }
                 } else {
                     //TODO 状态禁用
+                    if (type == 0) {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
                     Config.getInstance().setJin(true);
                 }
             }
@@ -223,6 +235,11 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
     private boolean isBottom = false;//是否到第20条数据了
     private int curPageNum = 1;
 
+    @Override
+    public void onRefresh() {
+        getNotList("0", 0);
+    }
+
     // 下拉刷新
     public interface OnSwipeIsValid {
         void setSwipeEnabledTrue();
@@ -233,14 +250,12 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
     private OnSwipeIsValid isValid = new OnSwipeIsValid() {
         @Override
         public void setSwipeEnabledTrue() {
-//            srfOrderDetailMsg.setEnabled(true);//让swipe起作用，能够刷新
-            isCanRefresh = true;
+            swipeRefreshLayout.setEnabled(true);//让swipe起作用，能够刷新
         }
 
         @Override
         public void setSwipeEnabledFalse() {
-//            srfOrderDetailMsg.setEnabled(false);//让swipe不能够刷新
-            isCanRefresh = false;
+            swipeRefreshLayout.setEnabled(false);//让swipe不能够刷新
         }
     };
 

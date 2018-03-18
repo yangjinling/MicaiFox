@@ -18,6 +18,7 @@ public class Config {
     private boolean noti=false;
     private boolean isSet=false;
     private boolean isJin=false;
+    private boolean loginAndNo=false;
     private Config() {
     }
 
@@ -113,5 +114,13 @@ public class Config {
 
     public void setJin(boolean jin) {
         isJin = jin;
+    }
+
+    public boolean isLoginAndNo() {
+        return loginAndNo;
+    }
+
+    public void setLoginAndNo(boolean loginAndNo) {
+        this.loginAndNo = loginAndNo;
     }
 }

@@ -5,6 +5,7 @@ import android.graphics.drawable.RippleDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.activity.ExpertsDetailActivity;
+import com.micai.fox.activity.NotificationActivity;
 import com.micai.fox.activity.ZhongChouDetailActivity;
 import com.micai.fox.activity.ZhongChouOrderDetailActivity;
 import com.micai.fox.adapter.MyExpertsListAdapter;
@@ -43,7 +45,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  */
 
 /*我的--我的众筹模块*/
-public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrollListener {
+public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrollListener, SwipeRefreshLayout.OnRefreshListener {
     private ArrayList<MyZhongChouResultBean.ExecDatasBean.RecordListBean> data = new ArrayList<>();
     private ListView lv;
     private TextView tv;
@@ -52,6 +54,7 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
     private MyZhongChouResultBean myZhongChouResultBean;
     MyZhonChouAdapter adapter;
     private View footer_view;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -59,54 +62,57 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
         View view = inflater.inflate(R.layout.fragment_mine_zhongchou, container, false);
         lv = ((ListView) view.findViewById(R.id.mine_zhongchou_lv));
         tv = ((TextView) view.findViewById(R.id.fragment_mine_zhongchou_tv));
+        swipeRefreshLayout = ((SwipeRefreshLayout) view.findViewById(R.id.mine_zhongchou_swp));
         kind = getArguments().getInt("KIND", 0);
-        switch (kind) {
-            case 0:
-                adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
-//                tv.setText("全部");
-                getMyZhongChouList(2, "0");
-                break;
-            case 1:
-//                tv.setText("待支付");
-                adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
-                getMyZhongChouList(0, "0");
-                break;
-            case 2:
-//                tv.setText("已支付");
-                adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
-                getMyZhongChouList(1, "0");
-                break;
-            case 3:
-//                tv.setText("已兑换");
-                adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
-                getMyZhongChouList(7, "0");
-                break;
-        }
-//        data = getData();
         headView = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.headview_lv, null);
         lv.addHeaderView(headView);
         footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv, null);
         lv.addFooterView(footer_view);
         tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
+        adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
         lv.setAdapter(adapter);
+        switch (kind) {
+            case 0:
+//                tv.setText("全部");
+                getMyZhongChouList(2, "0", 1);
+                break;
+            case 1:
+//                tv.setText("待支付");
+                getMyZhongChouList(0, "0", 1);
+                break;
+            case 2:
+//                tv.setText("已支付");
+                getMyZhongChouList(1, "0", 1);
+                break;
+            case 3:
+//                tv.setText("已兑换");
+                getMyZhongChouList(7, "0", 1);
+                break;
+        }
+//        data = getData();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ZhongChouOrderDetailActivity.class);
-                intent.putExtra("orderId", data.get(i - 1).getOrderId());
-                intent.putExtra("orderStatus", data.get(i - 1).getOrderStatus());
-                intent.putExtra("zhongchouStatus", data.get(i - 1).getCrowdfundingStatus());
+                if (i != 0) {
+                    intent.putExtra("orderId", data.get(i - 1).getOrderId());
+                    intent.putExtra("orderStatus", data.get(i - 1).getOrderStatus());
+                    intent.putExtra("zhongchouStatus", data.get(i - 1).getCrowdfundingStatus());
+                }
                 startActivity(intent);
             }
         });
         lv.setOnScrollListener(this);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        swipeRefreshLayout.setOnRefreshListener(this);
         return view;
     }
 
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
 
-    private void getMyZhongChouList(int status, String curPageNum) {
+    private void getMyZhongChouList(int status, String curPageNum, final int type) {
         Log.e("YJL", "status==" + status);
         paramBean = new ParamBean();
         paramBean.setLength("20");
@@ -125,7 +131,9 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-
+                if (type == 0) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
@@ -134,14 +142,31 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
                 if (Tools.isGoodJson(response)) {
                     myZhongChouResultBean = new Gson().fromJson(response, MyZhongChouResultBean.class);
                     if (myZhongChouResultBean.isExecResult()) {
-//                        data.clear();
-                        data.addAll(myZhongChouResultBean.getExecDatas().getRecordList());
-                        adapter.notifyDataSetChanged();
-                        if (tv_foot.getVisibility() == View.VISIBLE) {
-                            tv_foot.setVisibility(View.GONE);
+                        if (type == 0) {
+                            data.clear();
+                            if (null != myZhongChouResultBean.getExecDatas().getRecordList()) {
+                                data.addAll(myZhongChouResultBean.getExecDatas().getRecordList());
+                            }
+                            adapter.notifyDataSetChanged();
+                            swipeRefreshLayout.setRefreshing(false);
+                        } else {
+                            if (null != myZhongChouResultBean.getExecDatas().getRecordList()) {
+                                data.addAll(myZhongChouResultBean.getExecDatas().getRecordList());
+                            }
+                            adapter.notifyDataSetChanged();
+                            if (tv_foot.getVisibility() == View.VISIBLE) {
+                                tv_foot.setVisibility(View.GONE);
+                            }
+                        }
+                    } else {
+                        if (type == 0) {
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     }
-                }else {
+                } else {
+                    if (type == 0) {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
                     //TODO 状态禁用
                     Config.getInstance().setJin(true);
                 }
@@ -157,19 +182,38 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
     private boolean isBottom = false;//是否到第20条数据了
     private int curPageNum = 1;
 
+    // 下拉刷新
+    public interface OnSwipeIsValid {
+        void setSwipeEnabledTrue();
+
+        void setSwipeEnabledFalse();
+    }
+
+    private NotificationActivity.OnSwipeIsValid isValid = new NotificationActivity.OnSwipeIsValid() {
+        @Override
+        public void setSwipeEnabledTrue() {
+            swipeRefreshLayout.setEnabled(true);//让swipe起作用，能够刷新
+        }
+
+        @Override
+        public void setSwipeEnabledFalse() {
+            swipeRefreshLayout.setEnabled(false);//让swipe不能够刷新
+        }
+    };
+
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
         LogUtil.e("YJL---", "+进来了没有");
-        switch (i) {
-            case SCROLL_STATE_IDLE://空闲状态
-                LogUtil.e("YJL", "+进来了没有空闲");
-                break;
-            case SCROLL_STATE_TOUCH_SCROLL://滚状态
-                LogUtil.e("YJL", "+进来了没有滚");
-                break;
-            case SCROLL_STATE_FLING://飞状态
-                LogUtil.e("YJL", "+进来了没有飞");
-                break;
+        //判断ListView是否滑动到第一个Item的顶部
+        if (isValid != null && lv.getChildCount() > 0 && lv.getFirstVisiblePosition() == 0
+                && lv.getChildAt(0).getTop() >= lv.getPaddingTop()) {
+            //解决滑动冲突，当滑动到第一个item，下拉刷新才起作用
+            LogUtil.e("YJL", "刷新啊");
+            isValid.setSwipeEnabledTrue();
+//            isCanRefresh = true;
+        } else {
+            isValid.setSwipeEnabledFalse();
+//            isCanRefresh = false;
         }
 
     }
@@ -195,7 +239,24 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
 //                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
                 tv_foot.setVisibility(View.VISIBLE);
                 tv_foot.setText("加载中…");
-                getMyZhongChouList(kind, "" + curPageNum);
+                switch (kind) {
+                    case 0:
+//                tv.setText("全部");
+                        getMyZhongChouList(2, "" + curPageNum, 1);
+                        break;
+                    case 1:
+//                tv.setText("待支付");
+                        getMyZhongChouList(0, "" + curPageNum, 1);
+                        break;
+                    case 2:
+//                tv.setText("已支付");
+                        getMyZhongChouList(1, "" + curPageNum, 1);
+                        break;
+                    case 3:
+//                tv.setText("已兑换");
+                        getMyZhongChouList(7, "" + curPageNum, 1);
+                        break;
+                }
 //                Toast.makeText(getContext(), "加载中…", Toast.LENGTH_SHORT).show();
             } else {
 //                Toast.makeText(getContext(), "没有更多了", Toast.LENGTH_SHORT).show();
@@ -209,4 +270,25 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
         }
     }
 
+    @Override
+    public void onRefresh() {
+        switch (kind) {
+            case 0:
+//                tv.setText("全部");
+                getMyZhongChouList(2, "0", 0);
+                break;
+            case 1:
+//                tv.setText("待支付");
+                getMyZhongChouList(0, "0", 0);
+                break;
+            case 2:
+//                tv.setText("已支付");
+                getMyZhongChouList(1, "0", 0);
+                break;
+            case 3:
+//                tv.setText("已兑换");
+                getMyZhongChouList(7, "0", 0);
+                break;
+        }
+    }
 }

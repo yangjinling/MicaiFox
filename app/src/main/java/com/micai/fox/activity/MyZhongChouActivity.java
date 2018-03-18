@@ -1,26 +1,19 @@
 package com.micai.fox.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.micai.fox.R;
 import com.micai.fox.adapter.ViewPageAdapter;
 import com.micai.fox.fragment.MyZhongChouFragment;
-import com.micai.fox.util.Tools;
-import com.micai.fox.view.NoScrollViewPager;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 

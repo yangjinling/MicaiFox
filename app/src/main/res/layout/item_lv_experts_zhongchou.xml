@@ -185,11 +185,11 @@
 
 
 
-            <TextView
+            <com.micai.fox.view.CountdownTextView
                 android:id="@+id/experts_zhong_tv_daojishi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="48:00:00"
+                android:text=""
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
@@ -197,7 +197,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="距开始倒计时"
+                android:text="距开始"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
         </LinearLayout>

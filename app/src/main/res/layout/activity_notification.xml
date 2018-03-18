@@ -8,6 +8,7 @@
     tools:context="com.micai.fox.activity.NotificationActivity">
 
     <include layout="@layout/layout_title"></include>
+<!--
 
     <in.srain.cube.views.ptr.PtrFrameLayout
         xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
@@ -21,7 +22,13 @@
         cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
         cube_ptr:ptr_resistance="1.7"
         tools:context="com.micai.fox.activity.NotificationActivity">
-
+-->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/notice_sw"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="12.5dp"
+        android:layout_marginRight="12.5dp"
+        android:layout_height="wrap_content">
     <ListView
         android:id="@+id/lv_notify"
         android:layout_width="match_parent"
@@ -33,6 +40,7 @@
         android:listSelector="@android:color/transparent"
         android:scrollbars="none"></ListView>
 
-    </in.srain.cube.views.ptr.PtrFrameLayout>
+   <!-- </in.srain.cube.views.ptr.PtrFrameLayout>-->
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

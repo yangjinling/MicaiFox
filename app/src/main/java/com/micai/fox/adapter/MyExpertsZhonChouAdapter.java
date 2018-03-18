@@ -11,6 +11,7 @@ import com.micai.fox.resultbean.ExpertsZhongchouResultBean;
 import com.micai.fox.util.DateUtil;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
+import com.micai.fox.view.CountdownTextView;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -40,7 +41,7 @@ public class MyExpertsZhonChouAdapter extends MyBaseAdapter<ExpertsZhongchouResu
         TextView tv_people = ((TextView) viewHolder.findViewById(R.id.experts_zhongchou_people));
         //未开始
         LinearLayout ll_start = ((LinearLayout) viewHolder.findViewById(R.id.experts_zhong_ll_nostart));
-        TextView tv_time = ((TextView) viewHolder.findViewById(R.id.experts_zhong_tv_daojishi));
+        CountdownTextView tv_time = ((CountdownTextView) viewHolder.findViewById(R.id.experts_zhong_tv_daojishi));
 
         TextView tv_status = ((TextView) viewHolder.findViewById(R.id.experts_zhongchou_state));
         //进度条
@@ -63,8 +64,8 @@ public class MyExpertsZhonChouAdapter extends MyBaseAdapter<ExpertsZhongchouResu
                 ll_people.setVisibility(View.GONE);
                 ll_have.setVisibility(View.GONE);
                 tv_status.setText("未开始");
-                String time = DateUtil.getDistanceTime(list.get(position).getStartDate(), System.currentTimeMillis());
-                tv_time.setText("" + time);
+//                String time = DateUtil.getDistanceTime(list.get(position).getStartDate(), System.currentTimeMillis());
+                tv_time.setTimes(list.get(position).getStartDate());
             } else if ("9".equals(list.get(position).getStatus())) {
                 //流标
                 pb_ing.setVisibility(View.GONE);
@@ -85,9 +86,14 @@ public class MyExpertsZhonChouAdapter extends MyBaseAdapter<ExpertsZhongchouResu
                 tv_have.setText("" + list.get(position).getRealAmount());
                 if ("4".equals(list.get(position).getStatus()) || "3".equals(list.get(position).getStatus()) || "2".equals(list.get(position).getStatus())) {
                     tv_status.setText("已结束");
+                } else if ("5".equals(list.get(position).getStatus()) || "6".equals(list.get(position).getStatus())) {
+                    tv_status.setText("已披露");
+                } else if ("7".equals(list.get(position).getStatus())) {
+                    tv_status.setText("已兑付");
                 } else {
                     tv_status.setText(score.intValue() + "%");
                 }
+
             }
         }
     }

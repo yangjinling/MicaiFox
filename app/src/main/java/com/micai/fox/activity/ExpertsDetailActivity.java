@@ -9,8 +9,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,7 +51,7 @@ import okhttp3.Call;
 import okhttp3.MediaType;
 
 /*专家详情页面*/
-public class ExpertsDetailActivity extends AppCompatActivity implements PageListScrollView.OnScrollToBottomListener {
+public class ExpertsDetailActivity extends AppCompatActivity implements PageListScrollView.OnScrollToBottomListener, SwipeRefreshLayout.OnRefreshListener, View.OnTouchListener {
 
     @Bind(R.id.tv_back)
     TextView tvBack;
@@ -87,14 +89,16 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
     LinearLayout expertsDetailMoveview;
     @Bind(R.id.experts_detail_parentcontent)
     LinearLayout expertsDetailParentcontent;
-    @Bind(R.id.xuantingquyu)
-    LinearLayout xuantingquyu;
+    //    @Bind(R.id.xuantingquyu)
+//    LinearLayout xuantingquyu;
     @Bind(R.id.experts_detail_tablayout)
     TabLayout expertsDetailTablayout;
     @Bind(R.id.experts_detail_viewpager)
     CustomViewPager expertsDetailViewpager;
     @Bind(R.id.experts_detail_tv_count)
     TextView expertsDetailTvCount;
+    @Bind(R.id.experts_detail_swp)
+    SwipeRefreshLayout swipeRefreshLayout;
     private Fragment[] mFragments;
     private FragmentManager mManager;
     private FragmentTransaction transcation;
@@ -156,6 +160,10 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
         expertsDetailViewpager.resetHeight(0);
         expertsDetailViewpager.setOffscreenPageLimit(0);
         scrollView.setOnScrollToBottomListener(this);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        expertsDetailViewpager.setOnTouchListener(this);
     }
 
     @OnClick({R.id.experts_detail_tv_content, R.id.tv_back, R.id.experts_detail_tv_zhongchou, R.id.experts_detail_tv_report})
@@ -172,7 +180,7 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
                 TextUtil.toggleEllipsize(ExpertsDetailActivity.this,
                         expertsDetailTvContent, 2,
                         expertsDetailResultBean.getExecDatas().getProfessor().getSelfIntro(),
-                        "展开全",
+                        "展开",
                         R.color.red, isExpandDescripe);
                 break;
             case R.id.tv_back:
@@ -328,7 +336,9 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
@@ -348,8 +358,19 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
                         TextUtil.toggleEllipsize(ExpertsDetailActivity.this,
                                 expertsDetailTvContent, 2,
                                 expertsDetailResultBean.getExecDatas().getProfessor().getSelfIntro(),
-                                "展开全",
+                                "展开",
                                 R.color.red, isExpandDescripe);
+                        if (swipeRefreshLayout.isRefreshing()) {
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    } else {
+                        if (swipeRefreshLayout.isRefreshing()) {
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                } else {
+                    if (swipeRefreshLayout.isRefreshing()) {
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }
             }
@@ -369,5 +390,31 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
         BotomBean botomBean = new BotomBean();
         botomBean.setBootom(isBottom);
         EventBus.getDefault().post(botomBean);
+    }
+
+    @Override
+    public void onRefresh() {
+        getExpertsDetail(proId);
+    }
+
+    /**
+     * 解决swip嵌套scroll中viewpager滑动冲突
+     */
+    int downX;
+    int downY;
+    int dragthreshold = 30;
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        switch (motionEvent.getAction()) {
+            case MotionEvent.ACTION_MOVE:
+                swipeRefreshLayout.setEnabled(false);
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                swipeRefreshLayout.setEnabled(true);
+                break;
+        }
+        return false;
     }
 }

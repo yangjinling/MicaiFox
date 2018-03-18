@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.igexin.sdk.GTIntentService;
@@ -27,6 +28,7 @@ import org.greenrobot.eventbus.EventBus;
 
 public class IntentService extends GTIntentService {
     NotificationManager mange;
+
     public IntentService() {
 
     }
@@ -57,22 +59,25 @@ public class IntentService extends GTIntentService {
             String data = new String(payload);
             Log.d(TAG, "receiver payload = " + data);
 //            sendMessage(data, 0);
-            NotiBean bean=new NotiBean();
-            bean.setHaveN(true);
-            EventBus.getDefault().post(bean);
-            nomaleNotif(context,data);
+            if (null != Config.getInstance().getClientId() && !TextUtils.isEmpty(Config.getInstance().getClientId())) {
+                NotiBean bean = new NotiBean();
+                bean.setHaveN(true);
+                EventBus.getDefault().post(bean);
+                nomaleNotif(context, data);
+            }
         }
-
         Log.d(TAG, "----------------------------------------------------------------------------------------------");
 
     }
+
     /*一般的通知*/
-    public void nomaleNotif(Context  context,String content) {
+
+    public void nomaleNotif(Context context, String content) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 //        builder.setTicker("提示");
 //        builder.setContentTitle(""+content);
 //        builder.setSubText(""+content);
-        builder.setContentText(""+content);
+        builder.setContentText("" + content);
 //        builder.setContentInfo("显示于通知时间的下面");
         builder.setNumber(1);//显示同种通知的数量，塔河setContentinfo只能设置其中一种
         builder.setAutoCancel(true);//可以点击通知栏的删除按钮删除
@@ -84,6 +89,7 @@ public class IntentService extends GTIntentService {
         Notification notification = builder.build();
         mange.notify(1, notification);
     }
+
     @Override
     public void onReceiveClientId(Context context, String clientid) {
         Log.e("YJL", "onReceiveClientId -> " + "clientid = " + clientid);

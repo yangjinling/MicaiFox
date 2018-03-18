@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity {
 
     private Fragment[] mFragments;
     private FragmentManager mManager;
-    private Handler handler;
+    private Handler handler = new Handler();
     private int type;
 
     @Override
@@ -58,7 +58,6 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        handler = new Handler();
         ExitAppUtils.getInstance().addActivity(this);
         //初始化fragment
         initFragments();
@@ -75,6 +74,27 @@ public class MainActivity extends BaseActivity {
         mFragments[2] = new MineFragmnet();
     }
 
+    private Fragment currentFragment = new Fragment();
+
+    //正确的做法
+    private void switchFragment(Fragment targetFragment) {
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+        if (!targetFragment.isAdded()) {
+            transaction
+                    .hide(currentFragment)
+                    .add(R.id.main_fragment, targetFragment)
+                    .commit();
+            System.out.println("还没添加呢");
+        } else {
+            transaction
+                    .hide(currentFragment)
+                    .show(targetFragment)
+                    .commit();
+            System.out.println("添加了( ⊙o⊙ )哇");
+        }
+        currentFragment = targetFragment;
+    }
 
     private void initLinearLayout(int type) {
         //导航
@@ -92,6 +112,7 @@ public class MainActivity extends BaseActivity {
             rbExperts.setChecked(false);
             rbMine.setChecked(true);
             mManager.beginTransaction().replace(R.id.main_fragment, mFragments[2]).commit();
+            currentFragment = mFragments[2];
         } else if (type == 2) {
             //设置退出
             if (!Config.getInstance().isSet()) {
@@ -99,12 +120,15 @@ public class MainActivity extends BaseActivity {
                 mFragments[2].setArguments(bundle);
                 Config.getInstance().setSet(true);
             }
+            homeMinePoint.setVisibility(View.GONE);
             rbHome.setChecked(false);
             rbExperts.setChecked(false);
             rbMine.setChecked(true);
             mManager.beginTransaction().replace(R.id.main_fragment, mFragments[2]).commit();
+            currentFragment = mFragments[2];
         } else {
             mManager.beginTransaction().replace(R.id.main_fragment, mFragments[0]).commit();
+            currentFragment = mFragments[0];
         }
     }
 
@@ -123,16 +147,18 @@ public class MainActivity extends BaseActivity {
                 rbHome.setChecked(true);
                 rbExperts.setChecked(false);
                 rbMine.setChecked(false);
-                FragmentTransaction transaction1 = mManager.beginTransaction();
-                transaction1.replace(R.id.main_fragment, mFragments[0]).commit();
+//                FragmentTransaction transaction1 = mManager.beginTransaction();
+//                transaction1.replace(R.id.main_fragment, mFragments[0]).commit();
+                switchFragment(mFragments[0]);
                 break;
             case R.id.rb_experts:
 //                homeMinePoint.setVisibility(View.GONE);
                 rbHome.setChecked(false);
                 rbExperts.setChecked(true);
                 rbMine.setChecked(false);
-                FragmentTransaction transaction2 = mManager.beginTransaction();
-                transaction2.replace(R.id.main_fragment, mFragments[1]).commit();
+//                FragmentTransaction transaction2 = mManager.beginTransaction();
+//                transaction2.replace(R.id.main_fragment, mFragments[1]).commit();
+                switchFragment(mFragments[1]);
                 break;
             case R.id.rb_mine:
 //                homeMinePoint.setVisibility(View.GONE);
@@ -149,8 +175,9 @@ public class MainActivity extends BaseActivity {
                     mFragments[2].setArguments(bundle);
                     Config.getInstance().setSet(true);
                 }
-                FragmentTransaction transaction3 = mManager.beginTransaction();
-                transaction3.replace(R.id.main_fragment, mFragments[2]).commit();
+//                FragmentTransaction transaction3 = mManager.beginTransaction();
+//                transaction3.replace(R.id.main_fragment, mFragments[2]).commit();
+                switchFragment(mFragments[2]);
                 break;
         }
     }
@@ -160,8 +187,14 @@ public class MainActivity extends BaseActivity {
         LogUtil.e("eventbus", "" + bean.isHaveN());
 
         if (bean.isHaveN()) {
-            Config.getInstance().setNoti(true);
-            handler.post(runnableUi);
+            if (null == PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", null) || TextUtils.isEmpty(PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", ""))) {
+                Config.getInstance().setLoginAndNo(true);
+                handler.post(runnableUis);
+            } else {
+                Config.getInstance().setLoginAndNo(true);
+                Config.getInstance().setNoti(true);
+                handler.post(runnableUi);
+            }
 
         } else {
             Config.getInstance().setNoti(false);

@@ -17,6 +17,7 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.igexin.sdk.PushManager;
 import com.micai.fox.R;
 import com.micai.fox.activity.IndexActivity;
 import com.micai.fox.activity.LoginActivity;
@@ -47,6 +49,8 @@ import com.micai.fox.resultbean.MineResultBean;
 import com.micai.fox.util.Bimp;
 import com.micai.fox.util.ExitAppUtils;
 import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.PrefUtils;
+import com.micai.fox.util.TextUtil;
 import com.micai.fox.util.Tools;
 import com.micai.fox.view.ChooseDialog;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -126,7 +130,7 @@ public class MineFragmnet extends Fragment {
     File photo = null;
     private Uri uri;
     private MineResultBean mineResultBean;
-    private Handler handler;
+    private Handler handler = new Handler();
     private boolean isLogin;
 
     @Nullable
@@ -141,6 +145,11 @@ public class MineFragmnet extends Fragment {
         }
         LogUtil.e("YJL", "isLogin==" + isLogin);
         if (isLogin) {
+            if (Config.getInstance().isLoginAndNo()) {
+                ivNotifyPoint.setVisibility(View.VISIBLE);
+            } else {
+                ivNotifyPoint.setVisibility(View.GONE);
+            }
             login_mine.setVisibility(View.VISIBLE);
             rl.setVisibility(View.VISIBLE);
             tvBack.setVisibility(View.GONE);
@@ -151,7 +160,6 @@ public class MineFragmnet extends Fragment {
             } else {
                 ivNotifyPoint.setVisibility(View.GONE);
             }
-            handler = new Handler();
             Drawable drawable = getResources().getDrawable(R.mipmap.message);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置边界
             // param 左上右下
@@ -165,6 +173,9 @@ public class MineFragmnet extends Fragment {
             }
             getMineInfo();
         } else {
+            NotiBean bean = new NotiBean();
+            bean.setHaveN(false);
+            EventBus.getDefault().post(bean);
             nologin_mine.setVisibility(View.VISIBLE);
         }
 
@@ -183,8 +194,11 @@ public class MineFragmnet extends Fragment {
         LogUtil.e("eventbus", "" + bean.isHaveN());
 
         if (bean.isHaveN()) {
-            handler.post(runnableUi);
-
+            if (null == PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", null) || TextUtils.isEmpty(PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", ""))) {
+                Config.getInstance().setLoginAndNo(true);
+            } else {
+                handler.post(runnableUi);
+            }
         } else {
             handler.post(runnableUis);
         }
@@ -340,7 +354,7 @@ public class MineFragmnet extends Fragment {
             return;
         } else if (resultCode != RESULT_OK) {
         } else {
-            startActivityForResult(cropp(Uri.parse(isimg), 240, 300, 4, 4), REQUEST_CODE_CLIP_PHOTO);
+            startActivityForResult(cropp(Uri.parse(isimg), 240, 300, 5, 5), REQUEST_CODE_CLIP_PHOTO);
         }
     }
 
@@ -572,7 +586,15 @@ public class MineFragmnet extends Fragment {
                         }
                     }
                 } else {
+                    if (null != Config.getInstance().getClientId() && !TextUtils.isEmpty(Config.getInstance().getClientId())) {
+                        PushManager.getInstance().unBindAlias(getContext().getApplicationContext(), Config.getInstance().getClientId(), false);
+                        Config.getInstance().setClientId("");
+                    }
                     Config.getInstance().setJin(true);
+                    PrefUtils.setString(Config.getInstance().getmContext(), "SESSIONID", null);
+                    NotiBean bean = new NotiBean();
+                    bean.setHaveN(false);
+                    EventBus.getDefault().post(bean);
                     login_mine.setVisibility(View.GONE);
                     nologin_mine.setVisibility(View.VISIBLE);
                 }

@@ -98,7 +98,7 @@ public class DateUtil {
 
                 {
                     public String getValue() {
-                        return "yyyy-MM-dd HH:mm";
+                        return "yyyy.MM.dd HH:mm";
                     }
                 },
         /**
@@ -389,10 +389,40 @@ public class DateUtil {
         return "00";
     }
 
+    public static long getDistanceTimess(long time1, long time2) {
+        long day = 0;
+        long hour = 0;
+        long min = 0;
+        long sec = 0;
+        long diff;
+
+        if (time1 < time2) {
+            diff = time2 - time1;
+        } else {
+            diff = time1 - time2;
+        }
+        day = diff / (24 * 60 * 60 * 1000);
+        hour = (diff / (60 * 60 * 1000) - day * 24);
+        min = ((diff / (60 * 1000)) - day * 24 * 60 - hour * 60);
+        sec = (diff / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+        if (day != 0) return (day * 24 * 60 * 60 + hour * 60 * 60 + min * 60 + sec);
+        if (hour != 0) return (hour * 60 * 60 + min * 60 + sec);
+        if (min != 0) return (min * 60 + sec);
+        if (sec != 0) return sec;
+        return 0;
+    }
+
     //ONLY_DAYS
     public static String getDateToStrings(long milSecond) {
         Date date = new Date(milSecond);
         SimpleDateFormat format = new SimpleDateFormat(DatePattern.ONLY_DAYS.getValue(), Locale.CHINA);
+        return format.format(date);
+    }
+
+    //ONLY_MINUTE
+    public static String getDateToStringss(long milSecond) {
+        Date date = new Date(milSecond);
+        SimpleDateFormat format = new SimpleDateFormat(DatePattern.ONLY_MINUTE.getValue(), Locale.CHINA);
         return format.format(date);
     }
 

@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.micai.fox.R;
 import com.micai.fox.resultbean.NotificationResultBean;
+import com.micai.fox.util.DateUtil;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class MyNotificationAdapter extends MyBaseAdapter<NotificationResultBean.
     @Override
     public void setData(ViewHolder viewHolder, int position) {
         TextView content = ((TextView) viewHolder.findViewById(R.id.notification_tv_content));
+        TextView tv_time = ((TextView) viewHolder.findViewById(R.id.notification_tv_time));
         content.setText("" + mLists.get(position).getContent());
         if (1 == mLists.get(position).getReviewFlag()) {
             content.setTextColor(context.getResources().getColor(R.color.text_gray));
@@ -43,6 +45,7 @@ public class MyNotificationAdapter extends MyBaseAdapter<NotificationResultBean.
         }
         TextView title = ((TextView) viewHolder.findViewById(R.id.notification_tv_title));
         ImageView iv = ((ImageView) viewHolder.findViewById(R.id.notification_iv));
+        tv_time.setText("" + DateUtil.getDateToStringss(mLists.get(position).getCreateDate()));
         switch (mLists.get(position).getType()) {
             case 0://众筹满标
                 title.setText("满标通知");

@@ -2,6 +2,7 @@ package com.micai.fox.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,7 +36,7 @@ import okhttp3.Call;
 import okhttp3.MediaType;
 
 /*我的报告界面*/
-public class MyReportActivity extends AppCompatActivity implements AbsListView.OnScrollListener {
+public class MyReportActivity extends AppCompatActivity implements AbsListView.OnScrollListener, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.tv_back)
     TextView tvBack;
@@ -45,6 +46,8 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
     RelativeLayout rl;
     @Bind(R.id.lv_myreport)
     ListView lvMyreport;
+    @Bind(R.id.mine_report_swp)
+    SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList<MyReportResultBean.ExecDatasBean.RecordListBean> data = new ArrayList<>();
     private View headView;
     MyReportAdapter adapter;
@@ -65,7 +68,7 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
         footer_view = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv, null);
         lvMyreport.addFooterView(footer_view);
         tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
-        getReportList("0");
+        getReportList("0",1);
         adapter = new MyReportAdapter(data, this, R.layout.item_lv_myreport);
         lvMyreport.setAdapter(adapter);
         lvMyreport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -78,6 +81,9 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
             }
         });
         lvMyreport.setOnScrollListener(this);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @OnClick(R.id.tv_back)
@@ -99,7 +105,7 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
 
-    private void getReportList(String pageNum) {
+    private void getReportList(String pageNum, final int type) {
         paramBean = new ParamBean();
         paramBean.setLength("20");
         paramBean.setPageNum(pageNum);
@@ -110,7 +116,9 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-
+                if (type == 0) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
@@ -120,13 +128,27 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
                     myReportResultBean = new Gson().fromJson(response, MyReportResultBean.class);
                     if (myReportResultBean.isExecResult()) {
                         recordList = myReportResultBean.getExecDatas().getRecordList();
-                        data.addAll(recordList);
-                        adapter.notifyDataSetChanged();
-                        if (tv_foot.getVisibility() == View.VISIBLE) {
-                            tv_foot.setVisibility(View.GONE);
+                        if (type == 0) {
+                            data.clear();
+                            data.addAll(recordList);
+                            adapter.notifyDataSetChanged();
+                            swipeRefreshLayout.setRefreshing(false);
+                        } else {
+                            data.addAll(recordList);
+                            adapter.notifyDataSetChanged();
+                            if (tv_foot.getVisibility() == View.VISIBLE) {
+                                tv_foot.setVisibility(View.GONE);
+                            }
+                        }
+                    }else {
+                        if (type==0){
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     }
-                }else {
+                } else {
+                    if (type==0){
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
                     //TODO 状态禁用
                     Config.getInstance().setJin(true);
                 }
@@ -134,19 +156,37 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
         });
     }
 
+    // 下拉刷新
+    public interface OnSwipeIsValid {
+        void setSwipeEnabledTrue();
+
+        void setSwipeEnabledFalse();
+    }
+
+    private NotificationActivity.OnSwipeIsValid isValid = new NotificationActivity.OnSwipeIsValid() {
+        @Override
+        public void setSwipeEnabledTrue() {
+            swipeRefreshLayout.setEnabled(true);//让swipe起作用，能够刷新
+        }
+
+        @Override
+        public void setSwipeEnabledFalse() {
+            swipeRefreshLayout.setEnabled(false);//让swipe不能够刷新
+        }
+    };
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
         LogUtil.e("YJL---", "+进来了没有");
-        switch (i) {
-            case SCROLL_STATE_IDLE://空闲状态
-                LogUtil.e("YJL", "+进来了没有空闲");
-                break;
-            case SCROLL_STATE_TOUCH_SCROLL://滚状态
-                LogUtil.e("YJL", "+进来了没有滚");
-                break;
-            case SCROLL_STATE_FLING://飞状态
-                LogUtil.e("YJL", "+进来了没有飞");
-                break;
+        //判断ListView是否滑动到第一个Item的顶部
+        if (isValid != null && lvMyreport.getChildCount() > 0 && lvMyreport.getFirstVisiblePosition() == 0
+                && lvMyreport.getChildAt(0).getTop() >= lvMyreport.getPaddingTop()) {
+            //解决滑动冲突，当滑动到第一个item，下拉刷新才起作用
+            LogUtil.e("YJL", "刷新啊");
+            isValid.setSwipeEnabledTrue();
+//            isCanRefresh = true;
+        } else {
+            isValid.setSwipeEnabledFalse();
+//            isCanRefresh = false;
         }
     }
 
@@ -173,7 +213,7 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
 //                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
                 tv_foot.setVisibility(View.VISIBLE);
                 tv_foot.setText("加载中…");
-                getReportList("" + curPageNum);
+                getReportList("" + curPageNum,1);
 //                Toast.makeText(this, "加载中…", Toast.LENGTH_SHORT).show();
             } else {
                 tv_foot.setVisibility(View.VISIBLE);
@@ -184,5 +224,10 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
                 tv_foot.setVisibility(View.GONE);
             }
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        getReportList("0", 0);
     }
 }

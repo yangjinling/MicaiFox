@@ -160,7 +160,7 @@ public class ZhouChouDetailPilutFragment extends Fragment {
                                     } else {
                                         tv_info.setText("以上仅为截止目前已开奖的投注统计，最终以兑付日数据为准；");
                                     }
-                                    tv_info.setText("营收金额、盈利金额、盈利率数据将在投注开奖后展示；兑付盈利金额为投注盈利金额的" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashPercent() + "%");
+                                    tv_info.setText("营收金额、盈利金额、盈利率数据将在投注开奖后展示；兑付盈利金额为投注盈利金额的" +new BigDecimal(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashPercent()).multiply(new BigDecimal(100)).setScale(0)+ "%");
                                 }
                                 break;
                             case 1:
@@ -175,8 +175,12 @@ public class ZhouChouDetailPilutFragment extends Fragment {
                                 zhongchouDetailTvTouzhuyingliRate.setText("" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate());
                                 zhongchouDetailTvDuifuyingli.setText("¥" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitAmount());
                                 zhongchouDetailTvDuifuyingliRate.setText("" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitRate());
-                                if (new BigDecimal("" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitAmount()).compareTo(new BigDecimal(0)) == 1) {
-                                    tv_info.setText("以上仅为截止目前已开奖的投注统计，最终以兑付日数据为准；兑付盈利金额为投注盈利金额的" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashPercent() + "%");
+                                if (null != myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashPercent()) {
+                                    if (new BigDecimal("" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitAmount()).compareTo(new BigDecimal(0)) == 1) {
+                                        tv_info.setText("以上仅为截止目前已开奖的投注统计，最终以兑付日数据为准；兑付盈利金额为投注盈利金额的" + new BigDecimal(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashPercent()).multiply(new BigDecimal(100)).setScale(0)+ "%");
+                                    } else {
+                                        tv_info.setText("以上仅为截止目前已开奖的投注统计，最终以兑付日数据为准；");
+                                    }
                                 } else {
                                     tv_info.setText("以上仅为截止目前已开奖的投注统计，最终以兑付日数据为准；");
                                 }

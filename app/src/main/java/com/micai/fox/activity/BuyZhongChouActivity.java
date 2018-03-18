@@ -223,7 +223,13 @@ public class BuyZhongChouActivity extends AppCompatActivity {
             intent.putExtra("TYPE", 1);
             startActivity(intent);
         } else {
-            buyZhongChou(view);
+            if (Integer.parseInt(tv_money.getText().toString().substring(1)) % Integer.parseInt(detailResultBean.getExecDatas().getIncrementQuota()) == 0) {
+                buyZhongChou(view);
+            } else {
+                String contents = "支持金额需为￥" + detailResultBean.getExecDatas().getIncrementQuota() + "元的整数倍，请重新输入";
+                Tools.showPayPopWindow(BuyZhongChouActivity.this, view, contents);
+            }
+
         }
     }
 

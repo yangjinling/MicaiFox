@@ -72,8 +72,9 @@ public class LoginActivity extends BaseActivity {
 //                    loginEtPassword.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});//20
                     loginEtPhone.requestFocus();
                     hideSoftInput(loginEtPhone);
-                    loginEtPhone.setText("");
+                    hideSoftInput(loginEtPassword);
                     loginEtPassword.setText("");
+                    loginEtPhone.setText("");
                     loginEtPhone.setHintTextColor(getResources().getColor(R.color.gray));
                     loginEtPhone.setHint("请输入手机号");
                     loginEtPassword.setHintTextColor(getResources().getColor(R.color.gray));
@@ -232,8 +233,10 @@ public class LoginActivity extends BaseActivity {
                                 Config.getInstance().setJin(false);
                                 finish();
                             } else {
-                                loginEtPhone.setText("");
                                 loginEtPassword.setText("");
+                                loginEtPhone.setText("");
+                                hideSoftInput(loginEtPhone);
+                                hideSoftInput(loginEtPassword);
                                 loginEtPhone.setHintTextColor(getResources().getColor(R.color.red));
                                 loginEtPassword.setHintTextColor(getResources().getColor(R.color.red));
                                 loginEtPhone.setHint("" + loginResultBean.getExecMsg());

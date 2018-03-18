@@ -30,7 +30,7 @@ public class TextUtil {
             @Override
             public void onGlobalLayout() {
                 if (isExpand) {
-                    if (textView.getLineCount() <= 2) {
+                    if (textView.getText().toString().length()== originText.length()) {
                     } else {
                         CharSequence temp = originText + "收起";
                         SpannableStringBuilder ssb = new SpannableStringBuilder(temp);

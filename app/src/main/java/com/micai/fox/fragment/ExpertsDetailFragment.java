@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.activity.ExpertsDetailActivity;
+import com.micai.fox.activity.NotificationActivity;
 import com.micai.fox.adapter.MyExpertsListAdapter;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
@@ -41,15 +43,16 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  * 邮箱：18363820101@163.com
  */
 
-public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScrollListener {
+public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScrollListener, SwipeRefreshLayout.OnRefreshListener {
     private int kind;
     //    private TextView tv;
-    private List<ExpertsResultBean.ExecDatasBean.RecordListBean> resultBeanList=new ArrayList<>();
+    private List<ExpertsResultBean.ExecDatasBean.RecordListBean> resultBeanList = new ArrayList<>();
     private ListView lv;
     private View footer_view;
     private View headView;
     private ExpertsResultBean expertsResultBean;
     private MyExpertsListAdapter adapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -57,6 +60,7 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
         View view = inflater.inflate(R.layout.fragment_detail_experts, container, false);
         kind = getArguments().getInt("KIND", 0);
         lv = ((ListView) view.findViewById(R.id.experts_fragment_lv));
+        swipeRefreshLayout = ((SwipeRefreshLayout) view.findViewById(R.id.experts_swp));
         resultBeanList = new ArrayList<ExpertsResultBean.ExecDatasBean.RecordListBean>();
         headView = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.headview_lv, null);
         lv.addHeaderView(headView);
@@ -67,37 +71,41 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
         switch (kind) {
             case 0:
 //                tv.setText("全部");
-                getExpertsList(kind, "0");
+                getExpertsList(kind, "0",1);
                 break;
             case 1:
 //                tv.setText("盈利榜");
-                getExpertsList(kind, "0");
+                getExpertsList(kind, "0",1);
                 break;
             case 2:
 //                tv.setText("命中榜");
-                getExpertsList(kind, "0");
+                getExpertsList(kind, "0",1);
                 break;
         }
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i!=0){
                 Intent intent = new Intent(getActivity(), ExpertsDetailActivity.class);
                 intent.putExtra("proId", expertsResultBean.getExecDatas().getRecordList().get(i - 1).getProId());
-                startActivity(intent);
+                startActivity(intent);}
             }
         });
         lv.setOnScrollListener(this);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        swipeRefreshLayout.setOnRefreshListener(this);
         return view;
     }
 
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
 
-    private void getExpertsList(int type, String pageNnum) {
+    private void getExpertsList(final int kind, String pageNnum, final int type) {
         paramBean = new ParamBean();
         paramData = new ParamBean.ParamData();
-        paramData.setType(("" + type));
+        paramData.setType(("" + kind));
         paramBean.setParamData(paramData);
         paramBean.setLength("" + 20);
         paramBean.setPageNum(pageNnum);
@@ -108,7 +116,9 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-
+                if (type==0){
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
@@ -117,9 +127,24 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
                 if (Tools.isGoodJson(response)) {
                     expertsResultBean = new Gson().fromJson(response, ExpertsResultBean.class);
                     if (expertsResultBean.isExecResult()) {
+                        if (type == 0) {
+                            resultBeanList.clear();
+                            resultBeanList.addAll(expertsResultBean.getExecDatas().getRecordList());
+                            adapter.notifyDataSetChanged();
+                            swipeRefreshLayout.setRefreshing(false);
+                        } else {
 //                        resultBeanList.clear();
-                        resultBeanList.addAll( expertsResultBean.getExecDatas().getRecordList());
-                        adapter.notifyDataSetChanged();
+                            resultBeanList.addAll(expertsResultBean.getExecDatas().getRecordList());
+                            adapter.notifyDataSetChanged();
+                        }
+                    }else {
+                        if (type==0){
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                }else {
+                    if (type==0){
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }
             }
@@ -135,19 +160,38 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
     private boolean isBottom = false;//是否到第20条数据了
     private int curPageNum = 1;
 
+    // 下拉刷新
+    public interface OnSwipeIsValid {
+        void setSwipeEnabledTrue();
+
+        void setSwipeEnabledFalse();
+    }
+
+    private NotificationActivity.OnSwipeIsValid isValid = new NotificationActivity.OnSwipeIsValid() {
+        @Override
+        public void setSwipeEnabledTrue() {
+            swipeRefreshLayout.setEnabled(true);//让swipe起作用，能够刷新
+        }
+
+        @Override
+        public void setSwipeEnabledFalse() {
+            swipeRefreshLayout.setEnabled(false);//让swipe不能够刷新
+        }
+    };
+
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
         LogUtil.e("YJL---", "+进来了没有");
-        switch (i) {
-            case SCROLL_STATE_IDLE://空闲状态
-                LogUtil.e("YJL", "+进来了没有空闲");
-                break;
-            case SCROLL_STATE_TOUCH_SCROLL://滚状态
-                LogUtil.e("YJL", "+进来了没有滚");
-                break;
-            case SCROLL_STATE_FLING://飞状态
-                LogUtil.e("YJL", "+进来了没有飞");
-                break;
+        //判断ListView是否滑动到第一个Item的顶部
+        if (isValid != null && lv.getChildCount() > 0 && lv.getFirstVisiblePosition() == 0
+                && lv.getChildAt(0).getTop() >= lv.getPaddingTop()) {
+            //解决滑动冲突，当滑动到第一个item，下拉刷新才起作用
+            LogUtil.e("YJL", "刷新啊");
+            isValid.setSwipeEnabledTrue();
+//            isCanRefresh = true;
+        } else {
+            isValid.setSwipeEnabledFalse();
+//            isCanRefresh = false;
         }
     }
 
@@ -168,7 +212,7 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
             if (++curPageNum <= expertsResultBean.getExecDatas().getTotalPage()) {
                 LogUtil.e("YJL", "curPageNum==" + curPageNum);
 //                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
-                getExpertsList(kind, "" + curPageNum);
+                getExpertsList(kind, "" + curPageNum,1);
                 Toast.makeText(getContext(), "加载中…", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getContext(), "没有更多了", Toast.LENGTH_SHORT).show();
@@ -177,4 +221,8 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
         }
     }
 
+    @Override
+    public void onRefresh() {
+        getExpertsList(kind, "0", 0);
+    }
 }
