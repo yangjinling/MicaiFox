@@ -156,7 +156,7 @@ public class MyReportResultBean {
             private String issue;
             private int totalMatchNum;
             private int winMatchNum;
-
+            private String hitResult;
             public String getReportId() {
                 return reportId;
             }
@@ -251,6 +251,14 @@ public class MyReportResultBean {
 
             public void setWinMatchNum(int winMatchNum) {
                 this.winMatchNum = winMatchNum;
+            }
+
+            public String getHitResult() {
+                return hitResult;
+            }
+
+            public void setHitResult(String hitResult) {
+                this.hitResult = hitResult;
             }
         }
     }

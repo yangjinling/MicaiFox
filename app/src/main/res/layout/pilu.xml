@@ -156,28 +156,27 @@
                             android:gravity="center"
                             android:text="让球2.32"
                             android:textColor="@color/white"
-                            android:textSize="14sp"
-                            android:visibility="gone" />
+                            android:textSize="14sp" />
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/pilu_content_touzhu2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="让球2.32"
                             android:textColor="@color/white"
-                            android:textSize="14sp"
-                            android:visibility="gone" />
+                            android:textSize="14sp" />
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/pilu_content_touzhu3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="让球2.32"
                             android:textColor="@color/white"
-                            android:textSize="14sp"
-                            android:visibility="gone" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
 
@@ -203,18 +202,19 @@
                     android:visibility="gone"></View>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/pilu_ll_rang"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="7.5dp"
                     android:layout_marginTop="7.5dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/pilu_content_wanfa2"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="让球（-1）"
@@ -239,30 +239,30 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/pilu_content_rang_touzhu2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="让球2.32"
                             android:textColor="@color/white"
-                            android:textSize="14sp"
-                            android:visibility="gone" />
+                            android:textSize="14sp"/>
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/pilu_content_rang_touzhu3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="让球2.32"
                             android:textColor="@color/white"
-                            android:textSize="14sp"
-                            android:visibility="gone" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <TextView
                         android:id="@+id/pilu_content_wanfa2_result"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="-"

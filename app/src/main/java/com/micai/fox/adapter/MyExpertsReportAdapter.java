@@ -1,6 +1,7 @@
 package com.micai.fox.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -46,11 +47,10 @@ public class MyExpertsReportAdapter extends MyBaseAdapter<ExpertsReportResultBea
             tv_score.setText("" + mList.get(position).getHomeScore() + ":" + mList.get(position).getGuestScore());
         }
         TextView tv_rate = ((TextView) viewHolder.findViewById(R.id.experts_report_tv_changci));
-        if (0 == mList.get(position).getTotalMatchNum()) {
-            tv_rate.setVisibility(View.GONE);
+        if (null != mList.get(position).getHitResult() && !TextUtils.isEmpty(mList.get(position).getHitResult())) {
+            tv_rate.setText(mList.get(position).getHitResult());
         } else {
-            String result = mList.get(position).getTotalMatchNum() + "中" + mList.get(position).getWinMatchNum();
-            tv_rate.setText(result);
+            tv_rate.setVisibility(View.GONE);
         }
         TextView tv_state = ((TextView) viewHolder.findViewById(R.id.experts_report_tv_state));
         tv_state.setText("" + DateUtil.getDistanceTimes(mList.get(position).getCreateDate(), System.currentTimeMillis()) + "发布");

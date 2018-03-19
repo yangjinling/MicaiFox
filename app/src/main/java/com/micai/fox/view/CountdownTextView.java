@@ -7,7 +7,10 @@ import android.os.Message;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.micai.fox.adapter.MyBaseAdapter;
 import com.micai.fox.util.DateUtil;
+
 import java.util.Date;
 
 /**

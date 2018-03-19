@@ -14,7 +14,11 @@ import com.micai.fox.util.Tools;
 import com.micai.fox.view.CountdownTextView;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+
+import cn.iwgang.countdownview.CountdownView;
 
 /**
  * Created by lq on 2018/1/8.
@@ -41,7 +45,7 @@ public class MyExpertsZhonChouAdapter extends MyBaseAdapter<ExpertsZhongchouResu
         TextView tv_people = ((TextView) viewHolder.findViewById(R.id.experts_zhongchou_people));
         //未开始
         LinearLayout ll_start = ((LinearLayout) viewHolder.findViewById(R.id.experts_zhong_ll_nostart));
-        CountdownTextView tv_time = ((CountdownTextView) viewHolder.findViewById(R.id.experts_zhong_tv_daojishi));
+        CountdownView tv_time = ((CountdownView) viewHolder.findViewById(R.id.experts_zhong_tv_daojishi));
 
         TextView tv_status = ((TextView) viewHolder.findViewById(R.id.experts_zhongchou_state));
         //进度条
@@ -58,6 +62,7 @@ public class MyExpertsZhonChouAdapter extends MyBaseAdapter<ExpertsZhongchouResu
         }
         if (null != list.get(position).getStatus()) {
             if ("0".equals(list.get(position).getStatus())) {
+                viewHolder.needReInflate = true;
                 //未开始
                 pb_ing.setProgress(0);
                 ll_start.setVisibility(View.VISIBLE);
@@ -65,7 +70,22 @@ public class MyExpertsZhonChouAdapter extends MyBaseAdapter<ExpertsZhongchouResu
                 ll_have.setVisibility(View.GONE);
                 tv_status.setText("未开始");
 //                String time = DateUtil.getDistanceTime(list.get(position).getStartDate(), System.currentTimeMillis());
-                tv_time.setTimes(list.get(position).getStartDate());
+//                tv_time.setTimes(list.get(position).getStartDate());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+                String str = dateFormat.format(list.get(position).getStartDate());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");  //此处转换为毫秒数
+                try {
+                    long millionSeconds = sdf.parse(str).getTime();
+                    tv_time.start(millionSeconds - System.currentTimeMillis());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                tv_time.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
+                    @Override
+                    public void onEnd(CountdownView cv) {
+                        //时间结束
+                    }
+                });
             } else if ("9".equals(list.get(position).getStatus())) {
                 //流标
                 pb_ing.setVisibility(View.GONE);

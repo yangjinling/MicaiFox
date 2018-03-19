@@ -1,6 +1,7 @@
 package com.micai.fox.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import com.micai.fox.R;
 import com.micai.fox.resultbean.MyReportResultBean;
 import com.micai.fox.util.DateUtil;
+import com.micai.fox.util.TextUtil;
 
 import java.util.List;
 
@@ -31,12 +33,12 @@ public class MyReportAdapter extends MyBaseAdapter<MyReportResultBean.ExecDatasB
         ((TextView) viewHolder.findViewById(R.id.tv_type_lv_report)).setText("【" + list.get(position).getGameName() + "】");
         ((TextView) viewHolder.findViewById(R.id.tv_country1_lv_report)).setText(list.get(position).getHomeTeamName());
         ((TextView) viewHolder.findViewById(R.id.tv_country2_lv_report)).setText(list.get(position).getGuestTeamName());
-        String result = list.get(position).getTotalMatchNum() + "中" + list.get(position).getWinMatchNum();
+//        String result = list.get(position).getTotalMatchNum() + "中" + list.get(position).getWinMatchNum();
         TextView tv_rate = ((TextView) viewHolder.findViewById(R.id.tv_rate_lv_report));
-        if (0 == list.get(position).getTotalMatchNum()) {
-            tv_rate.setVisibility(View.GONE);
+        if (null != list.get(position).getHitResult() && !TextUtils.isEmpty(list.get(position).getHitResult())) {
+            tv_rate.setText(list.get(position).getHitResult());
         } else {
-            tv_rate.setText(result);
+            tv_rate.setVisibility(View.GONE);
         }
         TextView tv_score = ((TextView) viewHolder.findViewById(R.id.tv_score_lv_report));
         if (null == list.get(position).getGuestScore()) {

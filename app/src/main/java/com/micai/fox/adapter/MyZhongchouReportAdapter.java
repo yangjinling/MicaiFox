@@ -1,6 +1,7 @@
 package com.micai.fox.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -37,10 +38,10 @@ public class MyZhongchouReportAdapter extends MyBaseAdapter<ZhonchouReportResult
             tv_score.setText("" + mList.get(position).getHomeScore() + ":" + mList.get(position).getGuestScore());
         }
         TextView tv_rate = ((TextView) viewHolder.findViewById(R.id.zhouchou_detail_report_tv_changci));
-        if (0 != mList.get(position).getTotalMatchNum()) {
-            tv_rate.setVisibility(View.VISIBLE);
-            tv_rate.setText("" + mList.get(position).getTotalMatchNum() + "中" + mList.get(position).getWinMatchNum());
-
+        if (null != mList.get(position).getHitResult() && !TextUtils.isEmpty(mList.get(position).getHitResult())) {
+            tv_rate.setText(mList.get(position).getHitResult());
+        } else {
+            tv_rate.setVisibility(View.GONE);
         }
         TextView tv_date = ((TextView) viewHolder.findViewById(R.id.zhouchou_detail_report_tv_date));
         if (null != mList.get(position).getIssue()) {

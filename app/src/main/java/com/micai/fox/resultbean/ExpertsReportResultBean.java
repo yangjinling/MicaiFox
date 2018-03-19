@@ -155,6 +155,7 @@ public class ExpertsReportResultBean {
             private String issue;
             private int totalMatchNum;
             private int winMatchNum;
+            private String hitResult;
 
             public String getReportId() {
                 return reportId;
@@ -250,6 +251,14 @@ public class ExpertsReportResultBean {
 
             public void setIssue(String issue) {
                 this.issue = issue;
+            }
+
+            public String getHitResult() {
+                return hitResult;
+            }
+
+            public void setHitResult(String hitResult) {
+                this.hitResult = hitResult;
             }
         }
     }

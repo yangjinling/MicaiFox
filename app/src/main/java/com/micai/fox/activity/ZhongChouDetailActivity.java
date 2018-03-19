@@ -42,12 +42,15 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.iwgang.countdownview.CountdownView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -124,7 +127,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity implements SwipeR
     @Bind(R.id.zhongchou_detail_scoll)
     ScrollView scrollView;
     @Bind(R.id.zhongchou_detail_tv_time)
-    CountdownTextView zhongchouDetailTvTime;
+    CountdownView zhongchouDetailTvTime;
     private Fragment[] mFragments;
     private FragmentManager mManager;
     private FragmentTransaction transcation;
@@ -394,7 +397,21 @@ public class ZhongChouDetailActivity extends AppCompatActivity implements SwipeR
                                 zhongchouDetailDaojishi.setVisibility(View.VISIBLE);
                                 homeZhongTvState.setText("未开始");
 //                                String time = DateUtil.getDistanceTime(zhongChouDetailResultBean.getExecDatas().getStartDate(), System.currentTimeMillis());
-                                zhongchouDetailTvTime.setTimes(zhongChouDetailResultBean.getExecDatas().getStartDate());
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+                                String str = dateFormat.format(zhongChouDetailResultBean.getExecDatas().getStartDate());
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");  //此处转换为毫秒数
+                                try {
+                                    long millionSeconds = sdf.parse(str).getTime();
+                                    zhongchouDetailTvTime.start(millionSeconds - System.currentTimeMillis());
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                zhongchouDetailTvTime.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
+                                    @Override
+                                    public void onEnd(CountdownView cv) {
+                                        //时间结束
+                                    }
+                                });
                             } else if ("9".equals(status)) {
                                 homeZhongTvState.setText("流标");
                             } else {
@@ -428,7 +445,6 @@ public class ZhongChouDetailActivity extends AppCompatActivity implements SwipeR
     @Override
     protected void onPause() {
         super.onPause();
-        zhongchouDetailTvTime.stop();
     }
 
     @Override

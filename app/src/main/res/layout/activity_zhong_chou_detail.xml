@@ -345,13 +345,28 @@
                             android:visibility="gone">
 
 
-                            <com.micai.fox.view.CountdownTextView
+                        <!--    <com.micai.fox.view.CountdownTextView
                                 android:id="@+id/zhongchou_detail_tv_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@android:color/black"
                                 android:textSize="24sp" />
-
+-->
+                            <cn.iwgang.countdownview.CountdownView
+                                android:id="@+id/zhongchou_detail_tv_time"
+                                android:layout_width="90dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center_horizontal"
+                                app:isShowDay="false"
+                                app:isShowHour="true"
+                                app:isShowMillisecond="false"
+                                app:isShowMinute="true"
+                                app:isShowSecond="true"
+                                app:suffixGravity="center"
+                                app:suffixTextColor="@color/black"
+                                app:suffixTextSize="24sp"
+                                app:timeTextColor="@color/black"
+                                app:timeTextSize="24sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
