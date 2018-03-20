@@ -191,6 +191,8 @@ public class MineFragmnet extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         if (hidden) {
+            nologin_mine.setVisibility(View.GONE);
+            login_mine.setVisibility(View.GONE);
         } else {
             if (Config.getInstance().isLoginFromBuy()) {
                 nologin_mine.setVisibility(View.GONE);

@@ -168,8 +168,10 @@ public class MainActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 if (null == PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", null) || TextUtils.isEmpty(PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", ""))) {
                     bundle.putBoolean("LOGIN", false);
+                    Config.getInstance().setLoginFromBuy(false);
                 } else {
                     bundle.putBoolean("LOGIN", true);
+                    Config.getInstance().setLoginFromBuy(true);
                 }
                 if (!Config.getInstance().isSet()) {
                     mFragments[2].setArguments(bundle);
