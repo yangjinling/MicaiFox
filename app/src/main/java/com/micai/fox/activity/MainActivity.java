@@ -12,18 +12,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
+import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.app.Config;
+import com.micai.fox.app.Url;
 import com.micai.fox.base.BaseActivity;
 import com.micai.fox.fragment.ExpertsFragment;
 import com.micai.fox.fragment.HomeFragment;
 import com.micai.fox.fragment.MineFragmnet;
 import com.micai.fox.parambean.NotiBean;
+import com.micai.fox.resultbean.BaseResultBean;
 import com.micai.fox.util.ExitAppUtils;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.PrefUtils;
 import com.micai.fox.view.CyDownProgressView;
+import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.DialogInShow;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -31,6 +36,7 @@ import org.greenrobot.eventbus.Subscribe;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
 
 /*主界面*/
 public class MainActivity extends BaseActivity {
@@ -61,6 +67,9 @@ public class MainActivity extends BaseActivity {
         ExitAppUtils.getInstance().addActivity(this);
         //初始化fragment
         initFragments();
+        if (null != PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", null) && !TextUtils.isEmpty(PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", ""))) {
+            checkNotice();
+        }
         type = getIntent().getIntExtra("TYPE", 0);
         //初始化布局
         initLinearLayout(type);
@@ -72,6 +81,37 @@ public class MainActivity extends BaseActivity {
         mFragments[0] = new HomeFragment();
         mFragments[1] = new ExpertsFragment();
         mFragments[2] = new MineFragmnet();
+    }
+
+    private void checkNotice() {
+        OkHttpUtils.post().
+                url(String.format(Url.WEN_CHECK_NOTICE, Config.getInstance().getSessionId()))
+                .build().execute(new StringCallback() {
+
+            private BaseResultBean noticeResultBean;
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("YJL", "checkNoti==" + response);
+                noticeResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                if (noticeResultBean.isExecResult()) {
+                    NotiBean bean = new NotiBean();
+                    if (Integer.parseInt(noticeResultBean.getExecDatas()) > 0) {
+                        LogUtil.e("YJL", "checkNoti==" + Integer.parseInt(noticeResultBean.getExecDatas()));
+                        bean.setHaveN(true);
+                        EventBus.getDefault().post(bean);
+                    } else {
+                        bean.setHaveN(false);
+                        EventBus.getDefault().post(bean);
+                    }
+                }
+            }
+        });
     }
 
     private Fragment currentFragment = new Fragment();
