@@ -40,6 +40,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -83,7 +85,7 @@ public class ReportDetailActivity extends AppCompatActivity {
     private ArrayList<ReportDetailResultBean.ExecDatasBean.GameBean> data = new ArrayList<>();
     private String reportId;
     private ReportDetailResultBean reportDetailResultBean;
-    ReportDetailLvAdapter adapter;
+//    ReportDetailLvAdapter adapter;
     CopyReportDetailLvAdapter adapters;
     private DisplayImageOptions options;
 
@@ -163,36 +165,17 @@ public class ReportDetailActivity extends AppCompatActivity {
                 if (Tools.isGoodJson(response)) {
                     reportDetailResultBean = new Gson().fromJson(response, ReportDetailResultBean.class);
                     if (reportDetailResultBean.isExecResult()) {
-                        reportDetailTvTimeTalk.setText(reportDetailResultBean.getExecDatas().getReport().getTitle());
-                        reportDetailTvName.setText(reportDetailResultBean.getExecDatas().getReport().getProName());
-                        reportDetailTvIntroduce.setText(reportDetailResultBean.getExecDatas().getReport().getProAuth());
-                        reportDetailTvRate.setText("" + reportDetailResultBean.getExecDatas().getReport().getHitRate());
+                        reportDetailTvTimeTalk.setText("" + reportDetailResultBean.getExecDatas().getReport().getTitle());
+                        reportDetailTvName.setText("" + reportDetailResultBean.getExecDatas().getReport().getProName());
+                        reportDetailTvIntroduce.setText("" + reportDetailResultBean.getExecDatas().getReport().getProAuth());
+                        NumberFormat percent = NumberFormat.getPercentInstance();  //建立百分比格式化引用
+                        reportDetailTvRate.setText("" + percent.format(BigDecimal.valueOf(reportDetailResultBean.getExecDatas().getReport().getHitRate())).replace("%", ""));
                         reportDetailTvTime.setText("" + DateUtil.getDistanceTimes(reportDetailResultBean.getExecDatas().getReport().getCreateDate(), System.currentTimeMillis()) + "发布");
                         Glide.with(ReportDetailActivity.this).load(Url.WEB_BASE_IP + reportDetailResultBean.getExecDatas().getReport().getProPhoto()).asBitmap().placeholder(R.drawable.circle).error(R.drawable.circle).into(head);
-          /*              CharSequence charSequence = Html.fromHtml(reportDetailResultBean.getExecDatas().getReport().getContent(), new Html.ImageGetter() {
-                            @Override
-                            public Drawable getDrawable(String arg0) {
-                                Drawable d = null;
-                                try {
-                                    LogUtil.e("YJL", "arg0===" + arg0);
-                                    InputStream is = new DefaultHttpClient().execute(new HttpGet(Url.WEB_BASE_IP + arg0)).getEntity().getContent();
-                                    Bitmap bm = BitmapFactory.decodeStream(is);
-                                    d = new BitmapDrawable(bm);
-                                    d.setBounds(0, 0, bm.getWidth(), bm.getHeight());
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-
-                                return d;
-                            }
-                        }, null);
-                        tvFu.setText(charSequence);
-                        tvFu.getPaint().setAntiAlias(true);
-                     */
                         if (null != reportDetailResultBean.getExecDatas().getReport().getStatus()) {
                             if ("0".equals(reportDetailResultBean.getExecDatas().getReport().getStatus())) {
                                 reportDetailLlAbout.setVisibility(View.GONE);
-                            }else {
+                            } else {
                                 reportDetailLlAbout.setVisibility(View.VISIBLE);
                                 reportDetailTvZhongchouTitle.setText("" + reportDetailResultBean.getExecDatas().getReport().getCrowdfundingTitle());
                             }

@@ -19,6 +19,7 @@ public class BaseResultBean implements Serializable {
     private String execMsg;
     private int count;
     private int num;
+    private String execDatas;
 
     public boolean isExecResult() {
         return execResult;
@@ -50,5 +51,13 @@ public class BaseResultBean implements Serializable {
 
     public void setNum(int num) {
         this.num = num;
+    }
+
+    public String getExecDatas() {
+        return execDatas;
+    }
+
+    public void setExecDatas(String execDatas) {
+        this.execDatas = execDatas;
     }
 }

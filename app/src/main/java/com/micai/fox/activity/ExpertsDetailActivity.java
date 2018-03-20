@@ -41,6 +41,8 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -350,9 +352,13 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
                         expertsDetailTvName.setText(expertsDetailResultBean.getExecDatas().getProfessor().getProName());
                         expertsDetailTvIntroduce.setText(expertsDetailResultBean.getExecDatas().getProfessor().getProAuth());
                         expertsDetailTvContent.setText(expertsDetailResultBean.getExecDatas().getProfessor().getSelfIntro());
-                        expertsDetailTvRate.setText("" + expertsDetailResultBean.getExecDatas().getProfessor().getHitRate());
-                        expertsDetailTvYili.setText("" + expertsDetailResultBean.getExecDatas().getProfessor().getProfitRate());
-                        expertsDetailTvMaxyili.setText("" + expertsDetailResultBean.getExecDatas().getProfessor().getMaxProfitRate());
+                        NumberFormat percent = NumberFormat.getPercentInstance();  //建立百分比格式化引用
+//                                        zhongchouDetailTvTouzhuyingliRate.setText("" +  BigDecimal.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate()).multiply(new BigDecimal(100).setScale(0)) + "%");
+//                        zhongchouDetailTvTouzhuyingliRate.setText(""+percent.format(BigDecimal.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate())));
+
+                        expertsDetailTvRate.setText("" + percent.format(BigDecimal.valueOf(expertsDetailResultBean.getExecDatas().getProfessor().getHitRate())).replace("%",""));
+                        expertsDetailTvYili.setText("" + percent.format(BigDecimal.valueOf(expertsDetailResultBean.getExecDatas().getProfessor().getProfitRate())).replace("%",""));
+                        expertsDetailTvMaxyili.setText("" + percent.format(BigDecimal.valueOf(expertsDetailResultBean.getExecDatas().getProfessor().getMaxProfitRate())).replace("%",""));
                         expertsDetailTvCount.setText("共" + expertsDetailResultBean.getExecDatas().getProfessor().getTotalNum() + "次众筹");
                         Glide.with(ExpertsDetailActivity.this).load(Url.WEB_BASE_IP + expertsDetailResultBean.getExecDatas().getProfessor().getProPhoto()).asBitmap().placeholder(R.drawable.circle).error(R.drawable.circle).into(head);
                         TextUtil.toggleEllipsize(ExpertsDetailActivity.this,

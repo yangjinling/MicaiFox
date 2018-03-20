@@ -139,7 +139,8 @@ public class MineFragmnet extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
-        isLogin = getArguments().getBoolean("LOGIN");
+        if (null != getArguments())
+            isLogin = getArguments().getBoolean("LOGIN", false);
         if (Config.getInstance().isJin()) {
             isLogin = false;
         }
@@ -173,13 +174,58 @@ public class MineFragmnet extends Fragment {
             }
             getMineInfo();
         } else {
-            NotiBean bean = new NotiBean();
-            bean.setHaveN(false);
-            EventBus.getDefault().post(bean);
-            nologin_mine.setVisibility(View.VISIBLE);
+            if (Config.getInstance().isLoginFromBuy()) {
+                nologin_mine.setVisibility(View.GONE);
+                showLoginLayout();
+            } else {
+                NotiBean bean = new NotiBean();
+                bean.setHaveN(false);
+                EventBus.getDefault().post(bean);
+                nologin_mine.setVisibility(View.VISIBLE);
+            }
         }
 
         return view;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (hidden) {
+        } else {
+            if (Config.getInstance().isLoginFromBuy()) {
+                nologin_mine.setVisibility(View.GONE);
+                showLoginLayout();
+            } else {
+                NotiBean bean = new NotiBean();
+                bean.setHaveN(false);
+                EventBus.getDefault().post(bean);
+                nologin_mine.setVisibility(View.VISIBLE);
+            }
+        }
+
+    }
+
+    private void showLoginLayout() {
+        if (Config.getInstance().isLoginAndNo()) {
+            ivNotifyPoint.setVisibility(View.VISIBLE);
+        } else {
+            ivNotifyPoint.setVisibility(View.GONE);
+        }
+        login_mine.setVisibility(View.VISIBLE);
+        rl.setVisibility(View.VISIBLE);
+        tvBack.setVisibility(View.GONE);
+        tvNotify.setVisibility(View.VISIBLE);
+        tvTitle.setText("我的");
+        if (Config.getInstance().isNoti()) {
+            ivNotifyPoint.setVisibility(View.VISIBLE);
+        } else {
+            ivNotifyPoint.setVisibility(View.GONE);
+        }
+        Drawable drawable = getResources().getDrawable(R.mipmap.message);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());// 设置边界
+        // param 左上右下
+        tvNotify.setCompoundDrawables(null, null, drawable, null);
+        getMineInfo();
     }
 
     @Override

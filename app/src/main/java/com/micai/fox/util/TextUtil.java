@@ -30,7 +30,7 @@ public class TextUtil {
             @Override
             public void onGlobalLayout() {
                 if (isExpand) {
-                    if (textView.getText().toString().length()== originText.length()) {
+                    if (textView.getText().toString().length() == originText.length()) {
                     } else {
                         CharSequence temp = originText + "收起";
                         SpannableStringBuilder ssb = new SpannableStringBuilder(temp);
@@ -44,7 +44,7 @@ public class TextUtil {
                     int paddingLeft = textView.getPaddingLeft();
                     int paddingRight = textView.getPaddingRight();
                     TextPaint paint = textView.getPaint();
-                    float moreText = textView.getTextSize() * endText.length();
+                    float moreText = textView.getTextSize() * (endText.length() + 1);
                     float availableTextWidth = (textView.getWidth() - paddingLeft - paddingRight) *
                             minLines - moreText;
                     CharSequence ellipsizeStr = TextUtils.ellipsize(originText, paint,

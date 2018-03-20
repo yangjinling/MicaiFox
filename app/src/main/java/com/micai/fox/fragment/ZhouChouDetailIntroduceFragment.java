@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.micai.fox.R;
 import com.micai.fox.activity.ExpertsDetailActivity;
 import com.micai.fox.adapter.MyExpertsListAdapter;
 import com.micai.fox.app.Config;
+import com.micai.fox.util.TextUtil;
 import com.micai.fox.view.CustomViewPager;
 
 import java.util.ArrayList;
@@ -39,8 +41,9 @@ public class ZhouChouDetailIntroduceFragment extends Fragment {
     private CustomViewPager vp;
     @Bind(R.id.zhongchou_intruduce)
     TextView tv;
-@Bind(R.id.zhouchou_detail_introduce_ll_ing)
+    @Bind(R.id.zhouchou_detail_introduce_ll_ing)
     LinearLayout ll;
+
     public ZhouChouDetailIntroduceFragment() {
     }
 
@@ -54,7 +57,7 @@ public class ZhouChouDetailIntroduceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_zhouchou_detail_introduce, container, false);
         ButterKnife.bind(this, view);
-        if (null != Config.getInstance().getContent()) {
+        if (null != Config.getInstance().getContent() && !TextUtils.isEmpty(Config.getInstance().getContent())) {
             tv.setVisibility(View.VISIBLE);
             tv.setText("" + Config.getInstance().getContent());
         } else {

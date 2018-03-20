@@ -9,6 +9,8 @@ import com.micai.fox.R;
 import com.micai.fox.app.Url;
 import com.micai.fox.resultbean.ExpertsResultBean;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -33,7 +35,8 @@ public class MyExpertsListAdapter extends MyBaseAdapter<ExpertsResultBean.ExecDa
     public void setData(ViewHolder viewHolder, int position) {
         ((TextView) viewHolder.findViewById(R.id.experts_tv_name)).setText(mLists.get(position).getProName());
         ((TextView) viewHolder.findViewById(R.id.experts_tv_talk)).setText(mLists.get(position).getProAuth());
-        ((TextView) viewHolder.findViewById(R.id.experts_tv_rate)).setText("" + mLists.get(position).getHitRate());
+        NumberFormat percent = NumberFormat.getPercentInstance();  //建立百分比格式化引用
+        ((TextView) viewHolder.findViewById(R.id.experts_tv_rate)).setText("" + percent.format(BigDecimal.valueOf(mLists.get(position).getHitRate())).replace("%",""));
         CircleImageView iv = ((CircleImageView) viewHolder.findViewById(R.id.experts_iv_head));
         Glide.with(mContext).load(Url.WEB_BASE_IP + mLists.get(position).getProPhoto()).asBitmap().placeholder(R.drawable.circle).error(R.drawable.circle).into(iv);
 

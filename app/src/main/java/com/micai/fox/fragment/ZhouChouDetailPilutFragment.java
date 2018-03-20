@@ -26,6 +26,7 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -177,9 +178,13 @@ public class ZhouChouDetailPilutFragment extends Fragment {
                                         //兑付盈利金额
                                         zhongchouDetailTvDuifuyingli.setText("¥" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitAmount());
                                         //投注盈利率
-                                        zhongchouDetailTvTouzhuyingliRate.setText("-" + new BigDecimal(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate().replace("-", "")).multiply(new BigDecimal(100).setScale(0)) + "%");
+                                        NumberFormat percent = NumberFormat.getPercentInstance();  //建立百分比格式化引用
+//                                        zhongchouDetailTvTouzhuyingliRate.setText("" +  BigDecimal.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate()).multiply(new BigDecimal(100).setScale(0)) + "%");
+                                        zhongchouDetailTvTouzhuyingliRate.setText(""+percent.format(BigDecimal.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate())));
                                         //兑付盈利率
-                                        zhongchouDetailTvDuifuyingliRate.setText("-" + new BigDecimal(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate().replace("-", "")).multiply(new BigDecimal(100).setScale(0)) + "%");
+//                                        zhongchouDetailTvDuifuyingliRate.setText("" + BigDecimal.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate()).multiply(new BigDecimal(100).setScale(0)) + "%");
+                                        zhongchouDetailTvDuifuyingliRate.setText(""+percent.format(BigDecimal.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate())));
+
                                     } else {
                                         //兑付盈利金额
                                         zhongchouDetailTvDuifuyingli.setText("¥" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitAmount());

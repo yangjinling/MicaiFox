@@ -15,10 +15,12 @@ public class Config {
     private String phone;
     private String clientId;
     private String content;
-    private boolean noti=false;
-    private boolean isSet=false;
-    private boolean isJin=false;
-    private boolean loginAndNo=false;
+    private boolean noti = false;
+    private boolean isSet = false;
+    private boolean isJin = false;
+    private boolean loginAndNo = false;
+    private boolean isLoginFromBuy;
+
     private Config() {
     }
 
@@ -122,5 +124,13 @@ public class Config {
 
     public void setLoginAndNo(boolean loginAndNo) {
         this.loginAndNo = loginAndNo;
+    }
+
+    public boolean isLoginFromBuy() {
+        return isLoginFromBuy;
+    }
+
+    public void setLoginFromBuy(boolean loginFromBuy) {
+        isLoginFromBuy = loginFromBuy;
     }
 }

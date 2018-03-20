@@ -23,45 +23,46 @@
                 android:background="#FF23253C"
                 android:orientation="horizontal"
                 android:paddingBottom="1.5dp"
-                android:paddingLeft="8dp"
+                android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="1.5dp">
 
                 <TextView
+                    android:layout_weight="1"
                     android:id="@+id/pop_changci"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="星期五013"
                     android:textColor="@color/red"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/pop_title"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
                     android:text="[世界杯]"
                     android:textColor="@color/red"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/pop_time"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
                     android:text="2018年01月10日 10:23"
                     android:textColor="@color/red"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/pop_status"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text=""
                     android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout

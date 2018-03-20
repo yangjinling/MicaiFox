@@ -10,7 +10,7 @@ public class MyZhongchouPiluResultBean {
 
     /**
      * execResult : true
-     * execDatas : {"profitInfo":{"winStatus":1,"totalBetAmount":"48.00","totalRevenueAmount":"0.00","totalProfitAmount":"-48.00","depotProfitRate":"-1.0000","cashPercent":0.8,"cashProfitAmount":-48,"cashProfitRate":1},"betInfo":[{"match":[{"id":"112b8967a89e4754ae6182b4282fa8f61521284210919","relId":"3c99e1498a964586afc2f146a095129f1521284035096","moduleType":0,"issue":"20180317","seq":"022","gameName":"西甲","homeTeamName":"拉科","guestTeamName":"拉帕马斯","matchTime":1521288000000,"homeScore":1,"guestScore":1,"handicap":-1,"sp":"3:1.66;1:3.60;0:4.05","spr":"3:3.00;1:3.45;0:1.98","selections":"3,3R","createDate":1521284211000,"createBy":"ZJ100010","updateDate":1521302400000,"updateBy":"task","delFlag":"0","result":"1","resultr":"0R"},{"id":"9ee75a4fb25047819ce945547a0fa5f11521284210933","relId":"3c99e1498a964586afc2f146a095129f1521284035096","moduleType":0,"issue":"20180317","seq":"023","gameName":"英足总杯","homeTeamName":"斯旺西","guestTeamName":"热刺","matchTime":1521288900000,"homeScore":0,"guestScore":3,"handicap":1,"sp":"3:7.50;1:4.20;0:1.32","spr":"3:2.86;1:3.35;0:2.08","selections":"3,3R,1R","createDate":1521284211000,"createBy":"ZJ100010","updateDate":1521302402000,"updateBy":"task","delFlag":"0","result":"0","resultr":"0R"},{"id":"2468ea6955b94e58aa2668409a1cea1d1521284210933","relId":"3c99e1498a964586afc2f146a095129f1521284035096","moduleType":0,"issue":"20180317","seq":"024","gameName":"英冠","homeTeamName":"富勒姆","guestTeamName":"女王巡游","matchTime":1521289800000,"homeScore":2,"guestScore":2,"handicap":-1,"sp":"3:1.38;1:4.40;0:5.65","spr":"3:2.17;1:3.65;0:2.54","selections":"3,0R","createDate":1521284211000,"createBy":"ZJ100010","updateDate":1521302401000,"updateBy":"task","delFlag":"0","result":"1","resultr":"0R"}],"multiple":2,"betnum":12,"seqnum":3,"betAmount":48,"revenueAmount":0,"status":5}]}
+     * execDatas : {"profitInfo":{"winStatus":0,"totalBetAmount":"84.00","totalRevenueAmount":"0.00","totalProfitAmount":"0.00","depotProfitRate":"0.0000","cashProfitRate":"0.0000","cashPercent":0.9,"cashProfitAmount":0},"betInfo":[{"match":[{"id":"6d1cd7d82fbb4bb0a32f3e39ecf95c7c1521382844702","relId":"13","moduleType":0,"issue":"20180318","seq":"037","gameName":"荷甲","homeTeamName":"兹沃勒","guestTeamName":"费耶诺德","matchTime":1521387900000,"homeScore":3,"guestScore":4,"handicap":1,"sp":"3:4.35;1:3.70;0:1.59","spr":"3:2.04;1:3.50;0:2.83","selections":"0","createDate":1521382845000,"createBy":"ZJ100006","updateDate":1521424800000,"updateBy":"task","delFlag":"0","result":"0","resultr":"1R"},{"id":"5f03b37f2ffd41d3b28456ac128d35ef1521382844702","relId":"13","moduleType":0,"issue":"20180318","seq":"038","gameName":"法甲","homeTeamName":"圣埃蒂安","guestTeamName":"甘冈","matchTime":1521388800000,"homeScore":2,"guestScore":0,"handicap":-1,"sp":"3:1.52;1:3.55;0:5.26","spr":"3:2.80;1:3.30;0:2.13","selections":"3","createDate":1521382845000,"createBy":"ZJ100006","updateDate":1521417600000,"updateBy":"task","delFlag":"0","result":"3","resultr":"3R"}],"multiple":5,"betnum":1,"seqnum":2,"betAmount":10,"revenueAmount":"","status":4},{"match":[{"id":"dd1ccac46c2c494bb02946e39ebcb49a1521382430279","relId":"14","moduleType":0,"issue":"20180318","seq":"035","gameName":"智利甲","homeTeamName":"康塞大学","guestTeamName":"科洛科洛","matchTime":1521385200000,"homeScore":2,"guestScore":1,"handicap":1,"sp":"3:3.06;1:3.30;0:2.00","spr":"3:1.63;1:3.70;0:4.08","selections":"3R","createDate":1521382430000,"createBy":"1","updateDate":1521417601000,"updateBy":"task","delFlag":"0","result":"3","resultr":"3R"},{"id":"4376c45e200e4511911f0586d99b14111521382430295","relId":"14","moduleType":0,"issue":"20180318","seq":"036","gameName":"西甲","homeTeamName":"巴萨","guestTeamName":"毕尔巴鄂","matchTime":1521386100000,"homeScore":2,"guestScore":0,"handicap":-2,"spr":"3:2.06;1:3.95;0:2.56","selections":"3R","createDate":1521382430000,"createBy":"1","updateDate":1521417600000,"updateBy":"task","delFlag":"0","result":"3","resultr":"1R"}],"multiple":5,"betnum":1,"seqnum":2,"betAmount":10,"revenueAmount":"","status":4},{"match":[{"id":"ef60d990860748189115988112c213ee1521381187159","relId":"2fe3302dfa14490693054d6dfeb202f81521381057170","moduleType":0,"issue":"20180318","seq":"034","gameName":"德甲","homeTeamName":"科隆","guestTeamName":"勒沃库森","matchTime":1521383400000,"homeScore":2,"guestScore":0,"handicap":1,"sp":"3:4.50;1:3.95;0:1.53","spr":"3:2.16;1:3.45;0:2.66","selections":"0,3R","createDate":1521381187000,"createBy":"1","updateDate":1521396000000,"updateBy":"task","delFlag":"0","result":"3","resultr":"3R"},{"id":"ca9af4ed30b448a5978dfc76b3f0b3fc1521381187164","relId":"2fe3302dfa14490693054d6dfeb202f81521381057170","moduleType":0,"issue":"20180318","seq":"035","gameName":"智利甲","homeTeamName":"康塞大学","guestTeamName":"科洛科洛","matchTime":1521385200000,"homeScore":2,"guestScore":1,"handicap":1,"sp":"3:3.06;1:3.30;0:2.00","spr":"3:1.63;1:3.70;0:4.08","selections":"0,3R","createDate":1521381187000,"createBy":"1","updateDate":1521417601000,"updateBy":"task","delFlag":"0","result":"3","resultr":"3R"}],"multiple":8,"betnum":4,"seqnum":2,"betAmount":64,"revenueAmount":"","status":4}]}
      * count : 0
      * num : 0
      */
@@ -54,8 +54,8 @@ public class MyZhongchouPiluResultBean {
 
     public static class ExecDatasBean {
         /**
-         * profitInfo : {"winStatus":1,"totalBetAmount":"48.00","totalRevenueAmount":"0.00","totalProfitAmount":"-48.00","depotProfitRate":"-1.0000","cashPercent":0.8,"cashProfitAmount":-48,"cashProfitRate":1}
-         * betInfo : [{"match":[{"id":"112b8967a89e4754ae6182b4282fa8f61521284210919","relId":"3c99e1498a964586afc2f146a095129f1521284035096","moduleType":0,"issue":"20180317","seq":"022","gameName":"西甲","homeTeamName":"拉科","guestTeamName":"拉帕马斯","matchTime":1521288000000,"homeScore":1,"guestScore":1,"handicap":-1,"sp":"3:1.66;1:3.60;0:4.05","spr":"3:3.00;1:3.45;0:1.98","selections":"3,3R","createDate":1521284211000,"createBy":"ZJ100010","updateDate":1521302400000,"updateBy":"task","delFlag":"0","result":"1","resultr":"0R"},{"id":"9ee75a4fb25047819ce945547a0fa5f11521284210933","relId":"3c99e1498a964586afc2f146a095129f1521284035096","moduleType":0,"issue":"20180317","seq":"023","gameName":"英足总杯","homeTeamName":"斯旺西","guestTeamName":"热刺","matchTime":1521288900000,"homeScore":0,"guestScore":3,"handicap":1,"sp":"3:7.50;1:4.20;0:1.32","spr":"3:2.86;1:3.35;0:2.08","selections":"3,3R,1R","createDate":1521284211000,"createBy":"ZJ100010","updateDate":1521302402000,"updateBy":"task","delFlag":"0","result":"0","resultr":"0R"},{"id":"2468ea6955b94e58aa2668409a1cea1d1521284210933","relId":"3c99e1498a964586afc2f146a095129f1521284035096","moduleType":0,"issue":"20180317","seq":"024","gameName":"英冠","homeTeamName":"富勒姆","guestTeamName":"女王巡游","matchTime":1521289800000,"homeScore":2,"guestScore":2,"handicap":-1,"sp":"3:1.38;1:4.40;0:5.65","spr":"3:2.17;1:3.65;0:2.54","selections":"3,0R","createDate":1521284211000,"createBy":"ZJ100010","updateDate":1521302401000,"updateBy":"task","delFlag":"0","result":"1","resultr":"0R"}],"multiple":2,"betnum":12,"seqnum":3,"betAmount":48,"revenueAmount":0,"status":5}]
+         * profitInfo : {"winStatus":0,"totalBetAmount":"84.00","totalRevenueAmount":"0.00","totalProfitAmount":"0.00","depotProfitRate":"0.0000","cashProfitRate":"0.0000","cashPercent":0.9,"cashProfitAmount":0}
+         * betInfo : [{"match":[{"id":"6d1cd7d82fbb4bb0a32f3e39ecf95c7c1521382844702","relId":"13","moduleType":0,"issue":"20180318","seq":"037","gameName":"荷甲","homeTeamName":"兹沃勒","guestTeamName":"费耶诺德","matchTime":1521387900000,"homeScore":3,"guestScore":4,"handicap":1,"sp":"3:4.35;1:3.70;0:1.59","spr":"3:2.04;1:3.50;0:2.83","selections":"0","createDate":1521382845000,"createBy":"ZJ100006","updateDate":1521424800000,"updateBy":"task","delFlag":"0","result":"0","resultr":"1R"},{"id":"5f03b37f2ffd41d3b28456ac128d35ef1521382844702","relId":"13","moduleType":0,"issue":"20180318","seq":"038","gameName":"法甲","homeTeamName":"圣埃蒂安","guestTeamName":"甘冈","matchTime":1521388800000,"homeScore":2,"guestScore":0,"handicap":-1,"sp":"3:1.52;1:3.55;0:5.26","spr":"3:2.80;1:3.30;0:2.13","selections":"3","createDate":1521382845000,"createBy":"ZJ100006","updateDate":1521417600000,"updateBy":"task","delFlag":"0","result":"3","resultr":"3R"}],"multiple":5,"betnum":1,"seqnum":2,"betAmount":10,"revenueAmount":"","status":4},{"match":[{"id":"dd1ccac46c2c494bb02946e39ebcb49a1521382430279","relId":"14","moduleType":0,"issue":"20180318","seq":"035","gameName":"智利甲","homeTeamName":"康塞大学","guestTeamName":"科洛科洛","matchTime":1521385200000,"homeScore":2,"guestScore":1,"handicap":1,"sp":"3:3.06;1:3.30;0:2.00","spr":"3:1.63;1:3.70;0:4.08","selections":"3R","createDate":1521382430000,"createBy":"1","updateDate":1521417601000,"updateBy":"task","delFlag":"0","result":"3","resultr":"3R"},{"id":"4376c45e200e4511911f0586d99b14111521382430295","relId":"14","moduleType":0,"issue":"20180318","seq":"036","gameName":"西甲","homeTeamName":"巴萨","guestTeamName":"毕尔巴鄂","matchTime":1521386100000,"homeScore":2,"guestScore":0,"handicap":-2,"spr":"3:2.06;1:3.95;0:2.56","selections":"3R","createDate":1521382430000,"createBy":"1","updateDate":1521417600000,"updateBy":"task","delFlag":"0","result":"3","resultr":"1R"}],"multiple":5,"betnum":1,"seqnum":2,"betAmount":10,"revenueAmount":"","status":4},{"match":[{"id":"ef60d990860748189115988112c213ee1521381187159","relId":"2fe3302dfa14490693054d6dfeb202f81521381057170","moduleType":0,"issue":"20180318","seq":"034","gameName":"德甲","homeTeamName":"科隆","guestTeamName":"勒沃库森","matchTime":1521383400000,"homeScore":2,"guestScore":0,"handicap":1,"sp":"3:4.50;1:3.95;0:1.53","spr":"3:2.16;1:3.45;0:2.66","selections":"0,3R","createDate":1521381187000,"createBy":"1","updateDate":1521396000000,"updateBy":"task","delFlag":"0","result":"3","resultr":"3R"},{"id":"ca9af4ed30b448a5978dfc76b3f0b3fc1521381187164","relId":"2fe3302dfa14490693054d6dfeb202f81521381057170","moduleType":0,"issue":"20180318","seq":"035","gameName":"智利甲","homeTeamName":"康塞大学","guestTeamName":"科洛科洛","matchTime":1521385200000,"homeScore":2,"guestScore":1,"handicap":1,"sp":"3:3.06;1:3.30;0:2.00","spr":"3:1.63;1:3.70;0:4.08","selections":"0,3R","createDate":1521381187000,"createBy":"1","updateDate":1521417601000,"updateBy":"task","delFlag":"0","result":"3","resultr":"3R"}],"multiple":8,"betnum":4,"seqnum":2,"betAmount":64,"revenueAmount":"","status":4}]
          */
 
         private ProfitInfoBean profitInfo;
@@ -79,24 +79,24 @@ public class MyZhongchouPiluResultBean {
 
         public static class ProfitInfoBean {
             /**
-             * winStatus : 1
-             * totalBetAmount : 48.00
+             * winStatus : 0
+             * totalBetAmount : 84.00
              * totalRevenueAmount : 0.00
-             * totalProfitAmount : -48.00
-             * depotProfitRate : -1.0000
-             * cashPercent : 0.8
-             * cashProfitAmount : -48.0
-             * cashProfitRate : 1.0
+             * totalProfitAmount : 0.00
+             * depotProfitRate : 0.0000
+             * cashProfitRate : 0.0000
+             * cashPercent : 0.9
+             * cashProfitAmount : 0
              */
 
             private int winStatus;
             private String totalBetAmount;
             private String totalRevenueAmount;
             private String totalProfitAmount;
-            private String depotProfitRate;
-            private double cashPercent;
-            private double cashProfitAmount;
+            private double depotProfitRate;
             private double cashProfitRate;
+            private String cashPercent;
+            private String cashProfitAmount;
 
             public int getWinStatus() {
                 return winStatus;
@@ -130,28 +130,12 @@ public class MyZhongchouPiluResultBean {
                 this.totalProfitAmount = totalProfitAmount;
             }
 
-            public String getDepotProfitRate() {
+            public double getDepotProfitRate() {
                 return depotProfitRate;
             }
 
-            public void setDepotProfitRate(String depotProfitRate) {
+            public void setDepotProfitRate(double depotProfitRate) {
                 this.depotProfitRate = depotProfitRate;
-            }
-
-            public double getCashPercent() {
-                return cashPercent;
-            }
-
-            public void setCashPercent(double cashPercent) {
-                this.cashPercent = cashPercent;
-            }
-
-            public double getCashProfitAmount() {
-                return cashProfitAmount;
-            }
-
-            public void setCashProfitAmount(double cashProfitAmount) {
-                this.cashProfitAmount = cashProfitAmount;
             }
 
             public double getCashProfitRate() {
@@ -161,24 +145,40 @@ public class MyZhongchouPiluResultBean {
             public void setCashProfitRate(double cashProfitRate) {
                 this.cashProfitRate = cashProfitRate;
             }
+
+            public String getCashPercent() {
+                return cashPercent;
+            }
+
+            public void setCashPercent(String cashPercent) {
+                this.cashPercent = cashPercent;
+            }
+
+            public String getCashProfitAmount() {
+                return cashProfitAmount;
+            }
+
+            public void setCashProfitAmount(String cashProfitAmount) {
+                this.cashProfitAmount = cashProfitAmount;
+            }
         }
 
         public static class BetInfoBean {
             /**
-             * match : [{"id":"112b8967a89e4754ae6182b4282fa8f61521284210919","relId":"3c99e1498a964586afc2f146a095129f1521284035096","moduleType":0,"issue":"20180317","seq":"022","gameName":"西甲","homeTeamName":"拉科","guestTeamName":"拉帕马斯","matchTime":1521288000000,"homeScore":1,"guestScore":1,"handicap":-1,"sp":"3:1.66;1:3.60;0:4.05","spr":"3:3.00;1:3.45;0:1.98","selections":"3,3R","createDate":1521284211000,"createBy":"ZJ100010","updateDate":1521302400000,"updateBy":"task","delFlag":"0","result":"1","resultr":"0R"},{"id":"9ee75a4fb25047819ce945547a0fa5f11521284210933","relId":"3c99e1498a964586afc2f146a095129f1521284035096","moduleType":0,"issue":"20180317","seq":"023","gameName":"英足总杯","homeTeamName":"斯旺西","guestTeamName":"热刺","matchTime":1521288900000,"homeScore":0,"guestScore":3,"handicap":1,"sp":"3:7.50;1:4.20;0:1.32","spr":"3:2.86;1:3.35;0:2.08","selections":"3,3R,1R","createDate":1521284211000,"createBy":"ZJ100010","updateDate":1521302402000,"updateBy":"task","delFlag":"0","result":"0","resultr":"0R"},{"id":"2468ea6955b94e58aa2668409a1cea1d1521284210933","relId":"3c99e1498a964586afc2f146a095129f1521284035096","moduleType":0,"issue":"20180317","seq":"024","gameName":"英冠","homeTeamName":"富勒姆","guestTeamName":"女王巡游","matchTime":1521289800000,"homeScore":2,"guestScore":2,"handicap":-1,"sp":"3:1.38;1:4.40;0:5.65","spr":"3:2.17;1:3.65;0:2.54","selections":"3,0R","createDate":1521284211000,"createBy":"ZJ100010","updateDate":1521302401000,"updateBy":"task","delFlag":"0","result":"1","resultr":"0R"}]
-             * multiple : 2
-             * betnum : 12
-             * seqnum : 3
-             * betAmount : 48.0
-             * revenueAmount : 0.0
-             * status : 5
+             * match : [{"id":"6d1cd7d82fbb4bb0a32f3e39ecf95c7c1521382844702","relId":"13","moduleType":0,"issue":"20180318","seq":"037","gameName":"荷甲","homeTeamName":"兹沃勒","guestTeamName":"费耶诺德","matchTime":1521387900000,"homeScore":3,"guestScore":4,"handicap":1,"sp":"3:4.35;1:3.70;0:1.59","spr":"3:2.04;1:3.50;0:2.83","selections":"0","createDate":1521382845000,"createBy":"ZJ100006","updateDate":1521424800000,"updateBy":"task","delFlag":"0","result":"0","resultr":"1R"},{"id":"5f03b37f2ffd41d3b28456ac128d35ef1521382844702","relId":"13","moduleType":0,"issue":"20180318","seq":"038","gameName":"法甲","homeTeamName":"圣埃蒂安","guestTeamName":"甘冈","matchTime":1521388800000,"homeScore":2,"guestScore":0,"handicap":-1,"sp":"3:1.52;1:3.55;0:5.26","spr":"3:2.80;1:3.30;0:2.13","selections":"3","createDate":1521382845000,"createBy":"ZJ100006","updateDate":1521417600000,"updateBy":"task","delFlag":"0","result":"3","resultr":"3R"}]
+             * multiple : 5
+             * betnum : 1
+             * seqnum : 2
+             * betAmount : 10
+             * revenueAmount :
+             * status : 4
              */
 
             private int multiple;
             private int betnum;
             private int seqnum;
-            private double betAmount;
-            private double revenueAmount;
+            private int betAmount;
+            private String revenueAmount;
             private int status;
             private List<MatchBean> match;
 
@@ -206,19 +206,19 @@ public class MyZhongchouPiluResultBean {
                 this.seqnum = seqnum;
             }
 
-            public double getBetAmount() {
+            public int getBetAmount() {
                 return betAmount;
             }
 
-            public void setBetAmount(double betAmount) {
+            public void setBetAmount(int betAmount) {
                 this.betAmount = betAmount;
             }
 
-            public double getRevenueAmount() {
+            public String getRevenueAmount() {
                 return revenueAmount;
             }
 
-            public void setRevenueAmount(double revenueAmount) {
+            public void setRevenueAmount(String revenueAmount) {
                 this.revenueAmount = revenueAmount;
             }
 
@@ -240,28 +240,28 @@ public class MyZhongchouPiluResultBean {
 
             public static class MatchBean {
                 /**
-                 * id : 112b8967a89e4754ae6182b4282fa8f61521284210919
-                 * relId : 3c99e1498a964586afc2f146a095129f1521284035096
+                 * id : 6d1cd7d82fbb4bb0a32f3e39ecf95c7c1521382844702
+                 * relId : 13
                  * moduleType : 0
-                 * issue : 20180317
-                 * seq : 022
-                 * gameName : 西甲
-                 * homeTeamName : 拉科
-                 * guestTeamName : 拉帕马斯
-                 * matchTime : 1521288000000
-                 * homeScore : 1
-                 * guestScore : 1
-                 * handicap : -1
-                 * sp : 3:1.66;1:3.60;0:4.05
-                 * spr : 3:3.00;1:3.45;0:1.98
-                 * selections : 3,3R
-                 * createDate : 1521284211000
-                 * createBy : ZJ100010
-                 * updateDate : 1521302400000
+                 * issue : 20180318
+                 * seq : 037
+                 * gameName : 荷甲
+                 * homeTeamName : 兹沃勒
+                 * guestTeamName : 费耶诺德
+                 * matchTime : 1521387900000
+                 * homeScore : 3
+                 * guestScore : 4
+                 * handicap : 1
+                 * sp : 3:4.35;1:3.70;0:1.59
+                 * spr : 3:2.04;1:3.50;0:2.83
+                 * selections : 0
+                 * createDate : 1521382845000
+                 * createBy : ZJ100006
+                 * updateDate : 1521424800000
                  * updateBy : task
                  * delFlag : 0
-                 * result : 1
-                 * resultr : 0R
+                 * result : 0
+                 * resultr : 1R
                  */
 
                 private String id;

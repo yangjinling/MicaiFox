@@ -39,6 +39,7 @@ public class MyZhongchouReportAdapter extends MyBaseAdapter<ZhonchouReportResult
         }
         TextView tv_rate = ((TextView) viewHolder.findViewById(R.id.zhouchou_detail_report_tv_changci));
         if (null != mList.get(position).getHitResult() && !TextUtils.isEmpty(mList.get(position).getHitResult())) {
+            tv_rate.setVisibility(View.VISIBLE);
             tv_rate.setText(mList.get(position).getHitResult());
         } else {
             tv_rate.setVisibility(View.GONE);

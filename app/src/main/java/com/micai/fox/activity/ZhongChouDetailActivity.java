@@ -42,6 +42,7 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -225,7 +226,8 @@ public class ZhongChouDetailActivity extends AppCompatActivity implements SwipeR
                 //已兑付
                 zhongchouDetailTvState.setText("已兑付");
                 zhongchouDetailLlRate.setVisibility(View.VISIBLE);
-                zhongchouDetailTvRate.setText("" + zhongChouDetailResultBean.getExecDatas().getHitRate());
+                NumberFormat percent = NumberFormat.getPercentInstance();  //建立百分比格式化引用
+                zhongchouDetailTvRate.setText("" + percent.format(BigDecimal.valueOf(zhongChouDetailResultBean.getExecDatas().getHitRate())).replace("%", ""));
                 btnZhongchouDetailPay.setText("项目已结束");
                 btnZhongchouDetailPay.setClickable(false);
                 zhongchouDetailTv1.setText("已于" + DateUtil.getDateToStrings(zhongChouDetailResultBean.getExecDatas().getEndDate()) + "结束众筹");
@@ -342,6 +344,11 @@ public class ZhongChouDetailActivity extends AppCompatActivity implements SwipeR
                     if (zhongChouDetailResultBean.isExecResult()) {
 
                         status = "" + zhongChouDetailResultBean.getExecDatas().getStatus();
+                        if (null != zhongChouDetailResultBean.getExecDatas().getRemarks() && !TextUtils.isEmpty(zhongChouDetailResultBean.getExecDatas().getRemarks())) {
+                            Config.getInstance().setContent("" + zhongChouDetailResultBean.getExecDatas().getRemarks());
+                        } else {
+                            Config.getInstance().setContent(null);
+                        }
                         if (null != status) {
                             if (status.equals("5") || status.equals("6") || status.equals("7")) {
                                 //5/6：已披露  7：已兑付
@@ -372,10 +379,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity implements SwipeR
                         zhongchouDetailTvPeople.setText("" + zhongChouDetailResultBean.getExecDatas().getSupNum());
 //                        zhongchouDetailTv1.setText("" + zhongChouDetailResultBean.getExecDatas().getRemarks());
 //                        zhongchouDetailTv2.setText("" + zhongChouDetailResultBean.getExecDatas().getRemarks());
-                        if (null != zhongChouDetailResultBean.getExecDatas().getRemarks() && !TextUtils.isEmpty(zhongChouDetailResultBean.getExecDatas().getRemarks())) {
-                            Config.getInstance().setContent("" + zhongChouDetailResultBean.getExecDatas().getRemarks());
-                        }
-                        zhongchouDetailTvRate.setText("" + zhongChouDetailResultBean.getExecDatas().getHitRate());
+//                        zhongchouDetailTvRate.setText("" + zhongChouDetailResultBean.getExecDatas().getHitRate());
                         BigDecimal score = null;
                         try {
                             score = Tools.div(zhongChouDetailResultBean.getExecDatas().getRealAmount(), zhongChouDetailResultBean.getExecDatas().getAmountDown(), 2);
@@ -451,7 +455,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity implements SwipeR
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
-
+        Config.getInstance().setContent(null);
     }
 
     /**

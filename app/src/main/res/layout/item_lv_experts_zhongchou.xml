@@ -199,6 +199,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
                 app:isShowDay="false"
+                app:isConvertDaysToHours="true"
                 app:isShowHour="true"
                 app:isShowMillisecond="false"
                 app:isShowMinute="true"

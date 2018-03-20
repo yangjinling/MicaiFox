@@ -82,4 +82,5 @@ public class Url {
     /*2.5.9头像上传*/
     public static final String WEB_MINE_HEAD = WEB_BASE_URL + "sys/user/file/upload" + WEB_BASE_SESSION;
 
+    public static  final String WEN_CHECK_NOTICE=WEB_BASE_URL+"bd/notice/unReview"+WEB_BASE_SESSION;
 }

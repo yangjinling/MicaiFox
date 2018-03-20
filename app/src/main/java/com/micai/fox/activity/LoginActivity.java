@@ -21,6 +21,8 @@ import com.micai.fox.R;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.base.BaseActivity;
+import com.micai.fox.parambean.NotiBean;
+import com.micai.fox.resultbean.BaseResultBean;
 import com.micai.fox.resultbean.LoginResultBean;
 import com.micai.fox.util.ExitAppUtils;
 import com.micai.fox.util.LogUtil;
@@ -28,6 +30,8 @@ import com.micai.fox.util.PrefUtils;
 import com.micai.fox.util.Tools;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -222,14 +226,17 @@ public class LoginActivity extends BaseActivity {
 //                                startActivity(intent);
 //                                ExitAppUtils.getInstance().finishActivity(IndexActivity.class);
 //                                ExitAppUtils.getInstance().finishActivity(MainActivity.class);
+                                checkNotice();
                                 if (type == 0) {
                                     ExitAppUtils.getInstance().finishAllActivities();
                                     intent.putExtra("TYPE", 1);
                                     startActivity(intent);
-                                    Config.getInstance().setSet(true);
+                                    Config.getInstance().setSet(false);
+                                    Config.getInstance().setLoginFromBuy(false);
                                 }
 //                                众筹过来
-                                Config.getInstance().setSet(false);
+                                Config.getInstance().setLoginFromBuy(true);
+                                Config.getInstance().setSet(true);
                                 Config.getInstance().setJin(false);
                                 finish();
                             } else {
@@ -275,4 +282,34 @@ public class LoginActivity extends BaseActivity {
         imm.showSoftInput(v, InputMethodManager.SHOW_FORCED);
     }
 
+    private void checkNotice() {
+        OkHttpUtils.post().
+                url(String.format(Url.WEN_CHECK_NOTICE, Config.getInstance().getSessionId()))
+                .build().execute(new StringCallback() {
+
+            private BaseResultBean noticeResultBean;
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("YJL", "checkNoti==" + response);
+                noticeResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                if (noticeResultBean.isExecResult()) {
+                    NotiBean bean = new NotiBean();
+                    if (Integer.parseInt(noticeResultBean.getExecDatas()) > 0) {
+                        LogUtil.e("YJL", "checkNoti==" + Integer.parseInt(noticeResultBean.getExecDatas()));
+                        bean.setHaveN(true);
+                        EventBus.getDefault().post(bean);
+                    } else {
+                        bean.setHaveN(false);
+                        EventBus.getDefault().post(bean);
+                    }
+                }
+            }
+        });
+    }
 }

@@ -23,6 +23,7 @@ import com.micai.fox.util.Tools;
 import com.micai.fox.view.CountdownTextView;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,8 +62,9 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeZhongChouResultBea
         TextView tv_introduce = ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_introduce));
         tv_introduce.setText(mList.get(position).getProAuth());
         //命中率
+        NumberFormat percent = NumberFormat.getPercentInstance();  //建立百分比格式化引用
         TextView tv_rate = ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_rates));
-        tv_rate.setText("" + mList.get(position).getHitRate());
+        tv_rate.setText("" + percent.format(BigDecimal.valueOf(mList.get(position).getHitRate())).replace("%", ""));
         //标题
         TextView tv_talk = ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_talk));
         tv_talk.setText(mList.get(position).getTitle());

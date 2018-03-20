@@ -89,14 +89,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="100"
-                    android:textColor="@android:color/holo_red_light"
+                    android:textColor="@color/red"
                     android:textSize="24sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="%"
-                    android:textColor="@android:color/holo_red_light"
+                    android:textColor="@color/red"
                     android:textSize="15sp" />
             </LinearLayout>
 
@@ -301,6 +301,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     app:isShowDay="false"
+                    app:isConvertDaysToHours="true"
                     app:isShowHour="true"
                     app:isShowMillisecond="false"
                     app:isShowMinute="true"

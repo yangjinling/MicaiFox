@@ -103,14 +103,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text=""
-                                    android:textColor="@android:color/holo_red_light"
+                                    android:textColor="@color/red"
                                     android:textSize="24sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="%"
-                                    android:textColor="@android:color/holo_red_light"
+                                    android:textColor="@color/red"
                                     android:textSize="15sp" />
                             </LinearLayout>
 
@@ -143,10 +143,9 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="14dp"
-                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -155,11 +154,10 @@
                                 android:layout_height="wrap_content"
                                 android:text=""
                                 android:textColor="@color/red"
-                                android:textSize="35sp" />
+                                android:textSize="32sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
-
                                 android:layout_height="wrap_content"
                                 android:text="%"
                                 android:textColor="@color/red"
@@ -168,7 +166,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="57dp"
-                                android:layout_marginLeft="8dp"
+                                android:layout_marginLeft="5dp"
                                 android:gravity="center_vertical"
                                 android:orientation="vertical">
 
@@ -189,32 +187,34 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="23dp"
+                            android:layout_marginRight="18dp"
                             android:layout_weight="1"
                             android:gravity="right"
+                            android:layout_gravity="right"
                             android:orientation="horizontal">
 
                             <TextView
+                                android:gravity="right"
                                 android:id="@+id/experts_detail_tv_maxyili"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=""
                                 android:textColor="@color/red"
-                                android:textSize="35sp" />
+                                android:textSize="32sp" />
 
                             <TextView
+                                android:gravity="right"
                                 android:layout_width="wrap_content"
-
                                 android:layout_height="wrap_content"
                                 android:text="%"
                                 android:textColor="@color/red"
                                 android:textSize="15sp" />
 
                             <LinearLayout
+                                android:layout_marginLeft="3dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="57dp"
-                                android:layout_marginLeft="8dp"
-                                android:gravity="center_vertical"
+                                android:gravity="center_vertical|right"
                                 android:orientation="vertical">
 
                                 <TextView

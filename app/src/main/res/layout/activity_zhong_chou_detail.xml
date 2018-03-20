@@ -362,6 +362,7 @@
                                 app:isShowMillisecond="false"
                                 app:isShowMinute="true"
                                 app:isShowSecond="true"
+                                app:isConvertDaysToHours="true"
                                 app:suffixGravity="center"
                                 app:suffixTextColor="@color/black"
                                 app:suffixTextSize="24sp"
