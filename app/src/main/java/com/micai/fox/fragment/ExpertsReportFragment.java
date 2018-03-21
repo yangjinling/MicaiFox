@@ -79,6 +79,7 @@ public class ExpertsReportFragment extends Fragment {
         EventBus.getDefault().register(this);
         proId = getArguments().getString("proId");
         footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv, null);
+        tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
         lv.addFooterView(footer_view);
         reportAdapter = new MyExpertsReportAdapter(data, getContext(), R.layout.item_lv_experts_report);
         lv.setAdapter(reportAdapter);
@@ -128,10 +129,9 @@ public class ExpertsReportFragment extends Fragment {
                     if (expertsReportResultBean.isExecResult()) {
                         data.addAll(expertsReportResultBean.getExecDatas().getRecordList());
                         reportAdapter.notifyDataSetChanged();
-                        tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
                         if (tv_foot.getVisibility() == View.VISIBLE)
                             tv_foot.setVisibility(View.GONE);
-                        initLoadMoreTagOp();
+//                        initLoadMoreTagOp();
 //                        currentpage++;
                     }
                 }
@@ -145,7 +145,7 @@ public class ExpertsReportFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private int currentpage = 1;
+    private int currentpage = 0;
     private boolean judgeCanLoadMore = true;
     TextView tv_foot;
 
@@ -153,7 +153,7 @@ public class ExpertsReportFragment extends Fragment {
     @Subscribe
     public void onEventMainThread(BotomBean bean) {
         LogUtil.e("YJL", "isBootom" + bean.isBootom());
-        if (bean.isBootom()) {
+     /*   if (bean.isBootom()) {
 //            mDialog.show();
             //模拟进行数据的分页加载
             if (judgeCanLoadMore && bean.isBootom()) {
@@ -184,7 +184,19 @@ public class ExpertsReportFragment extends Fragment {
             tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
             tv_foot.setVisibility(View.GONE);
         }
-
+*/
+        if (bean.isBootom()) {
+            LogUtil.e("YJL", "总页数==" + expertsReportResultBean.getExecDatas().getTotalPage() + "--" + data.size());
+            if (data.size() < expertsReportResultBean.getExecDatas().getTotalRow()) {
+                tv_foot.setVisibility(View.VISIBLE);
+                tv_foot.setText("加载中...");
+                currentpage++;
+                getExpertsReportList(proId, "" + currentpage);
+            } else {
+                tv_foot.setVisibility(View.VISIBLE);
+                tv_foot.setText("没有更多了");
+            }
+        }
     }
 
     private void initLoadMoreTagOp() {

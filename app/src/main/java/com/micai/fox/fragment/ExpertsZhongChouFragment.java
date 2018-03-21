@@ -63,7 +63,6 @@ public class ExpertsZhongChouFragment extends Fragment {
     private String proId;
     private ExpertsZhongchouResultBean expertsZhongchouResultBean;
     MyExpertsZhonChouAdapter adapter;
-    private boolean toast = false;
 
     public ExpertsZhongChouFragment() {
     }
@@ -83,6 +82,7 @@ public class ExpertsZhongChouFragment extends Fragment {
         proId = getArguments().getString("proId");
 //        LvUtil.setListViewHeightBasedOnChildren(lv);
         footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv, null);
+        tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
         lv.addFooterView(footer_view);
         adapter = new MyExpertsZhonChouAdapter(data, getContext(), R.layout.item_lv_experts_zhongchou);
         lv.setAdapter(adapter);
@@ -91,9 +91,10 @@ public class ExpertsZhongChouFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i < data.size()) {
-                Intent intent = new Intent(getActivity(), ZhongChouDetailActivity.class);
-                intent.putExtra("crowdingId", expertsZhongchouResultBean.getExecDatas().getRecordList().get(i).getCrowdfundingId());
-                startActivity(intent);}
+                    Intent intent = new Intent(getActivity(), ZhongChouDetailActivity.class);
+                    intent.putExtra("crowdingId", expertsZhongchouResultBean.getExecDatas().getRecordList().get(i).getCrowdfundingId());
+                    startActivity(intent);
+                }
             }
         });
 //        lv.setOnScrollListener(this);
@@ -132,10 +133,9 @@ public class ExpertsZhongChouFragment extends Fragment {
                     if (expertsZhongchouResultBean.isExecResult()) {
                         data.addAll(expertsZhongchouResultBean.getExecDatas().getRecordList());
                         adapter.notifyDataSetChanged();
-                        tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
                         if (tv_foot.getVisibility() == View.VISIBLE)
                             tv_foot.setVisibility(View.GONE);
-                        initLoadMoreTagOp();
+//                        initLoadMoreTagOp();
 //                        currentpage++;
                     }
                 }
@@ -149,7 +149,7 @@ public class ExpertsZhongChouFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private int currentpage = 1;
+    private int currentpage = 0;
     private boolean judgeCanLoadMore = true;
     TextView tv_foot;
 
@@ -157,7 +157,7 @@ public class ExpertsZhongChouFragment extends Fragment {
     @Subscribe
     public void onEventMainThread(BotomBean bean) {
         LogUtil.e("YJL", "isBootom" + bean.isBootom());
-        if (bean.isBootom()) {
+/*        if (bean.isBootom()) {
 //            mDialog.show();
             //模拟进行数据的分页加载
             if (judgeCanLoadMore && bean.isBootom()) {
@@ -172,7 +172,6 @@ public class ExpertsZhongChouFragment extends Fragment {
                     tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
                     tv_foot.setVisibility(View.VISIBLE);
                     tv_foot.setText("没有更多了");
-                    toast = true;
                 } else {
                     tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
                     tv_foot.setVisibility(View.VISIBLE);
@@ -189,9 +188,20 @@ public class ExpertsZhongChouFragment extends Fragment {
 //            mDialog.dismiss();
             tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
             tv_foot.setVisibility(View.GONE);
+        }*/
+
+        if (bean.isBootom()) {
+            LogUtil.e("YJL", "总页数==" + expertsZhongchouResultBean.getExecDatas().getTotalPage() + "--" + data.size());
+            if (data.size() < expertsZhongchouResultBean.getExecDatas().getTotalRow()) {
+                tv_foot.setVisibility(View.VISIBLE);
+                tv_foot.setText("加载中...");
+                currentpage++;
+                getExpertsZhongChouList(proId, "" + currentpage);
+            } else {
+                tv_foot.setVisibility(View.VISIBLE);
+                tv_foot.setText("没有更多了");
+            }
         }
-
-
     }
 
     private void initLoadMoreTagOp() {

@@ -69,7 +69,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  * Created by lq on 2017/12/19.
  */
 
-public class HomeFragment extends Fragment implements PageListScrollView.OnScrollToBottomListener, SwipeRefreshLayout.OnRefreshListener, View.OnTouchListener, CustomCompatScrollView.ScrollListener {
+public class HomeFragment extends Fragment implements PageListScrollView.OnScrollToBottomListener, SwipeRefreshLayout.OnRefreshListener, View.OnTouchListener {
     @Bind(R.id.recycleview_h)
     RecyclerView recycleviewH;
     @Bind(R.id.listview_home)
@@ -342,9 +342,9 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
                 tv_foot.setVisibility(View.VISIBLE);
                 tv_foot.setText("没有更多了");
             }
-        } else {
+        } /*else {
             tv_foot.setVisibility(View.GONE);
-        }
+        }*/
     }
 
 
@@ -414,27 +414,4 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         return false;
     }
 
-    @Override
-    public void onScrollChanged(ScrollView scrollView, int x, int y, int oldx, int oldy) {
-        LogUtil.e("CustomScroll==", "x=" + x + "y==" + y);
-    }
-
-    @Override
-    public void onScrollBottom(ScrollView scrollView) {
-        LogUtil.e("CustomScroll==", "bottom");
-    }
-
-    @Override
-    public void onScrollTop(ScrollView scrollView) {
-        LogUtil.e("CustomScroll==", "top");
-        if (data.size() < homeZhongChouResultBean.getExecDatas().getTotalRow()) {
-        } else {
-
-        }
-    }
-
-    @Override
-    public void onScrollStop(ScrollView scrollView) {
-        LogUtil.e("CustomScroll==", "stop");
-    }
 }
