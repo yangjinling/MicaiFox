@@ -10,9 +10,9 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/experts_iv_head"
-        android:background="@drawable/circle"
         android:layout_width="65dp"
         android:layout_height="65dp"
+        android:background="@mipmap/head"
         android:layout_marginLeft="10dp"/>
 
     <LinearLayout

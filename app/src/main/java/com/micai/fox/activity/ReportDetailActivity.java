@@ -48,6 +48,7 @@ import java.util.Date;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.MediaType;
 
@@ -65,7 +66,7 @@ public class ReportDetailActivity extends AppCompatActivity {
     @Bind(R.id.report_detail_tv_time)
     TextView reportDetailTvTime;
     @Bind(R.id.report_detail_iv_head)
-    ImageView head;
+    CircleImageView head;
     @Bind(R.id.report_detail_tv_name)
     TextView reportDetailTvName;
     @Bind(R.id.report_detail_tv_introduce)
@@ -85,7 +86,7 @@ public class ReportDetailActivity extends AppCompatActivity {
     private ArrayList<ReportDetailResultBean.ExecDatasBean.GameBean> data = new ArrayList<>();
     private String reportId;
     private ReportDetailResultBean reportDetailResultBean;
-//    ReportDetailLvAdapter adapter;
+    //    ReportDetailLvAdapter adapter;
     CopyReportDetailLvAdapter adapters;
     private DisplayImageOptions options;
 
@@ -168,10 +169,10 @@ public class ReportDetailActivity extends AppCompatActivity {
                         reportDetailTvTimeTalk.setText("" + reportDetailResultBean.getExecDatas().getReport().getTitle());
                         reportDetailTvName.setText("" + reportDetailResultBean.getExecDatas().getReport().getProName());
                         reportDetailTvIntroduce.setText("" + reportDetailResultBean.getExecDatas().getReport().getProAuth());
-                        NumberFormat percent = NumberFormat.getPercentInstance();  //建立百分比格式化引用
-                        reportDetailTvRate.setText("" + percent.format(BigDecimal.valueOf(reportDetailResultBean.getExecDatas().getReport().getHitRate())).replace("%", ""));
+                        java.text.DecimalFormat df = new java.text.DecimalFormat("#.##");
+                        reportDetailTvRate.setText("" + df.format(new BigDecimal(String.valueOf(reportDetailResultBean.getExecDatas().getReport().getHitRate())).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP)));
                         reportDetailTvTime.setText("" + DateUtil.getDistanceTimes(reportDetailResultBean.getExecDatas().getReport().getCreateDate(), System.currentTimeMillis()) + "发布");
-                        Glide.with(ReportDetailActivity.this).load(Url.WEB_BASE_IP + reportDetailResultBean.getExecDatas().getReport().getProPhoto()).asBitmap().placeholder(R.drawable.circle).error(R.drawable.circle).into(head);
+                        Glide.with(ReportDetailActivity.this).load(Url.WEB_BASE_IP + reportDetailResultBean.getExecDatas().getReport().getProPhoto()).asBitmap().placeholder(R.mipmap.head).error(R.mipmap.head).into(head);
                         if (null != reportDetailResultBean.getExecDatas().getReport().getStatus()) {
                             if ("0".equals(reportDetailResultBean.getExecDatas().getReport().getStatus())) {
                                 reportDetailLlAbout.setVisibility(View.GONE);

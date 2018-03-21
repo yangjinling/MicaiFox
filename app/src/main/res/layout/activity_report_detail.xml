@@ -70,8 +70,8 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/report_detail_iv_head"
+                        android:background="@mipmap/head"
                         android:layout_width="65dp"
-                        android:background="@drawable/circle"
                         android:layout_height="65dp"></de.hdodenhof.circleimageview.CircleImageView>
 
                     <LinearLayout

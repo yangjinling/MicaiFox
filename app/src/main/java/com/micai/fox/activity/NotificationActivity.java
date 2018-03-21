@@ -100,10 +100,10 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
                 if (4 == data.get(i).getType()) {
                     intent = new Intent(NotificationActivity.this, ReportDetailActivity.class);
                     intent.putExtra("reportId", data.get(i).getRelId());
-                } else if (3==data.get(i).getType()){
+                } else if (3 == data.get(i).getType()) {
                     intent = new Intent(NotificationActivity.this, ZhongChouOrderDetailActivity.class);
                     intent.putExtra("orderId", data.get(i).getRelId());
-                }else {
+                } else {
                     intent = new Intent(NotificationActivity.this, ZhongChouDetailActivity.class);
                     intent.putExtra("crowdingId", data.get(i).getRelId());
                 }
@@ -237,6 +237,7 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
 
     @Override
     public void onRefresh() {
+        curPageNum = 1;
         getNotList("0", 0);
     }
 

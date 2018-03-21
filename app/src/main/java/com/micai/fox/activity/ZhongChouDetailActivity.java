@@ -370,7 +370,7 @@ public class ZhongChouDetailActivity extends AppCompatActivity implements SwipeR
                         }
                         if (null != status)
                             initViewData();
-                        Glide.with(ZhongChouDetailActivity.this).load(Url.WEB_BASE_IP + zhongChouDetailResultBean.getExecDatas().getProPhoto()).asBitmap().placeholder(R.drawable.circle).error(R.drawable.circle).into(head);
+                        Glide.with(ZhongChouDetailActivity.this).load(Url.WEB_BASE_IP + zhongChouDetailResultBean.getExecDatas().getProPhoto()).asBitmap().placeholder(R.mipmap.head).error(R.mipmap.head).into(head);
                         zhongchouDetailTvTalk.setText("" + zhongChouDetailResultBean.getExecDatas().getTitle());
                         zhongchouDetailTvName.setText("" + zhongChouDetailResultBean.getExecDatas().getProName());
                         zhongchouDetailTvIntroduce.setText("" + zhongChouDetailResultBean.getExecDatas().getProAuth());

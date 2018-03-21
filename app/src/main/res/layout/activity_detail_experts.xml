@@ -11,10 +11,10 @@
     <include layout="@layout/layout_title"></include>
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_marginTop="48dp"
         android:id="@+id/experts_detail_swp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp">
 
         <com.micai.fox.view.PageListScrollView
             android:id="@+id/experts_detail_scroll"
@@ -46,10 +46,10 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/experts_detail_iv_head"
+                           android:background="@mipmap/head"
                             android:layout_width="65dp"
                             android:layout_height="65dp"
-                            android:layout_marginLeft="13dp"
-                            android:background="@drawable/circle" />
+                            android:layout_marginLeft="13dp" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -130,9 +130,9 @@
                         android:id="@+id/experts_detail_tv_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="13dp"
-                        android:layout_marginTop="10dp"
                         android:textColor="@android:color/black"
                         android:textSize="15sp" />
 
@@ -187,33 +187,33 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="right"
                             android:layout_marginRight="18dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:layout_gravity="right"
                             android:orientation="horizontal">
 
                             <TextView
-                                android:gravity="right"
                                 android:id="@+id/experts_detail_tv_maxyili"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:gravity="right"
                                 android:text=""
                                 android:textColor="@color/red"
                                 android:textSize="32sp" />
 
                             <TextView
-                                android:gravity="right"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:gravity="right"
                                 android:text="%"
                                 android:textColor="@color/red"
                                 android:textSize="15sp" />
 
                             <LinearLayout
-                                android:layout_marginLeft="3dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="57dp"
+                                android:layout_marginLeft="3dp"
                                 android:gravity="center_vertical|right"
                                 android:orientation="vertical">
 
@@ -227,7 +227,7 @@
                                     android:id="@+id/experts_detail_tv_count"
                                     android:layout_width="wrap_content"
                                     android:layout_height="20dp"
-                                    android:text="共32次众筹"
+                                    android:text="共 次众筹"
                                     android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>

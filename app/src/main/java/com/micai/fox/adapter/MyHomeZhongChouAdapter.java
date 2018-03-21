@@ -54,7 +54,7 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeZhongChouResultBea
     public void setData(ViewHolder viewHolder, final int position) {
         //头像
         CircleImageView head = ((CircleImageView) viewHolder.findViewById(R.id.home_zhong_iv_head));
-        Glide.with(mContext).load(Url.WEB_BASE_IP + mList.get(position).getProPhoto()).asBitmap().placeholder(R.drawable.circle).error(R.drawable.circle).into(head);
+        Glide.with(mContext).load(Url.WEB_BASE_IP + mList.get(position).getProPhoto()).asBitmap().placeholder(R.mipmap.head).error(R.mipmap.head).into(head);
         //姓名
         TextView tv_name = ((TextView) viewHolder.findViewById(R.id.home_zhong_tv_name));
         tv_name.setText(mList.get(position).getProName());
@@ -89,9 +89,9 @@ public class MyHomeZhongChouAdapter extends MyBaseAdapter<HomeZhongChouResultBea
         BigDecimal score = null;
         try {
             score = Tools.div(mList.get(position).getRealAmount(), mList.get(position).getAmountDown(), 2);
-            LogUtil.e("YJL", mList.get(position).getRealAmount() + "====" + mList.get(position).getAmountDown() + "score==" + score);
+//            LogUtil.e("YJL", mList.get(position).getRealAmount() + "====" + mList.get(position).getAmountDown() + "score==" + score);
             score = score.multiply(new BigDecimal(100));
-            LogUtil.e("YJL", "score==" + score);
+//            LogUtil.e("YJL", "score==" + score);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }

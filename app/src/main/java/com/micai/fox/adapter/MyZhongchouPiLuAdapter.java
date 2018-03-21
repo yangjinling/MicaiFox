@@ -295,20 +295,28 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
     }
 
     private void addImageSpan(Context context, TextView tv) {
-        SpannableString spanString = new SpannableString("  ");
-        Drawable d = context.getResources().getDrawable(R.mipmap.right);
-        d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
-        ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BASELINE);
-        spanString.setSpan(span, 1, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tv.append(spanString);
+//        SpannableString spanString = new SpannableString("  ");
+//        Drawable d = context.getResources().getDrawable(R.mipmap.right);
+//        d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+//        ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BASELINE);
+//        spanString.setSpan(span, 1, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        tv.append(spanString);
+        Drawable drawable = context.getResources().getDrawable(R.mipmap.right);
+        drawable.setBounds(-2, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+        tv.setCompoundDrawables(null, null, drawable, null);//画在右边
     }
 
     private void addWrongImageSpan(Context context, TextView tv) {
-        SpannableString spanString = new SpannableString("  ");
+     /*   SpannableString spanString = new SpannableString("  ");
         Drawable d = context.getResources().getDrawable(R.mipmap.wrong);
         d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
         ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BASELINE);
         spanString.setSpan(span, 1, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tv.append(spanString);
+        tv.append(spanString);*/
+        Drawable drawable = context.getResources().getDrawable(R.mipmap.wrong);
+        drawable.setBounds(-2, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+        tv.setCompoundDrawables(null, null, drawable, null);//画在右边
+        tv.setCompoundDrawablePadding(2);//设置图片和text之间的间距
+
     }
 }

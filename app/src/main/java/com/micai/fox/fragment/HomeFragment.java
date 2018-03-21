@@ -29,6 +29,7 @@ import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.activity.ExpertsDetailActivity;
 import com.micai.fox.activity.ReportDetailActivity;
+import com.micai.fox.activity.WebActivity;
 import com.micai.fox.activity.ZhongChouDetailActivity;
 import com.micai.fox.adapter.MyExpertsListAdapter;
 import com.micai.fox.adapter.MyHomeZhongChouAdapter;
@@ -43,6 +44,7 @@ import com.micai.fox.resultbean.HomeResultBean;
 import com.micai.fox.resultbean.HomeZhongChouResultBean;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
+import com.micai.fox.view.CustomCompatScrollView;
 import com.micai.fox.view.MyDividerItemDecoration;
 import com.micai.fox.view.MyScrollView;
 import com.micai.fox.view.PageListScrollView;
@@ -67,7 +69,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  * Created by lq on 2017/12/19.
  */
 
-public class HomeFragment extends Fragment implements PageListScrollView.OnScrollToBottomListener, SwipeRefreshLayout.OnRefreshListener, View.OnTouchListener {
+public class HomeFragment extends Fragment implements PageListScrollView.OnScrollToBottomListener, SwipeRefreshLayout.OnRefreshListener, View.OnTouchListener, CustomCompatScrollView.ScrollListener {
     @Bind(R.id.recycleview_h)
     RecyclerView recycleviewH;
     @Bind(R.id.listview_home)
@@ -108,15 +110,17 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         listviewHome.setFocusable(false);
         getHomeData(1);
         footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv_home_zhongchou, null);
+        tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
         listviewHome.addFooterView(footer_view);
         adapter = new MyHomeZhongChouAdapter(data, getContext(), R.layout.item_v_listview);
         listviewHome.setAdapter(adapter);
         getZhongChouList(0, 1);
-//        homeScroll.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//        homeScroll.getViewTreeObs
+// erver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 //            @Override
 //            public void onGlobalLayout() {
 //                Log.e("YJL", "悬停");
-//                homeScroll.setXuantingquyu(homeXuanting, homeExpertsParent, homeExpertsMoveview);
+//                ho.smeScrolletXuantingquyu(homeXuanting, homeExpertsParent, homeExpertsMoveview);
 //                homeScroll.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 //
 //            }
@@ -179,7 +183,7 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
             }
         });
         if (null != homeResultBean.getExecDatas().getProfessor()) {
-            LogUtil.e("yjl","recycle"+type);
+            LogUtil.e("yjl", "recycle" + type);
             if (type == 0) {
                 datas.clear();
                 datas.addAll(homeResultBean.getExecDatas().getProfessor());
@@ -190,7 +194,7 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
                 int itemSpacing = 13;
                 recycleviewH.addItemDecoration(new MyDividerItemDecoration(itemSpacing));
             }
-            LogUtil.e("yjl",type+"recycle"+datas.size());
+            LogUtil.e("yjl", type + "recycle" + datas.size());
 
         }
     }
@@ -231,9 +235,7 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         banner.setImages(images, new Banner.OnLoadImageListener() {
             @Override
             public void OnLoadImage(ImageView view, Object url) {
-                System.out.println("加载中");
                 Glide.with(getActivity()).load(url).into(view);
-                System.out.println("加载完");
             }
         });
         //设置点击事件，下标是从1开始
@@ -263,6 +265,12 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
                         //专家
                         intent = new Intent(getActivity(), ExpertsDetailActivity.class);
                         intent.putExtra("proId", bannerBeanList.get(position - 1).getForwardPath());
+                        startActivity(intent);
+                        break;
+                    case "9":
+                        //网页
+                        intent = new Intent(getActivity(), WebActivity.class);
+                        intent.putExtra("URL", bannerBeanList.get(position - 1).getForwardPath());
                         startActivity(intent);
                         break;
                 }
@@ -318,57 +326,27 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         });
     }
 
-    private int pagesize = 20;
-    private int currentpage = 1;
-    private boolean judgeCanLoadMore = true;
-    private int totalCount = 20;//设置本次加载的数据的总数
+    private int currentpage = 0;
     TextView tv_foot;
 
     @Override
     public void onScrollBottomListener(boolean isBottom) {
-        if (!isBottom) {
-            tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
-            tv_foot.setVisibility(View.GONE);
-        } else {
-            //模拟进行数据的分页加载
-            if (judgeCanLoadMore && isBottom) {
-//            commentLv.startLoading();
-//            if (currentpage == 0) {
-//                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
-//            } else {
-//                Toast.makeText(getContext(), "正在加载中", Toast.LENGTH_SHORT).show();
-//                getZhongChouList(currentpage);
-//            }
-                if (++currentpage > homeZhongChouResultBean.getExecDatas().getTotalPage()) {
-                    tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
-                    tv_foot.setVisibility(View.VISIBLE);
-                    tv_foot.setText("没有更多了");
-//                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
-                } else {
-                    tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
-                    tv_foot.setVisibility(View.VISIBLE);
-                    tv_foot.setText("加载中...");
-//                Toast.makeText(getContext(), "正在加载中", Toast.LENGTH_SHORT).show();
-                    getZhongChouList(currentpage, 1);
-                }
-            }
-            if (!judgeCanLoadMore && isBottom) {
-                tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
+        if (isBottom) {
+            LogUtil.e("YJL", "总页数==" + homeZhongChouResultBean.getExecDatas().getTotalPage() + "--" + data.size());
+            if (data.size() < homeZhongChouResultBean.getExecDatas().getTotalRow()) {
+                tv_foot.setVisibility(View.VISIBLE);
+                tv_foot.setText("加载中...");
+                currentpage++;
+                getZhongChouList(currentpage, 1);
+            } else {
                 tv_foot.setVisibility(View.VISIBLE);
                 tv_foot.setText("没有更多了");
-//            Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
             }
+        } else {
+            tv_foot.setVisibility(View.GONE);
         }
     }
 
-    private void initLoadMoreTagOp() {
-        if (data.size() == 0 || data.size() <= 20 + ((currentpage - 1) * 20)) {//当前获取的数目大于等于总共的数目时表示数据加载完毕，禁止滑动
-            judgeCanLoadMore = false;
-//            commentLv.loadComplete();
-//            Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
-            return;
-        }
-    }
 
     private void getZhongChouList(int pageNum, final int type) {
         paramBean = new ParamBean();
@@ -391,22 +369,16 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
                     homeZhongChouResultBean = new Gson().fromJson(response, HomeZhongChouResultBean.class);
                     if (homeZhongChouResultBean.isExecResult()) {
                         if (type == 0) {
+                            currentpage = 0;
                             data.clear();
                             data.addAll(homeZhongChouResultBean.getExecDatas().getRecordList());
                             adapter.notifyDataSetChanged();
                         } else {
-//                    crowdfundingBeanList = homeResultBean.getExecDatas().getCrowdfunding();
                             data.addAll(homeZhongChouResultBean.getExecDatas().getRecordList());
-//                    if (crowdfundingBeanList.getTotalPage()>0) {
-//                        currentpage++;
-//                    }
                             adapter.notifyDataSetChanged();
-//                        mHandler.post(scrollViewRunable);
-                            tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
                             if (tv_foot.getVisibility() == View.VISIBLE)
                                 tv_foot.setVisibility(View.GONE);
-                            initLoadMoreTagOp();
-//                        currentpage++;
+//
                         }
                     }
 
@@ -421,24 +393,48 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         getZhongChouList(0, 0);
     }
 
-        /**
-         * 解决swip嵌套scroll中viewpager滑动冲突
-         */
-        int downX;
-        int downY;
-        int dragthreshold = 30;
+    /**
+     * 解决swip嵌套scroll中viewpager滑动冲突
+     */
+    int downX;
+    int downY;
+    int dragthreshold = 30;
 
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            switch (motionEvent.getAction()) {
-                case MotionEvent.ACTION_MOVE:
-                    swipeRefreshLayout.setEnabled(false);
-                    break;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    swipeRefreshLayout.setEnabled(true);
-                    break;
-            }
-            return false;
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        switch (motionEvent.getAction()) {
+            case MotionEvent.ACTION_MOVE:
+                swipeRefreshLayout.setEnabled(false);
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                swipeRefreshLayout.setEnabled(true);
+                break;
+        }
+        return false;
+    }
+
+    @Override
+    public void onScrollChanged(ScrollView scrollView, int x, int y, int oldx, int oldy) {
+        LogUtil.e("CustomScroll==", "x=" + x + "y==" + y);
+    }
+
+    @Override
+    public void onScrollBottom(ScrollView scrollView) {
+        LogUtil.e("CustomScroll==", "bottom");
+    }
+
+    @Override
+    public void onScrollTop(ScrollView scrollView) {
+        LogUtil.e("CustomScroll==", "top");
+        if (data.size() < homeZhongChouResultBean.getExecDatas().getTotalRow()) {
+        } else {
+
+        }
+    }
+
+    @Override
+    public void onScrollStop(ScrollView scrollView) {
+        LogUtil.e("CustomScroll==", "stop");
     }
 }

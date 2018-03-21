@@ -26,8 +26,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
+            android:maxWidth="200dp"
+            android:ellipsize="end"
             android:gravity="center"
-            android:text="标题"
+            android:singleLine="true"
+            android:text=""
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
