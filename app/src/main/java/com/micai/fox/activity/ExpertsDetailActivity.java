@@ -30,6 +30,7 @@ import com.micai.fox.fragment.ExpertsReportFragment;
 import com.micai.fox.fragment.ExpertsZhongChouFragment;
 import com.micai.fox.parambean.BotomBean;
 import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.parambean.RreshBean;
 import com.micai.fox.resultbean.ExpertsDetailResultBean;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.TextUtil;
@@ -269,20 +270,11 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
         list_title = new ArrayList<>();
         list_title.add("众筹");
         list_title.add("报告");
-//        list_title.add("已兑换");
-        //设置TabLayout的模式
-//        expertsTablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         expertsDetailTablayout.setTabMode(TabLayout.MODE_FIXED);
         fAdapter = new ViewPageAdapter(getSupportFragmentManager(), list_fragment, list_title);
         //viewpager加载adapter
         expertsDetailViewpager.setAdapter(fAdapter);
-        //tab_FindFragment_title.setViewPager(vp_FindFragment_pager);
-        //TabLayout加载viewpager
         expertsDetailTablayout.setupWithViewPager(expertsDetailViewpager);
-        //为TabLayout添加tab名称
-        /* for (int i = 0; i < 4; i++) {
-            tabLayout.addTab(tabLayout.newTab().setText(list_title.get(i)));
-        }*/
         initTable();
     }
 
@@ -399,15 +391,12 @@ public class ExpertsDetailActivity extends AppCompatActivity implements PageList
     @Override
     public void onRefresh() {
         getExpertsDetail(proId);
+        EventBus.getDefault().post(new RreshBean(true));
     }
 
     /**
      * 解决swip嵌套scroll中viewpager滑动冲突
      */
-    int downX;
-    int downY;
-    int dragthreshold = 30;
-
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         switch (motionEvent.getAction()) {
