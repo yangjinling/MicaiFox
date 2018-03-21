@@ -152,7 +152,6 @@ public class ExpertsZhongChouFragment extends Fragment {
     }
 
     private int currentpage = 0;
-    private boolean judgeCanLoadMore = true;
     TextView tv_foot;
 
     //给网络请求加缓冲小黄圈
@@ -181,13 +180,4 @@ public class ExpertsZhongChouFragment extends Fragment {
         }
     }
 
-    private void initLoadMoreTagOp() {
-        if (data.size() == 0 || data.size() <= ((currentpage - 1) * 20)) {//当前获取的数目大于等于总共的数目时表示数据加载完毕，禁止滑动
-            judgeCanLoadMore = false;
-//            commentLv.loadComplete();
-//            Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
-            return;
-        }
-//        currentpage++;
-    }
 }
