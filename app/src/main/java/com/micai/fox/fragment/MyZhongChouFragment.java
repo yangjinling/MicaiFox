@@ -74,19 +74,19 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
         switch (kind) {
             case 0:
 //                tv.setText("全部");
-                getMyZhongChouList(2, "0", 1);
+                getMyZhongChouList(2, "1", 1);
                 break;
             case 1:
 //                tv.setText("待支付");
-                getMyZhongChouList(0, "0", 1);
+                getMyZhongChouList(0, "1", 1);
                 break;
             case 2:
 //                tv.setText("已支付");
-                getMyZhongChouList(1, "0", 1);
+                getMyZhongChouList(1, "1", 1);
                 break;
             case 3:
 //                tv.setText("已兑换");
-                getMyZhongChouList(7, "0", 1);
+                getMyZhongChouList(7, "1", 1);
                 break;
         }
 //        data = getData();
@@ -112,7 +112,7 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
 
-    private void getMyZhongChouList(int status, String curPageNum, final int type) {
+    private void getMyZhongChouList(int status, final String curPageNum, final int type) {
         Log.e("YJL", "status==" + status);
         paramBean = new ParamBean();
         paramBean.setLength("20");
@@ -154,9 +154,6 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
                                 data.addAll(myZhongChouResultBean.getExecDatas().getRecordList());
                             }
                             adapter.notifyDataSetChanged();
-                            if (tv_foot.getVisibility() == View.VISIBLE) {
-                                tv_foot.setVisibility(View.GONE);
-                            }
                         }
                     } else {
                         if (type == 0) {
@@ -272,22 +269,23 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
 
     @Override
     public void onRefresh() {
+        curPageNum = 1;
         switch (kind) {
             case 0:
 //                tv.setText("全部");
-                getMyZhongChouList(2, "0", 0);
+                getMyZhongChouList(2, "1", 0);
                 break;
             case 1:
 //                tv.setText("待支付");
-                getMyZhongChouList(0, "0", 0);
+                getMyZhongChouList(0, "1", 0);
                 break;
             case 2:
 //                tv.setText("已支付");
-                getMyZhongChouList(1, "0", 0);
+                getMyZhongChouList(1, "1", 0);
                 break;
             case 3:
 //                tv.setText("已兑换");
-                getMyZhongChouList(7, "0", 0);
+                getMyZhongChouList(7, "1", 0);
                 break;
         }
     }

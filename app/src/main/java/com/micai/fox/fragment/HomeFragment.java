@@ -326,7 +326,7 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         });
     }
 
-    private int currentpage =1;
+    private int currentpage = 1;
     TextView tv_foot;
 
     @Override
@@ -334,7 +334,7 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         if (isBottom) {
             LogUtil.e("YJL", "总页数==" + homeZhongChouResultBean.getExecDatas().getTotalPage() + "--" + data.size());
             if (data.size() < homeZhongChouResultBean.getExecDatas().getTotalRow()) {
-                tv_foot.setVisibility(View.VISIBLE);
+//                tv_foot.setVisibility(View.VISIBLE);
                 tv_foot.setText("加载中...");
                 currentpage++;
                 getZhongChouList(currentpage, 1);
@@ -369,11 +369,16 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
                     homeZhongChouResultBean = new Gson().fromJson(response, HomeZhongChouResultBean.class);
                     if (homeZhongChouResultBean.isExecResult()) {
                         if (type == 0) {
-                            currentpage = 0;
+                            currentpage = 1;
                             data.clear();
                         }
                         data.addAll(homeZhongChouResultBean.getExecDatas().getRecordList());
                         adapter.notifyDataSetChanged();
+                        if (currentpage < homeZhongChouResultBean.getExecDatas().getTotalPage()) {
+                            tv_foot.setVisibility(View.VISIBLE);
+                        } else {
+                            tv_foot.setVisibility(View.GONE);
+                        }
                     }
 
                 }

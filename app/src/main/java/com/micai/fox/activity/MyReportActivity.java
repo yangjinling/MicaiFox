@@ -68,7 +68,7 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
         footer_view = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv, null);
         lvMyreport.addFooterView(footer_view);
         tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
-        getReportList("0",1);
+        getReportList("1",1);
         adapter = new MyReportAdapter(data, this, R.layout.item_lv_myreport);
         lvMyreport.setAdapter(adapter);
         lvMyreport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -129,6 +129,7 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
                     if (myReportResultBean.isExecResult()) {
                         recordList = myReportResultBean.getExecDatas().getRecordList();
                         if (type == 0) {
+                            curPageNum=1;
                             data.clear();
                             data.addAll(recordList);
                             adapter.notifyDataSetChanged();
@@ -228,6 +229,6 @@ public class MyReportActivity extends AppCompatActivity implements AbsListView.O
 
     @Override
     public void onRefresh() {
-        getReportList("0", 0);
+        getReportList("1", 0);
     }
 }

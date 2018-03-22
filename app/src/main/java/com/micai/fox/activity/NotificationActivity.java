@@ -182,6 +182,11 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
                                 data.addAll(notificationResultBean.getExecDatas().getRecordList());
                                 adapter.notifyDataSetChanged();
                             }
+                            if (curPageNum < notificationResultBean.getExecDatas().getTotalPage()) {
+                                tv_foot.setVisibility(View.VISIBLE);
+                            } else {
+                                tv_foot.setVisibility(View.GONE);
+                            }
                         } else {
                             if (type == 0) {
                                 swipeRefreshLayout.setRefreshing(false);

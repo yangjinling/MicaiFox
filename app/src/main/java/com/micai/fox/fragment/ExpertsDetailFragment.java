@@ -131,14 +131,19 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
                     expertsResultBean = new Gson().fromJson(response, ExpertsResultBean.class);
                     if (expertsResultBean.isExecResult()) {
                         if (type == 0) {
+                            curPageNum=1;
                             resultBeanList.clear();
                             resultBeanList.addAll(expertsResultBean.getExecDatas().getRecordList());
                             adapter.notifyDataSetChanged();
                             swipeRefreshLayout.setRefreshing(false);
                         } else {
-//                        resultBeanList.clear();
                             resultBeanList.addAll(expertsResultBean.getExecDatas().getRecordList());
                             adapter.notifyDataSetChanged();
+                        }
+                        if (curPageNum < expertsResultBean.getExecDatas().getTotalPage()) {
+                            tv_foot.setVisibility(View.VISIBLE);
+                        } else {
+                            tv_foot.setVisibility(View.GONE);
                         }
                     } else {
                         if (type == 0) {

@@ -129,14 +129,16 @@ public class ExpertsReportFragment extends Fragment {
                     expertsReportResultBean = new Gson().fromJson(response, ExpertsReportResultBean.class);
                     if (expertsReportResultBean.isExecResult()) {
                         if (type == 0) {
+                            currentpage=1;
                             data.clear();
                         }
                         data.addAll(expertsReportResultBean.getExecDatas().getRecordList());
                         reportAdapter.notifyDataSetChanged();
-                        if (tv_foot.getVisibility() == View.VISIBLE)
+                        if (currentpage < expertsReportResultBean.getExecDatas().getTotalPage()) {
+                            tv_foot.setVisibility(View.VISIBLE);
+                        } else {
                             tv_foot.setVisibility(View.GONE);
-//                        initLoadMoreTagOp();
-//                        currentpage++;
+                        }
                     }
                 }
             }

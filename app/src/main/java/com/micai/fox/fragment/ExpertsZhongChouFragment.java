@@ -87,7 +87,7 @@ public class ExpertsZhongChouFragment extends Fragment {
         lv.addFooterView(footer_view);
         adapter = new MyExpertsZhonChouAdapter(data, getContext(), R.layout.item_lv_experts_zhongchou);
         lv.setAdapter(adapter);
-        getExpertsZhongChouList(proId, "1",1);
+        getExpertsZhongChouList(proId, "1", 1);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -134,11 +134,15 @@ public class ExpertsZhongChouFragment extends Fragment {
                     if (expertsZhongchouResultBean.isExecResult()) {
                         if (type == 0) {
                             data.clear();
+                            currentpage = 1;
                         }
                         data.addAll(expertsZhongchouResultBean.getExecDatas().getRecordList());
                         adapter.notifyDataSetChanged();
-                        if (tv_foot.getVisibility() == View.VISIBLE)
+                        if (currentpage < expertsZhongchouResultBean.getExecDatas().getTotalPage()) {
+                            tv_foot.setVisibility(View.VISIBLE);
+                        } else {
                             tv_foot.setVisibility(View.GONE);
+                        }
                     }
                 }
             }
@@ -164,7 +168,7 @@ public class ExpertsZhongChouFragment extends Fragment {
                 tv_foot.setVisibility(View.VISIBLE);
                 tv_foot.setText("加载中...");
                 currentpage++;
-                getExpertsZhongChouList(proId, "" + currentpage,1);
+                getExpertsZhongChouList(proId, "" + currentpage, 1);
             } else {
                 tv_foot.setVisibility(View.VISIBLE);
                 tv_foot.setText("没有更多了");
@@ -176,7 +180,6 @@ public class ExpertsZhongChouFragment extends Fragment {
     @Subscribe
     public void onEventMainThread(RreshBean bean) {
         if (bean.isRefresh()) {
-            currentpage=1;
             getExpertsZhongChouList(proId, "1", 0);
         }
     }
