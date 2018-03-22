@@ -84,7 +84,7 @@ public class ExpertsReportFragment extends Fragment {
         lv.addFooterView(footer_view);
         reportAdapter = new MyExpertsReportAdapter(data, getContext(), R.layout.item_lv_experts_report);
         lv.setAdapter(reportAdapter);
-        getExpertsReportList(proId, "0",1);
+        getExpertsReportList(proId, "1",1);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -149,7 +149,7 @@ public class ExpertsReportFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private int currentpage = 0;
+    private int currentpage = 1;
     TextView tv_foot;
 
     //给网络请求加缓冲小黄圈
@@ -174,7 +174,7 @@ public class ExpertsReportFragment extends Fragment {
     @Subscribe
     public void onEventMainThread(RreshBean bean) {
         if (bean.isRefresh()) {
-            getExpertsReportList(proId, "0", 0);
+            getExpertsReportList(proId, "1", 0);
         }
     }
 

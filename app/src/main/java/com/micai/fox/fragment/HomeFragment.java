@@ -114,7 +114,7 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         listviewHome.addFooterView(footer_view);
         adapter = new MyHomeZhongChouAdapter(data, getContext(), R.layout.item_v_listview);
         listviewHome.setAdapter(adapter);
-        getZhongChouList(0, 1);
+        getZhongChouList(1, 1);
 //        homeScroll.getViewTreeObs
 // erver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 //            @Override
@@ -326,7 +326,7 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         });
     }
 
-    private int currentpage = 0;
+    private int currentpage =1;
     TextView tv_foot;
 
     @Override
@@ -371,15 +371,9 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
                         if (type == 0) {
                             currentpage = 0;
                             data.clear();
-                            data.addAll(homeZhongChouResultBean.getExecDatas().getRecordList());
-                            adapter.notifyDataSetChanged();
-                        } else {
-                            data.addAll(homeZhongChouResultBean.getExecDatas().getRecordList());
-                            adapter.notifyDataSetChanged();
-                            if (tv_foot.getVisibility() == View.VISIBLE)
-                                tv_foot.setVisibility(View.GONE);
-//
                         }
+                        data.addAll(homeZhongChouResultBean.getExecDatas().getRecordList());
+                        adapter.notifyDataSetChanged();
                     }
 
                 }
@@ -390,7 +384,7 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
     @Override
     public void onRefresh() {
         getHomeData(0);
-        getZhongChouList(0, 0);
+        getZhongChouList(1, 0);
     }
 
     /**

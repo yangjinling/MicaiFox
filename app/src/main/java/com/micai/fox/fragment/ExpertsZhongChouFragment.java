@@ -87,7 +87,7 @@ public class ExpertsZhongChouFragment extends Fragment {
         lv.addFooterView(footer_view);
         adapter = new MyExpertsZhonChouAdapter(data, getContext(), R.layout.item_lv_experts_zhongchou);
         lv.setAdapter(adapter);
-        getExpertsZhongChouList(proId, "0",1);
+        getExpertsZhongChouList(proId, "1",1);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -176,7 +176,8 @@ public class ExpertsZhongChouFragment extends Fragment {
     @Subscribe
     public void onEventMainThread(RreshBean bean) {
         if (bean.isRefresh()) {
-            getExpertsZhongChouList(proId, "0", 0);
+            currentpage=1;
+            getExpertsZhongChouList(proId, "1", 0);
         }
     }
 

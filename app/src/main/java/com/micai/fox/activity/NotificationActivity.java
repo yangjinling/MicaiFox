@@ -87,7 +87,7 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
         tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
         adapter = new MyNotificationAdapter(data, this, R.layout.item_lv_notification);
         lvNotify.setAdapter(adapter);
-        getNotList("0", 1);
+        getNotList("1", 1);
         lvNotify.setOnScrollListener(this);
         lvNotify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -238,7 +238,7 @@ public class NotificationActivity extends AppCompatActivity implements AbsListVi
     @Override
     public void onRefresh() {
         curPageNum = 1;
-        getNotList("0", 0);
+        getNotList("1", 0);
     }
 
     // 下拉刷新

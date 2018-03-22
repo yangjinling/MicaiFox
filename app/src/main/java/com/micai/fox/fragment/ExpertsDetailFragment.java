@@ -53,6 +53,7 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
     private ExpertsResultBean expertsResultBean;
     private MyExpertsListAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView tv_foot;
 
     @Nullable
     @Override
@@ -65,31 +66,33 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
         headView = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.headview_lv, null);
         lv.addHeaderView(headView);
         footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv_home_zhongchou, null);
+        tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
         lv.addFooterView(footer_view);
         adapter = new MyExpertsListAdapter(resultBeanList, getContext(), R.layout.item_lv_experts);
         lv.setAdapter(adapter);
         switch (kind) {
             case 0:
 //                tv.setText("全部");
-                getExpertsList(kind, "0",1);
+                getExpertsList(kind, "1", 1);
                 break;
             case 1:
 //                tv.setText("盈利榜");
-                getExpertsList(kind, "0",1);
+                getExpertsList(kind, "1", 1);
                 break;
             case 2:
 //                tv.setText("命中榜");
-                getExpertsList(kind, "0",1);
+                getExpertsList(kind, "1", 1);
                 break;
         }
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i!=0){
-                Intent intent = new Intent(getActivity(), ExpertsDetailActivity.class);
-                intent.putExtra("proId", expertsResultBean.getExecDatas().getRecordList().get(i - 1).getProId());
-                startActivity(intent);}
+                if (i != 0) {
+                    Intent intent = new Intent(getActivity(), ExpertsDetailActivity.class);
+                    intent.putExtra("proId", expertsResultBean.getExecDatas().getRecordList().get(i - 1).getProId());
+                    startActivity(intent);
+                }
             }
         });
         lv.setOnScrollListener(this);
@@ -116,7 +119,7 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-                if (type==0){
+                if (type == 0) {
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
@@ -137,13 +140,13 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
                             resultBeanList.addAll(expertsResultBean.getExecDatas().getRecordList());
                             adapter.notifyDataSetChanged();
                         }
-                    }else {
-                        if (type==0){
+                    } else {
+                        if (type == 0) {
                             swipeRefreshLayout.setRefreshing(false);
                         }
                     }
-                }else {
-                    if (type==0){
+                } else {
+                    if (type == 0) {
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 }
@@ -212,10 +215,14 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
             if (++curPageNum <= expertsResultBean.getExecDatas().getTotalPage()) {
                 LogUtil.e("YJL", "curPageNum==" + curPageNum);
 //                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
-                getExpertsList(kind, "" + curPageNum,1);
-                Toast.makeText(getContext(), "加载中…", Toast.LENGTH_SHORT).show();
+                tv_foot.setVisibility(View.VISIBLE);
+                tv_foot.setText("加载中...");
+                getExpertsList(kind, "" + curPageNum, 1);
+//                Toast.makeText(getContext(), "加载中…", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getContext(), "没有更多了", Toast.LENGTH_SHORT).show();
+                tv_foot.setVisibility(View.VISIBLE);
+                tv_foot.setText("没有更多了");
+//                Toast.makeText(getContext(), "没有更多了", Toast.LENGTH_SHORT).show();
 //                ToolsC.CenterToast(getContext(), "没有更多数据");
             }
         }
@@ -223,6 +230,6 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
 
     @Override
     public void onRefresh() {
-        getExpertsList(kind, "0", 0);
+        getExpertsList(kind, "1", 0);
     }
 }
