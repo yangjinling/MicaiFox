@@ -215,7 +215,7 @@ public class ExpertsDetailFragment extends Fragment implements AbsListView.OnScr
             isBottom = false;
             LogUtil.e("YJL", "isBottom222===" + isBottom);
         }
-        if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum - 1) * 20)) {
+        if (absListView.getLastVisiblePosition()-1 >= 20 + ((curPageNum - 1) * 20)) {
             LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
             if (++curPageNum <= expertsResultBean.getExecDatas().getTotalPage()) {
                 LogUtil.e("YJL", "curPageNum==" + curPageNum);

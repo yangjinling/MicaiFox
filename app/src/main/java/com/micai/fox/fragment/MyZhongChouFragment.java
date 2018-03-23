@@ -66,9 +66,9 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
         kind = getArguments().getInt("KIND", 0);
         headView = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.headview_lv, null);
         lv.addHeaderView(headView);
-        footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv, null);
-        lv.addFooterView(footer_view);
+        footer_view = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_lv_home_zhongchou, null);
         tv_foot = ((TextView) footer_view.findViewById(R.id.foot_tv));
+        lv.addFooterView(footer_view);
         adapter = new MyZhonChouAdapter(data, getContext(), R.layout.item_lv_mine_zhongchou);
         lv.setAdapter(adapter);
         switch (kind) {
@@ -155,6 +155,11 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
                             }
                             adapter.notifyDataSetChanged();
                         }
+                        if (curPageNums < myZhongChouResultBean.getExecDatas().getTotalPage()) {
+                            tv_foot.setVisibility(View.VISIBLE);
+                        } else {
+                            tv_foot.setVisibility(View.GONE);
+                        }
                     } else {
                         if (type == 0) {
                             swipeRefreshLayout.setRefreshing(false);
@@ -177,7 +182,7 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
     }
 
     private boolean isBottom = false;//是否到第20条数据了
-    private int curPageNum = 1;
+    private int curPageNums = 1;
 
     // 下拉刷新
     public interface OnSwipeIsValid {
@@ -229,29 +234,29 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
             isBottom = false;
             LogUtil.e("YJL", "isBottom222===" + isBottom);
         }
-        if (absListView.getLastVisiblePosition() >= 20 + ((curPageNum - 1) * 20)) {
-            LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNum - 1) * 25)));
-            if (++curPageNum <= myZhongChouResultBean.getExecDatas().getTotalPage()) {
-                LogUtil.e("YJL", "curPageNum==" + curPageNum);
+        if (absListView.getLastVisiblePosition()-1 >= 20 + ((curPageNums - 1) * 20)) {
+            LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNums - 1) * 25)));
+            if (++curPageNums <= myZhongChouResultBean.getExecDatas().getTotalPage()) {
+                LogUtil.e("YJL", "curPageNum==" + curPageNums);
 //                LogUtil.e("YJL", "total===" + walletDetailResultBean.getTotalPage());
                 tv_foot.setVisibility(View.VISIBLE);
-                tv_foot.setText("加载中…");
+                tv_foot.setText("加载中...");
                 switch (kind) {
                     case 0:
 //                tv.setText("全部");
-                        getMyZhongChouList(2, "" + curPageNum, 1);
+                        getMyZhongChouList(2, "" + curPageNums, 1);
                         break;
                     case 1:
 //                tv.setText("待支付");
-                        getMyZhongChouList(0, "" + curPageNum, 1);
+                        getMyZhongChouList(0, "" + curPageNums, 1);
                         break;
                     case 2:
 //                tv.setText("已支付");
-                        getMyZhongChouList(1, "" + curPageNum, 1);
+                        getMyZhongChouList(1, "" + curPageNums, 1);
                         break;
                     case 3:
 //                tv.setText("已兑换");
-                        getMyZhongChouList(7, "" + curPageNum, 1);
+                        getMyZhongChouList(7, "" + curPageNums, 1);
                         break;
                 }
 //                Toast.makeText(getContext(), "加载中…", Toast.LENGTH_SHORT).show();
@@ -260,16 +265,16 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
                 tv_foot.setVisibility(View.VISIBLE);
                 tv_foot.setText("没有更多了");
             }
-        } else {
+        } /*else {
             if (tv_foot.getVisibility() == View.VISIBLE) {
                 tv_foot.setVisibility(View.GONE);
             }
-        }
+        }*/
     }
 
     @Override
     public void onRefresh() {
-        curPageNum = 1;
+        curPageNums = 1;
         switch (kind) {
             case 0:
 //                tv.setText("全部");
