@@ -181,7 +181,7 @@ public class ZhouChouDetailPilutFragment extends Fragment {
                                         java.text.DecimalFormat df = new java.text.DecimalFormat("#.##");
                                         zhongchouDetailTvTouzhuyingliRate.setText("" + df.format(new BigDecimal(String.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate())).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP)) + "%"/*percent.format(BigDecimal.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate()))*/);
                                         //兑付盈利率
-                                        zhongchouDetailTvDuifuyingliRate.setText("" + df.format(new BigDecimal(String.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate())).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP)) + "%"/* percent.format(BigDecimal.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitRate()))*/);
+                                        zhongchouDetailTvDuifuyingliRate.setText("" + df.format(new BigDecimal(String.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitRate())).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP)) + "%"/* percent.format(BigDecimal.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitRate()))*/);
                                     } else {
                                         //兑付盈利金额
                                         zhongchouDetailTvDuifuyingli.setText("¥" + new BigDecimal(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitAmount()).setScale(2));
@@ -189,7 +189,7 @@ public class ZhouChouDetailPilutFragment extends Fragment {
                                         //投注盈利率
                                         zhongchouDetailTvTouzhuyingliRate.setText("" + df.format(new BigDecimal(String.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate())).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP)) + "%"/*percent.format(BigDecimal.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate()))*/);
                                         //兑付盈利率
-                                        zhongchouDetailTvDuifuyingliRate.setText("" + df.format(new BigDecimal(String.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getDepotProfitRate())).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP)) + "%"/* percent.format(BigDecimal.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitRate()))*/);
+                                        zhongchouDetailTvDuifuyingliRate.setText("" + df.format(new BigDecimal(String.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitRate())).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP)) + "%"/* percent.format(BigDecimal.valueOf(myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitRate()))*/);
                                     }
                                 }
                                 if (new BigDecimal("" + myZhongchouPiluResultBean.getExecDatas().getProfitInfo().getCashProfitAmount()).compareTo(new BigDecimal(0)) == 1) {
