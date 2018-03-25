@@ -313,7 +313,6 @@
             android:id="@+id/lv_pilu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="7dp"
             android:background="@android:color/transparent"
             android:divider="@android:color/transparent"
             android:scrollbars="none"></com.micai.fox.view.MyListView>
