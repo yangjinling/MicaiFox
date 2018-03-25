@@ -23,6 +23,8 @@ import com.micai.fox.util.Tools;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.math.BigDecimal;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -76,6 +78,8 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
     TextView orderTvTimeXiadan;
     @Bind(R.id.order_tv_time_pay)
     TextView orderTvTimePay;
+    @Bind(R.id.order_tv_money_pay_title)
+    TextView orderTvMoneyPayTitle;
     private View view;
     private String orderId;
     private int orderStatus;
@@ -99,10 +103,13 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
             case 1://众筹中
                 zhongchouDetailTvStatus.setText("众筹中");
                 break;
-            case 2://已满标
-                zhongchouDetailTvStatus.setText("已满标");
+            case 2:
+            case 3:
+            case 4://已结束
+                zhongchouDetailTvStatus.setText("已结束");
                 break;
             case 5://已披露
+            case 6:
                 zhongchouDetailTvStatus.setText("已披露");
                 break;
             case 7:
@@ -122,6 +129,7 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
             case 0:
                 //待支付
                 btnZhongchouDetailOrderPay.setVisibility(View.VISIBLE);
+                orderTvMoneyPayTitle.setText("需支付金额");
                 zhongchouDetailTv1.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getEndDate()) + "或已筹金额达￥" + Tools.fomatMoney(String.valueOf(myZhongChouOrderResultBean.getExecDatas().getAmountDown())) + "时结束众筹");
                 zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起开始兑付");
 
@@ -130,6 +138,7 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 //已支付
                 btnZhongchouDetailOrderPay.setVisibility(View.GONE);
                 detailZhongchouTvOrderstate.setText("已支付");
+                orderTvMoneyPayTitle.setText("支付金额");
                 orderdetailLlXiadan.setVisibility(View.VISIBLE);
                 orderdetailLlPay.setVisibility(View.VISIBLE);
                 orderdetailLlBank.setVisibility(View.VISIBLE);
@@ -140,6 +149,7 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
             case 3:
                 btnZhongchouDetailOrderPay.setVisibility(View.GONE);
                 detailZhongchouTvOrderstate.setText("已退款");
+                orderTvMoneyPayTitle.setText("支付金额");
                 orderdetailLlXiadan.setVisibility(View.VISIBLE);
                 orderdetailLlPay.setVisibility(View.VISIBLE);
                 orderdetailLlBank.setVisibility(View.VISIBLE);
@@ -148,6 +158,7 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 break;
             case 4:
                 btnZhongchouDetailOrderPay.setVisibility(View.GONE);
+                orderTvMoneyPayTitle.setText("需支付金额");
                 detailZhongchouTvOrderstate.setText("已过期");
                 zhongchouDetailTv1.setText("已于" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getEndDate()) + "结束众筹");
                 zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起已兑付");
@@ -157,6 +168,7 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 //已兑换
                 btnZhongchouDetailOrderPay.setVisibility(View.GONE);
                 detailZhongchouTvOrderstate.setText("已兑付");
+                orderTvMoneyPayTitle.setText("支付金额");
                 orderdetailLlXiadan.setVisibility(View.VISIBLE);
                 orderdetailMoneyBenifate.setVisibility(View.VISIBLE);
                 orderdetailMoneyDuifu.setVisibility(View.VISIBLE);
@@ -165,7 +177,14 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 orderdetailLlBank.setVisibility(View.VISIBLE);
                 zhongchouDetailTv1.setText("已于" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getEndDate()) + "结束众筹");
                 zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起已兑付");
-
+                BigDecimal cha = new BigDecimal("0" + myZhongChouOrderResultBean.getExecDatas().getCashAmount()).subtract(new BigDecimal("0" + myZhongChouOrderResultBean.getExecDatas().getPurchaseAmount())).setScale(2);
+                if (cha.compareTo(new BigDecimal(0)) == 1) {
+                    orderTvMoneyBenifate.setText("+ ¥ " + cha);
+                } else if ((cha.compareTo(new BigDecimal(0)) == -1)){
+                    orderTvMoneyBenifate.setText("- ¥ " +cha.toString().substring(1));
+                }else {
+                    orderTvMoneyBenifate.setText("¥ " +cha);
+                }
                 break;
         }
     }
@@ -208,10 +227,8 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                         initStatus();
                         String date = DateUtil.getDateToString(myZhongChouOrderResultBean.getExecDatas().getCreateDate());
                         orderTvTimeXiadan.setText("" + date);
-
                         orderTvMoneyPay.setText("￥" + myZhongChouOrderResultBean.getExecDatas().getPurchaseAmount());
                         orderTvMoneyDuifu.setText("￥" + myZhongChouOrderResultBean.getExecDatas().getCashAmount());
-
                         if (null != myZhongChouOrderResultBean.getExecDatas().getPayDate() && !TextUtils.isEmpty(myZhongChouOrderResultBean.getExecDatas().getPayDate())) {
                             String datePay = DateUtil.getDateToString(Long.parseLong(myZhongChouOrderResultBean.getExecDatas().getPayDate()));
                             orderTvTimePay.setText("" + datePay);

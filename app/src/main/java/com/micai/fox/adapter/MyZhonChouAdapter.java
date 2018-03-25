@@ -53,15 +53,19 @@ public class MyZhonChouAdapter extends MyBaseAdapter<MyZhongChouResultBean.ExecD
                 });
                 break;
             case 1:
+                pay.setVisibility(View.GONE);
                 orderStatus.setText("已支付");
                 break;
             case 3:
+                pay.setVisibility(View.GONE);
                 orderStatus.setText("已退款");
                 break;
             case 4:
+                pay.setVisibility(View.GONE);
                 orderStatus.setText("已过期");
                 break;
             case 7:
+                pay.setVisibility(View.GONE);
                 orderStatus.setText("已兑付");
                 break;
         }
@@ -85,8 +89,8 @@ public class MyZhonChouAdapter extends MyBaseAdapter<MyZhongChouResultBean.ExecD
                 break;
         }
         ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_talk)).setText(mLists.get(position).getTitle());
-      String date=  DateUtil.getDateToString(mLists.get(position).getCreateDate());
-        ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_date)).setText(""+date);
-        ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_money)).setText("￥"+mLists.get(position).getPurchaseAmount());
+        String date = DateUtil.getDateToString(mLists.get(position).getCreateDate());
+        ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_date)).setText("" + date);
+        ((TextView) viewHolder.findViewById(R.id.item_zhongchou_tv_money)).setText("￥" + mLists.get(position).getPurchaseAmount());
     }
 }

@@ -68,7 +68,7 @@ public class MyZhongChouOrderResultBean {
 
         private String orderId;
         private int orderStatus;
-        private double purchaseAmount;
+        private String purchaseAmount;
         private long createDate;
         private String payDate;
         private String payType;
@@ -95,11 +95,11 @@ public class MyZhongChouOrderResultBean {
             this.orderStatus = orderStatus;
         }
 
-        public double getPurchaseAmount() {
+        public String getPurchaseAmount() {
             return purchaseAmount;
         }
 
-        public void setPurchaseAmount(double purchaseAmount) {
+        public void setPurchaseAmount(String purchaseAmount) {
             this.purchaseAmount = purchaseAmount;
         }
 

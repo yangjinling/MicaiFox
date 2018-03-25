@@ -140,7 +140,7 @@ public class MyZhongChouResultBean {
 
             private String orderId;
             private String crowdfundingId;
-            private double purchaseAmount;
+            private String purchaseAmount;
             private long createDate;
             private int orderStatus;
             private String title;
@@ -162,11 +162,11 @@ public class MyZhongChouResultBean {
                 this.crowdfundingId = crowdfundingId;
             }
 
-            public double getPurchaseAmount() {
+            public String getPurchaseAmount() {
                 return purchaseAmount;
             }
 
-            public void setPurchaseAmount(double purchaseAmount) {
+            public void setPurchaseAmount(String purchaseAmount) {
                 this.purchaseAmount = purchaseAmount;
             }
 

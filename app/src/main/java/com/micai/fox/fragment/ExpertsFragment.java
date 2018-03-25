@@ -134,7 +134,7 @@ public class ExpertsFragment extends Fragment {
         list_title = new ArrayList<>();
         list_title.add("全部");
         list_title.add("周盈利榜");
-        list_title.add("周命中榜");
+        list_title.add("总盈利榜");
 //        list_title.add("已兑换");
         //设置TabLayout的模式
 //        expertsTablayout.setTabMode(TabLayout.MODE_SCROLLABLE);

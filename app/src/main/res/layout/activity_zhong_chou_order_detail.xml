@@ -153,9 +153,10 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/order_tv_money_pay_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="需支付的金额 ："
+                            android:text=" "
                             android:textColor="#23253C"
                             android:textSize="15sp" />
 
@@ -193,7 +194,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:text="+￥50000.00"
+                            android:text=""
                             android:textColor="@color/red"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -211,7 +212,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="需兑付金额 ："
+                            android:text="兑付金额 ："
                             android:textColor="#23253C"
                             android:textSize="15sp" />
 
@@ -326,7 +327,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="兑换方式 ："
+                            android:text="兑付方式 ："
                             android:textColor="@color/text_gray"
                             android:textSize="14sp" />
 
