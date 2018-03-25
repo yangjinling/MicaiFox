@@ -22,6 +22,7 @@ import com.micai.fox.app.Url;
 import com.micai.fox.base.BaseActivity;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.BaseResultBean;
+import com.micai.fox.resultbean.PhoneCodeResult;
 import com.micai.fox.util.ExitAppUtils;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
@@ -267,7 +268,7 @@ public class RegistActivity extends BaseActivity {
                 .content(new Gson().toJson(paramBean))
                 .build().execute(new StringCallback() {
 
-            private BaseResultBean baseResultBean;
+            private PhoneCodeResult baseResultBean;
 
             @Override
             public void onError(Call call, Exception e, int id) {
@@ -278,7 +279,7 @@ public class RegistActivity extends BaseActivity {
             public void onResponse(String response, int id) throws Exception {
                 Log.e("yjl","regist--code"+response);
                 if (Tools.isGoodJson(response)) {
-                    baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                    baseResultBean = new Gson().fromJson(response, PhoneCodeResult.class);
                     if (baseResultBean.isExecResult()) {
                         mHandler.post(new Runnable() {
                             @Override

@@ -223,9 +223,14 @@
             android:process=":pushservice" />
         <service android:name=".service.IntentService" />
 
-        <activity android:name=".activity.WebActivity"
+        <activity
+            android:name=".activity.WebActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ActivityTheme"></activity>
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name=".activity.BuyAgrementActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
     </application>
 
 </manifest>

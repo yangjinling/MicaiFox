@@ -8,6 +8,7 @@
     android:background="@android:color/transparent">
 
     <TextView
+        android:id="@+id/set_web_tv"
         android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:textColor="@color/white"

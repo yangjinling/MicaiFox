@@ -1,20 +1,17 @@
 package com.micai.fox.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -71,6 +68,11 @@ public class BuyZhongChouActivity extends AppCompatActivity {
     RelativeLayout rls;
     @Bind(R.id.et_tv_money)
     TextView tv_money;
+    @Bind(R.id.tv_buy_agreement)
+    TextView tvBuyAgreement;
+    @Bind(R.id.ll_buy)
+    LinearLayout llBuy;
+
     private ZhongChouDetailResultBean detailResultBean;
     private BaseResultBean baseResultBean;
 
@@ -125,9 +127,13 @@ public class BuyZhongChouActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick({R.id.et_tv_money, R.id.buy_pay, R.id.tv_back, R.id.buy_iv_minus, R.id.buy_iv_plus})
+    @OnClick({R.id.tv_buy_agreement, R.id.et_tv_money, R.id.buy_pay, R.id.tv_back, R.id.buy_iv_minus, R.id.buy_iv_plus})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.tv_buy_agreement:
+                Intent intent=new Intent(BuyZhongChouActivity.this,BuyAgrementActivity.class);
+                startActivity(intent);
+                break;
             case R.id.et_tv_money:
                 tv_money.setVisibility(View.GONE);
                 buyEtMoney.setVisibility(View.VISIBLE);
@@ -299,5 +305,6 @@ public class BuyZhongChouActivity extends AppCompatActivity {
         BigDecimal b2 = new BigDecimal(v2);
         return b1.subtract(b2).intValue();
     }
+
 
 }

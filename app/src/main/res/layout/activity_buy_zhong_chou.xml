@@ -203,6 +203,7 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/tv_buy_agreement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="《众筹购买协议》"

@@ -222,7 +222,7 @@ public class HomeFragment extends Fragment implements PageListScrollView.OnScrol
         banner.isAutoPlay(true);
 
         //设置轮播图片间隔时间（不设置默认为2000）
-//        banner.setDelayTime(5000);
+        banner.setDelayTime(3000);
         //设置图片资源:可选图片网址/资源文件，默认用Glide加载,也可自定义图片的加载框架
         //所有设置参数方法都放在此方法之前执行
         //banner.setImages(images);

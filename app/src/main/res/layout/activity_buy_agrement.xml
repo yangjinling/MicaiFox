@@ -6,21 +6,17 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical"
-    tools:context="com.micai.fox.activity.AgreementActivity">
-
+    tools:context="com.micai.fox.activity.BuyAgrementActivity">
     <include layout="@layout/layout_title"></include>
-
     <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/buy_agree_web"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/agree_web"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:textColor="@color/white" />
-    </ScrollView>
-
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="@color/white" />
+</ScrollView>
 </LinearLayout>

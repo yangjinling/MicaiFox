@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.Html;
 import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -29,7 +30,9 @@ import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.resultbean.AccountInfoResult;
 import com.micai.fox.resultbean.BaseResultBean;
+import com.micai.fox.resultbean.PhoneCodeResult;
 import com.micai.fox.util.LogUtil;
+import com.micai.fox.util.PrefUtils;
 import com.micai.fox.util.Tools;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -58,6 +61,8 @@ public class SettingDetailActivity extends AppCompatActivity {
     LinearLayout setLlPass;
     @Bind(R.id.set_web)
     LinearLayout setWeb;
+    @Bind(R.id.set_web_tv)
+    TextView tv_web;
     @Bind(R.id.set_ll_idea)
     RelativeLayout setLlIdea;
     @Bind(R.id.set_ll_phone)
@@ -99,7 +104,7 @@ public class SettingDetailActivity extends AppCompatActivity {
     @Bind(R.id.set_phone_tv_content)
     TextView setPhoneTvContent;
     private int type;
-    private int second = 60;
+    private int second = 120;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -117,7 +122,7 @@ public class SettingDetailActivity extends AppCompatActivity {
                 case 2:
                     phoneEtNum.setHintTextColor(getResources().getColor(R.color.gray));
                     phoneEtNum.setHint("请输入手机号");
-                    phoneBtnConfirm.setClickable(true);
+                    phoneBtnCode.setClickable(true);
                     break;
                 case 3://phone---验证码没有输入
                     phoneEtCode.setHintTextColor(getResources().getColor(R.color.gray));
@@ -145,7 +150,7 @@ public class SettingDetailActivity extends AppCompatActivity {
                         phoneBtnCode.setBackground(getResources().getDrawable(R.drawable.vertifystyle));
                         phoneBtnCode.setClickable(true);
                         phoneBtnCode.setText("重新获取验证码");
-                        second = 60;
+                        second = 120;
                     }
                     break;
                 case 7:
@@ -196,6 +201,7 @@ public class SettingDetailActivity extends AppCompatActivity {
     private Dialog phoneDialog;
     private ParamBean paramBeanResult;
     private ParamBean.ParamData paramDataResult;
+    private String content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,6 +209,15 @@ public class SettingDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting_detail);
         ButterKnife.bind(this);
         type = getIntent().getIntExtra("VALUE", 0);
+        content = "<p style=\"margin-top: 0px; margin-bottom: 0px; text-align: justify; text-indent: 21px; font-stretch: normal; font-size: 10.5px; line-height: normal; font-family: &quot;PingFang SC Semibold&quot;; -webkit-text-stroke-width: initial; -webkit-text-stroke-color: rgb(0, 0, 0);\">\n" +
+                "    <span style=\"font-stretch: normal; line-height: normal; font-family: &quot;PingFang SC&quot;; -webkit-font-kerning: none;\"><strong>公司介绍：</strong></span>\n" +
+                "</p>" +
+                "<p style=\"margin-top: 0px; margin-bottom: 0px; text-align: justify; text-indent: 21px; font-stretch: normal; font-size: 10.5px; line-height: normal; font-family: &quot;PingFang SC&quot;; -webkit-text-stroke-width: initial; -webkit-text-stroke-color: rgb(0, 0, 0);\">\n" +
+                "    <span style=\"font-kerning: none\">杭州迷彩狐网络科技有限公司是一家致力于通过大数据人工智能技术，提供投资解决方案的科技金融公司。公司成立于</span><span style=\"font-stretch: normal; line-height: normal; font-family: &quot;Trebuchet MS&quot;; -webkit-font-kerning: none;\">2017</span><span style=\"font-kerning: none\">年</span><span style=\"font-stretch: normal; line-height: normal; font-family: &quot;Trebuchet MS&quot;; -webkit-font-kerning: none;\">9</span><span style=\"font-kerning: none\">月</span><span style=\"font-stretch: normal; line-height: normal; font-family: &quot;Trebuchet MS&quot;; -webkit-font-kerning: none;\">28</span><span style=\"font-kerning: none\">日，注册资金</span><span style=\"font-stretch: normal; line-height: normal; font-family: &quot;Trebuchet MS&quot;; -webkit-font-kerning: none;\">500</span><span style=\"font-kerning: none\">万，公司以大数据分析模型为依托，精心研发出完整的投资策略模型。为用户输出优异的投资解决方案。同时，通过公司的商品及活动众筹平台，为全国</span><span style=\"font-stretch: normal; line-height: normal; font-family: &quot;Trebuchet MS&quot;; -webkit-font-kerning: none;\">3</span><span style=\"font-kerning: none\">亿用户提供科技金融服务。</span>\n" +
+                "</p>" +
+                "<p>" +
+                "    <br/>" +
+                "</p>";
         initView(type);
 
     }
@@ -240,6 +255,7 @@ public class SettingDetailActivity extends AppCompatActivity {
             case 5:
                 tvTitle.setText("关于我们");
                 setWeb.setVisibility(View.VISIBLE);
+                tv_web.setText(Html.fromHtml(content));
                 break;
         }
     }
@@ -664,7 +680,7 @@ public class SettingDetailActivity extends AppCompatActivity {
                 .content(new Gson().toJson(paramBean))
                 .build().execute(new StringCallback() {
 
-            private BaseResultBean baseResultBean;
+            private PhoneCodeResult baseResultBean;
 
             @Override
             public void onError(Call call, Exception e, int id) {
@@ -675,7 +691,7 @@ public class SettingDetailActivity extends AppCompatActivity {
             public void onResponse(String response, int id) throws Exception {
                 LogUtil.e("yjl", "set---phoneCode>>" + response);
                 if (Tools.isGoodJson(response)) {
-                    baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
+                    baseResultBean = new Gson().fromJson(response, PhoneCodeResult.class);
                     if (baseResultBean.isExecResult()) {
                         mHandler.post(new Runnable() {
                             @Override
@@ -690,17 +706,19 @@ public class SettingDetailActivity extends AppCompatActivity {
                         phoneEtNum.setText("");
                         phoneEtNum.setHintTextColor(getResources().getColor(R.color.red));
                         phoneEtNum.setHint("" + baseResultBean.getExecMsg());
-                        phoneBtnConfirm.setClickable(false);
+                        phoneBtnCode.setClickable(false);
                         mHandler.sendEmptyMessageDelayed(2, 3000);
                     }
+                } else {
+                    Config.getInstance().setJin(true);
                 }
-
             }
+
         });
     }
 
     /*修改手机号*/
-    private void updatePhone(String phone, String code) {
+    private void updatePhone(final String phone, String code) {
         paramBean = new ParamBean();
         paramData = new ParamBean.ParamData();
         paramData.setPhone(phone);
@@ -726,6 +744,8 @@ public class SettingDetailActivity extends AppCompatActivity {
                 if (Tools.isGoodJson(response)) {
                     baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
                     if (baseResultBean.isExecResult()) {
+                        PrefUtils.setString(Config.getInstance().getmContext(), "PHONE", phone);
+                        Config.getInstance().setPhone(phone);
                         phoneDialog = Tools.showDialog(SettingDetailActivity.this, 2);
                         mHandler.sendEmptyMessageDelayed(5, 1500);
                     } else {
