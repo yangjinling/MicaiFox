@@ -625,8 +625,8 @@ public class MineFragmnet extends Fragment {
                     Config.getInstance().setJin(false);
                     mineResultBean = new Gson().fromJson(response, MineResultBean.class);
                     if (mineResultBean.isExecResult()) {
-                        tvMineNicheng.setText(mineResultBean.getExecDatas().getNickName());
-                        tvMineAmount.setText(mineResultBean.getExecDatas().getProfitTotal());
+                        tvMineNicheng.setText("" + mineResultBean.getExecDatas().getNickName());
+                        tvMineAmount.setText("" + mineResultBean.getExecDatas().getProfitTotal());
                         if (null != mineResultBean.getExecDatas().getPhoto())
                             Config.getInstance().setPhotoUrl(mineResultBean.getExecDatas().getPhoto());
                         if (null != Config.getInstance().getPhotoUrl() || !TextUtils.isEmpty(Config.getInstance().getPhotoUrl())) {
