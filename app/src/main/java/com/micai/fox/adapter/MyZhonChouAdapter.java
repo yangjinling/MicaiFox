@@ -73,10 +73,13 @@ public class MyZhonChouAdapter extends MyBaseAdapter<MyZhongChouResultBean.ExecD
             case 1://众筹中
                 zhongchouStatus.setText("众筹中");
                 break;
-            case 2://已满标
-                zhongchouStatus.setText("已满标");
+            case 2:
+            case 3:
+            case 4://已满标
+                zhongchouStatus.setText("已结束");
                 break;
-            case 5://已披露
+            case 5:
+            case 6://已披露
                 zhongchouStatus.setText("已披露");
                 break;
             case 7:

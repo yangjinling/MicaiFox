@@ -43,8 +43,8 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
         TextView pilu_tv_touzhu_money = ((TextView) viewHolder.findViewById(R.id.pilu_tv_touzhu_money));
         TextView pilu_tv_yingshou_money = ((TextView) viewHolder.findViewById(R.id.pilu_tv_yingshou_money));
         pilu_tv_touzhu.setText("" + infoBean.getBetnum() + "注 " + infoBean.getSeqnum() + "场 " + infoBean.getSeqnum() + "串1 方案" + infoBean.getMultiple() + "倍");
-        pilu_tv_touzhu_money.setText("" + infoBean.getBetAmount());
-        pilu_tv_yingshou_money.setText("￥" + infoBean.getRevenueAmount());
+        pilu_tv_touzhu_money.setText("￥ " + infoBean.getBetAmount());
+        pilu_tv_yingshou_money.setText("￥ " + infoBean.getRevenueAmount());
         List<MyZhongchouPiluResultBean.ExecDatasBean.BetInfoBean.MatchBean> matchBeanList = infoBean.getMatch();
         LogUtil.e("YJL", "size" + matchBeanList.size());
         LinearLayout pilu_ll_yingshou = ((LinearLayout) viewHolder.findViewById(R.id.pilu_ll_yingshou));
@@ -288,7 +288,9 @@ public class MyZhongchouPiLuAdapter extends MyBaseAdapter<MyZhongchouPiluResultB
                     break;
                 case 5:
                     //已开奖
+                    pilu_ll_yingshou.setVisibility(View.VISIBLE);
                     pilu_tv_status.setText("已开奖");
+//                    pilu_tv_yingshou_money.setText("￥ 2000");
                     break;
             }
         }

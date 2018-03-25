@@ -177,7 +177,7 @@ public class MyZhongchouPiluResultBean {
             private int multiple;
             private int betnum;
             private int seqnum;
-            private int betAmount;
+            private String betAmount;
             private String revenueAmount;
             private int status;
             private List<MatchBean> match;
@@ -206,11 +206,11 @@ public class MyZhongchouPiluResultBean {
                 this.seqnum = seqnum;
             }
 
-            public int getBetAmount() {
+            public String getBetAmount() {
                 return betAmount;
             }
 
-            public void setBetAmount(int betAmount) {
+            public void setBetAmount(String betAmount) {
                 this.betAmount = betAmount;
             }
 
