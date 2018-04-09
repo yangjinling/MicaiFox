@@ -7,22 +7,22 @@ import java.io.Serializable;
  */
 
 public class ZhongChouBean implements Serializable{
-    private String crowdingId;
+    private String orderId;
     private String title;
     private String money;
 
-    public ZhongChouBean(String crowdingId, String title, String money) {
-        this.crowdingId = crowdingId;
+    public ZhongChouBean(String orderId, String title, String money) {
+        this.orderId = orderId;
         this.title = title;
         this.money = money;
     }
 
-    public String getCrowdingId() {
-        return crowdingId;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setCrowdingId(String crowdingId) {
-        this.crowdingId = crowdingId;
+    public void setOrderId(String crowdingId) {
+        this.orderId = crowdingId;
     }
 
     public String getTitle() {
