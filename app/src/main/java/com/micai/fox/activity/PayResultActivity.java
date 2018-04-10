@@ -36,8 +36,6 @@ public class PayResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_result);
         ButterKnife.bind(this);
-//        tvTitle.setText("支付结果界面");
-//        rl.setVisibility(View.GONE);
         customHtml = getIntent().getStringExtra("URL");
         LogUtil.e("YJLS", "customHtml==" + customHtml);
         WebSettings websettings = payWeb.getSettings();
@@ -51,9 +49,7 @@ public class PayResultActivity extends AppCompatActivity {
         websettings.setAllowFileAccess(false);
         payWeb.requestFocus();
         payWeb.setVerticalScrollbarOverlay(true);
-//        payWeb.setWebChromeClient(new MyAndroidWebClient());
 ////        payWeb.loadDataWithBaseURL("", customHtml, "text/html", "utf-8", "");
-//        payWeb.addJavascriptInterface(new WebEvent(), "document.all.pay_form");
         payWeb.setWebViewClient(new WebViewClient() {
             @Override
 
@@ -86,25 +82,7 @@ public class PayResultActivity extends AppCompatActivity {
         ButterKnife.unbind(this);
     }
 
-    protected final class WebEvent {
-        public WebEvent() {
-        }
-
-        @JavascriptInterface
-        public void submit() {
-            LogUtil.e("YJLS", "submit");
-        }
-    }
-
-    /*  private final class MyAndroidWebClient extends WebChromeClient {
-          @Override
-          public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-              LogUtil.e("YJLS", "123--" + url + "457--" + message + "789==" + result.toString());
-              payWeb.loadUrl(url);
-              return true;
-          }
-      }*/
-    @Override
+   /* @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (payWeb.canGoBack() && event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             payWeb.goBack();
@@ -112,5 +90,5 @@ public class PayResultActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
 
-    }
+    }*/
 }

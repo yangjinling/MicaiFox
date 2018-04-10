@@ -9,6 +9,7 @@
 
     <WebView
         android:id="@+id/pay_web"
+        android:background="@android:color/transparent"
         android:layerType="software"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></WebView>

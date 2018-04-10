@@ -22,6 +22,7 @@ import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.parambean.ZhongChouBean;
 import com.micai.fox.resultbean.BaseResultBean;
+import com.micai.fox.resultbean.BuyResultBean;
 import com.micai.fox.resultbean.ZhongChouDetailResultBean;
 import com.micai.fox.util.DateUtil;
 import com.micai.fox.util.LogUtil;
@@ -74,7 +75,7 @@ public class BuyZhongChouActivity extends AppCompatActivity {
     LinearLayout llBuy;
 
     private ZhongChouDetailResultBean detailResultBean;
-    private BaseResultBean baseResultBean;
+    private BuyResultBean buyResultBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +132,7 @@ public class BuyZhongChouActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_buy_agreement:
-                Intent intent=new Intent(BuyZhongChouActivity.this,BuyAgrementActivity.class);
+                Intent intent = new Intent(BuyZhongChouActivity.this, BuyAgrementActivity.class);
                 startActivity(intent);
                 break;
             case R.id.et_tv_money:
@@ -206,9 +207,6 @@ public class BuyZhongChouActivity extends AppCompatActivity {
         }
     }
 
-    private void changetMoney() {
-    }
-
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
 
@@ -263,15 +261,15 @@ public class BuyZhongChouActivity extends AppCompatActivity {
                     // content ="抱歉，该众筹已满标，请选择其他众筹";
                     // content ="抱歉，该众筹支持人数已达200人，无法继续购买，请选择其他众筹";
                     //  content ="抱歉，该众筹已结束，请选择其他众筹";
-                    baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
-                    if (baseResultBean.isExecResult()) {
-                        ZhongChouBean bean = new ZhongChouBean(detailResultBean.getExecDatas().getCrowdfundingId(), detailResultBean.getExecDatas().getTitle(), tv_money.getText().toString().substring(1));
+                    buyResultBean = new Gson().fromJson(response, BuyResultBean.class);
+                    if (buyResultBean.isExecResult()) {
+                        ZhongChouBean bean = new ZhongChouBean(buyResultBean.getExecDatas().getOrderId(), detailResultBean.getExecDatas().getTitle(), tv_money.getText().toString().substring(1));
                         Intent intent = new Intent(BuyZhongChouActivity.this, PayActivity.class);
                         intent.putExtra("BEAN", bean);
                         startActivity(intent);
                         finish();
                     } else {
-                        Tools.showPayPopWindow(BuyZhongChouActivity.this, view, "" + baseResultBean.getExecMsg());
+                        Tools.showPayPopWindow(BuyZhongChouActivity.this, view, "" + buyResultBean.getExecMsg());
                     }
 
                 }
