@@ -107,6 +107,7 @@ public class PayActivity extends AppCompatActivity {
                     Intent intent = new Intent(PayActivity.this, PayResultActivity.class);
                     intent.putExtra("URL", payResultBean.getExecDatas().getPayHtml());
                     startActivity(intent);
+                    finish();
                 } else {
                     Config.getInstance().setJin(true);
                 }
