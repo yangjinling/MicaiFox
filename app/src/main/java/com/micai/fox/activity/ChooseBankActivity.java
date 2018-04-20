@@ -65,7 +65,7 @@ public class ChooseBankActivity extends AppCompatActivity {
             R.mipmap.ic_launcher, R.mipmap.youchu};
     private int positions = 0;
     public ArrayList<Integer> mArrayListChoosed;
-    private int selectPosition;
+    private int selectPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +162,7 @@ public class ChooseBankActivity extends AppCompatActivity {
             tv_name.setText(list.get(position).getName());
             ImageView iv_logo = ((ImageView) viewHolder.findViewById(R.id.iv_logo));
             iv_logo.setBackgroundResource(list.get(position).getImg_id());
-            LogUtil.e("YJL", "position==" + position+"--selectPosition=="+selectPosition);
+            LogUtil.e("YJL", "position==" + position + "--selectPosition==" + selectPosition);
             if (selectPosition == position) {
                 iv.setBackgroundResource(R.drawable.pointedselect);
             } else {
