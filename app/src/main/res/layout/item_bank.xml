@@ -38,6 +38,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="15dp"
-            android:background="@drawable/point" />
+            android:button="@null"
+            android:checked="false"
+            android:clickable="false"
+            android:focusable="false"
+            android:background="@drawable/ck_regist" />
     </LinearLayout>
 </LinearLayout>

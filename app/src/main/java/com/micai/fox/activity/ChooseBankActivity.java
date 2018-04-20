@@ -1,5 +1,6 @@
 package com.micai.fox.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,13 +8,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.micai.fox.R;
 import com.micai.fox.adapter.BankAdapter;
+import com.micai.fox.adapter.MyBaseAdapter;
+import com.micai.fox.adapter.ViewHolder;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
@@ -58,7 +63,9 @@ public class ChooseBankActivity extends AppCompatActivity {
     private int[] imgList = new int[]{R.mipmap.gongshang, R.mipmap.zhongguo, R.mipmap.ic_launcher, R.mipmap.nongye, R.mipmap.jianshe, R.mipmap.zhongxin
             , R.mipmap.ic_launcher, R.mipmap.minsheng, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.shanghai, R.mipmap.ic_launcher, R.mipmap.guangda,
             R.mipmap.ic_launcher, R.mipmap.youchu};
-    private int position = 0;
+    private int positions = 0;
+    public ArrayList<Integer> mArrayListChoosed;
+    private int selectPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +80,8 @@ public class ChooseBankActivity extends AppCompatActivity {
         bankLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                position = i;
-                view.findViewById(R.id.bank_iv).setBackgroundResource(R.drawable.pointedselect);
+                LogUtil.e("YJL", "position==" + i);
+                selectPosition = i;
                 bankAdapter.notifyDataSetChanged();
             }
         });
@@ -103,11 +110,11 @@ public class ChooseBankActivity extends AppCompatActivity {
     private ParamBean.ParamData paramData;
 
     private void pay() {
-        LogUtil.e("YJL", "position==" + position + "bank==" + list.get(position).getId() + "orderid==" + bean.getOrderId());
+        LogUtil.e("YJL", "position==" + positions + "bank==" + list.get(positions).getId() + "orderid==" + bean.getOrderId());
         paramBean = new ParamBean();
         paramData = new ParamBean.ParamData();
         paramData.setOrderId("" + bean.getOrderId());
-        paramData.setBankId(list.get(position).getId());
+        paramData.setBankId(list.get(positions).getId());
         paramBean.setParamData(paramData);
         OkHttpUtils.postString()
                 .mediaType(MediaType.parse(Url.CONTENT_TYPE))
@@ -139,4 +146,30 @@ public class ChooseBankActivity extends AppCompatActivity {
             }
         });
     }
+
+    public class BankAdapter extends MyBaseAdapter<BankBean> {
+        private List<BankBean> list;
+
+        public BankAdapter(List<BankBean> list, Context context, int resId) {
+            super(list, context, resId);
+            this.list = list;
+        }
+
+        @Override
+        public void setData(ViewHolder viewHolder, final int position) {
+            TextView tv_name = ((TextView) viewHolder.findViewById(R.id.bank_name_tv));
+            final ImageView iv = ((ImageView) viewHolder.findViewById(R.id.bank_iv));
+            tv_name.setText(list.get(position).getName());
+            ImageView iv_logo = ((ImageView) viewHolder.findViewById(R.id.iv_logo));
+            iv_logo.setBackgroundResource(list.get(position).getImg_id());
+            LogUtil.e("YJL", "position==" + position+"--selectPosition=="+selectPosition);
+            if (selectPosition == position) {
+                iv.setBackgroundResource(R.drawable.pointedselect);
+            } else {
+                iv.setBackgroundResource(R.drawable.point);
+            }
+
+        }
+    }
+
 }
