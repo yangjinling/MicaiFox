@@ -56,6 +56,7 @@ public class ParamBean implements Serializable {
         String status;
         String photo;
         String purchaseAmount;
+        String bankId;
 
         public String getPhone() {
             return phone;
@@ -215,6 +216,14 @@ public class ParamBean implements Serializable {
 
         public void setPurchaseAmount(String purchaseAmount) {
             this.purchaseAmount = purchaseAmount;
+        }
+
+        public String getBankId() {
+            return bankId;
+        }
+
+        public void setBankId(String bankId) {
+            this.bankId = bankId;
         }
     }
 }

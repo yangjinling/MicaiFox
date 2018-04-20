@@ -235,6 +235,10 @@
             android:name=".activity.PayResultActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
+        <activity
+            android:name=".activity.ChooseBankActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
     </application>
 
 </manifest>

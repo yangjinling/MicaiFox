@@ -3,31 +3,24 @@ package com.micai.fox.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.igexin.sdk.PushManager;
 import com.micai.fox.R;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
-import com.micai.fox.parambean.NotiBean;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.parambean.ZhongChouBean;
-import com.micai.fox.resultbean.MineResultBean;
 import com.micai.fox.resultbean.PayResultBean;
-import com.micai.fox.resultbean.ZhongChouDetailResultBean;
-import com.micai.fox.util.PrefUtils;
 import com.micai.fox.util.Tools;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,7 +43,20 @@ public class PayActivity extends AppCompatActivity {
     TextView payTvMoney;
     @Bind(R.id.pay_btn_pay)
     Button payBtnPay;
+    @Bind(R.id.pay_ll_payway)
+    LinearLayout payLlPayway;
+    @Bind(R.id.pay_ll_wechat)
+    LinearLayout payLlWechat;
+    @Bind(R.id.pay_ll_ali)
+    LinearLayout payLlAli;
+    @Bind(R.id.iv_wangyin)
+    ImageView ivWangyin;
+    @Bind(R.id.iv_wechat)
+    ImageView ivWechat;
+    @Bind(R.id.iv_ali)
+    ImageView ivAli;
     private ZhongChouBean bean;
+    private int kind = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,56 +70,44 @@ public class PayActivity extends AppCompatActivity {
         payBtnPay.setText("支付￥" + bean.getMoney());
     }
 
-    @OnClick({R.id.tv_back, R.id.pay_btn_pay})
+    @OnClick({R.id.tv_back, R.id.pay_btn_pay, R.id.pay_ll_payway, R.id.pay_ll_wechat, R.id.pay_ll_ali})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_back:
                 finish();
                 break;
             case R.id.pay_btn_pay:
-                pay();
+                pay(kind);
+                break;
+            case R.id.pay_ll_payway:
+                ivWangyin.setBackgroundResource(R.drawable.pointedselect);
+                ivWechat.setBackgroundResource(R.drawable.point);
+                ivAli.setBackgroundResource(R.drawable.point);
+                kind = 0;
+                break;
+            case R.id.pay_ll_wechat:
+                ivWangyin.setBackgroundResource(R.drawable.point);
+                ivWechat.setBackgroundResource(R.drawable.pointedselect);
+                ivAli.setBackgroundResource(R.drawable.point);
+                kind = 1;
+                break;
+            case R.id.pay_ll_ali:
+                ivWangyin.setBackgroundResource(R.drawable.point);
+                ivWechat.setBackgroundResource(R.drawable.point);
+                ivAli.setBackgroundResource(R.drawable.pointedselect);
+                kind = 2;
                 break;
         }
     }
 
-
-    private ParamBean paramBean;
-    private ParamBean.ParamData paramData;
-
-    private void pay() {
-        paramBean = new ParamBean();
-        paramData = new ParamBean.ParamData();
-        paramData.setOrderId("" + bean.getOrderId());
-        paramBean.setParamData(paramData);
-        OkHttpUtils.postString()
-                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
-                .url(String.format(Url.WEB_PAY, Config.getInstance().getSessionId()))
-                .content(new Gson().toJson(paramBean))
-                .build().execute(new StringCallback() {
-
-            private PayResultBean payResultBean;
-
-            @Override
-            public void onError(Call call, Exception e, int id) {
-
-            }
-
-            @Override
-            public void onResponse(String response, int id) throws Exception {
-                Log.e("yjl", "pay--data" + response);
-                if (Tools.isGoodJson(response)) {
-                    Config.getInstance().setJin(false);
-                    payResultBean = new Gson().fromJson(response, PayResultBean.class);
-                    Intent intent = new Intent(PayActivity.this, PayResultActivity.class);
-                    intent.putExtra("URL", payResultBean.getExecDatas().getPayHtml());
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Config.getInstance().setJin(true);
-                }
-
-            }
-        });
+        private void pay(int kind) {
+        if (kind == 0) {
+            ZhongChouBean beans = new ZhongChouBean(bean.getOrderId(), bean.getTitle(), bean.getMoney());
+            Intent intent = new Intent(PayActivity.this, ChooseBankActivity.class);
+            intent.putExtra("BEAN", beans);
+            startActivity(intent);
+            finish();
+        }
     }
 
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context="com.micai.fox.activity.ChooseBankActivity">
+
+    <include layout="@layout/layout_title"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="90dp"
+        android:layout_marginTop="50dp">
+
+        <LinearLayout
+            android:id="@+id/ll_parent_bank"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <com.micai.fox.view.MyListView
+                android:id="@+id/bank_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></com.micai.fox.view.MyListView>
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/bank_go"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/buttonstyle"
+        android:text="前往网银付款"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+</RelativeLayout>
