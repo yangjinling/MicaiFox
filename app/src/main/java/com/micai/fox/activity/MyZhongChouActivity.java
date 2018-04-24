@@ -13,6 +13,10 @@ import android.widget.TextView;
 import com.micai.fox.R;
 import com.micai.fox.adapter.ViewPageAdapter;
 import com.micai.fox.fragment.MyZhongChouFragment;
+import com.micai.fox.parambean.RreshBean;
+import com.micai.fox.parambean.ZhongChouRefreshBean;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,6 +138,5 @@ public class MyZhongChouActivity extends AppCompatActivity {
         super.onDestroy();
         ButterKnife.unbind(this);
     }
-
 
 }

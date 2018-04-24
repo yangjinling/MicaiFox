@@ -85,6 +85,7 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
     private int orderStatus;
     private MyZhongChouOrderResultBean myZhongChouOrderResultBean;
     private int zhongchouStatus;
+    private boolean account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +96,7 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
         orderId = getIntent().getStringExtra("orderId");
         orderStatus = getIntent().getIntExtra("orderStatus", 0);
         zhongchouStatus = getIntent().getIntExtra("zhongchouStatus", 0);
+        account = getIntent().getBooleanExtra("ACCOUNT", false);//支付界面过来的  查询收款账户是否设置
         getZhongChouOrderDetail(orderId);
     }
 
@@ -180,10 +182,10 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 BigDecimal cha = new BigDecimal("0" + myZhongChouOrderResultBean.getExecDatas().getCashAmount()).subtract(new BigDecimal("0" + myZhongChouOrderResultBean.getExecDatas().getPurchaseAmount())).setScale(2);
                 if (cha.compareTo(new BigDecimal(0)) == 1) {
                     orderTvMoneyBenifate.setText("+ ¥ " + cha);
-                } else if ((cha.compareTo(new BigDecimal(0)) == -1)){
-                    orderTvMoneyBenifate.setText("- ¥ " +cha.toString().substring(1));
-                }else {
-                    orderTvMoneyBenifate.setText("¥ " +cha);
+                } else if ((cha.compareTo(new BigDecimal(0)) == -1)) {
+                    orderTvMoneyBenifate.setText("- ¥ " + cha.toString().substring(1));
+                } else {
+                    orderTvMoneyBenifate.setText("¥ " + cha);
                 }
                 break;
         }

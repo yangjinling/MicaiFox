@@ -18,7 +18,11 @@ import android.widget.TextView;
 
 import com.micai.fox.R;
 import com.micai.fox.app.Url;
+import com.micai.fox.parambean.RreshBean;
+import com.micai.fox.parambean.ZhongChouRefreshBean;
 import com.micai.fox.util.LogUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -82,7 +86,13 @@ public class PayResultActivity extends AppCompatActivity {
         ButterKnife.unbind(this);
     }
 
-   /* @Override
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().post(new ZhongChouRefreshBean(true));
+    }
+
+    /* @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (payWeb.canGoBack() && event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             payWeb.goBack();

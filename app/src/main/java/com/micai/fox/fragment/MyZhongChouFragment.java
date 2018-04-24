@@ -27,11 +27,15 @@ import com.micai.fox.adapter.MyZhonChouAdapter;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.parambean.ZhongChouRefreshBean;
 import com.micai.fox.resultbean.MyZhongChouResultBean;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -62,6 +66,7 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
         View view = inflater.inflate(R.layout.fragment_mine_zhongchou, container, false);
         lv = ((ListView) view.findViewById(R.id.mine_zhongchou_lv));
         tv = ((TextView) view.findViewById(R.id.fragment_mine_zhongchou_tv));
+        EventBus.getDefault().register(this);
         swipeRefreshLayout = ((SwipeRefreshLayout) view.findViewById(R.id.mine_zhongchou_swp));
         kind = getArguments().getInt("KIND", 0);
         headView = ((LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.headview_lv, null);
@@ -184,12 +189,6 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
     private boolean isBottom = false;//是否到第20条数据了
     private int curPageNums = 1;
 
-    // 下拉刷新
-    public interface OnSwipeIsValid {
-        void setSwipeEnabledTrue();
-
-        void setSwipeEnabledFalse();
-    }
 
     private NotificationActivity.OnSwipeIsValid isValid = new NotificationActivity.OnSwipeIsValid() {
         @Override
@@ -234,7 +233,7 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
             isBottom = false;
             LogUtil.e("YJL", "isBottom222===" + isBottom);
         }
-        if (absListView.getLastVisiblePosition()-1 >= 20 + ((curPageNums - 1) * 20)) {
+        if (absListView.getLastVisiblePosition() - 1 >= 20 + ((curPageNums - 1) * 20)) {
             LogUtil.e("YJL---", "absListView.getLastVisiblePosition()==" + absListView.getLastVisiblePosition() + ",,,," + (20 + ((curPageNums - 1) * 25)));
             if (++curPageNums <= myZhongChouResultBean.getExecDatas().getTotalPage()) {
                 LogUtil.e("YJL", "curPageNum==" + curPageNums);
@@ -294,4 +293,13 @@ public class MyZhongChouFragment extends Fragment implements AbsListView.OnScrol
                 break;
         }
     }
+
+    //给网络请求加缓冲小黄圈
+    @Subscribe
+    public void onEventMainThread(ZhongChouRefreshBean bean) {
+        if (bean.isRefresh()) {
+            onRefresh();
+        }
+    }
+
 }

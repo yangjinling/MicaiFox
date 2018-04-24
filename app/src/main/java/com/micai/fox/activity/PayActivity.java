@@ -57,6 +57,7 @@ public class PayActivity extends AppCompatActivity {
     ImageView ivAli;
     private ZhongChouBean bean;
     private int kind = 0;
+    private boolean check = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,14 +101,43 @@ public class PayActivity extends AppCompatActivity {
         }
     }
 
-        private void pay(int kind) {
+    private void pay(int kind) {
         if (kind == 0) {
             ZhongChouBean beans = new ZhongChouBean(bean.getOrderId(), bean.getTitle(), bean.getMoney());
             Intent intent = new Intent(PayActivity.this, ChooseBankActivity.class);
             intent.putExtra("BEAN", beans);
             startActivity(intent);
-            finish();
+//            finish();
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (check) {
+            //查询状态
+
+        }
+    }
+
+    private void checkPayState(int type) {
+
+        if (type == 0) {
+            //支付成功
+            Intent intent = new Intent(PayActivity.this, ZhongChouOrderDetailActivity.class);
+            intent.putExtra("orderId", bean.getOrderId());
+            intent.putExtra("ACCOUNT", true);
+            startActivity(intent);
+        } else if (type == 1) {
+            //支付失败
+        } else if (type == 2) {
+            //没查询到结果
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        check = true;
+        super.onPause();
+    }
 }
