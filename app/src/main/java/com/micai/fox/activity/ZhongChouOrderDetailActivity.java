@@ -16,6 +16,7 @@ import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
 import com.micai.fox.parambean.ZhongChouBean;
+import com.micai.fox.resultbean.AccountInfoResult;
 import com.micai.fox.resultbean.MyZhongChouOrderResultBean;
 import com.micai.fox.util.DateUtil;
 import com.micai.fox.util.LogUtil;
@@ -235,7 +236,9 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                             String datePay = DateUtil.getDateToString(Long.parseLong(myZhongChouOrderResultBean.getExecDatas().getPayDate()));
                             orderTvTimePay.setText("" + datePay);
                         }
-
+                        if (account) {
+                            getAccountInfo();
+                        }
 
                     }
                 } else {
@@ -245,6 +248,39 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /*获取收款账户信息*/
+    private void getAccountInfo() {
+        OkHttpUtils.post()
+//                .mediaType(MediaType.parse(Url.CONTENT_TYPE))
+//                .url(Url.WEB_SET_ACCOUNT_SEARCH)
+                .url(String.format(Url.WEB_SET_ACCOUNT_SEARCH, Config.getInstance().getSessionId()))
+                .build().execute(new StringCallback() {
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) throws Exception {
+                LogUtil.e("yjl", "set---account>>" + response);
+                if (Tools.isGoodJson(response)) {
+                    AccountInfoResult accountInfoResult = new Gson().fromJson(response, AccountInfoResult.class);
+                    if (accountInfoResult.isExecResult()) {
+                        AccountInfoResult.ExecDatasBean execDatas = accountInfoResult.getExecDatas();
+                        if (null != execDatas) {
+                            Tools.showPayPopWindow(ZhongChouOrderDetailActivity.this, btnZhongchouDetailOrderPay, null, 3);
+                        } else {
+                            Tools.showPayPopWindow(ZhongChouOrderDetailActivity.this, btnZhongchouDetailOrderPay, null, 3);
+                        }
+                    } else {
+                    }
+                }
+
+            }
+        });
     }
 
     @OnClick({R.id.btn_zhongchou_detail_order_pay, R.id.tv_back})

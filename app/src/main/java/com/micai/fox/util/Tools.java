@@ -48,6 +48,7 @@ import android.widget.Toast;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.micai.fox.R;
+import com.micai.fox.activity.AcountEditActivity;
 import com.micai.fox.view.UploadHeader;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;
@@ -656,6 +657,7 @@ public class Tools {
         //设置它的ContentView
         dialog.setContentView(view);
         TextView tv = view.findViewById(R.id.dialog_tv);
+        ImageView iv = view.findViewById(R.id.dialog_iv);
         if (type == 0) {
             //注册成功
             tv.setText("注册成功");
@@ -665,6 +667,9 @@ public class Tools {
             tv.setText("修改成功");
         } else if (type == 3) {
             tv.setText("提交成功");
+        } else if (type == 4) {
+            iv.setVisibility(View.GONE);
+            tv.setText("支付成功");
         }
         WindowManager m = activity.getWindowManager();
         Display d = m.getDefaultDisplay();  //为获取屏幕宽、高
@@ -673,6 +678,9 @@ public class Tools {
         p.height = (int) (d.getHeight() * 0.3); //高度设置为屏幕-标题栏
                 /*(int) (d.getWidth() * 0.5);*/
         p.width = (int) (d.getWidth() * 0.9);   //宽度设置为屏幕的0.5
+        if (type == 4) {
+            p.alpha = 1;
+        }
         dialog.getWindow().setAttributes(p);     //设置生效
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);
@@ -688,26 +696,28 @@ public class Tools {
         });
         return dialog;
     }
+
     /**
      * 提供精确的除法运算方法div
+     *
      * @param value1 被除数
      * @param value2 除数
-     * @param scale 精确范围
+     * @param scale  精确范围
      * @return 两个参数的商
      * @throws IllegalAccessException
      */
-    public static BigDecimal div(double value1,double value2,int scale) throws IllegalAccessException{
+    public static BigDecimal div(double value1, double value2, int scale) throws IllegalAccessException {
 //如果精确范围小于0，抛出异常信息
-        if(scale<0){
+        if (scale < 0) {
             throw new IllegalAccessException("精确度不能小于0");
         }
         BigDecimal b1 = new BigDecimal(Double.valueOf(value1));
         BigDecimal b2 = new BigDecimal(Double.valueOf(value2));
-        return b1.divide(b2, scale,BigDecimal.ROUND_HALF_UP);
+        return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP);
     }
 
     /*放弃编辑的弹框*/
-    public static void showPayPopWindow(final Context activity, final View view,String content) {
+    public static void showPayPopWindow(final Activity activity, final View view, final String content, final int type) {
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(LAYOUT_INFLATER_SERVICE);
         View contentview = inflater.inflate(R.layout.popwindow_waitpay, null);
         final PopupWindow popupWindowConfirm = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT,
@@ -718,17 +728,52 @@ public class Tools {
         popupWindowConfirm.setOutsideTouchable(false);
         popupWindowConfirm.showAtLocation(view, Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
         Button pop_cancle = ((Button) contentview.findViewById(R.id.waitpay_pop_btn_cancle));
-        ((TextView) contentview.findViewById(R.id.pop_tv_content)).setText(""+content);
+        Button pop_sure = ((Button) contentview.findViewById(R.id.waitpay_pop_btn_sure));
+        TextView content1 = ((TextView) contentview.findViewById(R.id.pop_tv_content_1));
+        TextView content2 = ((TextView) contentview.findViewById(R.id.pop_tv_content_2));
+        if (type == 0) {
+            content1.setText("" + content);
+        } else if (type == 1) {
+            //支付失败
+            content1.setText("支付失败，请重新支付");
+            content2.setVisibility(View.VISIBLE);
+            content2.setText("如订单显示未支付但仍有扣款，可联系客服处理");
+        } else if (type == 2) {
+            content1.setText("未获取到支付结果，刷新看看");
+            content2.setVisibility(View.VISIBLE);
+            content2.setText("如订单显示未支付但仍有扣款，可联系客服处理");
+            pop_cancle.setText("取消");
+            pop_sure.setVisibility(View.VISIBLE);
+            pop_sure.setText("刷新看看");
+        } else if (type == 3) {
+            content1.setText("您还未设置收款账户，请前往设置以便兑换众筹营收金额。");
+            pop_cancle.setText("稍后设置");
+            pop_sure.setVisibility(View.VISIBLE);
+            pop_sure.setText("去设置");
+        }
         pop_cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 popupWindowConfirm.dismiss();
             }
         });
+        pop_sure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (type == 2) {
+                } else if (type == 3) {
+                    Intent intent = new Intent(activity, AcountEditActivity.class);
+                    intent.putExtra("KIND",1);
+                    activity.startActivity(intent);
+                    popupWindowConfirm.dismiss();
+                }
+            }
+        });
     }
+
     public static String fomatMoney(String money) {
         if (money.contains(".")) {
-            if ("00".equals(money.substring(money.indexOf(".")+1))) {
+            if ("00".equals(money.substring(money.indexOf(".") + 1))) {
                 money = money.substring(0, money.indexOf("."));
             } else if ("0".equals(money.substring(money.indexOf(".") + 1))) {
                 money = money.substring(0, money.indexOf("."));

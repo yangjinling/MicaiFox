@@ -202,7 +202,7 @@ public class SettingDetailActivity extends AppCompatActivity {
     private ParamBean paramBeanResult;
     private ParamBean.ParamData paramDataResult;
     private String content;
-
+    private int kind;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -218,6 +218,7 @@ public class SettingDetailActivity extends AppCompatActivity {
                 "<p>" +
                 "    <br/>" +
                 "</p>";
+        kind = getIntent().getIntExtra("KIND", 0);
         initView(type);
 
     }

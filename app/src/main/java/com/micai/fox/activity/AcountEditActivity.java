@@ -94,6 +94,7 @@ public class AcountEditActivity extends AppCompatActivity implements View.OnClic
             }
         }
     };
+    private int kind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,7 @@ public class AcountEditActivity extends AppCompatActivity implements View.OnClic
         ButterKnife.bind(this);
         setLlAccount.setVisibility(View.VISIBLE);
         tvNotify.setVisibility(View.VISIBLE);
+        kind = getIntent().getIntExtra("KIND", 0);
         tvNotify.setText("保存");
         tvTitle.setText("收款账户编辑");
     }
@@ -252,7 +254,13 @@ public class AcountEditActivity extends AppCompatActivity implements View.OnClic
                     if (baseResultBean.isExecResult()) {
                         Intent intent = new Intent(AcountEditActivity.this, SettingDetailActivity.class);
                         intent.putExtra("BEAN", paramBean);
-                        setResult(RESULT_OK, intent);
+                        intent.putExtra("KIND", kind);
+                        if (kind == 0) {
+                            setResult(RESULT_OK, intent);
+                        } else {
+                            intent.putExtra("VALUE", 0);
+                            startActivity(intent);
+                        }
                         finish();
                     } else {
                     }

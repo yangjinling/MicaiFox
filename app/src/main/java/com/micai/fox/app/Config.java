@@ -20,7 +20,14 @@ public class Config {
     private boolean isJin = false;
     private boolean loginAndNo = false;
     private boolean isLoginFromBuy;
+    private String payId;
+    public String getPayId() {
+        return payId;
+    }
 
+    public void setPayId(String payId) {
+        this.payId = payId;
+    }
     private Config() {
     }
 

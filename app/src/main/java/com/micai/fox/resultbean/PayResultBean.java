@@ -56,6 +56,7 @@ public class PayResultBean {
          */
 
         private String payHtml;
+        private String payId;
 
         public String getPayHtml() {
             return payHtml;
@@ -63,6 +64,14 @@ public class PayResultBean {
 
         public void setPayHtml(String payHtml) {
             this.payHtml = payHtml;
+        }
+
+        public String getPayId() {
+            return payId;
+        }
+
+        public void setPayId(String payId) {
+            this.payId = payId;
         }
     }
 }

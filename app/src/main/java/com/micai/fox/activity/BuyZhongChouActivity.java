@@ -150,20 +150,20 @@ public class BuyZhongChouActivity extends AppCompatActivity {
                     int cha = new BigDecimal(tv_money.getText().toString().substring(1)).compareTo(new BigDecimal(detailResultBean.getExecDatas().getOneAmountUp()));
                     if (chas == -1 || chas == 0 || cha == 1) {
                         String contents = "支持金额需在￥" + detailResultBean.getExecDatas().getOneAmountDown() + "~" + detailResultBean.getExecDatas().getOneAmountUp() + "之间，请重新输入";
-                        Tools.showPayPopWindow(BuyZhongChouActivity.this, view, contents);
+                        Tools.showPayPopWindow(BuyZhongChouActivity.this, view, contents,0);
                     } else {
                         buyEtMoney.setVisibility(View.GONE);
                         tv_money.setVisibility(View.VISIBLE);
                         if (tv_money.getText().toString().contains(".")) {
                             String content = "支持金额需为￥" + detailResultBean.getExecDatas().getIncrementQuota() + "元的整数倍，请重新输入";
-                            Tools.showPayPopWindow(BuyZhongChouActivity.this, view, content);
+                            Tools.showPayPopWindow(BuyZhongChouActivity.this, view, content,0);
                         } else {
                             if (Integer.parseInt(tv_money.getText().toString().substring(1)) % Integer.parseInt(detailResultBean.getExecDatas().getIncrementQuota()) == 0) {
                                 int minus = sub(tv_money.getText().toString().substring(1), detailResultBean.getExecDatas().getIncrementQuota());
                                 tv_money.setText("￥" + minus);
                             } else {
                                 String contents = "支持金额需为￥" + detailResultBean.getExecDatas().getIncrementQuota() + "元的整数倍，请重新输入";
-                                Tools.showPayPopWindow(BuyZhongChouActivity.this, view, contents);
+                                Tools.showPayPopWindow(BuyZhongChouActivity.this, view, contents,0);
                             }
                         }
                     }
@@ -182,20 +182,20 @@ public class BuyZhongChouActivity extends AppCompatActivity {
                     if (cha == 1 || cha == 0) {
 //                    支持金额需在￥XX~XXX之间，请重新输入
                         String content = "支持金额需在￥" + detailResultBean.getExecDatas().getOneAmountDown() + "~" + detailResultBean.getExecDatas().getOneAmountUp() + "之间，请重新输入";
-                        Tools.showPayPopWindow(BuyZhongChouActivity.this, view, content);
+                        Tools.showPayPopWindow(BuyZhongChouActivity.this, view, content,0);
                     } else {
                         buyEtMoney.setVisibility(View.GONE);
                         tv_money.setVisibility(View.VISIBLE);
                         if (tv_money.getText().toString().contains(".")) {
                             String content = "支持金额需为￥" + detailResultBean.getExecDatas().getIncrementQuota() + "元的整数倍，请重新输入";
-                            Tools.showPayPopWindow(BuyZhongChouActivity.this, view, content);
+                            Tools.showPayPopWindow(BuyZhongChouActivity.this, view, content,0);
                         } else {
                             if (Integer.parseInt(tv_money.getText().toString().substring(1)) % Integer.parseInt(detailResultBean.getExecDatas().getIncrementQuota()) == 0) {
                                 int add = add(tv_money.getText().toString().substring(1), "" + detailResultBean.getExecDatas().getIncrementQuota());
                                 tv_money.setText("￥" + add);
                             } else {
                                 String content = "支持金额需为￥" + detailResultBean.getExecDatas().getIncrementQuota() + "元的整数倍，请重新输入";
-                                Tools.showPayPopWindow(BuyZhongChouActivity.this, view, content);
+                                Tools.showPayPopWindow(BuyZhongChouActivity.this, view, content,0);
                             }
                         }
                     }
@@ -214,12 +214,12 @@ public class BuyZhongChouActivity extends AppCompatActivity {
         String content = null;
         if (TextUtils.isEmpty(buyEtMoney.getText().toString())) {
             content = "请输入您要支持的金额";
-            Tools.showPayPopWindow(this, view, content);
+            Tools.showPayPopWindow(this, view, content,0);
             return;
         }
         if (!buyCk.isChecked()) {
             content = "购买众筹需先阅读并同意《众筹购买协议》";
-            Tools.showPayPopWindow(this, view, content);
+            Tools.showPayPopWindow(this, view, content,0);
             return;
         }
         if (null == PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", null) || TextUtils.isEmpty(PrefUtils.getString(Config.getInstance().getmContext(), "SESSIONID", ""))) {
@@ -231,7 +231,7 @@ public class BuyZhongChouActivity extends AppCompatActivity {
                 buyZhongChou(view);
             } else {
                 String contents = "支持金额需为￥" + detailResultBean.getExecDatas().getIncrementQuota() + "元的整数倍，请重新输入";
-                Tools.showPayPopWindow(BuyZhongChouActivity.this, view, contents);
+                Tools.showPayPopWindow(BuyZhongChouActivity.this, view, contents,0);
             }
 
         }
@@ -269,7 +269,7 @@ public class BuyZhongChouActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else {
-                        Tools.showPayPopWindow(BuyZhongChouActivity.this, view, "" + buyResultBean.getExecMsg());
+                        Tools.showPayPopWindow(BuyZhongChouActivity.this, view, "" + buyResultBean.getExecMsg(),0);
                     }
 
                 }

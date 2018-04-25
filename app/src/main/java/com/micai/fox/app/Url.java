@@ -85,4 +85,7 @@ public class Url {
     public static final String WEN_CHECK_NOTICE = WEB_BASE_URL + "bd/notice/unReview" + WEB_BASE_SESSION;
     /*2.5.10 支付*/
     public static final String WEB_PAY = WEB_BASE_URL + "pay/xinfu/submit" + WEB_BASE_SESSION;
+
+    public static final String WEB_CHECK_PAY = WEB_BASE_URL + "pay/xinfu/query" + WEB_BASE_SESSION;
+
 }

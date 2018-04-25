@@ -13,17 +13,38 @@
         android:background="@drawable/edittextstyle"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/pop_tv_content"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:gravity="center_vertical"
+            android:background="@drawable/edittextstyle"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/pop_tv_content_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/pop_tv_content_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text=""
+                android:visibility="gone"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,6 +61,16 @@
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
+            <Button
+                android:id="@+id/waitpay_pop_btn_sure"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:text="知道了"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:visibility="gone" />
 
         </LinearLayout>
     </LinearLayout>
