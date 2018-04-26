@@ -79,6 +79,14 @@ public class ChooseBankActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_bank);
         ButterKnife.bind(this);
         tvTitle.setText("选择银行");
+        Config.getInstance().setCheck(false);
+        tvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Config.getInstance().setCheck(false);
+                finish();
+            }
+        });
         bean = ((ZhongChouBean) getIntent().getSerializableExtra("BEAN"));
         bankAdapter = new BankAdapter(list, this, R.layout.item_bank);
         bankLv.setAdapter(bankAdapter);
@@ -142,6 +150,7 @@ public class ChooseBankActivity extends AppCompatActivity {
                 if (Tools.isGoodJson(response)) {
                     Config.getInstance().setJin(false);
                     payResultBean = new Gson().fromJson(response, PayResultBean.class);
+                    Config.getInstance().setCheck(true);
                     Config.getInstance().setPayId(payResultBean.getExecDatas().getPayId());
                     Intent intent = new Intent(ChooseBankActivity.this, PayResultActivity.class);
                     intent.putExtra("URL", payResultBean.getExecDatas().getPayHtml());

@@ -18,13 +18,18 @@ import com.micai.fox.R;
 import com.micai.fox.app.Config;
 import com.micai.fox.app.Url;
 import com.micai.fox.parambean.ParamBean;
+import com.micai.fox.parambean.PayRefreshBean;
 import com.micai.fox.parambean.ZhongChouBean;
+import com.micai.fox.parambean.ZhongChouRefreshBean;
 import com.micai.fox.resultbean.CheckPayResultBean;
 import com.micai.fox.resultbean.PayResultBean;
 import com.micai.fox.util.LogUtil;
 import com.micai.fox.util.Tools;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -61,12 +66,12 @@ public class PayActivity extends AppCompatActivity {
     ImageView ivAli;
     private ZhongChouBean bean;
     private int kind = 0;
-    private boolean check = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
+        EventBus.getDefault().register(this);
         ButterKnife.bind(this);
         tvTitle.setText("支付");
         bean = ((ZhongChouBean) getIntent().getSerializableExtra("BEAN"));
@@ -118,16 +123,16 @@ public class PayActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (check) {
+        if (Config.getInstance().isCheck()) {
             //查询状态
-            CheckPay();
+            checkPay();
         }
     }
 
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
 
-    private void CheckPay() {
+    private void checkPay() {
         paramBean = new ParamBean();
         paramData = new ParamBean.ParamData();
         paramData.setPayId("" + Config.getInstance().getPayId());
@@ -213,7 +218,21 @@ public class PayActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        check = true;
         super.onPause();
+    }
+
+    //给网络请求加缓冲小黄圈
+    @Subscribe
+    public void onEventMainThread(PayRefreshBean bean) {
+        if (bean.isRefresh()) {
+            checkPay();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        ButterKnife.unbind(this);
+        super.onDestroy();
     }
 }

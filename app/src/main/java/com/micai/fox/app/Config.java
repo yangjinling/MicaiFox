@@ -21,6 +21,7 @@ public class Config {
     private boolean loginAndNo = false;
     private boolean isLoginFromBuy;
     private String payId;
+    private boolean check=false;
     public String getPayId() {
         return payId;
     }
@@ -139,5 +140,13 @@ public class Config {
 
     public void setLoginFromBuy(boolean loginFromBuy) {
         isLoginFromBuy = loginFromBuy;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
     }
 }

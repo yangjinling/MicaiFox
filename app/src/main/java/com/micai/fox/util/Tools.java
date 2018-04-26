@@ -49,10 +49,13 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.micai.fox.R;
 import com.micai.fox.activity.AcountEditActivity;
+import com.micai.fox.parambean.PayRefreshBean;
 import com.micai.fox.view.UploadHeader;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -761,9 +764,11 @@ public class Tools {
             @Override
             public void onClick(View view) {
                 if (type == 2) {
+                    popupWindowConfirm.dismiss();
+                    EventBus.getDefault().post(new PayRefreshBean(true));
                 } else if (type == 3) {
                     Intent intent = new Intent(activity, AcountEditActivity.class);
-                    intent.putExtra("KIND",1);
+                    intent.putExtra("KIND", 1);
                     activity.startActivity(intent);
                     popupWindowConfirm.dismiss();
                 }
