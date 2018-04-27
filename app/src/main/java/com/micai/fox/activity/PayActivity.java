@@ -193,7 +193,7 @@ public class PayActivity extends AppCompatActivity {
 
         if (type == 0) {
             //支付成功
-            dialog = Tools.showDialog(this, 4);
+            dialog = Tools.showDialog(this, 4,null);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

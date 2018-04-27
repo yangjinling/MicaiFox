@@ -136,7 +136,7 @@ public class AcountEditActivity extends AppCompatActivity implements View.OnClic
                         mHandler.sendEmptyMessageDelayed(2, 3000);
                         break;
                     case 3:
-                        updateAccount(accountEtName.getText().toString(), accountEtNum.getText().toString(), bankResultBean.getExecDatas().get(0).getValue(), accountEtBankname.getText().toString());
+                        updateAccount(accountEtName.getText().toString(), accountEtNum.getText().toString(), bankResultBean.getExecDatas().get(selectPosition - 1).getValue(), accountEtBankname.getText().toString());
                         break;
                     case 4:
                         updateAccountTvBank.setTextColor(getResources().getColor(R.color.red));

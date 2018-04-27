@@ -235,7 +235,7 @@ public class ResetPassTwoActivity extends AppCompatActivity {
                 if (Tools.isGoodJson(response)) {
                     baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
                     if (baseResultBean.isExecResult()) {
-                        dialog = Tools.showDialog(ResetPassTwoActivity.this, 1);
+                        dialog = Tools.showDialog(ResetPassTwoActivity.this, 1,null);
                         mHandler.sendEmptyMessageDelayed(4, 1500);
                     } else {
                     }

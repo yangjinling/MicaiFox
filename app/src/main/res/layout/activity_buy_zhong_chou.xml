@@ -136,7 +136,7 @@
                     android:background="@android:color/transparent"
                     android:gravity="center"
                     android:hint="￥100.00~1000"
-                    android:inputType="number"
+                    android:digits="0123456789."
                     android:maxLines="1"
                     android:textColor="@color/red" />
             </RelativeLayout>

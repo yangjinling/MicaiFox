@@ -1,8 +1,10 @@
 package com.micai.fox.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -123,6 +125,7 @@ public class ChooseBankActivity extends AppCompatActivity {
 
     private ParamBean paramBean;
     private ParamBean.ParamData paramData;
+    private Dialog dialog;
 
     private void pay() {
         LogUtil.e("YJL", "position==" + positions + "bank==" + list.get(positions).getId() + "orderid==" + bean.getOrderId());
@@ -150,12 +153,23 @@ public class ChooseBankActivity extends AppCompatActivity {
                 if (Tools.isGoodJson(response)) {
                     Config.getInstance().setJin(false);
                     payResultBean = new Gson().fromJson(response, PayResultBean.class);
-                    Config.getInstance().setCheck(true);
-                    Config.getInstance().setPayId(payResultBean.getExecDatas().getPayId());
-                    Intent intent = new Intent(ChooseBankActivity.this, PayResultActivity.class);
-                    intent.putExtra("URL", payResultBean.getExecDatas().getPayHtml());
-                    startActivity(intent);
-                    finish();
+                    if (payResultBean.isExecResult()) {
+                        Config.getInstance().setCheck(true);
+                        Config.getInstance().setPayId(payResultBean.getExecDatas().getPayId());
+                        Intent intent = new Intent(ChooseBankActivity.this, PayResultActivity.class);
+                        intent.putExtra("URL", payResultBean.getExecDatas().getPayHtml());
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Config.getInstance().setCheck(false);
+                        dialog = Tools.showDialog(ChooseBankActivity.this, 5, payResultBean.getExecMsg());
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                            }
+                        }, 3000);
+                    }
                 } else {
                     Config.getInstance().setJin(true);
                 }

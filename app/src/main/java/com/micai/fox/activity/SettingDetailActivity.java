@@ -614,7 +614,7 @@ public class SettingDetailActivity extends AppCompatActivity {
                 if (Tools.isGoodJson(response)) {
                     baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
                     if (baseResultBean.isExecResult()) {
-                        phoneDialog = Tools.showDialog(SettingDetailActivity.this, 3);
+                        phoneDialog = Tools.showDialog(SettingDetailActivity.this, 3,null);
                         mHandler.sendEmptyMessageDelayed(5, 1500);
                     } else {
                     }
@@ -652,7 +652,7 @@ public class SettingDetailActivity extends AppCompatActivity {
                 if (Tools.isGoodJson(response)) {
                     baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
                     if (baseResultBean.isExecResult()) {
-                        phoneDialog = Tools.showDialog(SettingDetailActivity.this, 2);
+                        phoneDialog = Tools.showDialog(SettingDetailActivity.this, 2,null);
                         mHandler.sendEmptyMessageDelayed(5, 1500);
                     } else {
                         passEtOrigin.setText("");
@@ -747,7 +747,7 @@ public class SettingDetailActivity extends AppCompatActivity {
                     if (baseResultBean.isExecResult()) {
                         PrefUtils.setString(Config.getInstance().getmContext(), "PHONE", phone);
                         Config.getInstance().setPhone(phone);
-                        phoneDialog = Tools.showDialog(SettingDetailActivity.this, 2);
+                        phoneDialog = Tools.showDialog(SettingDetailActivity.this, 2,null);
                         mHandler.sendEmptyMessageDelayed(5, 1500);
                     } else {
                         phoneEtCode.setText("");

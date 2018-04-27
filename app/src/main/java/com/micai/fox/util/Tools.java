@@ -654,7 +654,7 @@ public class Tools {
 
 
     //修改类提示dialog
-    public static Dialog showDialog(final Activity activity, int type) {
+    public static Dialog showDialog(final Activity activity, int type,String content) {
         final Dialog dialog = new Dialog(activity, R.style.Translucent_NoTitle);
         View view = ((LayoutInflater) activity.getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.layout_dialog, null);
         //设置它的ContentView
@@ -673,6 +673,9 @@ public class Tools {
         } else if (type == 4) {
             iv.setVisibility(View.GONE);
             tv.setText("支付成功");
+        }else if (type==5){
+            iv.setVisibility(View.GONE);
+            tv.setText(""+content);
         }
         WindowManager m = activity.getWindowManager();
         Display d = m.getDefaultDisplay();  //为获取屏幕宽、高

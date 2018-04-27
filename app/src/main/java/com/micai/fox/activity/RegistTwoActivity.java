@@ -308,7 +308,7 @@ public class RegistTwoActivity extends AppCompatActivity {
                 if (Tools.isGoodJson(response)) {
                     baseResultBean = new Gson().fromJson(response, BaseResultBean.class);
                     if (baseResultBean.isExecResult()) {
-                        dialog = Tools.showDialog(RegistTwoActivity.this, 0);
+                        dialog = Tools.showDialog(RegistTwoActivity.this, 0,null);
                         mHandler.sendEmptyMessageDelayed(5, 1500);
                     } else {
                     }

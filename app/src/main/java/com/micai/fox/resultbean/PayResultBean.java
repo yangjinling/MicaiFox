@@ -17,6 +17,7 @@ public class PayResultBean {
     private ExecDatasBean execDatas;
     private int count;
     private int num;
+    private String execMsg;
 
     public boolean isExecResult() {
         return execResult;
@@ -48,6 +49,14 @@ public class PayResultBean {
 
     public void setNum(int num) {
         this.num = num;
+    }
+
+    public String getExecMsg() {
+        return execMsg;
+    }
+
+    public void setExecMsg(String execMsg) {
+        this.execMsg = execMsg;
     }
 
     public static class ExecDatasBean {
