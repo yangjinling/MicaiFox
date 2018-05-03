@@ -163,6 +163,7 @@ public class PayActivity extends AppCompatActivity {
                             } else {
                                 switch (payResultBean.getExecDatas().getOrd_state()) {
                                     case "0"://交易处理中
+                                        checkPayState(2);
                                         break;
                                     case "1"://交易成功
                                         checkPayState(0);
@@ -190,14 +191,16 @@ public class PayActivity extends AppCompatActivity {
     private Dialog dialog;
 
     private void checkPayState(int type) {
-
+        Config.getInstance().setCheck(false);
+//        Config.getInstance().setPayId("");
         if (type == 0) {
             //支付成功
-            dialog = Tools.showDialog(this, 4,null);
+            dialog = Tools.showDialog(this, 4, null);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if (null != dialog && dialog.isShowing()) {
+                        dialog.dismiss();
                         Intent intent = new Intent(PayActivity.this, ZhongChouOrderDetailActivity.class);
                         intent.putExtra("orderId", bean.getOrderId());
                         intent.putExtra("ACCOUNT", true);

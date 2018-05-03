@@ -271,7 +271,7 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                     if (accountInfoResult.isExecResult()) {
                         AccountInfoResult.ExecDatasBean execDatas = accountInfoResult.getExecDatas();
                         if (null != execDatas) {
-                            Tools.showPayPopWindow(ZhongChouOrderDetailActivity.this, btnZhongchouDetailOrderPay, null, 3);
+//                            Tools.showPayPopWindow(ZhongChouOrderDetailActivity.this, btnZhongchouDetailOrderPay, null, 3);
                         } else {
                             Tools.showPayPopWindow(ZhongChouOrderDetailActivity.this, btnZhongchouDetailOrderPay, null, 3);
                         }

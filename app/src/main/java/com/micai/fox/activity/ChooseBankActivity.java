@@ -171,6 +171,7 @@ public class ChooseBankActivity extends AppCompatActivity {
                         }, 3000);
                     }
                 } else {
+                    Config.getInstance().setCheck(false);
                     Config.getInstance().setJin(true);
                 }
 

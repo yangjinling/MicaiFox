@@ -654,7 +654,7 @@ public class Tools {
 
 
     //修改类提示dialog
-    public static Dialog showDialog(final Activity activity, int type,String content) {
+    public static Dialog showDialog(final Activity activity, int type, String content) {
         final Dialog dialog = new Dialog(activity, R.style.Translucent_NoTitle);
         View view = ((LayoutInflater) activity.getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.layout_dialog, null);
         //设置它的ContentView
@@ -673,9 +673,9 @@ public class Tools {
         } else if (type == 4) {
             iv.setVisibility(View.GONE);
             tv.setText("支付成功");
-        }else if (type==5){
+        } else if (type == 5) {
             iv.setVisibility(View.GONE);
-            tv.setText(""+content);
+            tv.setText("" + content);
         }
         WindowManager m = activity.getWindowManager();
         Display d = m.getDefaultDisplay();  //为获取屏幕宽、高
@@ -766,14 +766,13 @@ public class Tools {
         pop_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                popupWindowConfirm.dismiss();
                 if (type == 2) {
-                    popupWindowConfirm.dismiss();
                     EventBus.getDefault().post(new PayRefreshBean(true));
                 } else if (type == 3) {
                     Intent intent = new Intent(activity, AcountEditActivity.class);
                     intent.putExtra("KIND", 1);
                     activity.startActivity(intent);
-                    popupWindowConfirm.dismiss();
                 }
             }
         });

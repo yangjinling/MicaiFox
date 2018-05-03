@@ -154,24 +154,25 @@ public class BuyZhongChouActivity extends AppCompatActivity {
                     } else {
                         buyEtMoney.setVisibility(View.GONE);
                         tv_money.setVisibility(View.VISIBLE);
-                        if (tv_money.getText().toString().contains(".")) {
-                            String content = "支持金额需为￥" + detailResultBean.getExecDatas().getIncrementQuota() + "元的整数倍，请重新输入";
-                            Tools.showPayPopWindow(BuyZhongChouActivity.this, view, content, 0);
+//                        if (tv_money.getText().toString().contains(".")) {
+//                            String content = "支持金额需为￥" + detailResultBean.getExecDatas().getIncrementQuota() + "元的整数倍，请重新输入";
+//                            Tools.showPayPopWindow(BuyZhongChouActivity.this, view, content, 0);
+//                        } else {
+//                            if (Integer.parseInt(tv_money.getText().toString().substring(1)) % Integer.parseInt(detailResultBean.getExecDatas().getIncrementQuota()) == 0) {
+                        if ((new BigDecimal("0" + tv_money.getText().toString().substring(1)).divideAndRemainder(new BigDecimal("0" + detailResultBean.getExecDatas().getIncrementQuota())))[1].compareTo(new BigDecimal(0)) == 0) {
+                            BigDecimal minus = sub(tv_money.getText().toString().substring(1), detailResultBean.getExecDatas().getIncrementQuota());
+                            tv_money.setText("￥" + minus);
                         } else {
-                            if (Integer.parseInt(tv_money.getText().toString().substring(1)) % Integer.parseInt(detailResultBean.getExecDatas().getIncrementQuota()) == 0) {
-                                int minus = sub(tv_money.getText().toString().substring(1), detailResultBean.getExecDatas().getIncrementQuota());
-                                tv_money.setText("￥" + minus);
-                            } else {
-                                String contents = "支持金额需为￥" + detailResultBean.getExecDatas().getIncrementQuota() + "元的整数倍，请重新输入";
-                                Tools.showPayPopWindow(BuyZhongChouActivity.this, view, contents, 0);
-                            }
+                            String contents = "支持金额需为￥" + detailResultBean.getExecDatas().getIncrementQuota() + "元的整数倍，请重新输入";
+                            Tools.showPayPopWindow(BuyZhongChouActivity.this, view, contents, 0);
                         }
+                        //}
                     }
                 }
                 break;
             case R.id.buy_iv_plus:
                 if (TextUtils.isEmpty(buyEtMoney.getText().toString())) {
-                    int add = add("0", detailResultBean.getExecDatas().getIncrementQuota());
+                    BigDecimal add = add("0", detailResultBean.getExecDatas().getOneAmountDown());
                     tv_money.setText("￥" + add);
                     buyEtMoney.setText("" + tv_money.getText().toString().substring(1));
                     buyEtMoney.setVisibility(View.GONE);
@@ -186,18 +187,19 @@ public class BuyZhongChouActivity extends AppCompatActivity {
                     } else {
                         buyEtMoney.setVisibility(View.GONE);
                         tv_money.setVisibility(View.VISIBLE);
-                        if (tv_money.getText().toString().contains(".")) {
+//                        if (tv_money.getText().toString().contains(".")) {
+//                            String content = "支持金额需为￥" + detailResultBean.getExecDatas().getIncrementQuota() + "元的整数倍，请重新输入";
+//                            Tools.showPayPopWindow(BuyZhongChouActivity.this, view, content, 0);
+//                        } else {
+//                            if (Integer.parseInt(tv_money.getText().toString().substring(1)) % Integer.parseInt(detailResultBean.getExecDatas().getIncrementQuota()) == 0) {
+                        if ((new BigDecimal("0" + tv_money.getText().toString().substring(1)).divideAndRemainder(new BigDecimal("0" + detailResultBean.getExecDatas().getIncrementQuota())))[1].compareTo(new BigDecimal(0)) == 0) {
+                            BigDecimal add = add(tv_money.getText().toString().substring(1), "" + detailResultBean.getExecDatas().getIncrementQuota());
+                            tv_money.setText("￥" + add);
+                        } else {
                             String content = "支持金额需为￥" + detailResultBean.getExecDatas().getIncrementQuota() + "元的整数倍，请重新输入";
                             Tools.showPayPopWindow(BuyZhongChouActivity.this, view, content, 0);
-                        } else {
-                            if (Integer.parseInt(tv_money.getText().toString().substring(1)) % Integer.parseInt(detailResultBean.getExecDatas().getIncrementQuota()) == 0) {
-                                int add = add(tv_money.getText().toString().substring(1), "" + detailResultBean.getExecDatas().getIncrementQuota());
-                                tv_money.setText("￥" + add);
-                            } else {
-                                String content = "支持金额需为￥" + detailResultBean.getExecDatas().getIncrementQuota() + "元的整数倍，请重新输入";
-                                Tools.showPayPopWindow(BuyZhongChouActivity.this, view, content, 0);
-                            }
                         }
+//                        }
                     }
                 }
                 break;
@@ -285,10 +287,10 @@ public class BuyZhongChouActivity extends AppCompatActivity {
      * @param v2 加数
      * @return 两个参数的和
      */
-    public int add(String v1, String v2) {
+    public BigDecimal add(String v1, String v2) {
         BigDecimal b1 = new BigDecimal(v1);
         BigDecimal b2 = new BigDecimal(v2);
-        return b1.add(b2).intValue();
+        return b1.add(b2).setScale(1);
     }
 
     /**
@@ -298,10 +300,10 @@ public class BuyZhongChouActivity extends AppCompatActivity {
      * @param v2 减数
      * @return 两个参数的差
      */
-    public int sub(String v1, String v2) {
+    public BigDecimal sub(String v1, String v2) {
         BigDecimal b1 = new BigDecimal(v1);
         BigDecimal b2 = new BigDecimal(v2);
-        return b1.subtract(b2).intValue();
+        return b1.subtract(b2).setScale(1);
     }
 
 

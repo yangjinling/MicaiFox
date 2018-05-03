@@ -6,8 +6,10 @@ package com.micai.fox.app;
 
 public class Url {
     public static final String CONTENT_TYPE = "application/json; charset=utf-8";
-    public static final String WEB_BASE_IP = "http://39.106.29.117:18888";
-    public static final String WEB_BASE_URL = "http://39.106.29.117:18888/mcfox/a/";
+//    public static final String WEB_BASE_IP = "http://39.106.29.117:18888";
+//    public static final String WEB_BASE_URL = "http://39.106.29.117:18888/mcfox/a/";
+    public static final String WEB_BASE_IP = "http://micaifox.cn";
+    public static final String WEB_BASE_URL = "http://micaifox.cn/mcfox/a/";
     //    public static final String WEB_BASE_IP="http://192.168.43.1:18888";
 //    public static final String WEB_BASE_URL = "http://192.168.43.1:18888/mcfox/a/";
     public static final String WEB_BASE_SESSION = ";JSESSIONID=%s?__ajax=true";
