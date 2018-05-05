@@ -756,6 +756,13 @@ public class Tools {
             pop_cancle.setText("稍后设置");
             pop_sure.setVisibility(View.VISIBLE);
             pop_sure.setText("去设置");
+        }else if (type==4){
+            content1.setText("未完成支付，刷新可重新查看支付状态");
+            content2.setVisibility(View.VISIBLE);
+            content2.setText("如订单显示未支付但仍有扣款，可联系客服处理");
+            pop_cancle.setText("取消");
+            pop_sure.setVisibility(View.VISIBLE);
+            pop_sure.setText("刷新看看");
         }
         pop_cancle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -767,7 +774,7 @@ public class Tools {
             @Override
             public void onClick(View view) {
                 popupWindowConfirm.dismiss();
-                if (type == 2) {
+                if (type == 2||type==4) {
                     EventBus.getDefault().post(new PayRefreshBean(true));
                 } else if (type == 3) {
                     Intent intent = new Intent(activity, AcountEditActivity.class);

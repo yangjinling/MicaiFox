@@ -163,7 +163,7 @@ public class PayActivity extends AppCompatActivity {
                             } else {
                                 switch (payResultBean.getExecDatas().getOrd_state()) {
                                     case "0"://交易处理中
-                                        checkPayState(2);
+                                        checkPayState(3);
                                         break;
                                     case "1"://交易成功
                                         checkPayState(0);
@@ -216,6 +216,8 @@ public class PayActivity extends AppCompatActivity {
         } else if (type == 2) {
             //没查询到结果
             Tools.showPayPopWindow(this, payBtnPay, null, 2);
+        }else if (type==3){
+            Tools.showPayPopWindow(this, payBtnPay, null, 4);
         }
     }
 
