@@ -46,6 +46,12 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
+        <View
+            android:id="@+id/line_view"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"></View>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -60,7 +66,12 @@
                 android:text="知道了"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
-
+<View
+    android:id="@+id/waitpay_view"
+    android:layout_width="1dp"
+    android:visibility="gone"
+    android:layout_height="wrap_content"
+    android:background="@color/black"></View>
             <Button
                 android:id="@+id/waitpay_pop_btn_sure"
                 android:layout_width="0dp"
@@ -68,9 +79,9 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:text="知道了"
+                android:visibility="gone"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                android:visibility="gone" />
+                android:textSize="14sp"/>
 
         </LinearLayout>
     </LinearLayout>

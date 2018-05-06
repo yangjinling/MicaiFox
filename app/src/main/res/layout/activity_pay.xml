@@ -135,6 +135,7 @@
 
         <LinearLayout
             android:id="@+id/pay_ll_wechat"
+            android:visibility="gone"
             android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -164,6 +165,7 @@
 
         <LinearLayout
             android:id="@+id/pay_ll_ali"
+            android:visibility="gone"
             android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
