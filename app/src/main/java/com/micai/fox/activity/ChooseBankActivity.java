@@ -61,12 +61,12 @@ public class ChooseBankActivity extends AppCompatActivity {
 //            "03070000", "03050000", "03060000", "03090000", "03100000", "03080000", "03030000", "03040000", "04030000"};
 //    private String[] nameList = new String[]{"工商银行", "中国银行", "交通银行", "农业银行", "建设银行"
 //            , "中信银行", "平安银行", "民生银行", "广发银行", "兴业银行", "浦发银行", "招商银行", "光大银行", "华夏银行", "邮政储蓄银行"};
-    private String[] idList = new String[]{"01020000", "01050000", "03020000", "01040000", "03050000", "01030000",
-            "04030000", "03100000", "03030000"/*,"00000000(北京银行银行号没有)"*/};
-    private String[] nameList = new String[]{"工商银行", "建设银行", "中信银行", "中国银行", "民生银行", "农业银行", "邮储银行"
-            , "上海银行", "光大银行"/*,"北京银行"*/};
-    private int[] imgList = new int[]{R.mipmap.gongshang, R.mipmap.jianshe, R.mipmap.zhongxin, R.mipmap.zhongguo, R.mipmap.minsheng, R.mipmap.nongye,
-            R.mipmap.youchu, R.mipmap.shanghai, R.mipmap.guangda/*, R.mipmap.beijing*/};
+    private String[] idList = new String[]{/*"01020000",*/ "01050000", "03020000", "01040000", "03050000", "01030000",
+           /* "04030000",*/ "03100000"/*, "03030000"*//*,"00000000(北京银行银行号没有)"*/};
+    private String[] nameList = new String[]{/*"工商银行",*/ "建设银行", "中信银行", "中国银行", "民生银行", "农业银行", /*"邮储银行"
+            ,*/ "上海银行"/*, "光大银行"*//*,"北京银行"*/};
+    private int[] imgList = new int[]{/*R.mipmap.gongshang,*/ R.mipmap.jianshe, R.mipmap.zhongxin, R.mipmap.zhongguo, R.mipmap.minsheng, R.mipmap.nongye,
+           /* R.mipmap.youchu,*/ R.mipmap.shanghai/*, R.mipmap.guangda*//*, R.mipmap.beijing*/};
     //交通、平安、广发、兴业、招商、华夏没有
 //    private int[] imgList = new int[]{R.mipmap.gongshang, R.mipmap.zhongguo, R.mipmap.ic_launcher, R.mipmap.nongye, R.mipmap.jianshe, R.mipmap.zhongxin
 //            , R.mipmap.ic_launcher, R.mipmap.minsheng, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.shanghai, R.mipmap.ic_launcher, R.mipmap.guangda,
