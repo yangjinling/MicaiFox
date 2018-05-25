@@ -87,7 +87,8 @@ public class PayActivity extends AppCompatActivity {
 				finish();
 				break;
 			case R.id.pay_btn_pay:
-				pay(kind);
+//				pay(kind);
+				pay();
 				break;
 			case R.id.pay_ll_payway:
 				ivWangyin.setBackgroundResource(R.drawable.pointedselect);
@@ -125,8 +126,8 @@ public class PayActivity extends AppCompatActivity {
 		super.onResume();
 		if (Config.getInstance().isCheck()) {
 			//查询状态
-			dialog = Tools.showDialog(this, 6, null);
-			checkPay();
+//			dialog = Tools.showDialog(this, 6, null);
+//			checkPay();
 		}
 	}
 
@@ -234,7 +235,7 @@ public class PayActivity extends AppCompatActivity {
 	@Subscribe
 	public void onEventMainThread(PayRefreshBean bean) {
 		if (bean.isRefresh()) {
-			checkPay();
+//			checkPay();
 		}
 	}
 
@@ -243,5 +244,54 @@ public class PayActivity extends AppCompatActivity {
 		EventBus.getDefault().unregister(this);
 		ButterKnife.unbind(this);
 		super.onDestroy();
+	}
+
+	private void pay() {
+		paramBean = new ParamBean();
+		paramData = new ParamBean.ParamData();
+		paramData.setOrderId("" + bean.getOrderId());
+		paramBean.setParamData(paramData);
+		OkHttpUtils.postString()
+				.mediaType(MediaType.parse(Url.CONTENT_TYPE))
+				.url(String.format(Url.WEB_PAY_WECHAT, Config.getInstance().getSessionId()))
+				.content(new Gson().toJson(paramBean))
+				.build().execute(new StringCallback() {
+
+			private PayResultBean payResultBean;
+
+			@Override
+			public void onError(Call call, Exception e, int id) {
+
+			}
+
+			@Override
+			public void onResponse(String response, int id) throws Exception {
+				Log.e("yjl", "pay--data" + response);
+				if (Tools.isGoodJson(response)) {
+					Config.getInstance().setJin(false);
+					payResultBean = new Gson().fromJson(response, PayResultBean.class);
+					if (payResultBean.isExecResult()) {
+						Config.getInstance().setCheck(true);
+						Intent intent = new Intent(PayActivity.this, PayResultActivity.class);
+						intent.putExtra("URL", payResultBean.getExecDatas().getPay_url());
+						startActivity(intent);
+						finish();
+					} else {
+						Config.getInstance().setCheck(false);
+						dialog = Tools.showDialog(PayActivity.this, 5, payResultBean.getExecMsg());
+						new Handler().postDelayed(new Runnable() {
+							@Override
+							public void run() {
+								dialog.dismiss();
+							}
+						}, 3000);
+					}
+				} else {
+					Config.getInstance().setCheck(false);
+					Config.getInstance().setJin(true);
+				}
+
+			}
+		});
 	}
 }

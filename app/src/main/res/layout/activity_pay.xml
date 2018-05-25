@@ -110,6 +110,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="12.5dp"
             android:layout_marginRight="12.5dp"
+            android:visibility="gone"
             android:layout_marginTop="9dp"
             android:background="@drawable/edittextstyle"
             android:orientation="horizontal">
@@ -135,8 +136,7 @@
 
         <LinearLayout
             android:id="@+id/pay_ll_wechat"
-            android:visibility="gone"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="9dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="12.5dp"

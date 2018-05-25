@@ -85,8 +85,10 @@ public class Url {
     public static final String WEB_MINE_HEAD = WEB_BASE_URL + "sys/user/file/upload" + WEB_BASE_SESSION;
     /*2.5.10 登录时查询是否有未读消息*/
     public static final String WEN_CHECK_NOTICE = WEB_BASE_URL + "bd/notice/unReview" + WEB_BASE_SESSION;
-    /*2.5.10 支付*/
+    /*2.5.11 支付--银行*/
     public static final String WEB_PAY = WEB_BASE_URL + "pay/xinfu/submit" + WEB_BASE_SESSION;
+    /*2.5.11 支付--微信*/
+    public static final String WEB_PAY_WECHAT = WEB_BASE_URL + "pay/wx/submit" + WEB_BASE_SESSION;
 
     public static final String WEB_CHECK_PAY = WEB_BASE_URL + "pay/xinfu/query" + WEB_BASE_SESSION;
 

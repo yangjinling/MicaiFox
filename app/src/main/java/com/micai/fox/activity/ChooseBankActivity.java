@@ -155,9 +155,9 @@ public class ChooseBankActivity extends AppCompatActivity {
                     payResultBean = new Gson().fromJson(response, PayResultBean.class);
                     if (payResultBean.isExecResult()) {
                         Config.getInstance().setCheck(true);
-                        Config.getInstance().setPayId(payResultBean.getExecDatas().getPayId());
+//                        Config.getInstance().setPayId(payResultBean.getExecDatas().getPayId());
                         Intent intent = new Intent(ChooseBankActivity.this, PayResultActivity.class);
-                        intent.putExtra("URL", payResultBean.getExecDatas().getPayHtml());
+//                        intent.putExtra("URL", payResultBean.getExecDatas().getPayHtml());
                         startActivity(intent);
                         finish();
                     } else {
