@@ -79,6 +79,8 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
     TextView orderTvTimeXiadan;
     @Bind(R.id.order_tv_time_pay)
     TextView orderTvTimePay;
+    @Bind(R.id.order_tv_time_pay_title)
+    TextView orderTvTimePayTitle;
     @Bind(R.id.order_tv_money_pay_title)
     TextView orderTvMoneyPayTitle;
     private View view;
@@ -174,6 +176,7 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起已兑付");
                 orderdetailLlXiadan.setVisibility(View.VISIBLE);
                 orderdetailLlPay.setVisibility(View.VISIBLE);
+                orderTvTimePayTitle.setText("取消时间");
                 break;
             case 7:
                 //已兑换
