@@ -127,7 +127,7 @@ public class PayActivity extends AppCompatActivity {
 		if (Config.getInstance().isCheck()) {
 			//查询状态
 //			dialog = Tools.showDialog(this, 6, null);
-//			checkPay();
+			checkPay();
 		}
 	}
 
@@ -235,7 +235,7 @@ public class PayActivity extends AppCompatActivity {
 	@Subscribe
 	public void onEventMainThread(PayRefreshBean bean) {
 		if (bean.isRefresh()) {
-//			checkPay();
+			checkPay();
 		}
 	}
 

@@ -160,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="15dp"
-                android:background="@drawable/point" />
+                android:background="@drawable/pointedselect" />
         </LinearLayout>
 
         <LinearLayout
