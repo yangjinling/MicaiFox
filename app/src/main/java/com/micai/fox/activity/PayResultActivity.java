@@ -54,30 +54,30 @@ public class PayResultActivity extends AppCompatActivity {
         payWeb.requestFocus();
         payWeb.setVerticalScrollbarOverlay(true);
 ////        payWeb.loadDataWithBaseURL("", customHtml, "text/html", "utf-8", "");
-        payWeb.setWebViewClient(new WebViewClient() {
-            @Override
-
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-
-                handler.proceed();  // 接受信任所有网站的证书
-
-                // handler.cancel();   // 默认操作 不处理
-
-                // handler.handleMessage(null);  // 可做其他处理
-            }
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                LogUtil.e("YJLS", url);
-                view.loadUrl(url);
-
-                return true;
-
-            }
-        });
-//        payWeb.loadData(customHtml, "text/html", "UTF-8");
-        payWeb.loadDataWithBaseURL("", customHtml, "text/html", "utf-8", "");
-
+//        payWeb.setWebViewClient(new WebViewClient() {
+//            @Override
+//
+//            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+//
+//                handler.proceed();  // 接受信任所有网站的证书
+//
+//                // handler.cancel();   // 默认操作 不处理
+//
+//                // handler.handleMessage(null);  // 可做其他处理
+//            }
+//
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                LogUtil.e("YJLS", url);
+//                view.loadUrl(url);
+//
+//                return true;
+//
+//            }
+//        });
+////        payWeb.loadData(customHtml, "text/html", "UTF-8");
+//        payWeb.loadDataWithBaseURL("", customHtml, "text/html", "utf-8", "");
+        payWeb.loadUrl(customHtml);
     }
 
     @Override

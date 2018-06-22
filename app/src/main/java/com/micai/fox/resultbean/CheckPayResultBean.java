@@ -58,50 +58,23 @@ public class CheckPayResultBean {
          * cust_id : 4001061867
          */
 
-        private String resp_desc;
-        private String ord_id;
-        private String resp_code;
-        private String cust_id;
-        private String ord_state;
+        private String orderId;
+        private String status;
 
-        public String getResp_desc() {
-            return resp_desc;
+        public String getOrderId() {
+            return orderId;
         }
 
-        public void setResp_desc(String resp_desc) {
-            this.resp_desc = resp_desc;
+        public void setOrderId(String orderId) {
+            this.orderId = orderId;
         }
 
-        public String getOrd_id() {
-            return ord_id;
+        public String getStatus() {
+            return status;
         }
 
-        public void setOrd_id(String ord_id) {
-            this.ord_id = ord_id;
-        }
-
-        public String getResp_code() {
-            return resp_code;
-        }
-
-        public void setResp_code(String resp_code) {
-            this.resp_code = resp_code;
-        }
-
-        public String getCust_id() {
-            return cust_id;
-        }
-
-        public void setCust_id(String cust_id) {
-            this.cust_id = cust_id;
-        }
-
-        public String getOrd_state() {
-            return ord_state;
-        }
-
-        public void setOrd_state(String ord_state) {
-            this.ord_state = ord_state;
+        public void setStatus(String status) {
+            this.status = status;
         }
     }
 }

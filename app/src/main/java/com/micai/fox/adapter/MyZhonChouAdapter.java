@@ -64,6 +64,10 @@ public class MyZhonChouAdapter extends MyBaseAdapter<MyZhongChouResultBean.ExecD
                 pay.setVisibility(View.GONE);
                 orderStatus.setText("已过期");
                 break;
+            case 5:
+                pay.setVisibility(View.GONE);
+                orderStatus.setText("已取消");
+                break;
             case 7:
                 pay.setVisibility(View.GONE);
                 orderStatus.setText("已兑付");

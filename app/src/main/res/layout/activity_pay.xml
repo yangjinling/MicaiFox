@@ -150,7 +150,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="17.5dp"
                 android:layout_weight="1"
-                android:text="微信支付"
+                android:text="微信扫码支付"
                 android:textColor="#23253C"
                 android:textSize="15sp" />
 

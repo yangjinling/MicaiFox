@@ -165,7 +165,15 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 detailZhongchouTvOrderstate.setText("已过期");
                 zhongchouDetailTv1.setText("已于" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getEndDate()) + "结束众筹");
                 zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起已兑付");
-
+                break;
+            case 5:
+                btnZhongchouDetailOrderPay.setVisibility(View.GONE);
+                orderTvMoneyPayTitle.setText("需支付金额");
+                detailZhongchouTvOrderstate.setText("已取消");
+                zhongchouDetailTv1.setText("已于" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getEndDate()) + "结束众筹");
+                zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起已兑付");
+                orderdetailLlXiadan.setVisibility(View.VISIBLE);
+                orderdetailLlPay.setVisibility(View.VISIBLE);
                 break;
             case 7:
                 //已兑换

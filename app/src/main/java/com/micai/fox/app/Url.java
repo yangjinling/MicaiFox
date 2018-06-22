@@ -91,5 +91,6 @@ public class Url {
     public static final String WEB_PAY_WECHAT = WEB_BASE_URL + "pay/wx/submit" + WEB_BASE_SESSION;
 
     public static final String WEB_CHECK_PAY = WEB_BASE_URL + "pay/xinfu/query" + WEB_BASE_SESSION;
+    public static final String WEB_CHECK_PAY_WECHAT = WEB_BASE_URL + "pay/wx/query" + WEB_BASE_SESSION;
 
 }
