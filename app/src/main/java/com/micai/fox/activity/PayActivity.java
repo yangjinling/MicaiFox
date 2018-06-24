@@ -78,6 +78,7 @@ public class PayActivity extends AppCompatActivity {
         payTvTitle.setText("" + bean.getTitle());
         payTvMoney.setText("￥" + bean.getMoney());
         payBtnPay.setText("支付￥" + bean.getMoney());
+        Config.getInstance().setOrderId(bean.getOrderId());
     }
 
     @OnClick({R.id.tv_back, R.id.pay_btn_pay, R.id.pay_ll_payway, R.id.pay_ll_wechat, R.id.pay_ll_ali})
@@ -272,10 +273,10 @@ public class PayActivity extends AppCompatActivity {
                         Intent intent = new Intent(PayActivity.this, PayResultActivity.class);
                         intent.putExtra("URL", payResultBean.getExecDatas().getPay_url());
                         startActivity(intent);
-                        finish();
+//                        finish();
                     } else {
                         Config.getInstance().setCheck(false);
-                        dialog = Tools.showDialog(PayActivity.this, 5, payResultBean.getExecMsg());
+                        dialog = Tools.showDialog(PayActivity.this, 5, "支付遇到问题，请稍后再试...");
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {

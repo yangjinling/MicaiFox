@@ -61,7 +61,7 @@ public class ResetPassActivity extends AppCompatActivity {
                     if (null != resetBtnCode)
                         resetBtnCode.setText(--second + "秒后可重发送");
                     if (second >= 1) {
-                        mHandler.sendEmptyMessageDelayed(1, 1000);
+                        mHandler.sendEmptyMessageDelayed(5, 1000);
                     } else {
                         resetBtnCode.setClickable(true);
                         resetBtnCode.setText("重新获取验证码");

@@ -176,7 +176,7 @@ public class ZhongChouOrderDetailActivity extends AppCompatActivity {
                 zhongchouDetailTv2.setText("" + DateUtil.getDateToStrings(myZhongChouOrderResultBean.getExecDatas().getCashDate()) + "起已兑付");
                 orderdetailLlXiadan.setVisibility(View.VISIBLE);
                 orderdetailLlPay.setVisibility(View.VISIBLE);
-                orderTvTimePayTitle.setText("取消时间");
+                orderTvTimePayTitle.setText("取消时间 ：");
                 break;
             case 7:
                 //已兑换

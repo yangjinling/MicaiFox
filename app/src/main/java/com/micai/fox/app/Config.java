@@ -20,16 +20,15 @@ public class Config {
     private boolean isJin = false;
     private boolean loginAndNo = false;
     private boolean isLoginFromBuy;
-    private String payId;
+    private String orderId;
     private boolean check=false;
-    public String getPayId() {
-        return payId;
+
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setPayId(String payId) {
-        this.payId = payId;
-    }
-    private Config() {
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public static Config getInstance() {
